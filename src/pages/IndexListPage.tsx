@@ -16,10 +16,9 @@ import {
 import { useMemo, useState } from "react";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import { IndexCard } from "../components/IndexCard";
-import { IndexDetailModal } from "../components/IndexDetailModal";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
-import { MarketIndex, ProviderId } from "../types";
+import { ProviderId } from "../types";
 
 export default function IndexListPage() {
   const { data: providers = [], isLoading: loadingProviders } =
@@ -31,9 +30,6 @@ export default function IndexListPage() {
     "sp",
   );
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeModalIndex, setActiveModalIndex] = useState<MarketIndex | null>(
-    null,
-  );
 
   // Calculate index counts per provider
   const indexCounts = useMemo(() => {
@@ -320,22 +316,11 @@ export default function IndexListPage() {
             }}
           >
             {filteredIndices.map((index) => (
-              <IndexCard
-                key={index.id}
-                index={index}
-                onSelect={(idx) => setActiveModalIndex(idx)}
-              />
+              <IndexCard key={index.id} index={index} />
             ))}
           </Box>
         )}
       </Box>
-
-      {/* Index Detail Modal */}
-      <IndexDetailModal
-        index={activeModalIndex}
-        open={Boolean(activeModalIndex)}
-        onClose={() => setActiveModalIndex(null)}
-      />
     </Container>
   );
 }

@@ -1,4 +1,4 @@
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Box,
   Card,
@@ -9,17 +9,27 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { MarketIndex } from "../types";
 
 interface IndexCardProps {
   index: MarketIndex;
-  onSelect: (index: MarketIndex) => void;
+  onSelect?: (index: MarketIndex) => void;
 }
 
 export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
+  const navigate = useNavigate();
   const provider = PROVIDERS_DATA[index.providerId];
   const accentColor = provider?.accentColor || "#6366f1";
+
+  const handleClick = () => {
+    if (onSelect) {
+      onSelect(index);
+    } else {
+      navigate(`/index/${index.id}`);
+    }
+  };
 
   return (
     <Card
@@ -42,7 +52,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
       }}
     >
       <CardActionArea
-        onClick={() => onSelect(index)}
+        onClick={handleClick}
         sx={{
           height: "100%",
           display: "flex",
@@ -274,9 +284,9 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                   fontSize: "0.72rem",
                 }}
               >
-                Methodology
+                Explore Details
               </Typography>
-              <InfoOutlinedIcon sx={{ fontSize: 13, color: accentColor }} />
+              <ArrowForwardIcon sx={{ fontSize: 13, color: accentColor }} />
             </Stack>
           </Stack>
         </CardContent>

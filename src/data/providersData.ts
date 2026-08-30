@@ -12,8 +12,8 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     headquarters: "New York, NY, USA",
     founded: "1896 (DJIA) / 1957 (S&P 500)",
     website: "https://www.spglobal.com/spdji",
-    accentColor: "#ef4444",
-    badgeBg: "rgba(239, 68, 68, 0.15)",
+    accentColor: "#8b5cf6",
+    badgeBg: "rgba(139, 92, 246, 0.15)",
     keyEtfPartners: [
       "State Street (SPDR)",
       "BlackRock (iShares)",
