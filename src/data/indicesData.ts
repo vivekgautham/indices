@@ -18,13 +18,13 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 1957,
     trackingEtfs: [
-      { ticker: "SPY", name: "SPDR S&P 500 ETF Trust", aum: "$600B+" },
-      { ticker: "VOO", name: "Vanguard S&P 500 ETF", aum: "$550B+" },
-      { ticker: "IVV", name: "iShares Core S&P 500 ETF", aum: "$520B+" },
+      { ticker: "SPY", name: "SPDR S&P 500 ETF Trust", aum: "$815B+" },
+      { ticker: "VOO", name: "Vanguard S&P 500 ETF", aum: "$1.05T+" },
+      { ticker: "IVV", name: "iShares Core S&P 500 ETF", aum: "$887B+" },
       {
         ticker: "SPYM",
         name: "State Street SPDR Portfolio S&P 500 ETF (formerly SPLG)",
-        aum: "$45B+",
+        aum: "$157B+",
       },
     ],
     summary:
@@ -96,9 +96,9 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1991,
     trackingEtfs: [
-      { ticker: "IJH", name: "iShares Core S&P Mid-Cap ETF", aum: "$85B+" },
-      { ticker: "MDY", name: "SPDR S&P MidCap 400 ETF Trust", aum: "$22B+" },
-      { ticker: "IVOO", name: "Vanguard S&P Mid-Cap 400 ETF", aum: "$3B+" },
+      { ticker: "IJH", name: "iShares Core S&P Mid-Cap ETF", aum: "$126B+" },
+      { ticker: "MDY", name: "SPDR S&P MidCap 400 ETF Trust", aum: "$26B+" },
+      { ticker: "IVOO", name: "Vanguard S&P Mid-Cap 400 ETF", aum: "$4B+" },
     ],
     summary:
       "Serves as the barometer for the US mid-cap equity sector, covering 400 companies representing ~7% of the total US market cap.",
@@ -131,13 +131,13 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1994,
     trackingEtfs: [
-      { ticker: "IJR", name: "iShares Core S&P Small-Cap ETF", aum: "$80B+" },
+      { ticker: "IJR", name: "iShares Core S&P Small-Cap ETF", aum: "$110B+" },
       {
         ticker: "SPSM",
         name: "SPDR Portfolio S&P 600 Small Cap ETF",
         aum: "$12B+",
       },
-      { ticker: "VIOO", name: "Vanguard S&P Small-Cap 600 ETF", aum: "$2.5B+" },
+      { ticker: "VIOO", name: "Vanguard S&P Small-Cap 600 ETF", aum: "$4.2B+" },
     ],
     summary:
       "Measures the small-cap segment of the US equity market, enforcing a strict profitability screen that eliminates unprofitable speculative firms.",
@@ -210,7 +210,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 2003,
     trackingEtfs: [
-      { ticker: "RSP", name: "Invesco S&P 500 Equal Weight ETF", aum: "$60B+" },
+      {
+        ticker: "RSP",
+        name: "Invesco S&P 500 Equal Weight ETF",
+        aum: "$101B+",
+      },
     ],
     summary:
       "An equal-weighted alternative to the market-cap S&P 500, giving each constituent identical weight (0.2%) to reduce concentration in top mega-cap tech stocks.",
@@ -280,7 +284,7 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "SCHD",
         name: "Schwab U.S. Dividend Equity ETF",
-        aum: "$62B+",
+        aum: "$112B+",
       },
     ],
     summary:
@@ -363,8 +367,8 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Annual Reconstitution (June)",
     launchYear: 1984,
     trackingEtfs: [
-      { ticker: "IWM", name: "iShares Russell 2000 ETF", aum: "$68B+" },
-      { ticker: "VTWO", name: "Vanguard Russell 2000 ETF", aum: "$11B+" },
+      { ticker: "IWM", name: "iShares Russell 2000 ETF", aum: "$81B+" },
+      { ticker: "VTWO", name: "Vanguard Russell 2000 ETF", aum: "$17B+" },
       {
         ticker: "TNA",
         name: "Direxion Daily Small Cap Bull 3X Shares",
@@ -406,8 +410,8 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Annual Reconstitution (June)",
     launchYear: 1984,
     trackingEtfs: [
-      { ticker: "IWB", name: "iShares Russell 1000 ETF", aum: "$38B+" },
-      { ticker: "VONE", name: "Vanguard Russell 1000 ETF", aum: "$5B+" },
+      { ticker: "IWB", name: "iShares Russell 1000 ETF", aum: "$49B+" },
+      { ticker: "VONE", name: "Vanguard Russell 1000 ETF", aum: "$9B+" },
     ],
     summary:
       "Captures the 1,000 largest publicly traded companies in the US equity universe, representing ~93% of the total US equity market value.",
@@ -434,7 +438,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Annual Reconstitution (June)",
     launchYear: 1987,
     trackingEtfs: [
-      { ticker: "IWF", name: "iShares Russell 1000 Growth ETF", aum: "$95B+" },
+      { ticker: "IWF", name: "iShares Russell 1000 Growth ETF", aum: "$126B+" },
       {
         ticker: "VONG",
         name: "Vanguard Russell 1000 Growth ETF",
@@ -466,8 +470,8 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Annual Reconstitution (June)",
     launchYear: 1984,
     trackingEtfs: [
-      { ticker: "IWV", name: "iShares Russell 3000 ETF", aum: "$15B+" },
-      { ticker: "VTHR", name: "Vanguard Russell 3000 ETF", aum: "$2B+" },
+      { ticker: "IWV", name: "iShares Russell 3000 ETF", aum: "$20B+" },
+      { ticker: "VTHR", name: "Vanguard Russell 3000 ETF", aum: "$5B+" },
     ],
     summary:
       "Comprehensive measure of the entire US equity market, representing roughly 98% of investable domestic equity securities.",
@@ -494,8 +498,8 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 1984,
     trackingEtfs: [
-      { ticker: "ISF", name: "iShares Core FTSE 100 UCITS ETF", aum: "£14B+" },
-      { ticker: "VUKE", name: "Vanguard FTSE 100 UCITS ETF", aum: "£4B+" },
+      { ticker: "ISF", name: "iShares Core FTSE 100 UCITS ETF", aum: "£15B+" },
+      { ticker: "VUKE", name: "Vanguard FTSE 100 UCITS ETF", aum: "£5B+" },
     ],
     summary:
       "The marquee benchmark for the UK equity market, comprising the 100 largest capitalized blue-chip companies listed on the London Stock Exchange.",
@@ -525,9 +529,9 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "VEA",
         name: "Vanguard FTSE Developed Markets ETF",
-        aum: "$140B+",
+        aum: "$238B+",
       },
-      { ticker: "SCHF", name: "Schwab International Equity ETF", aum: "$42B+" },
+      { ticker: "SCHF", name: "Schwab International Equity ETF", aum: "$70B+" },
     ],
     summary:
       "Measures large, mid, and small-cap stocks across 25 developed market countries worldwide excluding the United States.",
@@ -557,7 +561,7 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "VWO",
         name: "Vanguard FTSE Emerging Markets ETF",
-        aum: "$85B+",
+        aum: "$128B+",
       },
     ],
     summary:
@@ -585,7 +589,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Semi-Annual",
     launchYear: 2003,
     trackingEtfs: [
-      { ticker: "VT", name: "Vanguard Total World Stock ETF", aum: "$45B+" },
+      { ticker: "VT", name: "Vanguard Total World Stock ETF", aum: "$82B+" },
     ],
     summary:
       "The definitive single-index coverage of world equities, tracking over 10,000 stocks across 49 Developed and Emerging countries.",
@@ -616,7 +620,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly Index Reviews (Feb, May, Aug, Nov)",
     launchYear: 1990,
     trackingEtfs: [
-      { ticker: "ACWI", name: "iShares MSCI ACWI ETF", aum: "$22B+" },
+      { ticker: "ACWI", name: "iShares MSCI ACWI ETF", aum: "$33B+" },
       {
         ticker: "SPGM",
         name: "SPDR Portfolio MSCI Global Stock Market ETF",
@@ -653,7 +657,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly Index Reviews",
     launchYear: 1969,
     trackingEtfs: [
-      { ticker: "URTH", name: "iShares MSCI World ETF", aum: "$4.5B+" },
+      { ticker: "URTH", name: "iShares MSCI World ETF", aum: "$8B+" },
       {
         ticker: "SWDA",
         name: "iShares Core MSCI World UCITS ETF",
@@ -690,8 +694,8 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly Index Reviews",
     launchYear: 1969,
     trackingEtfs: [
-      { ticker: "EFA", name: "iShares MSCI EAFE ETF", aum: "$55B+" },
-      { ticker: "IEFA", name: "iShares Core MSCI EAFE ETF", aum: "$120B+" },
+      { ticker: "EFA", name: "iShares MSCI EAFE ETF", aum: "$79B+" },
+      { ticker: "IEFA", name: "iShares Core MSCI EAFE ETF", aum: "$195B+" },
     ],
     summary:
       "The oldest and most traditional international benchmark, covering Europe, Australasia, and the Far East while excluding the US and Canada.",
@@ -726,7 +730,7 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "IEMG",
         name: "iShares Core MSCI Emerging Markets ETF",
-        aum: "$82B+",
+        aum: "$161B+",
       },
     ],
     summary:
@@ -759,7 +763,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2019,
     trackingEtfs: [
-      { ticker: "SUSL", name: "iShares ESG MSCI USA Leaders ETF", aum: "$1B+" },
+      {
+        ticker: "SUSL",
+        name: "iShares ESG MSCI USA Leaders ETF",
+        aum: "$1.2B+",
+      },
     ],
     summary:
       "Selects companies from the MSCI USA Index with the highest Environmental, Social, and Governance (ESG) ratings relative to sector peers.",
@@ -787,8 +795,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Quarterly reweighting, Annual reconstitution (December)",
     launchYear: 1985,
     trackingEtfs: [
-      { ticker: "QQQ", name: "Invesco QQQ Trust", aum: "$300B+" },
-      { ticker: "QQQM", name: "Invesco NASDAQ 100 ETF", aum: "$35B+" },
+      { ticker: "QQQ", name: "Invesco QQQ Trust", aum: "$486B+" },
+      { ticker: "QQQM", name: "Invesco NASDAQ 100 ETF", aum: "$105B+" },
       {
         ticker: "IQQ",
         name: "iShares Nasdaq 100 ETF (BlackRock)",
@@ -872,7 +880,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 1993,
     trackingEtfs: [
-      { ticker: "SOXX", name: "iShares Semiconductor ETF", aum: "$15B+" },
+      { ticker: "SOXX", name: "iShares Semiconductor ETF", aum: "$42B+" },
       {
         ticker: "SOXL",
         name: "Direxion Daily Semiconductor Bull 3X",
@@ -933,7 +941,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Semi-Annual (March, September)",
     launchYear: 2015,
     trackingEtfs: [
-      { ticker: "BUG", name: "Global X Cybersecurity ETF", aum: "$800M+" },
+      { ticker: "BUG", name: "Global X Cybersecurity ETF", aum: "$1.7B+" },
       {
         ticker: "CIBR",
         name: "First Trust NASDAQ Cybersecurity ETF",
@@ -969,12 +977,12 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "VTI",
         name: "Vanguard Total Stock Market ETF",
-        aum: "$420B+ (ETF) / $1.6T (Fund)",
+        aum: "$690B+ (ETF) / $1.9T (Fund)",
       },
       {
         ticker: "VTSAX",
         name: "Vanguard Total Stock Market Index Admiral Fund",
-        aum: "$1.6T Total",
+        aum: "$1.9T Total Fund",
       },
     ],
     summary:
@@ -986,7 +994,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Covers approximately 100% of the investable US equity market capitalization",
     ],
     keyCharacteristics: [
-      "Benchmark for Vanguard's iconic $1.6+ Trillion Total Stock Market Fund (VTI / VTSAX)",
+      "Benchmark for Vanguard's iconic $1.9+ Trillion Total Stock Market Fund (VTI / VTSAX)",
       "CRSP 'Packeting' technology splits moving securities 50/50 across rebalances to eliminate turnover whipsawing",
       "Unrivaled historical academic database connection dating back to 1926",
     ],
@@ -1013,7 +1021,7 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2011,
     trackingEtfs: [
-      { ticker: "VV", name: "Vanguard Large-Cap ETF", aum: "$45B+" },
+      { ticker: "VV", name: "Vanguard Large-Cap ETF", aum: "$54B+" },
       {
         ticker: "VLCAX",
         name: "Vanguard Large-Cap Index Admiral",
@@ -1045,15 +1053,15 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2011,
     trackingEtfs: [
-      { ticker: "VUG", name: "Vanguard Growth ETF", aum: "$140B+" },
+      { ticker: "VUG", name: "Vanguard Growth ETF", aum: "$228B+" },
       {
         ticker: "VIGAX",
         name: "Vanguard Growth Index Admiral Fund",
-        aum: "$250B+",
+        aum: "$300B+ Total Fund",
       },
     ],
     summary:
-      "Multi-factor growth style ranking for US large-cap stocks. Benchmark for the $250B+ Vanguard Growth Fund (VUG / VIGAX).",
+      "Multi-factor growth style ranking for US large-cap stocks. Benchmark for the $300B+ Vanguard Growth Fund (VUG / VIGAX).",
     description:
       "CRSP evaluates growth using a comprehensive 6-factor model: future long-term EPS growth, future short-term EPS growth, historical 3-year EPS growth, historical 3-year sales growth, current investment-to-assets ratio, and return on assets.",
     keyCharacteristics: [
@@ -1077,11 +1085,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2011,
     trackingEtfs: [
-      { ticker: "VTV", name: "Vanguard Value ETF", aum: "$120B+" },
+      { ticker: "VTV", name: "Vanguard Value ETF", aum: "$192B+" },
       {
         ticker: "VVIAX",
         name: "Vanguard Value Index Admiral Fund",
-        aum: "$180B+",
+        aum: "$220B+ Total Fund",
       },
     ],
     summary:
@@ -1109,11 +1117,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2011,
     trackingEtfs: [
-      { ticker: "VO", name: "Vanguard Mid-Cap ETF", aum: "$65B+" },
+      { ticker: "VO", name: "Vanguard Mid-Cap ETF", aum: "$108B+" },
       {
         ticker: "VIMAX",
         name: "Vanguard Mid-Cap Index Admiral Fund",
-        aum: "$170B+",
+        aum: "$190B+ Total Fund",
       },
     ],
     summary:
@@ -1137,11 +1145,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2011,
     trackingEtfs: [
-      { ticker: "VB", name: "Vanguard Small-Cap ETF", aum: "$55B+" },
+      { ticker: "VB", name: "Vanguard Small-Cap ETF", aum: "$81B+" },
       {
         ticker: "VSMAX",
         name: "Vanguard Small-Cap Index Admiral Fund",
-        aum: "$140B+",
+        aum: "$160B+ Total Fund",
       },
     ],
     summary:

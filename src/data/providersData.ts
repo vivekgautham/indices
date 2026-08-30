@@ -23,7 +23,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     coverage:
       "Global Equities, Fixed Income, Real Estate, Commodities, Strategy & Factor",
     marketShareSummary:
-      "More assets are invested in products based on the S&P 500 than any other index globally, with over $11+ trillion benchmarked.",
+      "More assets are invested in products based on the S&P 500 than any other index globally, with over $15+ trillion benchmarked.",
   },
   ftse: {
     id: "ftse",
@@ -120,7 +120,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     coverage:
       "US Total Market, Large Cap, Mid Cap, Small Cap, Micro Cap, Value & Growth Style Dimensions",
     marketShareSummary:
-      "Primary benchmark underlying Vanguard's core US index funds, including the $1.5+ trillion Vanguard Total Stock Market (VTI).",
+      "Primary benchmark underlying Vanguard's core US index funds, including the $1.9+ trillion Vanguard Total Stock Market (VTI / VTSAX).",
   },
 };
 
