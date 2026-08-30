@@ -263,26 +263,36 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
               {provider.description}
             </Typography>
 
-            {/* Quick specs grid */}
-            <Box
+            {/* Vertical specs list */}
+            <Stack
+              spacing={1}
               sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  sm: "repeat(2, 1fr)",
-                  md: "repeat(4, 1fr)",
-                },
-                gap: 1.5,
                 pt: 1.5,
                 borderTop: "1px solid rgba(255, 255, 255, 0.08)",
               }}
             >
-              <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  alignItems: { xs: "flex-start", sm: "center" },
+                  gap: { xs: 0.25, sm: 1.5 },
+                  p: 1.25,
+                  borderRadius: 2,
+                  backgroundColor: "rgba(15, 23, 42, 0.5)",
+                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                }}
+              >
                 <Typography
                   variant="caption"
-                  sx={{ color: "text.secondary", display: "block" }}
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    minWidth: 180,
+                    fontSize: "0.8rem",
+                  }}
                 >
-                  🏢 Headquarters
+                  🏢 Headquarters:
                 </Typography>
                 <Typography
                   variant="body2"
@@ -292,12 +302,28 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 </Typography>
               </Box>
 
-              <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  alignItems: { xs: "flex-start", sm: "center" },
+                  gap: { xs: 0.25, sm: 1.5 },
+                  p: 1.25,
+                  borderRadius: 2,
+                  backgroundColor: "rgba(15, 23, 42, 0.5)",
+                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                }}
+              >
                 <Typography
                   variant="caption"
-                  sx={{ color: "text.secondary", display: "block" }}
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    minWidth: 180,
+                    fontSize: "0.8rem",
+                  }}
                 >
-                  🏛️ History / Founded
+                  🏛️ History / Founded:
                 </Typography>
                 <Typography
                   variant="body2"
@@ -307,50 +333,68 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 </Typography>
               </Box>
 
-              <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  alignItems: { xs: "flex-start", sm: "center" },
+                  gap: { xs: 0.25, sm: 1.5 },
+                  p: 1.25,
+                  borderRadius: 2,
+                  backgroundColor: "rgba(15, 23, 42, 0.5)",
+                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                }}
+              >
                 <Typography
                   variant="caption"
-                  sx={{ color: "text.secondary", display: "block" }}
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    minWidth: 180,
+                    fontSize: "0.8rem",
+                  }}
                 >
-                  🤝 Primary ETF Partners
+                  🤝 Primary ETF Partners:
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{
-                    fontWeight: 700,
-                    color: "#f8fafc",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                  title={provider.keyEtfPartners.join(", ")}
+                  sx={{ fontWeight: 700, color: "#f8fafc" }}
                 >
                   {provider.keyEtfPartners.join(", ")}
                 </Typography>
               </Box>
 
-              <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  alignItems: { xs: "flex-start", sm: "center" },
+                  gap: { xs: 0.25, sm: 1.5 },
+                  p: 1.25,
+                  borderRadius: 2,
+                  backgroundColor: "rgba(15, 23, 42, 0.5)",
+                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                }}
+              >
                 <Typography
                   variant="caption"
-                  sx={{ color: "text.secondary", display: "block" }}
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    minWidth: 180,
+                    fontSize: "0.8rem",
+                  }}
                 >
-                  📊 Market Footprint
+                  📊 Market Footprint:
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{
-                    fontWeight: 700,
-                    color: provider.accentColor,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                  title={provider.marketShareSummary}
+                  sx={{ fontWeight: 700, color: provider.accentColor }}
                 >
                   {provider.marketShareSummary}
                 </Typography>
               </Box>
-            </Box>
+            </Stack>
           </Stack>
         </Collapse>
       </Stack>
