@@ -21,7 +21,11 @@ export const INDICES_DATA: MarketIndex[] = [
       { ticker: "SPY", name: "SPDR S&P 500 ETF Trust", aum: "$600B+" },
       { ticker: "VOO", name: "Vanguard S&P 500 ETF", aum: "$550B+" },
       { ticker: "IVV", name: "iShares Core S&P 500 ETF", aum: "$520B+" },
-      { ticker: "SPLG", name: "SPDR Portfolio S&P 500 ETF", aum: "$45B+" },
+      {
+        ticker: "SPYM",
+        name: "State Street SPDR Portfolio S&P 500 ETF (formerly SPLG)",
+        aum: "$45B+",
+      },
     ],
     summary:
       "The premier benchmark for large-cap US equities, measuring the performance of 500 leading companies representing ~80% of available market cap.",
