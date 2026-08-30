@@ -1,7 +1,7 @@
 {
   "name": "indices",
   "private": true,
-  "version": "0.0.10",
+  "version": "0.0.11",
   "homepage": "https://vivekgautham.github.io/indices",
   "type": "module",
   "scripts": {

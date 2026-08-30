@@ -263,6 +263,53 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-dividend-aristocrats/",
   },
   {
+    id: "dow-jones-us-dividend-100",
+    symbol: "DJUSDIV",
+    altSymbols: ["DJUSD", "SCHD Benchmark", "DJUS100"],
+    name: "Dow Jones U.S. Dividend 100 Index",
+    providerId: "sp",
+    category: "Dividend & Quality",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 100,
+    weightingMethodology:
+      "Modified Market Capitalization (4% stock cap, 25% sector cap)",
+    rebalanceFrequency: "Annual Reconstitution (March), Quarterly Reweighting",
+    launchYear: 2011,
+    trackingEtfs: [
+      {
+        ticker: "SCHD",
+        name: "Schwab U.S. Dividend Equity ETF",
+        aum: "$62B+",
+      },
+    ],
+    summary:
+      "Measures 100 high-yielding US dividend-paying equities screened for fundamental financial strength and long-term dividend growth. The benchmark for Schwab SCHD.",
+    description:
+      "The Dow Jones U.S. Dividend 100 Index selects 100 top US dividend-paying companies from the Dow Jones U.S. Broad Market Index (excluding REITs). Candidates must have a minimum of 10 consecutive years of dividend payments. Eligible stocks are ranked by an equal-weighted composite score of 4 fundamentals: cash flow-to-total debt, return on equity (ROE), indicated dividend yield, and 5-year dividend growth rate.",
+    eligibilityCriteria: [
+      "Minimum 10 consecutive years of dividend payouts",
+      "Minimum float-adjusted market capitalization of $500M and 3-month ADTV of $2M",
+      "Excludes Real Estate Investment Trusts (REITs)",
+      "Ranked by 4 fundamental criteria: Cash Flow-to-Total Debt, Return on Equity (ROE), Indicated Dividend Yield, and 5-Year Dividend Growth Rate",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the popular Schwab U.S. Dividend Equity ETF (SCHD)",
+      "Strict constituent diversification: 4.0% maximum individual stock weight, 25.0% maximum sector weight",
+      "Widely acclaimed for balancing durable high current yield, dividend growth, and downside protection",
+    ],
+    tags: [
+      "Dividends",
+      "SCHD",
+      "Quality",
+      "Dividend Growth",
+      "Cash Flow",
+      "S&P DJI",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-dividend-100-index/",
+  },
+  {
     id: "cboe-vix",
     symbol: "VIX",
     altSymbols: ["^VIX", "Fear Gauge"],
@@ -728,7 +775,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "nasdaq-100",
     symbol: "NDX",
-    altSymbols: ["^NDX", "QQQ Benchmark"],
+    altSymbols: ["^NDX", "QQQ Benchmark", "IQQ", "QNDX"],
     name: "Nasdaq-100 Index",
     providerId: "nasdaq",
     category: "Large-Cap Tech & Innovation",
@@ -742,6 +789,16 @@ export const INDICES_DATA: MarketIndex[] = [
     trackingEtfs: [
       { ticker: "QQQ", name: "Invesco QQQ Trust", aum: "$300B+" },
       { ticker: "QQQM", name: "Invesco NASDAQ 100 ETF", aum: "$35B+" },
+      {
+        ticker: "IQQ",
+        name: "iShares Nasdaq 100 ETF (BlackRock)",
+        aum: "$1B+",
+      },
+      {
+        ticker: "QNDX",
+        name: "SPDR Portfolio Nasdaq 100 ETF (State Street)",
+        aum: "$1B+",
+      },
       {
         ticker: "TQQQ",
         name: "ProShares UltraPro QQQ (3x Leveraged)",
