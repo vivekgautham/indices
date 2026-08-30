@@ -104,15 +104,15 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
   },
   crsp: {
     id: "crsp",
-    name: "Center for Research in Security Prices (CRSP)",
+    name: "Center for Research in Security Prices (CRSP / Morningstar)",
     shortName: "CRSP",
     logoText: "CRSP",
     tagline:
       "Academically rigorous index architecture designed for cost- and tax-efficient investing.",
     description:
-      "Based at the University of Chicago Booth School of Business, CRSP has been the foundational source for academic financial research since 1960. CRSP Market Indexes feature unique innovative banding and packeting methodology to minimize unnecessary portfolio turnover.",
+      "Originally established in 1960 at the University of Chicago Booth School of Business and acquired by Morningstar in February 2026 for $375M, CRSP is the foundational benchmark provider for Vanguard's largest US index funds. CRSP Market Indexes feature innovative banding and packeting methodology to minimize portfolio turnover.",
     headquarters: "Chicago, IL, USA",
-    founded: "1960 (Research) / 2011 (Indexes)",
+    founded: "1960 (Univ. of Chicago) / 2026 (Morningstar)",
     website: "https://www.crsp.org",
     accentColor: "#f59e0b",
     badgeBg: "rgba(245, 158, 11, 0.15)",
