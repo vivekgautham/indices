@@ -66,6 +66,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     badgeBg: "rgba(16, 185, 129, 0.15)",
     keyEtfPartners: [
       "BlackRock (iShares)",
+      "Fidelity Investments (MSCI Sector ETFs)",
       "UBS",
       "Amundi",
       "DWS",

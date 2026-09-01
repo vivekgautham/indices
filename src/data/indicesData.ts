@@ -776,6 +776,55 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: ["ESG", "Sustainability", "Factor", "Responsible Investing"],
     officialUrl: "https://www.msci.com/our-solutions/indexes/esg-leaders",
   },
+  {
+    id: "msci-us-imi-information-technology-25-50",
+    symbol: "M1USIT",
+    altSymbols: ["FTEC Benchmark", "MSCI-US-IMI-TECH", "M1US50T"],
+    name: "MSCI US IMI Information Technology 25/50 Index",
+    providerId: "msci",
+    category: "Sector & Thematic Tech",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 325,
+    weightingMethodology:
+      "Modified Market Cap (25/50 Capped: max 25% single company, max 50% for all >5% issuers)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "FTEC",
+        name: "Fidelity MSCI Information Technology Index ETF",
+        aum: "$21B+",
+      },
+    ],
+    summary:
+      "Comprehensive benchmark capturing large, mid, and small-cap US Information Technology equities under GICS, applying 25/50 RIC diversification constraints.",
+    description:
+      "The MSCI US Investable Market Index (IMI) Information Technology 25/50 Index captures the complete market cap spectrum of US technology companies across software, semiconductors, hardware, and IT services. It applies the 25/50 constraint to comply with US Internal Revenue Code Regulated Investment Company (RIC) rules, ensuring no single group entity exceeds 25% and the sum of all entities with weights above 5% cannot exceed 50%.",
+    eligibilityCriteria: [
+      "Member of the MSCI US Investable Market Index (IMI) classified under the GICS Information Technology Sector",
+      "Spans large-cap, mid-cap, and small-cap tiers for complete sector coverage",
+      "Single-issuer weight capped strictly at 25% at each quarterly rebalance",
+      "Aggregate weight of all constituents each exceeding 5% is capped at 50%",
+      "Buffer rules applied at quarterly rebalances to avoid unnecessary portfolio turnover",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for Fidelity's flagship low-cost tech fund (FTEC, 0.084% fee)",
+      "Broader constituent breath than S&P Technology Select Sector (XLK) or Nasdaq-100 by incorporating mid and small caps",
+      "Strict 25/50 capping ensures regulatory compliance and prevents excessive concentration in mega-cap tech giants",
+    ],
+    tags: [
+      "Technology",
+      "FTEC Benchmark",
+      "25/50 Capped",
+      "Software",
+      "Semiconductors",
+      "All-Cap Tech",
+      "MSCI IMI",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-information-technology/M1US50T",
+  },
 
   // ==========================================
   // NASDAQ
