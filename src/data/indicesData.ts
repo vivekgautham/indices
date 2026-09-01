@@ -602,6 +602,60 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: ["Global", "All World", "Total Market", "Complete Universe"],
     officialUrl: "https://www.ftserussell.com/products/indices/geis",
   },
+  {
+    id: "ftse-high-dividend-yield",
+    symbol: "FTHDY",
+    altSymbols: ["FTSEHDY", "VYM Benchmark"],
+    name: "FTSE® High Dividend Yield Index",
+    providerId: "ftse",
+    category: "Dividend & Income",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 545,
+    weightingMethodology:
+      "Market Capitalization Weighted (Screened for top 50% 12-month forward forecasted dividend yields)",
+    rebalanceFrequency: "Semi-Annual (March, September)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "VYM",
+        name: "Vanguard High Dividend Yield ETF",
+        aum: "$83B+ (ETF) / $105B+ (Fund)",
+      },
+      {
+        ticker: "VHYAX",
+        name: "Vanguard High Dividend Yield Index Admiral Fund",
+        aum: "$105B+ Total Fund",
+      },
+    ],
+    summary:
+      "Measures the investment return of common stocks of US companies that are characterized by high dividend yields. Benchmark for Vanguard VYM.",
+    description:
+      "The FTSE® High Dividend Yield Index is derived from the US component of the FTSE Global Equity Index Series (GEIS). It ranks eligible US dividend-paying stocks by their 12-month forward forecasted dividend yield (provided by I/B/E/S consensus estimates), excludes REITs, and selects the top 50% highest yielding companies, weighting them by float-adjusted market capitalization.",
+    eligibilityCriteria: [
+      "Member of the US component of the FTSE Global Equity Index Series (large- and mid-cap domestic universe)",
+      "Ranked by 12-month forward projected dividend yield using I/B/E/S consensus estimates",
+      "Excludes Real Estate Investment Trusts (REITs) due to their unique tax pass-through structure",
+      "Selects constituents in the top 50% ranking until the target market cap is reached",
+      "Weighted by float-adjusted market capitalization to reduce portfolio turnover",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for Vanguard High Dividend Yield ETF (VYM) with over $105B+ in total fund assets",
+      "Market cap weighting ensures large, established cash-generative blue-chip payers anchor the index",
+      "Excludes REITs to optimize dividend income for qualified dividend tax treatment",
+    ],
+    tags: [
+      "Dividends",
+      "VYM Benchmark",
+      "High Yield",
+      "Income",
+      "Vanguard",
+      "Value",
+      "FTSE Russell",
+    ],
+    officialUrl:
+      "https://www.ftserussell.com/products/indices/high-dividend-yield",
+  },
 
   // ==========================================
   // MSCI
