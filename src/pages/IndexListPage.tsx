@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
+import AppVersionBadge from "../components/layout/AppVersionBadge";
 import { IndexCard } from "../components/IndexCard";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
@@ -122,10 +123,22 @@ export default function IndexListPage() {
       maxWidth={false}
       sx={{
         maxWidth: 1720,
-        py: { xs: 2.5, sm: 4 },
+        py: { xs: 2, sm: 3 },
         px: { xs: 1.5, sm: 3 },
       }}
     >
+      {/* Subtle App Version at Top Right */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          mb: { xs: 1, sm: 1.5 },
+        }}
+      >
+        <AppVersionBadge />
+      </Box>
+
       {/* Header Section */}
       <Box component="header" sx={{ mb: 3.5, textAlign: "center" }}>
         <Stack spacing={2} alignItems="center">

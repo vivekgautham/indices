@@ -18,6 +18,7 @@ import {
 import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
+import AppVersionBadge from "../components/layout/AppVersionBadge";
 
 export default function IndexDetailPage() {
   const { indexId = "" } = useParams<{ indexId: string }>();
@@ -170,31 +171,34 @@ export default function IndexDetailPage() {
           Back to Indices Catalog
         </Button>
 
-        {index.officialUrl && (
-          <Button
-            variant="outlined"
-            href={index.officialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
-            sx={{
-              borderRadius: 2.5,
-              borderColor: `${accentColor}66`,
-              color: accentColor,
-              backgroundColor: `${accentColor}10`,
-              fontWeight: 700,
-              fontSize: "0.82rem",
-              px: 2,
-              py: 0.75,
-              "&:hover": {
-                borderColor: accentColor,
-                backgroundColor: `${accentColor}20`,
-              },
-            }}
-          >
-            Official Factsheet
-          </Button>
-        )}
+        <Stack direction="row" spacing={1.5} alignItems="center">
+          <AppVersionBadge compact />
+          {index.officialUrl && (
+            <Button
+              variant="outlined"
+              href={index.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
+              sx={{
+                borderRadius: 2.5,
+                borderColor: `${accentColor}66`,
+                color: accentColor,
+                backgroundColor: `${accentColor}10`,
+                fontWeight: 700,
+                fontSize: "0.82rem",
+                px: 2,
+                py: 0.75,
+                "&:hover": {
+                  borderColor: accentColor,
+                  backgroundColor: `${accentColor}20`,
+                },
+              }}
+            >
+              Official Factsheet
+            </Button>
+          )}
+        </Stack>
       </Stack>
 
       {/* Hero Header Card */}
