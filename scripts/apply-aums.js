@@ -100,7 +100,10 @@ const aumMap = {
   VIS: "$8.0B+",
   FIDU: "$1.2B+",
   SGOV: "$110.5B+",
+  IGM: "$11.0B+",
+  IXN: "$9.5B+",
 };
+
 
 
 let content = fs.readFileSync("src/data/indicesData.ts", "utf8");

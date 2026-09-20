@@ -175,24 +175,20 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "SPDR Portfolio S&P 1500 Composite Stock Market ETF",
         aum: "$14B+",
       },
-      {
-        ticker: "ITOT",
-        name: "iShares Core S&P Total U.S. Stock Market ETF (transitioned to S&P TMI)",
-        aum: "$97B+",
-      },
     ],
     summary:
       "Combines the S&P 500, S&P MidCap 400, and S&P SmallCap 600 into a unified benchmark covering ~90% of US equity market capitalization.",
     description:
-      "The S&P Composite 1500 provides comprehensive coverage of the US market cap spectrum while preserving the profitability and quality filters enforced by the S&P Index Committee.",
+      "The S&P Composite 1500 provides comprehensive coverage of the US market cap spectrum while preserving the profitability and quality filters enforced by the S&P Index Committee. It is tracked by the $14B+ SPDR Portfolio S&P 1500 Composite Stock Market ETF (SPTM). Note: iShares Core S&P Total U.S. Stock Market ETF (ITOT) originally tracked this index from 2004 to December 2015 before transitioning to the broader all-cap S&P Total Market Index.",
     eligibilityCriteria: [
       "Consists of all constituents in the S&P 500, S&P MidCap 400, and S&P SmallCap 600",
     ],
     keyCharacteristics: [
-      "Covers approximately 90% of US market capitalization",
-      "Combines large, mid, and small caps into a seamless quality-screened total market solution",
+      "Covers approximately 90% of US market capitalization across large, mid, and small caps",
+      "Enforces S&P Index Committee profitability and earnings quality screens",
+      "Primary tracking ETF is State Street's SPDR Portfolio S&P 1500 ETF (SPTM)",
     ],
-    tags: ["Total Market", "All Cap", "Large+Mid+Small", "Core"],
+    tags: ["Total Market", "All Cap", "Large+Mid+Small", "SPTM", "Core"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-composite-1500/",
   },
@@ -215,16 +211,11 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "iShares Core S&P Total U.S. Stock Market ETF",
         aum: "$97B+",
       },
-      {
-        ticker: "SPTM",
-        name: "SPDR Portfolio S&P 1500 Composite Stock Market ETF (Core 1,500 Subset)",
-        aum: "$14B+",
-      },
     ],
     summary:
       "Comprehensive benchmark tracking the entire investable universe of US common equities, spanning large, mid, small, and micro caps.",
     description:
-      "The S&P Total Market Index is designed to track the broad U.S. equity market, including large-, mid-, small-, and micro-cap stocks listed on major U.S. exchanges. It encompasses approximately 3,850+ common stocks, serving as the benchmark for the $97B+ iShares Core S&P Total U.S. Stock Market ETF (ITOT).",
+      "The S&P Total Market Index is designed to track the broad U.S. equity market, including large-, mid-, small-, and micro-cap stocks listed on major U.S. exchanges. It encompasses approximately 3,850+ common stocks, serving as the official benchmark for the $97B+ iShares Core S&P Total U.S. Stock Market ETF (ITOT).",
     eligibilityCriteria: [
       "US company domiciled with primary listing on NYSE, NASDAQ, or Cboe",
       "Investable universe encompasses all eligible US common stocks",
@@ -232,8 +223,8 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Encompasses ~3,850+ investable US equities across the entire market-cap spectrum",
-      "Includes micro-cap universe beyond the S&P Composite 1500",
-      "Underlying benchmark for ITOT, providing complete US market exposure in a single ticker",
+      "Includes micro-cap universe (~2,350 additional stocks) beyond the S&P Composite 1500",
+      "Official underlying benchmark for iShares Core S&P Total U.S. Stock Market ETF (ITOT)",
     ],
     tags: [
       "Total Market",
@@ -999,6 +990,110 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-pharmaceuticals-index/",
+  },
+  {
+    id: "sp-north-american-expanded-technology",
+    symbol: "SPNETX",
+    altSymbols: [
+      "SPNATX",
+      "IGM Benchmark",
+      "S&P Expanded Tech",
+      "Expanded Technology Sector",
+    ],
+    name: "S&P North American Expanded Technology Sector Index",
+    providerId: "sp",
+    category: "Technology & Communication Services Equity",
+    assetClass: "Equity",
+    region: "Americas",
+    constituentsCount: 280,
+    weightingMethodology:
+      "Modified Market Capitalization (8.5% Single Issuer Cap)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2001,
+    trackingEtfs: [
+      {
+        ticker: "IGM",
+        name: "iShares Expanded Tech Sector ETF",
+        aum: "$11.0B+",
+      },
+    ],
+    summary:
+      "Expanded technology benchmark capturing traditional IT plus interactive media, digital entertainment, and electronic retail giants across North America.",
+    description:
+      "The S&P North American Expanded Technology Sector Index measures the performance of US- and Canadian-listed technology-related companies. Unlike standard narrow GICS Information Technology indexes (such as XLK or VGT), the Expanded Tech universe incorporates interactive media, internet services, and digital platforms—bringing together Alphabet, Meta, and Netflix alongside Apple, Microsoft, and Nvidia. It serves as the underlying benchmark for the $11B+ iShares Expanded Tech Sector ETF (IGM).",
+    eligibilityCriteria: [
+      "Common stock listed on a major US or Canadian stock exchange with market capitalization >$250M",
+      "Classified under GICS Information Technology or eligible sub-industries from Communication Services and Consumer Discretionary (interactive media, software, internet retail, digital entertainment)",
+      "Modified market capitalization weighting capped at 8.5% for individual issuers to avoid single-stock dominance",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the iShares Expanded Tech Sector ETF (IGM, $11.0B+ AUM)",
+      "Broader, modern definition of 'Tech' that includes Alphabet and Meta (Communication Services) alongside software and chip giants",
+      "Solves GICS reclassification dilemmas where transformative digital leaders were removed from pure Information Technology",
+    ],
+    tags: [
+      "Technology",
+      "IGM",
+      "Expanded Tech",
+      "Software",
+      "Interactive Media",
+      "Semiconductors",
+      "S&P DJI",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-north-american-expanded-technology-sector-index/",
+  },
+  {
+    id: "sp-global-1200-information-technology",
+    symbol: "SGIT",
+    altSymbols: [
+      "SPG1200-45",
+      "IXN Benchmark",
+      "S&P Global Tech",
+      "Global Information Technology",
+    ],
+    name: "S&P Global 1200 Information Technology Index",
+    providerId: "sp",
+    category: "Global Technology Sector Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 125,
+    weightingMethodology:
+      "Float-Adjusted Market Cap (4.5/22.5/45 Regulatory Capping)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2001,
+    trackingEtfs: [
+      {
+        ticker: "IXN",
+        name: "iShares Global Tech ETF",
+        aum: "$9.5B+",
+      },
+    ],
+    summary:
+      "Global technology benchmark capturing worldwide information technology leaders drawn from the flagship S&P Global 1200 index family.",
+    description:
+      "The S&P Global 1200 Information Technology Index captures leading information technology corporations across North America, Europe, Asia, and Latin America drawn from the S&P Global 1200. It combines domestic US powerhouses (Apple, Microsoft, Nvidia) with international semiconductor and enterprise titans (TSMC, ASML, SAP, Samsung). Tracked by the $9.5B+ iShares Global Tech ETF (IXN) with a 4.5/22.5/45 regulatory capping structure.",
+    eligibilityCriteria: [
+      "Constituent of the parent S&P Global 1200 Index across 7 regional headline benchmarks",
+      "Classified under the GICS Information Technology Sector",
+      "Quarterly rebalancing subject to 4.5/22.5/45 capping (max 22.5% single weight, aggregate weights >4.5% capped at 45%)",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the iShares Global Tech ETF (IXN, $9.5B+ AUM)",
+      "True global semiconductor, software, and hardware exposure across developed and key international markets",
+      "Complements domestic US tech portfolios with major European (ASML, SAP) and Asian semiconductor leadership",
+    ],
+    tags: [
+      "Global Tech",
+      "IXN",
+      "Information Technology",
+      "Semiconductors",
+      "Global",
+      "Hardware",
+      "S&P DJI",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-global-1200-information-technology-sector/",
   },
 
   // ==========================================
