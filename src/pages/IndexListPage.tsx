@@ -25,13 +25,13 @@ import { MarketIndex, ProviderId } from "../types";
 
 const POPULAR_SEARCH_SUGGESTIONS = [
   "Float-Adjusted",
-  "Price-Weighted",
   "Equal Weight",
-  "Packeting",
-  "Multi-Factor",
   "Profitability Screen",
   "Dividend Growth",
+  "Momentum",
   "Semiconductor",
+  "Precious Metals",
+  "Treasury / Cash",
   "Cybersecurity",
   "Volatility / VIX",
 ];
@@ -92,13 +92,13 @@ export default function IndexListPage() {
     return providers.find((p) => p.id === selectedProvider);
   }, [providers, selectedProvider]);
 
-  // Tokenized search query
+  // Tokenized search query (splitting by whitespace and slashes, filtering non-alphanumeric)
   const searchTokens = useMemo(() => {
     return searchTerm
       .trim()
       .toLowerCase()
-      .split(/\s+/)
-      .filter((t) => t.length > 0);
+      .split(/[\s/]+/)
+      .filter((t) => t.length > 0 && /[a-z0-9]/i.test(t));
   }, [searchTerm]);
 
   // Matches across ALL providers (for global search discovery)

@@ -1,4 +1,4 @@
-import { MarketIndex } from "../types";
+import type { MarketIndex } from "../types/index.ts";
 
 export const INDICES_DATA: MarketIndex[] = [
   // ==========================================
@@ -30,19 +30,26 @@ export const INDICES_DATA: MarketIndex[] = [
     summary:
       "The premier benchmark for large-cap US equities, measuring the performance of 500 leading companies representing ~80% of available market cap.",
     description:
-      "Widely regarded as the single best gauge of large-cap US equities, the S&P 500 includes 500 leading companies in leading industries of the US economy. It requires companies to meet stringent criteria including positive earnings over the most recent 4 quarters, high liquidity, and float percentage.",
+      "Widely regarded as the single best gauge of large-cap US equities, the S&P 500 includes 500 leading companies in leading industries of the US economy. It enforces a strict profitability screen requiring companies to have positive cumulative GAAP as-reported earnings over the trailing 4 quarters (and the most recent quarter), alongside high liquidity and float percentage.",
     eligibilityCriteria: [
       "US company domiciled with primary listing on NYSE, NASDAQ, or Cboe",
       "Market capitalization minimum threshold (currently >$18.0B)",
-      "Positive as-reported earnings over the most recent quarter and sum of 4 quarters",
+      "Strict profitability screen: positive as-reported earnings in the most recent quarter and positive cumulative sum over the most recent 4 quarters",
       "Public float of at least 50% and high trading liquidity ratio",
     ],
     keyCharacteristics: [
       "Represents approximately 80% of total US market capitalization",
-      "Determined by the S&P Index Committee",
+      "Determined by the S&P Index Committee with mandatory earnings profitability screening",
       "Foundation for futures (ES), options (SPX), and hundreds of ETFs globally",
     ],
-    tags: ["Large Cap", "US Core", "Benchmark", "Blue Chip", "S&P Committee"],
+    tags: [
+      "Large Cap",
+      "US Core",
+      "Benchmark",
+      "Blue Chip",
+      "Profitability Screen",
+      "S&P Committee",
+    ],
     officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
   },
   {
@@ -106,14 +113,21 @@ export const INDICES_DATA: MarketIndex[] = [
       "The S&P MidCap 400 provides investors with a benchmark for mid-sized companies, which often offer higher growth potential than large caps with greater operational stability than small caps.",
     eligibilityCriteria: [
       "Market capitalization within the mid-cap range (approx. $5.8B - $15.8B)",
-      "Track record of positive earnings over the recent four quarters",
+      "Strict profitability screen: track record of positive earnings over the recent four quarters",
       "Sufficient liquidity and 50%+ public float",
     ],
     keyCharacteristics: [
       "Historically distinctive risk/return profile ('mid-cap sweet spot')",
       "Captures companies in their rapid expansion phase",
+      "Enforces S&P Index Committee profitability and earnings quality standards",
     ],
-    tags: ["Mid Cap", "US Equity", "Growth & Value", "Core"],
+    tags: [
+      "Mid Cap",
+      "US Equity",
+      "Growth & Value",
+      "Profitability Screen",
+      "Core",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-midcap-400/",
   },
@@ -152,7 +166,13 @@ export const INDICES_DATA: MarketIndex[] = [
       "Enforces earnings quality screen to filter out low-quality zombie firms",
       "Often outperforms non-screened small cap benchmarks over full cycles",
     ],
-    tags: ["Small Cap", "Profitability Screened", "US Equity", "Quality"],
+    tags: [
+      "Small Cap",
+      "Profitability Screen",
+      "Profitability Screened",
+      "US Equity",
+      "Quality",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-smallcap-600/",
   },
@@ -182,13 +202,21 @@ export const INDICES_DATA: MarketIndex[] = [
       "The S&P Composite 1500 provides comprehensive coverage of the US market cap spectrum while preserving the profitability and quality filters enforced by the S&P Index Committee. It is tracked by the $14B+ SPDR Portfolio S&P 1500 Composite Stock Market ETF (SPTM). Note: iShares Core S&P Total U.S. Stock Market ETF (ITOT) originally tracked this index from 2004 to December 2015 before transitioning to the broader all-cap S&P Total Market Index.",
     eligibilityCriteria: [
       "Consists of all constituents in the S&P 500, S&P MidCap 400, and S&P SmallCap 600",
+      "Constituents must satisfy the S&P positive earnings (profitability screen) rule over the most recent quarter and sum of the trailing four quarters",
     ],
     keyCharacteristics: [
       "Covers approximately 90% of US market capitalization across large, mid, and small caps",
       "Enforces S&P Index Committee profitability and earnings quality screens",
       "Primary tracking ETF is State Street's SPDR Portfolio S&P 1500 ETF (SPTM)",
     ],
-    tags: ["Total Market", "All Cap", "Large+Mid+Small", "SPTM", "Core"],
+    tags: [
+      "Total Market",
+      "All Cap",
+      "Large+Mid+Small",
+      "SPTM",
+      "Core",
+      "Profitability Screen",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-composite-1500/",
   },

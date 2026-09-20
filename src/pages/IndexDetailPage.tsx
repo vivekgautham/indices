@@ -56,14 +56,32 @@ export default function IndexDetailPage() {
     return providers.find((p) => p.id === index.providerId) || null;
   }, [index, providers]);
 
-  // Related indices from the same provider
-  const relatedIndices = useMemo(() => {
-    if (!index) return [];
-    return indices
-      .filter(
-        (idx) => idx.providerId === index.providerId && idx.id !== index.id,
-      )
-      .slice(0, 6);
+  // Related indices from the same provider, supplemented with category/theme peers if sparse
+  const { relatedIndices, isSameProviderOnly } = useMemo(() => {
+    if (!index) return { relatedIndices: [], isSameProviderOnly: true };
+    const sameProvider = indices.filter(
+      (idx) => idx.providerId === index.providerId && idx.id !== index.id,
+    );
+    if (sameProvider.length >= 3) {
+      return {
+        relatedIndices: sameProvider.slice(0, 6),
+        isSameProviderOnly: true,
+      };
+    }
+    // Supplement with category or theme peers
+    const peers = indices.filter(
+      (idx) =>
+        idx.id !== index.id &&
+        idx.providerId !== index.providerId &&
+        (idx.category === index.category ||
+          (idx.assetClass === index.assetClass &&
+            idx.tags.some((t) => index.tags.includes(t)))),
+    );
+    const combined = [...sameProvider, ...peers];
+    return {
+      relatedIndices: combined.slice(0, 6),
+      isSameProviderOnly: false,
+    };
   }, [indices, index]);
 
   const isLoading = loadingIndices || loadingProviders;
@@ -811,8 +829,9 @@ export default function IndexDetailPage() {
               component="h2"
               sx={{ fontWeight: 800, color: "#f8fafc", mb: 2 }}
             >
-              🔗 More Famous Indices from{" "}
-              {provider?.shortName || "Same Provider"}
+              {isSameProviderOnly
+                ? `🔗 More Famous Indices from ${provider?.shortName || "Same Provider"}`
+                : "🔗 Related & Benchmark Peers"}
             </Typography>
 
             <Box

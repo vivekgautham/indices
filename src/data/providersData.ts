@@ -1,4 +1,4 @@
-import { IndexProvider, ProviderId } from "../types";
+import type { IndexProvider, ProviderId } from "../types/index.ts";
 
 export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
   sp: {
