@@ -68,8 +68,9 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 sx={{ color: "text.secondary", maxWidth: 850, mt: 1 }}
               >
                 Browsing all flagship benchmarks across S&P Dow Jones, FTSE
-                Russell, MSCI, NASDAQ, and CRSP. Select any preset provider chip
-                above to focus on their specific index family.
+                Russell, MSCI, NASDAQ, CRSP, ICE, and MarketVector. Select any
+                preset provider chip above to focus on their specific index
+                family.
               </Typography>
             </Collapse>
           </Box>

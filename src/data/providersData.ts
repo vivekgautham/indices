@@ -123,6 +123,52 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     marketShareSummary:
       "Primary benchmark underlying Vanguard's core US index funds, including the $1.9+ trillion Vanguard Total Stock Market (VTI / VTSAX).",
   },
+  ice: {
+    id: "ice",
+    name: "Intercontinental Exchange (ICE Data Indices)",
+    shortName: "ICE",
+    logoText: "ICE",
+    tagline:
+      "Global exchange powerhouse calculating fixed income, commodity, and equity benchmarks.",
+    description:
+      "Intercontinental Exchange (ICE) operates leading global exchanges including the New York Stock Exchange (NYSE) and major clearing houses. ICE Data Indices and ICE Benchmark Administration (IBA) administer essential market benchmarks including the LBMA Gold & Silver Prices, ICE BofA Fixed Income Indexes, ICE US Treasury Indices (underlying SGOV), and the ICE Semiconductor Index (underlying SOXX).",
+    headquarters: "Atlanta, GA, USA",
+    founded: "2000 (NYSE: 1792)",
+    website: "https://www.ice.com/market-data/indices",
+    accentColor: "#0284c7",
+    badgeBg: "rgba(2, 132, 199, 0.15)",
+    keyEtfPartners: [
+      "BlackRock (iShares)",
+      "State Street (SPDR)",
+      "Direxion",
+      "Sprott",
+      "Invesco",
+    ],
+    coverage:
+      "Fixed Income (BofA), U.S. Treasuries, Precious Metals & Commodities (LBMA), Equities & Semiconductors",
+    marketShareSummary:
+      "Administers the world's physical gold & silver bullion benchmarks (LBMA Gold & Silver), the leading short-term US Treasury index ($110B+ SGOV), and ICE Semiconductor Index ($40B+ SOXX).",
+  },
+  marketvector: {
+    id: "marketvector",
+    name: "MarketVector Indexes",
+    shortName: "MarketVector",
+    logoText: "MVIS",
+    tagline:
+      "Pioneering specialized, liquid thematic, industry, and digital asset benchmarks.",
+    description:
+      "MarketVector Indexes (formerly MVIS), a subsidiary of VanEck founded in Frankfurt, Germany, develops and maintains specialized benchmarks designed specifically to underpin investable ETFs. It is renowned for the MVIS US Listed Semiconductor 25 Index underlying the $66B+ VanEck Semiconductor ETF (SMH), as well as major mining and digital asset benchmarks.",
+    headquarters: "Frankfurt am Main, Germany",
+    founded: "2011",
+    website: "https://www.marketvector.com",
+    accentColor: "#ea580c",
+    badgeBg: "rgba(234, 88, 12, 0.15)",
+    keyEtfPartners: ["VanEck"],
+    coverage:
+      "Thematic & Industry Equities (Semiconductors, Mining, Clean Energy), Digital Assets & Crypto",
+    marketShareSummary:
+      "Underpins many of the largest thematic equity ETFs globally, most notably the $66B+ VanEck Semiconductor ETF (SMH).",
+  },
 };
 
 export const PROVIDERS_LIST: IndexProvider[] = [
@@ -131,4 +177,6 @@ export const PROVIDERS_LIST: IndexProvider[] = [
   PROVIDERS_DATA.msci,
   PROVIDERS_DATA.nasdaq,
   PROVIDERS_DATA.crsp,
+  PROVIDERS_DATA.ice,
+  PROVIDERS_DATA.marketvector,
 ];

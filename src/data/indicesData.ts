@@ -171,14 +171,14 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1995,
     trackingEtfs: [
       {
-        ticker: "ITOT",
-        name: "iShares Core S&P Total U.S. Stock Market ETF",
-        aum: "$55B+",
-      },
-      {
         ticker: "SPTM",
         name: "SPDR Portfolio S&P 1500 Composite Stock Market ETF",
-        aum: "$8B+",
+        aum: "$14B+",
+      },
+      {
+        ticker: "ITOT",
+        name: "iShares Core S&P Total U.S. Stock Market ETF (transitioned to S&P TMI)",
+        aum: "$97B+",
       },
     ],
     summary:
@@ -195,6 +195,106 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: ["Total Market", "All Cap", "Large+Mid+Small", "Core"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-composite-1500/",
+  },
+  {
+    id: "sp-total-market",
+    symbol: "SPTMI",
+    altSymbols: ["SPTRC", "S&P TMI", "ITOT Benchmark"],
+    name: "S&P Total Market Index (TMI)",
+    providerId: "sp",
+    category: "Broad Market Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 3850,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2005,
+    trackingEtfs: [
+      {
+        ticker: "ITOT",
+        name: "iShares Core S&P Total U.S. Stock Market ETF",
+        aum: "$97B+",
+      },
+      {
+        ticker: "SPTM",
+        name: "SPDR Portfolio S&P 1500 Composite Stock Market ETF (Core 1,500 Subset)",
+        aum: "$14B+",
+      },
+    ],
+    summary:
+      "Comprehensive benchmark tracking the entire investable universe of US common equities, spanning large, mid, small, and micro caps.",
+    description:
+      "The S&P Total Market Index is designed to track the broad U.S. equity market, including large-, mid-, small-, and micro-cap stocks listed on major U.S. exchanges. It encompasses approximately 3,850+ common stocks, serving as the benchmark for the $97B+ iShares Core S&P Total U.S. Stock Market ETF (ITOT).",
+    eligibilityCriteria: [
+      "US company domiciled with primary listing on NYSE, NASDAQ, or Cboe",
+      "Investable universe encompasses all eligible US common stocks",
+      "Public float of at least 10% and sufficient trading liquidity",
+    ],
+    keyCharacteristics: [
+      "Encompasses ~3,850+ investable US equities across the entire market-cap spectrum",
+      "Includes micro-cap universe beyond the S&P Composite 1500",
+      "Underlying benchmark for ITOT, providing complete US market exposure in a single ticker",
+    ],
+    tags: [
+      "Total Market",
+      "All Cap",
+      "Broad Market",
+      "ITOT",
+      "Core US",
+      "Micro Cap",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-total-market-index/",
+  },
+  {
+    id: "dow-jones-us-broad-market",
+    symbol: "DJUSBM",
+    altSymbols: [
+      "DW4900",
+      "DJ Broad Market",
+      "SCHB Benchmark",
+      "Dow Jones Broad",
+    ],
+    name: "Dow Jones U.S. Broad Stock Market Index",
+    providerId: "sp",
+    category: "Broad Market Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 2500,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1999,
+    trackingEtfs: [
+      {
+        ticker: "SCHB",
+        name: "Schwab U.S. Broad Market ETF",
+        aum: "$44B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the largest ~2,500 US companies by market capitalization, representing approximately 95% of the investable US equity universe.",
+    description:
+      "The Dow Jones U.S. Broad Stock Market Index is a subset of the Dow Jones U.S. Total Stock Market Index. It includes the 2,500 largest US equity securities by float-adjusted market cap, capturing large-, mid-, and small-cap exposure with ultra-low portfolio turnover. It is the underlying benchmark for the $44B+ Schwab U.S. Broad Market ETF (SCHB).",
+    eligibilityCriteria: [
+      "US companies listed on major US exchanges",
+      "Ranked among top 2,500 by float-adjusted market capitalization",
+      "Minimum liquidity and public float requirements",
+    ],
+    keyCharacteristics: [
+      "Tracks the top 2,500 US equities representing ~95% of market capitalization",
+      "Primary benchmark underlying the Schwab U.S. Broad Market ETF (SCHB)",
+      "Foundation for Dow Jones U.S. Select Sector and specialty indices",
+    ],
+    tags: [
+      "Broad Market",
+      "Total Market",
+      "Schwab",
+      "SCHB",
+      "Large+Mid+Small",
+      "Core",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-broad-stock-market-index/",
   },
   {
     id: "sp-500-equal-weight",
@@ -348,6 +448,557 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     tags: ["Volatility", "Fear Gauge", "Options", "Derivatives", "Risk"],
     officialUrl: "https://www.cboe.com/tradable_products/vix/",
+  },
+  {
+    id: "sp-500-growth",
+    symbol: "SP500G",
+    altSymbols: [
+      "^SP500G",
+      "SGX",
+      "S&P 500 Growth",
+      "SPYG Benchmark",
+      "VOOG Benchmark",
+    ],
+    name: "S&P 500 Growth Index",
+    providerId: "sp",
+    category: "Large-Cap Growth Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 230,
+    weightingMethodology: "Float-Adjusted Market Cap (Growth Factor Weighted)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1995,
+    trackingEtfs: [
+      {
+        ticker: "SPYG",
+        name: "SPDR Portfolio S&P 500 Growth ETF",
+        aum: "$53.8B+",
+      },
+      {
+        ticker: "VOOG",
+        name: "Vanguard S&P 500 Growth ETF",
+        aum: "$26.7B+",
+      },
+      {
+        ticker: "IVW",
+        name: "iShares S&P 500 Growth ETF",
+        aum: "$58B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the growth style segment of the S&P 500 based on sales growth, earnings momentum, and price momentum.",
+    description:
+      "The S&P 500 Growth Index includes constituents from the S&P 500 displaying the strongest growth characteristics. Growth factor scores are calculated using three-year net change in earnings per share over price per share, three-year sales per share growth rate, and 12-month momentum.",
+    eligibilityCriteria: [
+      "Must be a constituent of the parent S&P 500 Index",
+      "Ranked in the top growth tier based on sales growth, earnings growth, and momentum factors",
+      "Companies with balanced growth and value attributes may have their market cap split between S&P 500 Growth and Value",
+    ],
+    keyCharacteristics: [
+      "Heavily weighted in leading technology, consumer discretionary, and communication services giants",
+      "Benchmark for major low-cost growth ETFs including SPYG and VOOG",
+      "Disciplined multi-factor screening prevents pure single-metric style bias",
+    ],
+    tags: [
+      "Large Cap",
+      "Growth",
+      "S&P 500",
+      "SPYG",
+      "VOOG",
+      "Tech Giants",
+      "Style",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-500-growth/",
+  },
+  {
+    id: "dow-jones-us-large-cap-growth",
+    symbol: "DJUSGL",
+    altSymbols: ["DJUSG", "SCHG Benchmark", "Dow Jones Large Cap Growth"],
+    name: "Dow Jones U.S. Large-Cap Growth Total Stock Market Index",
+    providerId: "sp",
+    category: "Large-Cap Growth Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 240,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2001,
+    trackingEtfs: [
+      {
+        ticker: "SCHG",
+        name: "Schwab U.S. Large-Cap Growth ETF",
+        aum: "$62.0B+",
+      },
+    ],
+    summary:
+      "Tracks large-cap US growth equities drawn from the top 750 US companies, weighted by float-adjusted market capitalization.",
+    description:
+      "The Dow Jones U.S. Large-Cap Growth Total Stock Market Index selects companies from the 750 largest US stocks based on six fundamental growth metrics: projected P/E, price-to-book, dividend yield, historical sales and earnings growth. It serves as the underlying benchmark for the $62B+ Schwab U.S. Large-Cap Growth ETF (SCHG).",
+    eligibilityCriteria: [
+      "Drawn from the 750 largest US companies in the Dow Jones U.S. Total Stock Market Index",
+      "Multi-factor growth ranking combining forward and trailing fundamentals",
+      "Float-adjusted market capitalization weighting with minimum liquidity hurdles",
+    ],
+    keyCharacteristics: [
+      "Primary benchmark underlying the popular Schwab U.S. Large-Cap Growth ETF (SCHG)",
+      "High concentration in modern technology and mega-cap digital leaders",
+      "Cost-efficient index construction designed for minimal tracking error and low turnover",
+    ],
+    tags: ["Large Cap", "Growth", "Schwab", "SCHG", "Momentum", "Style"],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-large-cap-growth-total-stock-market-index/",
+  },
+  {
+    id: "sp-500-value",
+    symbol: "SP500V",
+    altSymbols: ["^SP500V", "SVX", "S&P 500 Value", "SPYV Benchmark"],
+    name: "S&P 500 Value Index",
+    providerId: "sp",
+    category: "Large-Cap Value Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 400,
+    weightingMethodology: "Float-Adjusted Market Cap (Value Factor Weighted)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1995,
+    trackingEtfs: [
+      {
+        ticker: "SPYV",
+        name: "SPDR Portfolio S&P 500 Value ETF",
+        aum: "$36.2B+",
+      },
+      {
+        ticker: "VOOV",
+        name: "Vanguard S&P 500 Value ETF",
+        aum: "$6.2B+",
+      },
+      {
+        ticker: "IVE",
+        name: "iShares S&P 500 Value ETF",
+        aum: "$33.5B+",
+      },
+    ],
+    summary:
+      "Measures the value segment of the S&P 500 based on book value to price, cash flow to price, and sales to price ratios.",
+    description:
+      "The S&P 500 Value Index captures the performance of large-cap US companies showing value style traits, identified via three fundamental metrics: book value-to-price, earnings-to-price, and sales-to-price ratios. It underlies major value ETFs including SPYV and VOOV.",
+    eligibilityCriteria: [
+      "Must be a constituent of the parent S&P 500 Index",
+      "Ranked in the value style tier based on book value to price, earnings to price, and sales to price",
+      "Constituents with blended characteristics have weight apportioned between Growth and Value",
+    ],
+    keyCharacteristics: [
+      "Emphasis on financial services, healthcare, industrials, and energy sectors",
+      "Offers higher dividend yield and lower valuation multiples than the core S&P 500",
+      "Tracks over $75B+ in aggregate ETF assets across SPYV, VOOV, and IVE",
+    ],
+    tags: ["Large Cap", "Value", "S&P 500", "SPYV", "Dividends", "Style"],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-500-value/",
+  },
+  {
+    id: "sp-500-momentum",
+    symbol: "SP500MO",
+    altSymbols: ["SPAMO", "SPMO Benchmark", "S&P 500 Momentum"],
+    name: "S&P 500 Momentum Index",
+    providerId: "sp",
+    category: "Factor / Momentum Large-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 100,
+    weightingMethodology:
+      "Momentum Score-Weighted Float-Adjusted Market Cap (5% Cap)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "SPMO",
+        name: "Invesco S&P 500 Momentum ETF",
+        aum: "$22.1B+",
+      },
+    ],
+    summary:
+      "Tracks the top 100 stocks in the S&P 500 exhibiting the highest risk-adjusted price momentum over the trailing 12 months.",
+    description:
+      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Underlying benchmark for the $22B+ Invesco S&P 500 Momentum ETF (SPMO).",
+    eligibilityCriteria: [
+      "Constituent of the S&P 500 Index",
+      "Calculated momentum score using 12-month trailing price performance divided by daily volatility",
+      "Top 100 securities with highest momentum scores are selected",
+      "Individual constituent weights capped at 5%",
+    ],
+    keyCharacteristics: [
+      "One of the most popular and highest-performing factor strategies in institutional finance",
+      "Underlying benchmark for SPMO with over $22B in assets under management",
+      "Dynamically rotates into market-leading leaders while dampening excess volatility",
+    ],
+    tags: ["Momentum", "Factor", "Smart Beta", "SPMO", "S&P 500", "Top 100"],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-500-momentum-index/",
+  },
+  {
+    id: "sp-technology-select-sector",
+    symbol: "IXT",
+    altSymbols: ["XLK", "^IXT", "Technology Select Sector", "XLK Benchmark"],
+    name: "Technology Select Sector Index",
+    providerId: "sp",
+    category: "Technology Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 65,
+    weightingMethodology: "Modified Market Cap (Capped at 23% / 4.8%)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1998,
+    trackingEtfs: [
+      {
+        ticker: "XLK",
+        name: "Technology Select Sector SPDR Fund",
+        aum: "$119.4B+",
+      },
+    ],
+    summary:
+      "The premier US technology sector benchmark, tracking IT companies within the S&P 500 including software, semiconductors, and hardware leaders.",
+    description:
+      "The Technology Select Sector Index includes companies from the S&P 500 classified under the Information Technology sector by GICS. It is modified market-cap weighted to meet IRS diversification rules (max single stock weight 23%, and sum of weights over 4.8% capped at 50%). It is the underlying benchmark for the $119B+ Technology Select Sector SPDR Fund (XLK).",
+    eligibilityCriteria: [
+      "Must be an existing constituent of the S&P 500 Index",
+      "Classified in the Information Technology Sector under GICS",
+      "Quarterly rebalancing with capped weighting (max single stock 23%, cumulative >4.8% capped at 50%)",
+    ],
+    keyCharacteristics: [
+      "The benchmark for the largest technology sector ETF on Earth (XLK, $119B+ AUM)",
+      "High exposure to semiconductor, enterprise software, and cloud infrastructure titans",
+      "Strict capping rules manage single-stock concentration between Microsoft, Apple, and Nvidia",
+    ],
+    tags: [
+      "Technology",
+      "XLK",
+      "Sector",
+      "S&P 500",
+      "Semiconductors",
+      "Software",
+      "GICS IT",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/technology-select-sector-index/",
+  },
+  {
+    id: "sp-consumer-staples-select-sector",
+    symbol: "IXR",
+    altSymbols: ["XLP", "^IXR", "Consumer Staples Select", "XLP Benchmark"],
+    name: "Consumer Staples Select Sector Index",
+    providerId: "sp",
+    category: "Consumer Staples Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 38,
+    weightingMethodology: "Modified Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1998,
+    trackingEtfs: [
+      {
+        ticker: "XLP",
+        name: "Consumer Staples Select Sector SPDR Fund",
+        aum: "$14.2B+",
+      },
+    ],
+    summary:
+      "Tracks defensive consumer staples companies from the S&P 500, spanning food & beverage, household products, hypermarkets, and tobacco.",
+    description:
+      "The Consumer Staples Select Sector Index measures companies in the S&P 500 that produce non-cyclical essential goods and consumer staples, including Procter & Gamble, Costco, Coca-Cola, and PepsiCo. Renowned for low beta, recession resilience, and reliable dividend yields. Underlying benchmark for the $14B+ Consumer Staples Select Sector SPDR Fund (XLP).",
+    eligibilityCriteria: [
+      "Must be a constituent of the S&P 500 Index",
+      "Classified under the Consumer Staples GICS Sector",
+      "Modified market cap weighting with RIC diversification limits",
+    ],
+    keyCharacteristics: [
+      "Underlying index for the $14B+ Consumer Staples Select Sector SPDR Fund (XLP)",
+      "Historically defensive risk profile with significantly lower volatility than broad equities",
+      "High concentration in blue-chip dividend aristocrats with stable consumer pricing power",
+    ],
+    tags: [
+      "Consumer Staples",
+      "XLP",
+      "Defensive",
+      "Dividends",
+      "Sector",
+      "S&P 500",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/consumer-staples-select-sector-index/",
+  },
+  {
+    id: "sp-energy-select-sector",
+    symbol: "IXE",
+    altSymbols: ["XLE", "^IXE", "Energy Select Sector", "XLE Benchmark"],
+    name: "Energy Select Sector Index",
+    providerId: "sp",
+    category: "Energy Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 23,
+    weightingMethodology: "Modified Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1998,
+    trackingEtfs: [
+      {
+        ticker: "XLE",
+        name: "Energy Select Sector SPDR Fund",
+        aum: "$41.8B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the energy sector in the S&P 500, dominated by integrated oil & gas supermajors and equipment/service providers.",
+    description:
+      "The Energy Select Sector Index captures US oil, gas, and consumable fuels leaders alongside energy equipment and services corporations from the S&P 500, led by ExxonMobil and Chevron. Serves as the primary institutional benchmark for energy equity exposure, tracked by the $41B+ Energy Select Sector SPDR Fund (XLE).",
+    eligibilityCriteria: [
+      "Must be a constituent of the S&P 500 Index",
+      "Classified under the Energy GICS Sector",
+      "Modified market cap weighting with single-stock and aggregate diversification caps",
+    ],
+    keyCharacteristics: [
+      "Benchmark for the world's largest energy ETF (XLE, $41B+ AUM)",
+      "High dividend yield and direct sensitivity to crude oil and natural gas commodity cycles",
+      "Concentrated exposure to mega-cap integrated energy producers and oilfield infrastructure",
+    ],
+    tags: [
+      "Energy",
+      "XLE",
+      "Oil & Gas",
+      "Sector",
+      "S&P 500",
+      "Commodities",
+      "Dividends",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/energy-select-sector-index/",
+  },
+  {
+    id: "sp-industrial-select-sector",
+    symbol: "IXI",
+    altSymbols: ["XLI", "^IXI", "Industrial Select Sector", "XLI Benchmark"],
+    name: "Industrial Select Sector Index",
+    providerId: "sp",
+    category: "Industrial Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 78,
+    weightingMethodology: "Modified Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1998,
+    trackingEtfs: [
+      {
+        ticker: "XLI",
+        name: "Industrial Select Sector SPDR Fund",
+        aum: "$30.5B+",
+      },
+    ],
+    summary:
+      "The premier US industrials benchmark, tracking aerospace & defense, transportation, machinery, and electrical equipment giants in the S&P 500.",
+    description:
+      "The Industrial Select Sector Index includes companies from the S&P 500 involved in manufacturing industrial machinery, aerospace & defense, commercial services, freight transportation, and construction equipment, such as GE Aerospace, Caterpillar, Union Pacific, and Honeywell. Benchmark for the $30B+ Industrial Select Sector SPDR Fund (XLI).",
+    eligibilityCriteria: [
+      "Must be an existing constituent of the S&P 500 Index",
+      "Classified under the Industrials GICS Sector",
+      "Quarterly rebalancing with modified market capitalization weighting",
+    ],
+    keyCharacteristics: [
+      "Benchmark for the largest industrial ETF globally (XLI, $30B+ AUM)",
+      "Broad economic cyclical exposure across aerospace, defense, logistics, and heavy machinery",
+      "Key beneficiary of global infrastructure investment and defense spending programs",
+    ],
+    tags: [
+      "Industrials",
+      "XLI",
+      "Aerospace",
+      "Machinery",
+      "Sector",
+      "S&P 500",
+      "Defense",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/industrial-select-sector-index/",
+  },
+  {
+    id: "sp-aerospace-defense-select-industry",
+    symbol: "SPSAD",
+    altSymbols: ["SPSIAD", "XAR Benchmark", "S&P Aerospace & Defense"],
+    name: "S&P Aerospace & Defense Select Industry Index",
+    providerId: "sp",
+    category: "Industry Equity / Aerospace & Defense",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 35,
+    weightingMethodology: "Modified Equal-Weighted",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "XAR",
+        name: "SPDR S&P Aerospace & Defense ETF",
+        aum: "$5.8B+",
+      },
+    ],
+    summary:
+      "Equal-weighted benchmark of US aerospace & defense stocks drawn from the broad S&P Total Market Index, providing balanced small/mid/large cap exposure.",
+    description:
+      "The S&P Aerospace & Defense Select Industry Index represents the aerospace & defense sub-industry portion of the S&P Total Market Index. It employs a modified equal-weighting methodology, avoiding mega-cap concentration and allowing smaller defense innovators and component manufacturers equal voice alongside prime defense contractors. Underlying benchmark for XAR ($5.8B+).",
+    eligibilityCriteria: [
+      "Must be a constituent of the S&P Total Market Index",
+      "Classified in the Aerospace & Defense GICS sub-industry",
+      "Modified equal-weighted structure with liquidity screening",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for SPDR S&P Aerospace & Defense ETF (XAR)",
+      "Equal-weight approach gives mid- and small-cap defense suppliers meaningful weight",
+      "Contrasts with market-cap-weighted defense benchmarks dominated by 3-4 mega-cap contractors",
+    ],
+    tags: [
+      "Aerospace & Defense",
+      "XAR",
+      "Equal Weight",
+      "Industry",
+      "Defense",
+      "SPDR",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-aerospace-defense-select-industry-index/",
+  },
+  {
+    id: "dow-jones-us-select-aerospace-defense",
+    symbol: "DJUSAD",
+    altSymbols: ["^DJUSAD", "ITA Benchmark", "Dow Jones Aerospace & Defense"],
+    name: "Dow Jones U.S. Select Aerospace & Defense Index",
+    providerId: "sp",
+    category: "Industry Equity / Aerospace & Defense",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 35,
+    weightingMethodology: "Float-Adjusted Market Cap (Capped at 22.5% / 4.5%)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "ITA",
+        name: "iShares U.S. Aerospace & Defense ETF",
+        aum: "$12.6B+",
+      },
+    ],
+    summary:
+      "Market-cap weighted index measuring US companies that manufacture commercial and military aircraft and defense electronics.",
+    description:
+      "The Dow Jones U.S. Select Aerospace & Defense Index is a market-cap weighted benchmark tracking prime US defense contractors and aerospace manufacturers including Lockheed Martin, RTX, General Dynamics, and Boeing. Underlying benchmark for the $12.6B+ iShares U.S. Aerospace & Defense ETF (ITA).",
+    eligibilityCriteria: [
+      "Constituent of the Dow Jones U.S. Total Stock Market Index",
+      "Classified in the Aerospace & Defense industry sector",
+      "Float-adjusted market cap weighting with single-stock and group capping limits",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for iShares U.S. Aerospace & Defense ETF (ITA, $12.6B+ AUM)",
+      "Market-cap weighted structure gives highest weighting to dominant prime military contractors",
+      "Direct exposure to Department of Defense (DoD) procurement and foreign military sales",
+    ],
+    tags: [
+      "Aerospace & Defense",
+      "ITA",
+      "Market Cap Weighted",
+      "iShares",
+      "Defense",
+      "Contractors",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-aerospace-defense-index/",
+  },
+  {
+    id: "sp-pharmaceuticals-select-industry",
+    symbol: "SPSIPH",
+    altSymbols: ["^SPSIPH", "XPH Benchmark", "S&P Pharmaceuticals"],
+    name: "S&P Pharmaceuticals Select Industry Index",
+    providerId: "sp",
+    category: "Industry Equity / Pharmaceuticals",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 40,
+    weightingMethodology: "Modified Equal-Weighted",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "XPH",
+        name: "SPDR S&P Pharmaceuticals ETF",
+        aum: "$572M+",
+      },
+    ],
+    summary:
+      "Equal-weighted index of US pharmaceutical producers across the market-cap spectrum, preventing single-stock dominance.",
+    description:
+      "The S&P Pharmaceuticals Select Industry Index represents the pharmaceuticals sub-industry of the S&P Total Market Index. It utilizes a modified equal-weight scheme so that innovative mid- and small-cap drug developers have equal impact alongside global pharma giants. Underlying benchmark for the SPDR S&P Pharmaceuticals ETF (XPH).",
+    eligibilityCriteria: [
+      "Constituent of the S&P Total Market Index",
+      "Classified under the Pharmaceuticals GICS sub-industry",
+      "Quarterly rebalancing with modified equal-weight allocation",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the SPDR S&P Pharmaceuticals ETF (XPH)",
+      "Equal-weight methodology boosts exposure to clinical drug approvals and mid-cap pharma M&A",
+      "Avoids mega-cap drug patent cliff concentration risk",
+    ],
+    tags: [
+      "Pharmaceuticals",
+      "XPH",
+      "Equal Weight",
+      "Healthcare",
+      "Biotech",
+      "SPDR",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-pharmaceuticals-select-industry-index/",
+  },
+  {
+    id: "dow-jones-us-select-pharmaceuticals",
+    symbol: "DJUSPR",
+    altSymbols: ["^DJUSPR", "IHE Benchmark", "Dow Jones Pharmaceuticals"],
+    name: "Dow Jones U.S. Select Pharmaceuticals Index",
+    providerId: "sp",
+    category: "Industry Equity / Pharmaceuticals",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 45,
+    weightingMethodology: "Float-Adjusted Market Cap (Capped at 22.5% / 4.5%)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "IHE",
+        name: "iShares U.S. Pharmaceuticals ETF",
+        aum: "$1.7B+",
+      },
+    ],
+    summary:
+      "Market-cap weighted benchmark of US pharmaceutical companies developing and commercializing prescription drugs and vaccines.",
+    description:
+      "The Dow Jones U.S. Select Pharmaceuticals Index measures the performance of US companies within the pharmaceutical sector, weighted by market capitalization and tracked by the iShares U.S. Pharmaceuticals ETF (IHE), heavily featuring leaders like Eli Lilly, Pfizer, and Johnson & Johnson.",
+    eligibilityCriteria: [
+      "Constituent of the Dow Jones U.S. Total Stock Market Index",
+      "Classified under the Pharmaceuticals industry sector",
+      "Float-adjusted market cap weighting subject to regulatory capping constraints",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for iShares U.S. Pharmaceuticals ETF (IHE, $1.7B+ AUM)",
+      "Market-cap weighted design gives heaviest weighting to global commercial pharma giants",
+      "High cash flows, defensive prescription demand, and strong dividend distributions",
+    ],
+    tags: [
+      "Pharmaceuticals",
+      "IHE",
+      "Healthcare",
+      "Market Cap Weighted",
+      "iShares",
+      "Pharma",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-pharmaceuticals-index/",
   },
 
   // ==========================================
@@ -656,6 +1307,102 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl:
       "https://www.ftserussell.com/products/indices/high-dividend-yield",
   },
+  {
+    id: "ftse-global-all-cap-ex-us",
+    symbol: "GEISACXUS",
+    altSymbols: [
+      "FTSE4XUS",
+      "VXUS Benchmark",
+      "FTSE Global ex US",
+      "FTSE All Cap ex US",
+    ],
+    name: "FTSE Global All Cap ex US Index",
+    providerId: "ftse",
+    category: "Broad International Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 8200,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2003,
+    trackingEtfs: [
+      {
+        ticker: "VXUS",
+        name: "Vanguard Total International Stock ETF",
+        aum: "$162.5B+ (ETF) / $430B+ (Fund)",
+      },
+    ],
+    summary:
+      "The premier international equity benchmark tracking ~8,200 stocks across 48 developed and emerging markets excluding the United States.",
+    description:
+      "The FTSE Global All Cap ex US Index is designed to measure the performance of international equity markets, covering large, mid, and small-cap stocks across 25 developed and 23 emerging countries outside the United States. It serves as the primary benchmark for the Vanguard Total International Stock ETF (VXUS), the world's largest international index fund.",
+    eligibilityCriteria: [
+      "Member of the FTSE Global Equity Index Series (GEIS) domiciled outside the United States",
+      "Spans large, mid, and small-cap segments across 48 non-US developed and emerging economies",
+      "Float-adjusted market cap weighting with strict liquidity, foreign ownership, and investability screens",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for Vanguard Total International Stock ETF (VXUS) with over $430B in total fund assets",
+      "Covers approximately 99% of the world's non-US investable equity market capitalization",
+      "Balanced exposure across Developed Europe, Developed Pacific, and Emerging Markets",
+    ],
+    tags: [
+      "International",
+      "VXUS",
+      "Global ex US",
+      "Developed + Emerging",
+      "All Cap",
+      "Vanguard Core",
+      "FTSE Russell",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/geis",
+  },
+  {
+    id: "ftse-all-world-ex-us-high-dividend-yield",
+    symbol: "FTAWXUSHD",
+    altSymbols: ["FTHDYXU", "VYMI Benchmark", "FTSE ex US High Dividend Yield"],
+    name: "FTSE All-World ex US High Dividend Yield Index",
+    providerId: "ftse",
+    category: "International Dividend Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 1400,
+    weightingMethodology: "Float-Adjusted Market Cap (Dividend Yield Screened)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2016,
+    trackingEtfs: [
+      {
+        ticker: "VYMI",
+        name: "Vanguard International High Dividend Yield ETF",
+        aum: "$21.8B+",
+      },
+    ],
+    summary:
+      "Measures higher-yielding international stocks across developed and emerging countries outside the United States.",
+    description:
+      "The FTSE All-World ex US High Dividend Yield Index selects international stocks with above-average forecasted dividend yields from the parent FTSE All-World ex US Index. It weights qualifying high-yield companies by float-adjusted market capitalization and serves as the benchmark for the $21B+ Vanguard International High Dividend Yield ETF (VYMI).",
+    eligibilityCriteria: [
+      "Constituent of the parent FTSE All-World ex US Index (developed and emerging markets excluding US)",
+      "Ranked by 12-month forward projected dividend yield using I/B/E/S consensus data",
+      "Selects top 50% highest yielding international companies; excludes REITs",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the Vanguard International High Dividend Yield ETF (VYMI, $21.8B+ AUM)",
+      "Provides international income diversification without domestic US tax or economic overlap",
+      "Strong historical tilt toward financial services, materials, energy, and European dividend champions",
+    ],
+    tags: [
+      "International Dividend",
+      "VYMI",
+      "High Yield",
+      "Global ex US",
+      "Income",
+      "Value",
+      "FTSE Russell",
+    ],
+    officialUrl:
+      "https://www.ftserussell.com/products/indices/high-dividend-yield",
+  },
 
   // ==========================================
   // MSCI
@@ -833,7 +1580,12 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "msci-us-imi-information-technology-25-50",
     symbol: "M1USIT",
-    altSymbols: ["FTEC Benchmark", "MSCI-US-IMI-TECH", "M1US50T"],
+    altSymbols: [
+      "FTEC Benchmark",
+      "VGT Benchmark",
+      "MSCI-US-IMI-TECH",
+      "M1US50T",
+    ],
     name: "MSCI US IMI Information Technology 25/50 Index",
     providerId: "msci",
     category: "Sector & Thematic Tech",
@@ -846,15 +1598,20 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 2013,
     trackingEtfs: [
       {
+        ticker: "VGT",
+        name: "Vanguard Information Technology ETF",
+        aum: "$145.8B+",
+      },
+      {
         ticker: "FTEC",
         name: "Fidelity MSCI Information Technology Index ETF",
-        aum: "$21B+",
+        aum: "$18.5B+",
       },
     ],
     summary:
       "Comprehensive benchmark capturing large, mid, and small-cap US Information Technology equities under GICS, applying 25/50 RIC diversification constraints.",
     description:
-      "The MSCI US Investable Market Index (IMI) Information Technology 25/50 Index captures the complete market cap spectrum of US technology companies across software, semiconductors, hardware, and IT services. It applies the 25/50 constraint to comply with US Internal Revenue Code Regulated Investment Company (RIC) rules, ensuring no single group entity exceeds 25% and the sum of all entities with weights above 5% cannot exceed 50%.",
+      "The MSCI US Investable Market Index (IMI) Information Technology 25/50 Index captures the complete market cap spectrum of US technology companies across software, semiconductors, hardware, and IT services. It applies the 25/50 constraint to comply with US Internal Revenue Code Regulated Investment Company (RIC) rules, ensuring no single group entity exceeds 25% and the sum of all entities with weights above 5% cannot exceed 50%. It serves as the underlying benchmark for Vanguard's $145B+ VGT and Fidelity's FTEC.",
     eligibilityCriteria: [
       "Member of the MSCI US Investable Market Index (IMI) classified under the GICS Information Technology Sector",
       "Spans large-cap, mid-cap, and small-cap tiers for complete sector coverage",
@@ -863,12 +1620,13 @@ export const INDICES_DATA: MarketIndex[] = [
       "Buffer rules applied at quarterly rebalances to avoid unnecessary portfolio turnover",
     ],
     keyCharacteristics: [
-      "Underlying benchmark for Fidelity's flagship low-cost tech fund (FTEC, 0.084% fee)",
+      "Underlying benchmark for Vanguard's massive tech ETF (VGT, $145B+ AUM) and Fidelity's low-cost fund (FTEC)",
       "Broader constituent breath than S&P Technology Select Sector (XLK) or Nasdaq-100 by incorporating mid and small caps",
       "Strict 25/50 capping ensures regulatory compliance and prevents excessive concentration in mega-cap tech giants",
     ],
     tags: [
       "Technology",
+      "VGT",
       "FTEC Benchmark",
       "25/50 Capped",
       "Software",
@@ -878,6 +1636,121 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-information-technology/M1US50T",
+  },
+  {
+    id: "msci-us-imi-consumer-staples-25-50",
+    symbol: "M1USCS",
+    altSymbols: [
+      "FSTA Benchmark",
+      "VDC Benchmark",
+      "MSCI Staples",
+      "MSCI US Consumer Staples",
+    ],
+    name: "MSCI USA IMI Consumer Staples 25/50 Index",
+    providerId: "msci",
+    category: "Consumer Staples Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 105,
+    weightingMethodology:
+      "Modified Market Cap (25/50 Capped: max 25% single company, max 50% for all >5% issuers)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "FSTA",
+        name: "Fidelity MSCI Consumer Staples Index ETF",
+        aum: "$1.4B+",
+      },
+      {
+        ticker: "VDC",
+        name: "Vanguard Consumer Staples ETF",
+        aum: "$7.5B+",
+      },
+    ],
+    summary:
+      "Captures large, mid, and small-cap US consumer staples equities with 25/50 issuer diversification caps.",
+    description:
+      "The MSCI USA IMI Consumer Staples 25/50 Index measures the performance of the consumer staples sector across the entire US investable market universe. It applies a 25/50 capping structure to ensure regulatory compliance and diversification across household food, beverage, personal care, and retail essentials. Benchmark for Fidelity's FSTA and Vanguard's VDC.",
+    eligibilityCriteria: [
+      "Member of the MSCI US Investable Market Index classified under Consumer Staples GICS",
+      "Includes large, mid, and small-cap US companies",
+      "25/50 capping constraint prevents excessive weighting in mega-caps like Procter & Gamble or Costco",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for Fidelity MSCI Consumer Staples Index ETF (FSTA, $1.4B+ AUM)",
+      "Broader constituent count (105+ holdings) than S&P Consumer Staples Select Sector (XLP, ~38 holdings)",
+      "Low beta, defensive cash flows, and reliable historical dividend yields",
+    ],
+    tags: [
+      "Consumer Staples",
+      "FSTA",
+      "VDC",
+      "MSCI",
+      "Defensive",
+      "Dividends",
+      "All-Cap",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-consumer-staples/M1US50C",
+  },
+  {
+    id: "msci-us-imi-industrials-25-50",
+    symbol: "M1USIN",
+    altSymbols: [
+      "VIS Benchmark",
+      "FIDU Benchmark",
+      "MSCI Industrials",
+      "MSCI US Industrials",
+    ],
+    name: "MSCI USA IMI Industrials 25/50 Index",
+    providerId: "msci",
+    category: "Industrial Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 380,
+    weightingMethodology:
+      "Modified Market Cap (25/50 Capped: max 25% single company, max 50% for all >5% issuers)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2010,
+    trackingEtfs: [
+      {
+        ticker: "VIS",
+        name: "Vanguard Industrials ETF",
+        aum: "$8.0B+",
+      },
+      {
+        ticker: "FIDU",
+        name: "Fidelity MSCI Industrials Index ETF",
+        aum: "$1.2B+",
+      },
+    ],
+    summary:
+      "Comprehensive benchmark of US industrial companies spanning large, mid, and small caps, tracked by Vanguard's VIS.",
+    description:
+      "The MSCI USA IMI Industrials 25/50 Index represents the full US industrials spectrum, encompassing manufacturing, transportation, commercial services, aerospace, and capital goods. It underlies the $8B+ Vanguard Industrials ETF (VIS) and Fidelity MSCI Industrials Index ETF (FIDU), offering broad industrial exposure beyond the mega-cap focus of XLI.",
+    eligibilityCriteria: [
+      "Member of the MSCI US Investable Market Index classified under Industrials GICS",
+      "Spans large, mid, and small-cap tiers across 380+ companies",
+      "Applies 25/50 RIC diversification capping at quarterly reconstitutions",
+    ],
+    keyCharacteristics: [
+      "Primary benchmark underlying the Vanguard Industrials ETF (VIS, $8.0B+ AUM)",
+      "Nearly 5x the constituent breath of S&P's Industrial Select Sector (XLI, ~78 holdings)",
+      "Captures high-growth specialized equipment makers and mid-cap logistics innovators",
+    ],
+    tags: [
+      "Industrials",
+      "VIS",
+      "FIDU",
+      "Vanguard",
+      "All-Cap",
+      "MSCI",
+      "Aerospace",
+      "Machinery",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-industrials/M1US50I",
   },
 
   // ==========================================
@@ -972,7 +1845,12 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "phlx-semiconductor",
     symbol: "SOX",
-    altSymbols: ["^SOX", "SOXX Benchmark"],
+    altSymbols: [
+      "^SOX",
+      "SOXQ Benchmark",
+      "SOXX Benchmark",
+      "PHLX Semiconductor",
+    ],
     name: "PHLX Semiconductor Sector Index",
     providerId: "nasdaq",
     category: "Semiconductors & Hardware",
@@ -983,22 +1861,45 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 1993,
     trackingEtfs: [
-      { ticker: "SOXX", name: "iShares Semiconductor ETF", aum: "$42B+" },
+      {
+        ticker: "SOXQ",
+        name: "Invesco PHLX Semiconductor ETF",
+        aum: "$2.9B+",
+      },
+      {
+        ticker: "SOXX",
+        name: "iShares Semiconductor ETF (originally tracked SOX; now tracks ICE Semi)",
+        aum: "$42B+",
+      },
       {
         ticker: "SOXL",
-        name: "Direxion Daily Semiconductor Bull 3X",
-        aum: "$10B+",
+        name: "Direxion Daily Semiconductor Bull 3X Shares",
+        aum: "$19B+",
+      },
+      {
+        ticker: "DRAM",
+        name: "Roundhill Memory ETF (Actively Managed AI Memory / Semiconductor Peer)",
+        aum: "$25.8B+",
       },
     ],
     summary:
       "The worldwide premier benchmark for the semiconductor industry, tracking 30 leaders in chip design, manufacturing, distribution, and equipment.",
     description:
-      "Created by the Philadelphia Stock Exchange (PHLX) and managed by Nasdaq, SOX tracks companies involved in the design, distribution, manufacture, and sale of semiconductors.",
+      "Created by the Philadelphia Stock Exchange (PHLX) and managed by Nasdaq, SOX tracks companies involved in the design, distribution, manufacture, and sale of semiconductors. It is the direct benchmark for the Invesco PHLX Semiconductor ETF (SOXQ).",
     keyCharacteristics: [
       "The definitive barometer for artificial intelligence chips, GPUs, and hardware infrastructure",
       "Features NVIDIA, TSMC (ADR), Broadcom, Qualcomm, ASML, AMD, and Intel",
+      "Direct underlying benchmark for SOXQ and peer reference for AI hardware/memory ETFs",
     ],
-    tags: ["Semiconductors", "Chips", "AI Hardware", "Sector Leader"],
+    tags: [
+      "Semiconductors",
+      "Chips",
+      "SOXQ",
+      "SOXX",
+      "DRAM",
+      "AI Hardware",
+      "Sector Leader",
+    ],
     officialUrl:
       "https://www.nasdaq.com/solutions/phlx-semiconductor-sector-index",
   },
@@ -1261,5 +2162,344 @@ export const INDICES_DATA: MarketIndex[] = [
       "The CRSP US Small Cap Index targets companies between the 85th and 98th percentiles of cumulative US market capitalization, covering over 1,400 small-cap stocks.",
     tags: ["Small Cap", "VB Benchmark", "Vanguard", "Small-Cap US"],
     officialUrl: "https://www.crsp.org/indexes-pages/crsp-us-market-indexes/",
+  },
+
+  // ==========================================
+  // INTERCONTINENTAL EXCHANGE (ICE Data Indices)
+  // ==========================================
+  {
+    id: "ice-0-3-month-us-treasury",
+    symbol: "IDCOT3",
+    altSymbols: [
+      "IDCOT3TR",
+      "ICE 0-3M Treasury",
+      "SGOV Benchmark",
+      "0-3 Month Treasury",
+    ],
+    name: "ICE 0-3 Month US Treasury Securities Index",
+    providerId: "ice",
+    category: "Ultra Short-Term Treasury",
+    assetClass: "Fixed Income",
+    region: "United States",
+    constituentsCount: 20,
+    weightingMethodology: "Market Value Weighted",
+    rebalanceFrequency: "Monthly",
+    launchYear: 2020,
+    trackingEtfs: [
+      {
+        ticker: "SGOV",
+        name: "iShares 0-3 Month Treasury Bond ETF",
+        aum: "$110.5B+",
+      },
+    ],
+    summary:
+      "Measures the performance of public obligations of the US Treasury that have a remaining maturity of less than or equal to three months.",
+    description:
+      "The ICE 0-3 Month US Treasury Securities Index tracks short-dated US Treasury Bills (T-Bills) maturing within three months. It serves as the primary cash-alternative and risk-free benchmark underlying the $110B+ iShares 0-3 Month Treasury Bond ETF (SGOV), offering maximum capital preservation, near-zero duration risk, and exempt-from-state-tax monthly income distributions.",
+    eligibilityCriteria: [
+      "Securities must be direct obligations of the US Treasury (Bills, Notes, or Bonds with remaining maturity <= 3 months)",
+      "Minimum outstanding par value of $1 billion",
+      "STRIPS, inflation-linked securities (TIPS), and floating rate notes are excluded",
+      "Rebalanced on the last calendar day of each month",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the massive iShares 0-3 Month Treasury Bond ETF (SGOV, $110B+ AUM)",
+      "Effective duration of ~0.1 years minimizes interest rate sensitivity during monetary policy changes",
+      "Income is generally exempt from state and local income taxes for US investors",
+    ],
+    tags: [
+      "Treasury",
+      "SGOV",
+      "T-Bills",
+      "Cash Alternative",
+      "Ultra Short",
+      "Fixed Income",
+      "Risk-Free Rate",
+      "ICE",
+    ],
+    officialUrl: "https://indices.ice.com/",
+  },
+  {
+    id: "ice-semiconductor",
+    symbol: "ICESEMI",
+    altSymbols: ["ICESEMITR", "ICE Semi", "SOXX Benchmark", "SOXL Benchmark"],
+    name: "ICE Semiconductor Index",
+    providerId: "ice",
+    category: "Semiconductors & Hardware",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 30,
+    weightingMethodology:
+      "Modified Market Cap (Top 5 capped at 8%, remainder capped at 4%)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2021,
+    trackingEtfs: [
+      {
+        ticker: "SOXX",
+        name: "iShares Semiconductor ETF",
+        aum: "$42.0B+",
+      },
+      {
+        ticker: "SOXL",
+        name: "Direxion Daily Semiconductor Bull 3X Shares",
+        aum: "$19.0B+",
+      },
+      {
+        ticker: "DRAM",
+        name: "Roundhill Memory ETF (Actively Managed AI Memory Peer)",
+        aum: "$25.8B+",
+      },
+    ],
+    summary:
+      "Rules-based benchmark tracking the 30 largest US-listed semiconductor manufacturers and chip design equipment leaders.",
+    description:
+      "The ICE Semiconductor Index tracks 30 prominent US-listed semiconductor companies across manufacturing, integrated circuits, testing, and memory chips. It is the underlying benchmark for the $42B+ iShares Semiconductor ETF (SOXX) and Direxion Daily Semiconductor Bull 3X Shares (SOXL) following their transition from the PHLX index in 2021. It also serves as a primary benchmark peer for active thematic memory funds such as Roundhill DRAM.",
+    eligibilityCriteria: [
+      "US-listed equities classified under the Semiconductor industry sector",
+      "Ranked by float-adjusted market capitalization and three-month average daily trading volume",
+      "Top 30 qualifying securities selected",
+      "Weighting capped at 8% for the top 5 constituents and 4% for remaining constituents",
+    ],
+    keyCharacteristics: [
+      "Official benchmark underlying the flagship iShares Semiconductor ETF (SOXX, $42B+ AUM)",
+      "Disciplined 8%/4% capping structure prevents extreme concentration in a single chipmaker",
+      "Captures high-bandwidth memory (HBM), graphic processing units (GPUs), and foundry giants",
+    ],
+    tags: [
+      "Semiconductor",
+      "SOXX",
+      "SOXL",
+      "DRAM",
+      "Chips",
+      "AI Hardware",
+      "ICE",
+      "Tech",
+    ],
+    officialUrl: "https://indices.ice.com/",
+  },
+  {
+    id: "dynamic-semiconductor-intellidex",
+    symbol: "DWSX",
+    altSymbols: [
+      "DWSX Index",
+      "PSI Benchmark",
+      "Intellidex Semi",
+      "Dynamic Semiconductor",
+    ],
+    name: "Dynamic Semiconductor Intellidex Index",
+    providerId: "ice",
+    category: "Factor / Smart Beta Semiconductor",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 30,
+    weightingMethodology:
+      "Factor-Weighted Tiered Equal Weight (10-Factor Multi-Metric Model)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2005,
+    trackingEtfs: [
+      {
+        ticker: "PSI",
+        name: "Invesco Semiconductors ETF",
+        aum: "$2.5B+",
+      },
+    ],
+    summary:
+      "Quantitatively-driven smart beta semiconductor benchmark screening 30 US chipmakers on momentum, earnings quality, and value.",
+    description:
+      "Calculated by ICE Data Indices for Invesco, the Dynamic Semiconductor Intellidex Index evaluates US semiconductor companies based on a proprietary quantitative multi-factor model. It assesses 30 securities across five investment merit criteria: price momentum, earnings momentum, quality, management action, and value. Benchmark for the Invesco Semiconductors ETF (PSI).",
+    eligibilityCriteria: [
+      "US companies engaged in the manufacture of semiconductors and semiconductor equipment",
+      "Evaluated across 10 fundamental and price metrics grouped into 5 investment merit categories",
+      "Constituents re-ranked and reconstituted quarterly",
+      "Tiered modified equal-weighting scheme applied to manage stock liquidity",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the Invesco Semiconductors ETF (PSI, $2.5B+ AUM)",
+      "Smart-beta quantitative model contrasts with pure market-cap-weighted semiconductor indices",
+      "Historically provides higher mid-cap chip exposure and dynamic factor tilt adjustments",
+    ],
+    tags: [
+      "Semiconductor",
+      "PSI",
+      "Smart Beta",
+      "Quant",
+      "Multi-Factor",
+      "Chips",
+      "ICE",
+    ],
+    officialUrl: "https://indices.ice.com/",
+  },
+  {
+    id: "lbma-gold-price",
+    symbol: "GOLD",
+    altSymbols: [
+      "XAU",
+      "LBMA Gold",
+      "Gold PM Fix",
+      "GLD Benchmark",
+      "IAU Benchmark",
+      "PHYS Benchmark",
+    ],
+    name: "LBMA Gold Price PM (London Gold Fix)",
+    providerId: "ice",
+    category: "Physical Precious Metals",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Electronic Auction Equilibrium Price (USD per Troy Ounce)",
+    rebalanceFrequency: "Twice Daily (10:30 AM & 3:00 PM London Time)",
+    launchYear: 1919,
+    trackingEtfs: [
+      {
+        ticker: "GLD",
+        name: "SPDR Gold Shares",
+        aum: "$146.4B+",
+      },
+      {
+        ticker: "IAU",
+        name: "iShares Gold Trust",
+        aum: "$64.6B+",
+      },
+      {
+        ticker: "PHYS",
+        name: "Sprott Physical Gold Trust",
+        aum: "$16.5B+",
+      },
+    ],
+    summary:
+      "The globally recognized institutional benchmark for physical gold bullion pricing, administered electronically by ICE Benchmark Administration.",
+    description:
+      "The LBMA Gold Price is the international price benchmark for unallocated physical gold delivered in London. Administered independently by ICE Benchmark Administration (IBA) via twice-daily electronic auctions, it is the direct pricing benchmark underlying the world's largest physically backed gold ETFs including SPDR Gold Shares (GLD), iShares Gold Trust (IAU), and Sprott Physical Gold Trust (PHYS).",
+    eligibilityCriteria: [
+      "Physical gold bullion meeting LBMA Good Delivery standards (minimum 99.5% fine gold purity)",
+      "Standard 400 troy ounce gold bar specifications",
+      "Auction clearing price determined through participating direct institutional bank bidding rounds",
+    ],
+    keyCharacteristics: [
+      "The supreme global pricing standard for gold, underlying over $225B+ in aggregate ETF/trust assets",
+      "Administered under strict UK Financial Conduct Authority (FCA) benchmark regulations by ICE Benchmark Administration",
+      "Provides institutional investors and sovereign entities transparent price discovery for physical gold bullion",
+    ],
+    tags: [
+      "Gold",
+      "GLD",
+      "IAU",
+      "PHYS",
+      "Commodity",
+      "Precious Metals",
+      "Store of Value",
+      "Inflation Hedge",
+      "LBMA",
+      "ICE",
+    ],
+    officialUrl:
+      "https://www.lbma.org.uk/prices-and-data/precious-metal-prices",
+  },
+  {
+    id: "lbma-silver-price",
+    symbol: "SILVER",
+    altSymbols: ["XAG", "LBMA Silver", "Silver Fix", "SLV Benchmark"],
+    name: "LBMA Silver Price (London Silver Fix)",
+    providerId: "ice",
+    category: "Physical Precious Metals",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Electronic Auction Equilibrium Price (USD per Troy Ounce)",
+    rebalanceFrequency: "Daily (12:00 PM London Time)",
+    launchYear: 1897,
+    trackingEtfs: [
+      {
+        ticker: "SLV",
+        name: "iShares Silver Trust",
+        aum: "$31.7B+",
+      },
+    ],
+    summary:
+      "The international pricing benchmark for physical silver bullion, administered by ICE Benchmark Administration.",
+    description:
+      "The LBMA Silver Price is the primary global benchmark used to value physical silver bullion and settle silver derivative contracts. Operated by ICE Benchmark Administration (IBA) via an electronic auction platform at 12:00 London time, it establishes the daily settlement price underlying the $31B+ iShares Silver Trust (SLV).",
+    eligibilityCriteria: [
+      "Physical silver bars meeting LBMA Good Delivery standards (minimum 99.9% fine silver purity)",
+      "Standard 1,000 troy ounce bar specifications",
+      "Determined through electronic multi-round auction administered by ICE Benchmark Administration",
+    ],
+    keyCharacteristics: [
+      "The premier global benchmark for physical silver bullion pricing",
+      "Underlying benchmark for the iShares Silver Trust (SLV, $31.7B+ AUM)",
+      "Hybrid commodity capturing both monetary safe-haven demand and growing industrial/solar photovoltaic demand",
+    ],
+    tags: [
+      "Silver",
+      "SLV",
+      "Commodity",
+      "Precious Metals",
+      "Industrial Metals",
+      "Solar",
+      "LBMA",
+      "ICE",
+    ],
+    officialUrl:
+      "https://www.lbma.org.uk/prices-and-data/precious-metal-prices",
+  },
+
+  // ==========================================
+  // MARKETVECTOR INDEXES (MVIS)
+  // ==========================================
+  {
+    id: "mvis-us-semiconductor-25",
+    symbol: "MVSMH",
+    altSymbols: [
+      "MVSMHTR",
+      "SMH Benchmark",
+      "MarketVector Semiconductor",
+      "MVIS Semi 25",
+    ],
+    name: "MVIS US Listed Semiconductor 25 Index",
+    providerId: "marketvector",
+    category: "Semiconductors & Hardware",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 25,
+    weightingMethodology:
+      "Modified Market Cap (Top company capped at 20%, others capped at 4.5% - 5%)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2011,
+    trackingEtfs: [
+      {
+        ticker: "SMH",
+        name: "VanEck Semiconductor ETF",
+        aum: "$66.8B+",
+      },
+    ],
+    summary:
+      "Tracks the 25 largest and most liquid US-listed semiconductor manufacturers and suppliers worldwide, tracked by the $66B+ VanEck SMH.",
+    description:
+      "Developed by MarketVector Indexes (MVIS), this benchmark includes US-listed global semiconductor leaders (including foreign ADRs such as TSMC and ASML). It underlies the $66B+ VanEck Semiconductor ETF (SMH), featuring heavy targeted weighting in Nvidia, TSMC, and Broadcom. It allows up to 20% weighting in the largest company, reflecting the true market dominance of leading GPU and AI chip makers.",
+    eligibilityCriteria: [
+      "Companies must generate at least 50% of their revenue from semiconductors or semiconductor equipment",
+      "Listed on a US exchange (including common stocks and American Depositary Receipts / ADRs)",
+      "Full market cap of at least $150 million and three-month average daily turnover >$1 million",
+      "Top 25 securities by market capitalization are selected",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the VanEck Semiconductor ETF (SMH, $66.8B+ AUM)",
+      "Permits up to 20% single-stock capping, capturing the outsized market weight of Nvidia and TSMC",
+      "Includes international powerhouses (TSMC, ASML) via US-listed ADRs",
+    ],
+    tags: [
+      "Semiconductor",
+      "SMH",
+      "Chips",
+      "Nvidia",
+      "TSMC",
+      "AI Hardware",
+      "MarketVector",
+      "VanEck",
+    ],
+    officialUrl:
+      "https://www.marketvector.com/indexes/sector/mvis-us-listed-semiconductor-25",
   },
 ];
