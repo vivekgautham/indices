@@ -68,9 +68,9 @@ export default function IndexListPage() {
     useProvidersData();
   const { data: indices = [], isLoading: loadingIndices } = useIndicesData();
 
-  // Preset selected provider, default to S&P as requested
+  // Preset selected provider, default to all providers
   const [selectedProvider, setSelectedProvider] = useState<ProviderId | "all">(
-    "sp",
+    "all",
   );
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -170,7 +170,7 @@ export default function IndexListPage() {
             weighting methodologies.
           </Typography>
 
-          {/* Quick Preset Provider Selection Chips (Default S&P) */}
+          {/* Quick Preset Provider Selection Chips (Default All) */}
           <ProviderPresetBar
             selectedProvider={selectedProvider}
             onSelectProvider={(p) => setSelectedProvider(p)}
@@ -354,12 +354,12 @@ export default function IndexListPage() {
             {searchTerm && ` • Matching "${searchTerm}"`}
           </Typography>
 
-          {(searchTerm || selectedProvider !== "sp") && (
+          {(searchTerm || selectedProvider !== "all") && (
             <Button
               size="small"
               startIcon={<ReplayIcon fontSize="small" />}
               onClick={() => {
-                setSelectedProvider("sp");
+                setSelectedProvider("all");
                 setSearchTerm("");
               }}
               sx={{
@@ -368,7 +368,7 @@ export default function IndexListPage() {
                 "&:hover": { color: "#ffffff" },
               }}
             >
-              Reset to S&P Default
+              Reset Filters
             </Button>
           )}
         </Stack>
@@ -437,7 +437,7 @@ export default function IndexListPage() {
                   variant="outlined"
                   startIcon={<ReplayIcon />}
                   onClick={() => {
-                    setSelectedProvider("sp");
+                    setSelectedProvider("all");
                     setSearchTerm("");
                   }}
                 >
