@@ -15,13 +15,3 @@ repos:
         stages: [pre-commit, pre-push]
       - id: check-added-large-files
         stages: [pre-commit, pre-push]
-
-  - repo: local
-    hooks:
-      - id: bump-version
-        name: Bump package version
-        entry: bash -c "npm version patch --no-git-tag-version && git add package.json package-lock.json"
-        language: system
-        pass_filenames: false
-        files: \.(ts|tsx|js|jsx|json)$
-        stages: [pre-commit]
