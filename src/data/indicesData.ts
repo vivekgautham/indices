@@ -619,7 +619,13 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-500-momentum",
     symbol: "SP500MO",
-    altSymbols: ["SPAMO", "SPMO Benchmark", "S&P 500 Momentum"],
+    altSymbols: [
+      "SPAMO",
+      "SPMO Benchmark",
+      "S&P 500 Momentum",
+      "FDMO Benchmark Peer",
+      "QMOM Peer",
+    ],
     name: "S&P 500 Momentum Index",
     providerId: "sp",
     category: "Factor / Momentum Large-Cap Equity",
@@ -634,13 +640,23 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "SPMO",
         name: "Invesco S&P 500 Momentum ETF",
-        aum: "$22.1B+",
+        aum: "$24.0B+",
+      },
+      {
+        ticker: "FDMO",
+        name: "Fidelity Momentum Factor ETF (U.S. Momentum Factor Peer)",
+        aum: "$920M+",
+      },
+      {
+        ticker: "QMOM",
+        name: "Alpha Architect U.S. Quantitative Momentum ETF (Quantitative Momentum Peer)",
+        aum: "$425M+",
       },
     ],
     summary:
       "Tracks the top 100 stocks in the S&P 500 exhibiting the highest risk-adjusted price momentum over the trailing 12 months.",
     description:
-      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Underlying benchmark for the $22B+ Invesco S&P 500 Momentum ETF (SPMO).",
+      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Underlying benchmark for the $24B+ Invesco S&P 500 Momentum ETF (SPMO), alongside related U.S. large-cap momentum strategies like FDMO and QMOM.",
     eligibilityCriteria: [
       "Constituent of the S&P 500 Index",
       "Calculated momentum score using 12-month trailing price performance divided by daily volatility",
@@ -649,12 +665,182 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "One of the most popular and highest-performing factor strategies in institutional finance",
-      "Underlying benchmark for SPMO with over $22B in assets under management",
+      "Underlying benchmark for SPMO with over $24B in assets under management",
       "Dynamically rotates into market-leading leaders while dampening excess volatility",
     ],
-    tags: ["Momentum", "Factor", "Smart Beta", "SPMO", "S&P 500", "Top 100"],
+    tags: [
+      "Momentum",
+      "Factor",
+      "Smart Beta",
+      "SPMO",
+      "FDMO",
+      "QMOM",
+      "S&P 500",
+      "Top 100",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-momentum-index/",
+  },
+  {
+    id: "sp-midcap-400-momentum",
+    symbol: "SPMMUPT",
+    altSymbols: [
+      "SP400MO",
+      "SPMMUP",
+      "XMMO Benchmark",
+      "S&P MidCap 400 Momentum",
+    ],
+    name: "S&P MidCap 400 Momentum Index",
+    providerId: "sp",
+    category: "Factor / Momentum Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 80,
+    weightingMethodology:
+      "Momentum Score-Weighted Float-Adjusted Market Cap (8% Cap)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2015,
+    trackingEtfs: [
+      {
+        ticker: "XMMO",
+        name: "Invesco S&P MidCap Momentum ETF",
+        aum: "$7.0B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the top 80 stocks in the S&P MidCap 400 Index exhibiting the highest risk-adjusted price momentum over the trailing 12 months.",
+    description:
+      "The S&P MidCap 400 Momentum Index is designed to capture the momentum factor within mid-sized US companies. It selects the top 80 companies from the S&P MidCap 400 by calculating risk-adjusted momentum scores (12-month trailing price return divided by daily volatility over that period, excluding the most recent month). Constituents are weighted by the product of their float-adjusted market capitalization and momentum score, capped at 8% per security. It serves as the underlying benchmark for the $7B+ Invesco S&P MidCap Momentum ETF (XMMO).",
+    eligibilityCriteria: [
+      "Constituent of the S&P MidCap 400 Index (inheriting the S&P positive earnings profitability filter)",
+      "Ranked by risk-adjusted momentum score: 12-month price change excluding the most recent month divided by volatility",
+      "Top 80 securities with highest scores are selected for inclusion",
+      "Individual constituent weights capped at 8% at semi-annual rebalancings",
+    ],
+    keyCharacteristics: [
+      "Combines the rapid growth and agility of mid-cap equities with systematic trend-following factor screening",
+      "Underlying benchmark for the $7B+ Invesco S&P MidCap Momentum ETF (XMMO)",
+      "Inherits S&P Index Committee profitability and earnings quality standards from the parent MidCap 400",
+      "Rebalanced semi-annually on the third Friday of March and September",
+    ],
+    tags: [
+      "Momentum",
+      "Mid Cap",
+      "XMMO",
+      "Factor",
+      "Smart Beta",
+      "S&P 400",
+      "Trend Following",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-midcap-400-momentum-index/",
+  },
+  {
+    id: "sp-smallcap-600-momentum",
+    symbol: "SP6MUT",
+    altSymbols: [
+      "SP600MO",
+      "SP6MUP",
+      "XSMO Benchmark",
+      "S&P SmallCap 600 Momentum",
+    ],
+    name: "S&P SmallCap 600 Momentum Index",
+    providerId: "sp",
+    category: "Factor / Momentum Small-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 120,
+    weightingMethodology:
+      "Momentum Score-Weighted Float-Adjusted Market Cap (8% Cap)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2015,
+    trackingEtfs: [
+      {
+        ticker: "XSMO",
+        name: "Invesco S&P SmallCap Momentum ETF",
+        aum: "$2.9B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the top 120 stocks in the S&P SmallCap 600 Index exhibiting the highest risk-adjusted price momentum over the trailing 12 months.",
+    description:
+      "The S&P SmallCap 600 Momentum Index targets small-cap equities that demonstrate strong, sustained upward price performance. Starting from the profitability-screened universe of the S&P SmallCap 600, it selects the 120 highest-ranking securities based on risk-adjusted trailing 12-month momentum. Constituents are weighted by their momentum score multiplied by float-adjusted market cap, capped at 8%. It underpins the $2.9B+ Invesco S&P SmallCap Momentum ETF (XSMO).",
+    eligibilityCriteria: [
+      "Constituent of the S&P SmallCap 600 Index (enforcing positive cumulative earnings)",
+      "Evaluated by 12-month risk-adjusted momentum score (excluding latest month)",
+      "Top 120 stocks (top 20% of parent index) selected",
+      "Individual constituent weights capped at 8%",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $2.9B+ Invesco S&P SmallCap Momentum ETF (XSMO)",
+      "Filters out speculative unprofitable small-caps through the parent S&P 600 screen before applying momentum",
+      "Rebalanced semi-annually in March and September",
+    ],
+    tags: [
+      "Momentum",
+      "Small Cap",
+      "XSMO",
+      "Factor",
+      "Smart Beta",
+      "S&P 600",
+      "Quality Momentum",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-smallcap-600-momentum-index/",
+  },
+  {
+    id: "sp-world-ex-us-momentum",
+    symbol: "SPDUKMUN",
+    altSymbols: [
+      "SPDUKMUP",
+      "SPWEXUSM",
+      "IDMO Benchmark",
+      "S&P World Ex-U.S. Momentum",
+      "S&P International Developed Momentum",
+    ],
+    name: "S&P World Ex-U.S. Momentum Index",
+    providerId: "sp",
+    category: "Factor / Momentum International Equity",
+    assetClass: "Equity",
+    region: "Developed Markets",
+    constituentsCount: 170,
+    weightingMethodology:
+      "Momentum Score-Weighted Float-Adjusted Market Cap (8% Cap)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2016,
+    trackingEtfs: [
+      {
+        ticker: "IDMO",
+        name: "Invesco S&P International Developed Momentum ETF",
+        aum: "$4.3B+",
+      },
+    ],
+    summary:
+      "Tracks developed market international equities (ex-US) exhibiting the highest price momentum over trailing 6- and 12-month periods.",
+    description:
+      "The S&P World Ex-U.S. Momentum Index measures the performance of large- and mid-cap stocks across developed international markets outside the United States and South Korea that demonstrate superior risk-adjusted price momentum. Constituents are selected from the S&P World Ex-U.S. LargeMidCap universe based on 12-month and 6-month momentum metrics and weighted by their momentum scores multiplied by float-adjusted market cap (8% security cap). It serves as the official underlying benchmark for the $4.3B+ Invesco S&P International Developed Momentum ETF (IDMO).",
+    eligibilityCriteria: [
+      "Member of the S&P World Ex-U.S. LargeMidCap universe across Europe, Asia-Pacific, and Canada (excluding US and South Korea)",
+      "Ranked by risk-adjusted momentum scores calculated across trailing 12- and 6-month horizons",
+      "Top ~170 securities with highest momentum scores are selected",
+      "Individual constituent weights capped at 8% at semi-annual reconstitutions",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the $4.3B+ Invesco S&P International Developed Momentum ETF (IDMO)",
+      "Provides systematic international factor exposure to high-performing foreign industrial, financial, and consumer leaders",
+      "Semi-annual reconstitution dynamically reallocates across non-US developed country equity markets",
+    ],
+    tags: [
+      "Momentum",
+      "International",
+      "Developed Markets",
+      "Ex-US",
+      "IDMO",
+      "Factor",
+      "Smart Beta",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-world-ex-us-momentum-index/",
   },
   {
     id: "sp-technology-select-sector",
@@ -1875,6 +2061,105 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl:
       "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-industrials/M1US50I",
   },
+  {
+    id: "msci-usa-momentum",
+    symbol: "M1USMM",
+    altSymbols: ["703025", "MXUS000M", "MTUM Benchmark", "MSCI USA Momentum"],
+    name: "MSCI USA Momentum Index",
+    providerId: "msci",
+    category: "Factor / Momentum Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 125,
+    weightingMethodology:
+      "Risk-Adjusted Momentum Score × Float Market Cap (5% Cap)",
+    rebalanceFrequency:
+      "Semi-Annually (May and November), with conditional ad-hoc reconstitutions during extreme volatility",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "MTUM",
+        name: "iShares MSCI USA Momentum Factor ETF",
+        aum: "$21.0B+",
+      },
+    ],
+    summary:
+      "The world's flagship institutional momentum benchmark, tracking large- and mid-cap US equities with persistent 6- and 12-month risk-adjusted price momentum.",
+    description:
+      "The MSCI USA Momentum Index is the institutional gold standard for equity momentum factor investing. Designed to capture the classic academic momentum premium documented by Jegadeesh and Titman, it selects securities from the parent MSCI USA Index based on their 6-month and 12-month risk-adjusted price returns (standardized as z-scores). Constituents are weighted by multiplying their momentum z-score by their float-adjusted market capitalization, subject to a 5% single-stock ceiling. It serves as the benchmark for BlackRock's $21B+ iShares MSCI USA Momentum Factor ETF (MTUM).",
+    eligibilityCriteria: [
+      "Constituent of the parent MSCI USA Index (large and mid caps)",
+      "Standardized 6-month and 12-month risk-adjusted price returns combined into a composite z-score",
+      "Securities selected in descending order of momentum scores until target coverage is met",
+      "Constituent weights capped at 5% at semi-annual reconstitutions (May and November)",
+      "Incorporates an ad-hoc conditional rebalancing mechanism if market volatility triggers predefined spikes",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the premier $21B+ iShares MSCI USA Momentum Factor ETF (MTUM)",
+      "Pioneer in institutional risk-adjusted momentum factor methodology",
+      "Features dynamic sector rotation into leading market themes while managing turnover",
+    ],
+    tags: [
+      "Momentum",
+      "MTUM",
+      "MSCI",
+      "Factor",
+      "Smart Beta",
+      "Large Cap",
+      "Mid Cap",
+      "US Equity",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa-momentum/703025",
+  },
+  {
+    id: "msci-world-ex-usa-momentum",
+    symbol: "M1WXUM",
+    altSymbols: ["MXWDOUM", "IMTM Benchmark", "MSCI World ex USA Momentum"],
+    name: "MSCI World ex USA Momentum Index",
+    providerId: "msci",
+    category: "Factor / Momentum Developed International Equity",
+    assetClass: "Equity",
+    region: "Developed Markets",
+    constituentsCount: 250,
+    weightingMethodology:
+      "Risk-Adjusted Momentum Score × Float Market Cap (5% Cap)",
+    rebalanceFrequency: "Semi-Annually (May and November)",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "IMTM",
+        name: "iShares MSCI Intl Momentum Factor ETF",
+        aum: "$4.3B+",
+      },
+    ],
+    summary:
+      "Captures large- and mid-cap equities across 22 developed market countries outside the US exhibiting sustained price momentum.",
+    description:
+      "The MSCI World ex USA Momentum Index identifies international developed market companies with strong, sustained price momentum over 6-month and 12-month horizons. Selecting from the parent MSCI World ex USA Index, it standardizes momentum scores across 22 countries to create a factor-tilt benchmark. It serves as the underlying index for the $4.3B+ iShares MSCI Intl Momentum Factor ETF (IMTM), providing institutional international momentum diversification.",
+    eligibilityCriteria: [
+      "Constituent of the MSCI World ex USA Index across 22 developed markets",
+      "Combined 6- and 12-month risk-adjusted momentum score",
+      "Top-scoring international equities selected and weighted by momentum score × float market cap",
+      "Single-constituent cap of 5% at semi-annual reviews",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $4.3B+ iShares MSCI Intl Momentum Factor ETF (IMTM)",
+      "Complements domestic momentum strategies with global factor diversification across Japan, Europe, the UK, and Canada",
+      "MSCI rules-based factor index construction with liquidity screening",
+    ],
+    tags: [
+      "Momentum",
+      "International",
+      "IMTM",
+      "MSCI",
+      "Factor",
+      "Smart Beta",
+      "Developed Markets",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-world-ex-usa-momentum/703026",
+  },
 
   // ==========================================
   // NASDAQ
@@ -2082,6 +2367,58 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: ["Cybersecurity", "Cloud Security", "Thematic", "Software"],
     officialUrl:
       "https://www.nasdaq.com/solutions/nasdaq-cta-cybersecurity-index",
+  },
+  {
+    id: "nasdaq-dorsey-wright-technical-leaders",
+    symbol: "DWTLI",
+    altSymbols: [
+      "PDP Benchmark",
+      "Dorsey Wright Technical Leaders",
+      "DW Technical Leaders",
+    ],
+    name: "Dorsey Wright Technical Leaders Index",
+    providerId: "nasdaq",
+    category: "Factor / Momentum & Relative Strength Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 100,
+    weightingMethodology:
+      "Modified Equal Weight (Rank-Based Relative Strength)",
+    rebalanceFrequency: "Quarterly (January, April, July, October)",
+    launchYear: 2007,
+    trackingEtfs: [
+      {
+        ticker: "PDP",
+        name: "Invesco Dorsey Wright Momentum ETF",
+        aum: "$1.5B+",
+      },
+    ],
+    summary:
+      "Pioneering technical momentum index using Dorsey Wright's Point and Figure Relative Strength matrix to select 100 top US market leaders.",
+    description:
+      "Maintained by Nasdaq following its acquisition of Dorsey, Wright & Associates, the Dorsey Wright Technical Leaders Index is one of the earliest and most celebrated momentum benchmarks in modern indexing. Rather than relying on simple price return ratios, the index deploys Dorsey Wright's proprietary Point and Figure relative strength matrix, comparing every stock against every other stock in an eligible 1,000-stock universe to isolate pure relative strength. It serves as the benchmark for the $1.5B+ Invesco Dorsey Wright Momentum ETF (PDP), which launched in 2007 as the market's first dedicated momentum ETF.",
+    eligibilityCriteria: [
+      "Universe consists of approximately 1,000 largest US-listed common stocks meeting liquidity criteria",
+      "Ranked using Dorsey Wright's proprietary Point and Figure relative strength matrix",
+      "Top 100 securities demonstrating the greatest relative strength characteristics are selected",
+      "Modified equal-weighting with rebalancing executed quarterly",
+    ],
+    keyCharacteristics: [
+      "Underlying index for the $1.5B+ Invesco Dorsey Wright Momentum ETF (PDP)",
+      "One of the longest track records in momentum ETF investing, pioneering systematic technical factor screening since 2007",
+      "Point and figure matrix approach seeks to avoid value traps and capture durable trend leadership",
+    ],
+    tags: [
+      "Momentum",
+      "PDP",
+      "Dorsey Wright",
+      "Nasdaq",
+      "Relative Strength",
+      "Technical Analysis",
+      "Smart Beta",
+    ],
+    officialUrl:
+      "https://www.nasdaq.com/solutions/dorsey-wright-technical-leaders-index",
   },
 
   // ==========================================

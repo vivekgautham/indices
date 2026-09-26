@@ -94,6 +94,8 @@ const userRequestedTickers = [
   "VXUS", "VYMI",
   "SLV",
   "SPMO",
+  "IDMO", "XMMO", "XSMO",
+  "MTUM", "IMTM", "PDP", "FDMO", "QMOM",
   "VT",
   "XLE",
   "RSP",
