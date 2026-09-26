@@ -13,12 +13,14 @@ import {
   Divider,
   Paper,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
+import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
 export default function IndexDetailPage() {
   const { indexId = "" } = useParams<{ indexId: string }>();
@@ -685,19 +687,75 @@ export default function IndexDetailPage() {
                         direction="row"
                         justifyContent="space-between"
                         alignItems="center"
-                        sx={{ mb: 0.5 }}
+                        flexWrap="wrap"
+                        gap={1}
+                        sx={{ mb: 0.75 }}
                       >
-                        <Chip
-                          label={etf.ticker}
-                          size="small"
-                          sx={{
-                            fontWeight: 800,
-                            backgroundColor: "rgba(99, 102, 241, 0.25)",
-                            color: "primary.light",
-                            border: "1px solid rgba(99, 102, 241, 0.4)",
-                            borderRadius: 1.5,
-                          }}
-                        />
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          spacing={1}
+                          flexWrap="wrap"
+                        >
+                          <Chip
+                            component="a"
+                            href={getStockAnalysisEtfUrl(etf.ticker)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            clickable
+                            label={etf.ticker}
+                            size="small"
+                            sx={{
+                              fontWeight: 800,
+                              backgroundColor: "rgba(99, 102, 241, 0.25)",
+                              color: "primary.light",
+                              border: "1px solid rgba(99, 102, 241, 0.4)",
+                              borderRadius: 1.5,
+                              cursor: "pointer",
+                              textDecoration: "none",
+                              "&:hover": {
+                                backgroundColor: "rgba(99, 102, 241, 0.4)",
+                              },
+                            }}
+                          />
+                          <Tooltip
+                            title={`View ${etf.ticker} on Stock Analysis`}
+                            arrow
+                          >
+                            <Button
+                              component="a"
+                              href={getStockAnalysisEtfUrl(etf.ticker)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              size="small"
+                              endIcon={
+                                <LaunchIcon
+                                  sx={{ fontSize: "11px !important" }}
+                                />
+                              }
+                              sx={{
+                                textTransform: "none",
+                                fontSize: "0.72rem",
+                                fontWeight: 600,
+                                color: "primary.light",
+                                py: 0.2,
+                                px: 0.9,
+                                height: 24,
+                                borderRadius: 1.5,
+                                backgroundColor: "rgba(99, 102, 241, 0.12)",
+                                border: "1px solid rgba(99, 102, 241, 0.25)",
+                                textDecoration: "none",
+                                "&:hover": {
+                                  backgroundColor: "rgba(99, 102, 241, 0.25)",
+                                  color: "#ffffff",
+                                  borderColor: "rgba(99, 102, 241, 0.5)",
+                                },
+                              }}
+                            >
+                              Stock Analysis
+                            </Button>
+                          </Tooltip>
+                        </Stack>
                         {etf.aum && (
                           <Typography
                             variant="caption"

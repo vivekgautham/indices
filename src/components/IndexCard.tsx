@@ -1,4 +1,5 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import LaunchIcon from "@mui/icons-material/Launch";
 import {
   Box,
   Card,
@@ -6,12 +7,14 @@ import {
   CardContent,
   Chip,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { MarketIndex } from "../types";
+import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
 interface IndexCardProps {
   index: MarketIndex;
@@ -52,6 +55,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
       }}
     >
       <CardActionArea
+        component="div"
         onClick={handleClick}
         sx={{
           height: "100%",
@@ -255,21 +259,54 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
               </Typography>
               <Stack direction="row" flexWrap="wrap" gap={0.6}>
                 {index.trackingEtfs.slice(0, 3).map((etf) => (
-                  <Chip
+                  <Tooltip
                     key={etf.ticker}
-                    label={etf.ticker}
-                    size="small"
-                    sx={{
-                      height: 20,
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      backgroundColor: "rgba(99, 102, 241, 0.15)",
-                      color: "primary.light",
-                      border: "1px solid rgba(99, 102, 241, 0.25)",
-                      borderRadius: 1,
-                      "& .MuiChip-label": { px: 0.6 },
-                    }}
-                  />
+                    title={`View ${etf.ticker} on Stock Analysis`}
+                    arrow
+                    placement="top"
+                  >
+                    <Chip
+                      component="a"
+                      href={getStockAnalysisEtfUrl(etf.ticker)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      clickable
+                      label={
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          spacing={0.3}
+                        >
+                          <span>{etf.ticker}</span>
+                          <LaunchIcon
+                            sx={{
+                              fontSize: "10px !important",
+                              opacity: 0.75,
+                            }}
+                          />
+                        </Stack>
+                      }
+                      size="small"
+                      sx={{
+                        height: 20,
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        backgroundColor: "rgba(99, 102, 241, 0.15)",
+                        color: "primary.light",
+                        border: "1px solid rgba(99, 102, 241, 0.25)",
+                        borderRadius: 1,
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        "& .MuiChip-label": { px: 0.6 },
+                        "&:hover": {
+                          backgroundColor: "rgba(99, 102, 241, 0.35)",
+                          borderColor: "primary.light",
+                          color: "#ffffff",
+                        },
+                      }}
+                    />
+                  </Tooltip>
                 ))}
                 {index.trackingEtfs.length > 3 && (
                   <Typography
