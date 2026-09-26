@@ -73,51 +73,77 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
           }}
         >
           {/* Header Row: Symbol & Provider */}
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            gap={1}
-          >
-            <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack spacing={1}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              gap={1}
+            >
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Chip
+                  label={index.symbol}
+                  size="small"
+                  sx={{
+                    fontWeight: 800,
+                    fontSize: "0.82rem",
+                    backgroundColor: accentColor,
+                    color: "#ffffff",
+                    borderRadius: 1.5,
+                    px: 0.25,
+                  }}
+                />
+                <Chip
+                  label={provider?.shortName || index.providerId.toUpperCase()}
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    borderColor: `${accentColor}55`,
+                    color: accentColor,
+                    fontWeight: 700,
+                    fontSize: "0.7rem",
+                    borderRadius: 1.5,
+                    backgroundColor: `${accentColor}10`,
+                  }}
+                />
+              </Stack>
+
               <Chip
-                label={index.symbol}
+                label={index.assetClass}
                 size="small"
                 sx={{
-                  fontWeight: 800,
-                  fontSize: "0.82rem",
-                  backgroundColor: accentColor,
-                  color: "#ffffff",
-                  borderRadius: 1.5,
-                  px: 0.25,
-                }}
-              />
-              <Chip
-                label={provider?.shortName || index.providerId.toUpperCase()}
-                size="small"
-                variant="outlined"
-                sx={{
-                  borderColor: `${accentColor}55`,
-                  color: accentColor,
-                  fontWeight: 700,
-                  fontSize: "0.7rem",
-                  borderRadius: 1.5,
-                  backgroundColor: `${accentColor}10`,
+                  fontSize: "0.68rem",
+                  fontWeight: 600,
+                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  color: "text.secondary",
+                  borderRadius: 1,
                 }}
               />
             </Stack>
 
-            <Chip
-              label={index.category}
-              size="small"
-              sx={{
-                fontSize: "0.68rem",
-                fontWeight: 600,
-                backgroundColor: "rgba(255, 255, 255, 0.06)",
-                color: "text.secondary",
-                borderRadius: 1,
-              }}
-            />
+            {/* Category Chip on dedicated line to prevent overflow */}
+            <Box>
+              <Chip
+                label={index.category}
+                size="small"
+                sx={{
+                  fontSize: "0.7rem",
+                  fontWeight: 600,
+                  backgroundColor: "rgba(255, 255, 255, 0.06)",
+                  color: "#cbd5e1",
+                  borderRadius: 1.25,
+                  maxWidth: "100%",
+                  height: "auto",
+                  py: 0.35,
+                  "& .MuiChip-label": {
+                    whiteSpace: "normal",
+                    px: 1,
+                    py: 0,
+                    lineHeight: 1.3,
+                  },
+                }}
+              />
+            </Box>
           </Stack>
 
           {/* Index Title */}

@@ -843,6 +843,116 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-world-ex-us-momentum-index/",
   },
   {
+    id: "sp-500-garp",
+    symbol: "SPXGARP",
+    altSymbols: [
+      "SP5GPUP",
+      "^SPXGARP",
+      "SPGP Benchmark",
+      "S&P 500 GARP",
+      "Growth at a Reasonable Price",
+    ],
+    name: "S&P 500 GARP Index",
+    providerId: "sp",
+    category: "Factor / GARP Large-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 75,
+    weightingMethodology: "Growth Score Proportional (5% Single-Stock Cap)",
+    rebalanceFrequency: "Semi-Annually (June and December)",
+    launchYear: 2019,
+    trackingEtfs: [
+      {
+        ticker: "SPGP",
+        name: "Invesco S&P 500 GARP ETF",
+        aum: "$2.1B+",
+      },
+    ],
+    summary:
+      "Tracks 75 consistent growth companies in the S&P 500 selected via fundamental growth metrics, balance-sheet quality, and reasonable valuations.",
+    description:
+      "The S&P 500 GARP (Growth at a Reasonable Price) Index targets companies that display consistent fundamental growth without trading at excessively stretched valuation multiples. Starting from the S&P 500 universe, it ranks constituents by their three-year EPS and sales per share growth to identify the top 150 growth candidates. These are then evaluated using a composite Quality & Value score combining Return on Equity (ROE), financial leverage ratio, and earnings-to-price. The top 75 qualifying stocks are weighted in proportion to their growth scores with a 5% cap. It is the direct underlying benchmark for the $2.1B+ Invesco S&P 500 GARP ETF (SPGP).",
+    eligibilityCriteria: [
+      "Constituent of the parent S&P 500 Index (enforcing S&P positive earnings screen)",
+      "Top 150 stocks ranked by Growth Score (three-year EPS and sales-per-share growth)",
+      "Screened by composite Quality & Value score (ROE, financial leverage, and earnings-to-price ratio)",
+      "Top 75 highest-ranking multi-factor stocks selected for inclusion",
+      "Constituents weighted proportionally by Growth Score with a 5% single-stock ceiling",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $2.1B+ Invesco S&P 500 GARP ETF (SPGP)",
+      "Systematically bridges traditional growth and value factor disciplines, avoiding high-multiple valuation traps",
+      "Rebalanced and reconstituted semi-annually on the third Friday of June and December",
+    ],
+    tags: [
+      "GARP",
+      "SPGP",
+      "Growth at a Reasonable Price",
+      "Factor",
+      "Quality",
+      "Value",
+      "Smart Beta",
+      "Multi-Factor",
+      "S&P 500",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/strategy/sp-500-garp-index/",
+  },
+  {
+    id: "sp-midcap-400-garp",
+    symbol: "SPM4GPUP",
+    altSymbols: [
+      "SP400GARP",
+      "GRPM Benchmark",
+      "S&P MidCap 400 GARP",
+      "MidCap GARP",
+    ],
+    name: "S&P MidCap 400 GARP Index",
+    providerId: "sp",
+    category: "Factor / GARP Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 60,
+    weightingMethodology: "Growth Score Proportional (5% Single-Stock Cap)",
+    rebalanceFrequency: "Semi-Annually (June and December)",
+    launchYear: 2021,
+    trackingEtfs: [
+      {
+        ticker: "GRPM",
+        name: "Invesco S&P MidCap 400 GARP ETF",
+        aum: "$250M+",
+      },
+    ],
+    summary:
+      "Measures mid-cap US equities from the S&P MidCap 400 that demonstrate sustainable fundamental growth, balance sheet strength, and reasonable valuations.",
+    description:
+      "The S&P MidCap 400 GARP Index applies the Growth at a Reasonable Price multi-factor methodology to mid-cap companies. Selecting from the S&P MidCap 400, it filters candidates for top-tier 3-year revenue and earnings expansion, verifies financial leverage and profitability metrics, and discounts overvalued multiples. It underpins the Invesco S&P MidCap 400 GARP ETF (GRPM).",
+    eligibilityCriteria: [
+      "Constituent of the S&P MidCap 400 Index",
+      "Ranked by 3-year EPS and sales-per-share growth metrics",
+      "Quality and Value screening based on ROE, financial leverage, and earnings yield",
+      "Top 60 mid-cap securities selected and weighted by growth score with a 5% maximum weighting",
+    ],
+    keyCharacteristics: [
+      "Underlying index for the Invesco S&P MidCap 400 GARP ETF (GRPM)",
+      "Captures high-conviction mid-market growth firms while managing valuation risk",
+      "Rebalanced semi-annually in June and December",
+    ],
+    tags: [
+      "GARP",
+      "GRPM",
+      "Mid Cap",
+      "Growth at a Reasonable Price",
+      "Factor",
+      "Quality",
+      "Value",
+      "Smart Beta",
+      "S&P 400",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/strategy/sp-midcap-400-garp-index/",
+  },
+  {
     id: "sp-technology-select-sector",
     symbol: "IXT",
     altSymbols: ["XLK", "^IXT", "Technology Select Sector", "XLK Benchmark"],
@@ -2159,6 +2269,64 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-world-ex-usa-momentum/703026",
+  },
+  {
+    id: "msci-usa-quality-garp-select",
+    symbol: "M1USQGP",
+    altSymbols: [
+      "756664",
+      "GU756664",
+      "GARP Benchmark",
+      "MSCI USA Quality GARP",
+      "Quality GARP Select",
+      "iShares GARP Benchmark",
+    ],
+    name: "MSCI USA Quality GARP Select Index",
+    providerId: "msci",
+    category: "Factor / GARP Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 130,
+    weightingMethodology:
+      "Market Cap Weight × Multi-Factor Tilt Score (Quality & Value, 5% Cap)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2020,
+    trackingEtfs: [
+      {
+        ticker: "GARP",
+        name: "iShares MSCI USA Quality GARP ETF",
+        aum: "$3.3B+",
+      },
+    ],
+    summary:
+      "Tracks large- and mid-cap US growth equities filtered and tilted towards strong balance sheet quality and reasonable valuation multiples.",
+    description:
+      "The MSCI USA Quality GARP Select Index targets companies from the MSCI USA Index that exhibit strong growth fundamentals without demanding excessive valuations. It assigns a growth score across 5 historical and forward metrics (short/long-term forward EPS, historical EPS/sales trend, and internal growth rate) to select top-tier growers representing ~50% of the parent universe. Candidates are then weighted by their parent market capitalization multiplied by a Multi-Factor Tilt Score combining Quality (ROE, debt-to-equity, earnings variability) and Value (forward P/E, P/B, enterprise value to cash flow). It underpins the $3.3B+ iShares MSCI USA Quality GARP ETF (ticker: GARP).",
+    eligibilityCriteria: [
+      "Constituent of the parent MSCI USA Index (large and mid caps)",
+      "Screened using composite Growth Score across 5 forward and historical growth metrics to select top 50% by weight",
+      "Multi-Factor Tilt Score calculated combining Quality metrics (ROE, D/E, earnings variability) and Value metrics (Forward P/E, P/B, EV/CFO)",
+      "Constituents weighted by market cap multiplied by tilt score with 5% issuer cap and sector constraints",
+      "Quarterly reconstitution and rebalancing",
+    ],
+    keyCharacteristics: [
+      "Direct underlying benchmark for the popular $3.3B+ iShares MSCI USA Quality GARP ETF (Ticker: GARP)",
+      "Combines multi-factor growth, quality, and valuation disciplines in a single institutional framework",
+      "Filters out overpriced speculative high-multiple growth equities",
+    ],
+    tags: [
+      "GARP",
+      "iShares",
+      "MSCI",
+      "Quality",
+      "Value",
+      "Growth at a Reasonable Price",
+      "Factor",
+      "Smart Beta",
+      "Multi-Factor",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa-quality-garp-select/756664",
   },
 
   // ==========================================

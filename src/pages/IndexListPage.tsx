@@ -29,6 +29,7 @@ const POPULAR_SEARCH_SUGGESTIONS = [
   "Profitability Screen",
   "Dividend Growth",
   "Momentum",
+  "GARP",
   "Semiconductor",
   "Precious Metals",
   "Treasury / Cash",

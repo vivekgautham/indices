@@ -869,7 +869,7 @@ export default function IndexDetailPage() {
                         direction="row"
                         justifyContent="space-between"
                         alignItems="center"
-                        sx={{ mb: 1 }}
+                        sx={{ mb: 0.75 }}
                       >
                         <Chip
                           label={rel.symbol}
@@ -885,9 +885,30 @@ export default function IndexDetailPage() {
                           variant="caption"
                           sx={{ color: "text.secondary", fontWeight: 600 }}
                         >
-                          {rel.category}
+                          {rel.assetClass}
                         </Typography>
                       </Stack>
+
+                      <Box sx={{ mb: 1 }}>
+                        <Chip
+                          label={rel.category}
+                          size="small"
+                          sx={{
+                            fontSize: "0.68rem",
+                            fontWeight: 600,
+                            backgroundColor: "rgba(255, 255, 255, 0.06)",
+                            color: "#cbd5e1",
+                            borderRadius: 1,
+                            maxWidth: "100%",
+                            height: "auto",
+                            py: 0.25,
+                            "& .MuiChip-label": {
+                              whiteSpace: "normal",
+                              lineHeight: 1.3,
+                            },
+                          }}
+                        />
+                      </Box>
 
                       <Typography
                         variant="subtitle1"
