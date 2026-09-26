@@ -1,4 +1,4 @@
-# 📊 Indices Catalog
+# 📊 Indices
 
 A modern, high-performance web application to explore major financial and market index providers and the indices they offer worldwide (e.g., S&P Dow Jones, MSCI, FTSE Russell, Nasdaq, STOXX, Bloomberg, and more).
 

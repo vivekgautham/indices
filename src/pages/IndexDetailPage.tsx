@@ -141,7 +141,7 @@ export default function IndexDetailPage() {
               startIcon={<ArrowBackIcon />}
               sx={{ mt: 2, borderRadius: 2.5, fontWeight: 700 }}
             >
-              Back to Catalog
+              Back to Indices
             </Button>
           </Stack>
         </Paper>
@@ -188,7 +188,7 @@ export default function IndexDetailPage() {
             },
           }}
         >
-          Back to Indices Catalog
+          Back to Indices
         </Button>
 
         <Stack direction="row" spacing={1.5} alignItems="center">

@@ -167,7 +167,7 @@ export default function IndexListPage() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Indices Catalog
+              Indices
             </Box>
           </Typography>
 
@@ -402,7 +402,7 @@ export default function IndexListPage() {
             <Stack spacing={2} alignItems="center">
               <CircularProgress color="primary" />
               <Typography color="text.secondary">
-                Loading index catalog...
+                Loading indices...
               </Typography>
             </Stack>
           </Paper>

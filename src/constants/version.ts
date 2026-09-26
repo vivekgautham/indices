@@ -6,4 +6,4 @@ export const BUILD_DATE =
     ? __BUILD_DATE__
     : new Date().toISOString();
 
-export const APP_NAME = "Indices Catalog";
+export const APP_NAME = "Indices";
