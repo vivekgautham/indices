@@ -112,6 +112,11 @@ const aumMap = {
   SGOV: "$110.5B+",
   IGM: "$11.0B+",
   IXN: "$9.5B+",
+  VFMO: "$1.9B+",
+  ONEO: "$1.4B+",
+  IWD: "$58B+",
+  VONV: "$11B+",
+  VFVA: "$1.2B+",
 };
 
 
