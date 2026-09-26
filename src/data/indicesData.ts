@@ -625,7 +625,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "S&P 500 Momentum",
       "FDMO Benchmark Peer",
       "QMOM Peer",
-      "VFMO Peer",
     ],
     name: "S&P 500 Momentum Index",
     providerId: "sp",
@@ -644,11 +643,6 @@ export const INDICES_DATA: MarketIndex[] = [
         aum: "$24.0B+",
       },
       {
-        ticker: "VFMO",
-        name: "Vanguard U.S. Momentum Factor ETF (Active Momentum Peer)",
-        aum: "$1.9B+",
-      },
-      {
         ticker: "FDMO",
         name: "Fidelity Momentum Factor ETF (U.S. Momentum Factor Peer)",
         aum: "$920M+",
@@ -662,7 +656,7 @@ export const INDICES_DATA: MarketIndex[] = [
     summary:
       "Tracks the top 100 stocks in the S&P 500 exhibiting the highest risk-adjusted price momentum over the trailing 12 months.",
     description:
-      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Underlying benchmark for the $24B+ Invesco S&P 500 Momentum ETF (SPMO), alongside related U.S. momentum strategies like VFMO, FDMO, and QMOM.",
+      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Underlying benchmark for the $24B+ Invesco S&P 500 Momentum ETF (SPMO), alongside related U.S. large-cap momentum strategies like FDMO and QMOM.",
     eligibilityCriteria: [
       "Constituent of the S&P 500 Index",
       "Calculated momentum score using 12-month trailing price performance divided by daily volatility",
@@ -679,7 +673,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "Factor",
       "Smart Beta",
       "SPMO",
-      "VFMO",
       "FDMO",
       "QMOM",
       "S&P 500",
@@ -1542,7 +1535,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "IWD Benchmark",
       "VONV Benchmark",
       "Russell Value",
-      "VFVA Benchmark Peer",
     ],
     name: "Russell 1000 Value Index",
     providerId: "ftse",
@@ -1564,16 +1556,11 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "Vanguard Russell 1000 Value ETF",
         aum: "$11B+",
       },
-      {
-        ticker: "VFVA",
-        name: "Vanguard U.S. Value Factor ETF (Active Factor Peer)",
-        aum: "$1.2B+",
-      },
     ],
     summary:
       "The institutional benchmark for US large-cap value investing, selecting companies with lower price-to-book ratios and lower forecasted growth.",
     description:
-      "The Russell 1000 Value Index measures the performance of large- and mid-cap US equities exhibiting value characteristics. Constructed from the broad Russell 1000 universe, it screens constituents based on low price-to-book ratios and lower medium-term growth expectations from I/B/E/S. It forms one half of the iconic Russell style box alongside the Russell 1000 Growth Index, serving as the benchmark for over $70B+ in tracking ETFs including iShares IWD, Vanguard VONV, and active factor strategies like VFVA.",
+      "The Russell 1000 Value Index measures the performance of large- and mid-cap US equities exhibiting value characteristics. Constructed from the broad Russell 1000 universe, it screens constituents based on low price-to-book ratios and lower medium-term growth expectations from I/B/E/S. It forms one half of the iconic Russell style box alongside the Russell 1000 Growth Index, serving as the benchmark for over $70B+ in tracking ETFs including iShares IWD and Vanguard VONV.",
     eligibilityCriteria: [
       "Constituent of the parent Russell 1000 Index",
       "Calculated multi-variable value score based on low price-to-book (P/B) ratio and historical sales per share growth",
@@ -1590,7 +1577,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "Large Cap",
       "IWD",
       "VONV",
-      "VFVA",
       "Russell 1000",
       "Style Benchmark",
       "Dividends",
@@ -1605,7 +1591,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "ONEO Benchmark",
       "Russell 1000 Momentum Focus",
       "Russell Momentum Index",
-      "VFMO Peer Index",
     ],
     name: "Russell 1000 Momentum Focused Factor Index",
     providerId: "ftse",
@@ -1623,16 +1608,11 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "SPDR Russell 1000 Momentum Focus ETF",
         aum: "$1.4B+",
       },
-      {
-        ticker: "VFMO",
-        name: "Vanguard U.S. Momentum Factor ETF (Active Russell Momentum Peer)",
-        aum: "$1.9B+",
-      },
     ],
     summary:
       "Tracks large-cap US equities from the Russell 1000 reflecting strong momentum factor characteristics combined with value, quality, and size risk controls.",
     description:
-      "The Russell 1000 Momentum Focused Factor Index is designed to capture the momentum factor premium within the Russell 1000 universe while managing uncompensated risks and single-factor volatility. Using FTSE Russell's multi-factor scoring architecture, it screens and tilts large-cap US securities toward strong relative price performance (12-month momentum excluding the latest month) while controlling for value, quality, and size factor tilts to avoid extreme cyclical whipsaws. It underpins the $1.4B+ SPDR Russell 1000 Momentum Focus ETF (ticker: ONEO) and serves as the primary Russell-universe benchmark counterpart for quantitative momentum factor strategies such as the $1.9B+ Vanguard U.S. Momentum Factor ETF (VFMO).",
+      "The Russell 1000 Momentum Focused Factor Index is designed to capture the momentum factor premium within the Russell 1000 universe while managing uncompensated risks and single-factor volatility. Using FTSE Russell's multi-factor scoring architecture, it screens and tilts large-cap US securities toward strong relative price performance (12-month momentum excluding the latest month) while controlling for value, quality, and size factor tilts to avoid extreme cyclical whipsaws. It underpins the $1.4B+ SPDR Russell 1000 Momentum Focus ETF (ticker: ONEO).",
     eligibilityCriteria: [
       "Constituent of the parent Russell 1000 Index",
       "Evaluated on 12-month relative price momentum (excluding the most recent month to avoid short-term reversals)",
@@ -1642,13 +1622,12 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Direct underlying benchmark for the $1.4B+ SPDR Russell 1000 Momentum Focus ETF (Ticker: ONEO)",
-      "Institutional benchmark peer for the $1.9B+ Vanguard U.S. Momentum Factor ETF (VFMO)",
       "Engineered to capture momentum excess return while dampening volatility through multi-factor constraints",
+      "Rebalanced semi-annually in June and December",
     ],
     tags: [
       "Momentum",
       "ONEO",
-      "VFMO",
       "Factor",
       "Russell 1000",
       "FTSE Russell",
@@ -1665,7 +1644,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "^RUA",
       "Russell 3K",
       "VFMO Benchmark",
-      "VFVA Benchmark",
       "Vanguard Factor Benchmark",
     ],
     name: "Russell 3000 Index",
@@ -1682,19 +1660,14 @@ export const INDICES_DATA: MarketIndex[] = [
       { ticker: "VTHR", name: "Vanguard Russell 3000 ETF", aum: "$5B+" },
       {
         ticker: "VFMO",
-        name: "Vanguard U.S. Momentum Factor ETF (Actively Managed Benchmark Peer)",
+        name: "Vanguard U.S. Momentum Factor ETF (Active Prospectus Benchmark)",
         aum: "$1.9B+",
-      },
-      {
-        ticker: "VFVA",
-        name: "Vanguard U.S. Value Factor ETF (Active Russell 3000 Value Peer)",
-        aum: "$1.2B+",
       },
     ],
     summary:
-      "Comprehensive measure of the entire US equity market (~98% coverage), serving as the core universe for IWV, VTHR, and the regulatory benchmark for Vanguard's active factor ETF suite (VFMO, VFVA).",
+      "Comprehensive measure of the entire US equity market (~98% coverage), serving as the underlying index for IWV and VTHR, and the official regulatory prospectus benchmark for VFMO.",
     description:
-      "The Russell 3000 Index combines the Russell 1000 and Russell 2000, providing an unbiased benchmark for the entire US equity opportunity set. In addition to being replicated by broad market ETFs like iShares IWV and Vanguard VTHR, it serves as the official prospectus benchmark against which Vanguard actively manages and evaluates its quantitative factor ETF suite, including the $1.9B+ Vanguard U.S. Momentum Factor ETF (VFMO) and Vanguard U.S. Value Factor ETF (VFVA).",
+      "The Russell 3000 Index combines the Russell 1000 and Russell 2000, providing an unbiased benchmark for the entire US equity opportunity set. In addition to being replicated by broad market ETFs like iShares IWV and Vanguard VTHR, it serves as the official regulatory benchmark against which Vanguard actively manages and evaluates the $1.9B+ Vanguard U.S. Momentum Factor ETF (VFMO).",
     eligibilityCriteria: [
       "All US common stocks meeting Russell market cap eligibility requirements",
       "Covers approximately 98% of investable domestic equity securities",
@@ -1702,7 +1675,7 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Covers 98% of the investable US equity market across large, mid, and small caps",
-      "Underlying index for IWV and VTHR, and official prospectus benchmark for Vanguard active factor ETFs (VFMO, VFVA)",
+      "Underlying index for IWV and VTHR, and official prospectus benchmark for Vanguard U.S. Momentum Factor ETF (VFMO)",
       "Famous for the annual Russell Reconstitution in June, the highest volume trading day of the year",
     ],
     tags: [
@@ -1711,8 +1684,6 @@ export const INDICES_DATA: MarketIndex[] = [
       "Comprehensive",
       "Broad Market",
       "VFMO",
-      "VFVA",
-      "Factor",
       "Active Benchmark",
     ],
     officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
@@ -2337,14 +2308,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "msci-usa-momentum",
     symbol: "M1USMM",
-    altSymbols: [
-      "703025",
-      "MXUS000M",
-      "MTUM Benchmark",
-      "MSCI USA Momentum",
-      "VFMO Peer",
-      "SPMO Peer",
-    ],
+    altSymbols: ["703025", "MXUS000M", "MTUM Benchmark", "MSCI USA Momentum"],
     name: "MSCI USA Momentum Index",
     providerId: "msci",
     category: "Factor / Momentum Large & Mid-Cap Equity",
@@ -2362,16 +2326,11 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "iShares MSCI USA Momentum Factor ETF",
         aum: "$21.0B+",
       },
-      {
-        ticker: "VFMO",
-        name: "Vanguard U.S. Momentum Factor ETF (Active Factor Peer)",
-        aum: "$1.9B+",
-      },
     ],
     summary:
       "The world's flagship institutional momentum benchmark, tracking large- and mid-cap US equities with persistent 6- and 12-month risk-adjusted price momentum.",
     description:
-      "The MSCI USA Momentum Index is the institutional gold standard for equity momentum factor investing. Designed to capture the classic academic momentum premium documented by Jegadeesh and Titman, it selects securities from the parent MSCI USA Index based on their 6-month and 12-month risk-adjusted price returns (standardized as z-scores). Constituents are weighted by multiplying their momentum z-score by their float-adjusted market capitalization, subject to a 5% single-stock ceiling. It serves as the benchmark for BlackRock's $21B+ iShares MSCI USA Momentum Factor ETF (MTUM), alongside prominent U.S. momentum strategies like SPMO and Vanguard's VFMO.",
+      "The MSCI USA Momentum Index is the institutional gold standard for equity momentum factor investing. Designed to capture the classic academic momentum premium documented by Jegadeesh and Titman, it selects securities from the parent MSCI USA Index based on their 6-month and 12-month risk-adjusted price returns (standardized as z-scores). Constituents are weighted by multiplying their momentum z-score by their float-adjusted market capitalization, subject to a 5% single-stock ceiling. It serves as the benchmark for BlackRock's $21B+ iShares MSCI USA Momentum Factor ETF (MTUM).",
     eligibilityCriteria: [
       "Constituent of the parent MSCI USA Index (large and mid caps)",
       "Standardized 6-month and 12-month risk-adjusted price returns combined into a composite z-score",
@@ -2387,7 +2346,6 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: [
       "Momentum",
       "MTUM",
-      "VFMO",
       "MSCI",
       "Factor",
       "Smart Beta",
