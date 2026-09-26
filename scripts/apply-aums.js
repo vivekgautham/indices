@@ -117,6 +117,7 @@ const aumMap = {
   IWD: "$58B+",
   VONV: "$11B+",
   VFVA: "$1.2B+",
+  DWAS: "$420M+",
 };
 
 

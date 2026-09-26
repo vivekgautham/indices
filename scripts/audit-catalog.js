@@ -95,7 +95,7 @@ const userRequestedTickers = [
   "SLV",
   "SPMO",
   "IDMO", "XMMO", "XSMO",
-  "MTUM", "IMTM", "PDP", "FDMO", "QMOM",
+  "MTUM", "IMTM", "PDP", "FDMO", "DWAS",
   "GARP", "SPGP", "GRPM",
   "VT",
   "XLE",

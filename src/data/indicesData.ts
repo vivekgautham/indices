@@ -619,13 +619,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-500-momentum",
     symbol: "SP500MO",
-    altSymbols: [
-      "SPAMO",
-      "SPMO Benchmark",
-      "S&P 500 Momentum",
-      "FDMO Benchmark Peer",
-      "QMOM Peer",
-    ],
+    altSymbols: ["SPAMO", "SPMO Benchmark", "S&P 500 Momentum"],
     name: "S&P 500 Momentum Index",
     providerId: "sp",
     category: "Factor / Momentum Large-Cap Equity",
@@ -642,21 +636,11 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "Invesco S&P 500 Momentum ETF",
         aum: "$24.0B+",
       },
-      {
-        ticker: "FDMO",
-        name: "Fidelity Momentum Factor ETF (U.S. Momentum Factor Peer)",
-        aum: "$920M+",
-      },
-      {
-        ticker: "QMOM",
-        name: "Alpha Architect U.S. Quantitative Momentum ETF (Quantitative Momentum Peer)",
-        aum: "$425M+",
-      },
     ],
     summary:
       "Tracks the top 100 stocks in the S&P 500 exhibiting the highest risk-adjusted price momentum over the trailing 12 months.",
     description:
-      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Underlying benchmark for the $24B+ Invesco S&P 500 Momentum ETF (SPMO), alongside related U.S. large-cap momentum strategies like FDMO and QMOM.",
+      "The S&P 500 Momentum Index identifies companies in the S&P 500 that have demonstrated persistent upward price performance. Constituents are selected by evaluating 12-month trailing price momentum adjusted for volatility, with individual security weights capped at 5%. Direct underlying benchmark for the $24B+ Invesco S&P 500 Momentum ETF (SPMO).",
     eligibilityCriteria: [
       "Constituent of the S&P 500 Index",
       "Calculated momentum score using 12-month trailing price performance divided by daily volatility",
@@ -668,18 +652,61 @@ export const INDICES_DATA: MarketIndex[] = [
       "Underlying benchmark for SPMO with over $24B in assets under management",
       "Dynamically rotates into market-leading leaders while dampening excess volatility",
     ],
-    tags: [
-      "Momentum",
-      "Factor",
-      "Smart Beta",
-      "SPMO",
-      "FDMO",
-      "QMOM",
-      "S&P 500",
-      "Top 100",
-    ],
+    tags: ["Momentum", "Factor", "Smart Beta", "SPMO", "S&P 500", "Top 100"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-momentum-index/",
+  },
+  {
+    id: "fidelity-us-momentum-factor",
+    symbol: "FIDMOM",
+    altSymbols: [
+      "FUMF",
+      "FDMO Benchmark",
+      "Fidelity Momentum Index",
+      "Fidelity US Momentum Factor",
+    ],
+    name: "Fidelity U.S. Momentum Factor Index",
+    providerId: "sp",
+    category: "Factor / Momentum Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 120,
+    weightingMethodology: "Momentum Tilt × Float-Adjusted Market Cap",
+    rebalanceFrequency: "Semi-Annually (February and August)",
+    launchYear: 2016,
+    trackingEtfs: [
+      {
+        ticker: "FDMO",
+        name: "Fidelity Momentum Factor ETF",
+        aum: "$920M+",
+      },
+    ],
+    summary:
+      "Measures large- and mid-cap US equities with robust momentum signals, combining price momentum with earnings trend indicators (calculation agent: S&P DJI).",
+    description:
+      "The Fidelity U.S. Momentum Factor Index reflects the performance of large- and mid-capitalization US companies that exhibit positive momentum characteristics. Designed by Fidelity and calculated by S&P Dow Jones Indices as official Calculation Agent, the index evaluates securities using a multi-signal momentum model combining historical 12-month and 6-month risk-adjusted price momentum with earnings momentum indicators (earnings surprises and estimate revisions). Direct underlying benchmark for the $920M+ Fidelity Momentum Factor ETF (ticker: FDMO).",
+    eligibilityCriteria: [
+      "Constituent of the broad US large- and mid-cap equity universe meeting liquidity thresholds",
+      "Evaluated on multi-signal momentum combining 12-month and 6-month price performance with fundamental earnings revisions and surprises",
+      "Constituents weighted by float-adjusted market capitalization multiplied by composite momentum score",
+      "Semi-annual reconstitution in February and August with turnover buffering constraints",
+    ],
+    keyCharacteristics: [
+      "Direct underlying benchmark for the $920M+ Fidelity Momentum Factor ETF (FDMO)",
+      "Calculated and published by S&P Dow Jones Indices for Fidelity Product Services",
+      "Combines price trend persistence with earnings quality and analyst revision momentum",
+    ],
+    tags: [
+      "Momentum",
+      "FDMO",
+      "Fidelity",
+      "Factor",
+      "Smart Beta",
+      "Large Cap",
+      "Mid Cap",
+      "Earnings Momentum",
+    ],
+    officialUrl: "https://www.fidelity.com/etfs/different-types-of-etfs",
   },
   {
     id: "sp-midcap-400-momentum",
@@ -1684,6 +1711,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Comprehensive",
       "Broad Market",
       "VFMO",
+      "Momentum",
       "Active Benchmark",
     ],
     officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
@@ -2721,6 +2749,60 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.nasdaq.com/solutions/dorsey-wright-technical-leaders-index",
+  },
+  {
+    id: "nasdaq-dorsey-wright-smallcap-technical-leaders",
+    symbol: "DWATL",
+    altSymbols: [
+      "DWSTLI",
+      "DWAS Benchmark",
+      "Dorsey Wright SmallCap Technical Leaders",
+      "Nasdaq DWA SmallCap",
+    ],
+    name: "Dorsey Wright SmallCap Technical Leaders Index",
+    providerId: "nasdaq",
+    category: "Factor / Momentum Small-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 200,
+    weightingMethodology:
+      "Modified Equal Weight (Rank-Based Relative Strength)",
+    rebalanceFrequency: "Quarterly (January, April, July, October)",
+    launchYear: 2012,
+    trackingEtfs: [
+      {
+        ticker: "DWAS",
+        name: "Invesco Dorsey Wright SmallCap Momentum ETF",
+        aum: "$420M+",
+      },
+    ],
+    summary:
+      "Measures 200 small-cap US equities exhibiting the strongest relative strength based on Dorsey Wright's Point and Figure technical momentum matrix.",
+    description:
+      "Maintained by Nasdaq, the Dorsey Wright SmallCap Technical Leaders Index applies Dorsey Wright's Point and Figure relative strength matrix to the US small-cap equity universe. It evaluates approximately 2,000 small-cap securities across daily price trends, selecting the top 200 companies demonstrating sustained upward relative momentum against their market peers. Direct underlying benchmark for the $420M+ Invesco Dorsey Wright SmallCap Momentum ETF (DWAS).",
+    eligibilityCriteria: [
+      "Common stocks listed on major US exchanges within the US small-cap universe meeting liquidity rules",
+      "Ranked using Dorsey Wright's Point and Figure relative strength matrix",
+      "Top 200 securities with highest relative strength scores selected",
+      "Modified equal-weighting to ensure broad diversification without single-stock concentration",
+      "Quarterly rebalancing and reconstitution in January, April, July, and October",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $420M+ Invesco Dorsey Wright SmallCap Momentum ETF (DWAS)",
+      "Pure technical relative strength momentum applied to high-beta US small caps",
+      "Quarterly rebalancing enables quick reaction to emerging small-cap market leadership",
+    ],
+    tags: [
+      "Momentum",
+      "DWAS",
+      "Small Cap",
+      "Dorsey Wright",
+      "Nasdaq",
+      "Relative Strength",
+      "Technical Analysis",
+      "Smart Beta",
+    ],
+    officialUrl: "https://indexes.nasdaq.com/",
   },
 
   // ==========================================
