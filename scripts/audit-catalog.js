@@ -163,6 +163,7 @@ const suggestions = [
   "GARP",
   "Semiconductor",
   "Precious Metals",
+  "Bonds / Fixed Income",
   "Treasury / Cash",
   "Cybersecurity",
   "Volatility / VIX"
