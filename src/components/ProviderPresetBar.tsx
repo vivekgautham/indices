@@ -65,7 +65,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                All Providers
+                All
               </Typography>
               <Box
                 component="span"
