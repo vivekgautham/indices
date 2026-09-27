@@ -15,13 +15,41 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
   indexCounts,
 }) => {
   return (
-    <Box sx={{ width: "100%", my: 1.5 }}>
+    <Box
+      sx={{
+        width: "100%",
+        my: 1.5,
+        display: "flex",
+        overflowX: "auto",
+        WebkitOverflowScrolling: "touch",
+        py: 0.5,
+        scrollbarWidth: "thin",
+        scrollbarColor: "rgba(255, 255, 255, 0.12) transparent",
+        "&::-webkit-scrollbar": {
+          height: 3,
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "transparent",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(255, 255, 255, 0.12)",
+          borderRadius: 3,
+        },
+        "&:hover::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(255, 255, 255, 0.25)",
+        },
+      }}
+    >
       <Stack
         direction="row"
-        flexWrap="wrap"
-        justifyContent="center"
+        flexWrap="nowrap"
         alignItems="center"
-        gap={{ xs: 1, sm: 1.5 }}
+        gap={{ xs: 0.8, sm: 1.2 }}
+        sx={{
+          m: "auto",
+          minWidth: "max-content",
+          px: { xs: 0.5, sm: 1 },
+        }}
       >
         <Chip
           label={
@@ -33,6 +61,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                   fontWeight: 700,
                   fontSize: "0.85rem",
                   fontFamily: "inherit",
+                  whiteSpace: "nowrap",
                 }}
               >
                 All Providers
@@ -60,7 +89,8 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
           color={selectedProvider === "all" ? "primary" : "default"}
           variant={selectedProvider === "all" ? "filled" : "outlined"}
           sx={{
-            py: 2.3,
+            flexShrink: 0,
+            py: { xs: 1.8, sm: 2.1 },
             px: 0.8,
             borderRadius: 3,
             borderColor:
@@ -108,9 +138,10 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                     component="span"
                     sx={{
                       fontWeight: 700,
-                      fontSize: "0.88rem",
+                      fontSize: "0.85rem",
                       fontFamily: "inherit",
                       color: isSelected ? "#ffffff" : "text.primary",
+                      whiteSpace: "nowrap",
                     }}
                   >
                     {provider.shortName}
@@ -136,8 +167,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
               clickable
               onClick={() => onSelectProvider(provider.id)}
               sx={{
-                py: 2.3,
-                px: 1,
+                flexShrink: 0,
+                py: { xs: 1.8, sm: 2.1 },
+                px: 0.9,
                 borderRadius: 3,
                 border: "1.5px solid",
                 borderColor: isSelected
