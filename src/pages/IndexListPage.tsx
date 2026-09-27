@@ -294,10 +294,9 @@ export default function IndexListPage() {
       {/* Main Content Area */}
       <Box component="main" sx={{ width: "100%" }}>
         {/* Selected Provider Spotlight Hero Banner (Collapsible) */}
-        <ProviderHeroBanner
-          provider={activeProviderObj}
-          totalIndicesCount={filteredIndices.length}
-        />
+        {activeProviderObj && (
+          <ProviderHeroBanner provider={activeProviderObj} />
+        )}
 
         {/* Global Search Discovery Callout (if search finds results in other providers) */}
         {searchTerm &&

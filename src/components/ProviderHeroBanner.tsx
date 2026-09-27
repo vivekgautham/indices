@@ -7,7 +7,6 @@ import {
   Card,
   Chip,
   Collapse,
-  IconButton,
   Stack,
   Tooltip,
   Typography,
@@ -17,88 +16,15 @@ import { IndexProvider } from "../types";
 
 interface ProviderHeroBannerProps {
   provider?: IndexProvider;
-  totalIndicesCount: number;
 }
 
 export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
   provider,
-  totalIndicesCount,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!provider) {
-    return (
-      <Card
-        variant="outlined"
-        sx={{
-          mb: 3,
-          p: { xs: 2, sm: 2.5 },
-          borderRadius: 3.5,
-          background:
-            "linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)",
-          backdropFilter: "blur(16px)",
-          border: "1px solid rgba(255, 255, 255, 0.1)",
-        }}
-      >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          gap={2}
-        >
-          <Box sx={{ flexGrow: 1 }}>
-            <Stack direction="row" alignItems="center" spacing={1.5}>
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 800, color: "#f8fafc" }}
-              >
-                All Major Index Providers
-              </Typography>
-              <Chip
-                label={`${totalIndicesCount} Famous Benchmarks`}
-                color="primary"
-                size="small"
-                variant="outlined"
-                sx={{ fontWeight: 700, borderRadius: 1.5 }}
-              />
-            </Stack>
-            <Collapse in={isExpanded}>
-              <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", maxWidth: 850, mt: 1 }}
-              >
-                Browsing all flagship benchmarks across S&P Dow Jones, FTSE
-                Russell, MSCI, NASDAQ, CRSP, ICE, and MarketVector. Select any
-                preset provider chip above to focus on their specific index
-                family.
-              </Typography>
-            </Collapse>
-          </Box>
-
-          <Tooltip
-            title={isExpanded ? "Collapse banner" : "Expand banner"}
-            arrow
-          >
-            <IconButton
-              size="small"
-              onClick={() => setIsExpanded((prev) => !prev)}
-              sx={{
-                color: "text.secondary",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                borderRadius: 2,
-                p: 0.75,
-                "&:hover": {
-                  color: "#ffffff",
-                  backgroundColor: "rgba(255, 255, 255, 0.08)",
-                },
-              }}
-            >
-              {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      </Card>
-    );
+    return null;
   }
 
   return (
