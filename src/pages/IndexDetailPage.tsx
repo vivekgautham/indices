@@ -20,6 +20,7 @@ import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
+import { ProviderLogo } from "../components/ProviderLogo";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
 export default function IndexDetailPage() {
@@ -270,6 +271,7 @@ export default function IndexDetailPage() {
 
             {provider && (
               <Chip
+                icon={<ProviderLogo providerId={provider.id} size={16} />}
                 label={provider.name}
                 sx={{
                   fontWeight: 700,
@@ -279,6 +281,10 @@ export default function IndexDetailPage() {
                   borderRadius: 2,
                   border: "1px solid",
                   backgroundColor: `${accentColor}15`,
+                  "& .MuiChip-icon": {
+                    ml: "6px",
+                    mr: "-2px",
+                  },
                 }}
               />
             )}
@@ -793,23 +799,28 @@ export default function IndexDetailPage() {
                 }}
               >
                 <Stack spacing={1.5}>
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <Chip
-                      label={provider.shortName}
-                      size="small"
-                      sx={{
-                        backgroundColor: accentColor,
-                        color: "#ffffff",
-                        fontWeight: 800,
-                        borderRadius: 1.5,
-                      }}
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: 800, color: "#f8fafc" }}
-                    >
-                      {provider.name}
-                    </Typography>
+                  <Stack direction="row" alignItems="center" spacing={1.25}>
+                    <ProviderLogo providerId={provider.id} size={32} />
+                    <Box>
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Chip
+                          label={provider.shortName}
+                          size="small"
+                          sx={{
+                            backgroundColor: accentColor,
+                            color: "#ffffff",
+                            fontWeight: 800,
+                            borderRadius: 1.5,
+                          }}
+                        />
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 800, color: "#f8fafc" }}
+                        >
+                          {provider.name}
+                        </Typography>
+                      </Stack>
+                    </Box>
                   </Stack>
 
                   <Typography

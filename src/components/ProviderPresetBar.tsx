@@ -2,6 +2,7 @@ import { Box, Chip, Stack, Typography } from "@mui/material";
 import React from "react";
 import { PROVIDERS_LIST } from "../data/providersData";
 import { ProviderId } from "../types";
+import { ProviderLogo } from "./ProviderLogo";
 
 interface ProviderPresetBarProps {
   selectedProvider: ProviderId | "all";
@@ -54,7 +55,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
         <Chip
           label={
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-              <span>🌐</span>
+              <ProviderLogo providerId="all" size={18} />
               <Typography
                 component="span"
                 sx={{
@@ -122,18 +123,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
               key={provider.id}
               label={
                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
-                  <Box
-                    component="span"
-                    sx={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: "50%",
-                      backgroundColor: provider.accentColor,
-                      boxShadow: isSelected
-                        ? `0 0 10px ${provider.accentColor}`
-                        : "none",
-                    }}
-                  />
+                  <ProviderLogo providerId={provider.id} size={18} />
                   <Typography
                     component="span"
                     sx={{

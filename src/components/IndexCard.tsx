@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { MarketIndex } from "../types";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
+import { ProviderLogo } from "./ProviderLogo";
 
 interface IndexCardProps {
   index: MarketIndex;
@@ -98,6 +99,9 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                   }}
                 />
                 <Chip
+                  icon={
+                    <ProviderLogo providerId={index.providerId} size={14} />
+                  }
                   label={provider?.shortName || index.providerId.toUpperCase()}
                   size="small"
                   variant="outlined"
@@ -108,6 +112,10 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                     fontSize: "0.7rem",
                     borderRadius: 1.5,
                     backgroundColor: `${accentColor}10`,
+                    "& .MuiChip-icon": {
+                      ml: "4px",
+                      mr: "-2px",
+                    },
                   }}
                 />
               </Stack>

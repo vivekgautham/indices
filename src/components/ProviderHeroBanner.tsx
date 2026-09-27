@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { IndexProvider } from "../types";
+import { ProviderLogo } from "./ProviderLogo";
 
 interface ProviderHeroBannerProps {
   provider?: IndexProvider;
@@ -74,6 +75,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
               spacing={1.25}
               sx={{ mb: 0.25 }}
             >
+              <ProviderLogo providerId={provider.id} size={26} />
               <Chip
                 label={provider.shortName}
                 size="small"
