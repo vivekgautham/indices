@@ -125,7 +125,8 @@ export default function IndexListPage() {
     <Container
       maxWidth={false}
       sx={{
-        maxWidth: 1720,
+        width: "100%",
+        maxWidth: "100%",
         py: { xs: 2, sm: 3 },
         px: { xs: 1.5, sm: 3 },
       }}
@@ -143,8 +144,8 @@ export default function IndexListPage() {
       </Box>
 
       {/* Header Section */}
-      <Box component="header" sx={{ mb: 3.5, textAlign: "center" }}>
-        <Stack spacing={2} alignItems="center">
+      <Box component="header" sx={{ mb: 3.5, textAlign: "center", width: "100%" }}>
+        <Stack spacing={2} alignItems="center" sx={{ width: "100%" }}>
           <Typography
             variant="h3"
             component="h1"
@@ -194,7 +195,7 @@ export default function IndexListPage() {
           />
 
           {/* Search Bar */}
-          <Box sx={{ width: "100%", maxWidth: 780, mt: 0.5 }}>
+          <Box sx={{ width: "100%", mt: 0.5 }}>
             <TextField
               fullWidth
               variant="outlined"

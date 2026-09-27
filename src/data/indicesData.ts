@@ -1697,6 +1697,66 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl: "https://www.ftserussell.com/products/indices/factor",
   },
   {
+    id: "russell-1000-technology-ric-capped",
+    symbol: "RIYWCTR",
+    altSymbols: [
+      "RIYW",
+      "^RIYWCTR",
+      "IYW Benchmark",
+      "Russell 1000 Tech Capped",
+      "Russell 1000 Technology",
+      "IYW",
+      "R10TECH",
+    ],
+    name: "Russell 1000 Technology RIC 22.5/45 Capped Index",
+    providerId: "ftse",
+    category: "Technology Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 148,
+    weightingMethodology:
+      "Modified Market Cap (Quarterly 22.5 / 45 RIC Capped)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2021,
+    trackingEtfs: [
+      {
+        ticker: "IYW",
+        name: "iShares U.S. Technology ETF",
+        aum: "$25.4B+",
+      },
+    ],
+    summary:
+      "The underlying benchmark for the $25.4B+ iShares U.S. Technology ETF (IYW), tracking US large- and mid-cap technology leaders under ICB classification with quarterly 22.5/45 RIC diversification caps.",
+    description:
+      "The Russell 1000 Technology RIC 22.5/45 Capped Index measures the performance of US technology companies drawn from the broad Russell 1000 Index. Using the FTSE Russell Industry Classification Benchmark (ICB) rather than GICS, the index retains major tech platforms including Meta Platforms and Alphabet alongside semiconductor and enterprise software stalwarts Apple, Microsoft, and NVIDIA. To satisfy IRS Regulated Investment Company (RIC) diversification standards, the index enforces a quarterly 22.5/45 capping mechanism: no single company can exceed 22.5% of the index, and the aggregate weight of all companies exceeding 4.5% is capped at 45%. It serves as the official underlying benchmark for the $25.4B+ iShares U.S. Technology ETF (IYW).",
+    eligibilityCriteria: [
+      "Must be an existing constituent of the parent Russell 1000 Index",
+      "Classified under the Technology Industry according to the FTSE Russell Industry Classification Benchmark (ICB)",
+      "IRS RIC Capping Rule 1: No single constituent weight may exceed 22.5% at quarterly rebalancing",
+      "IRS RIC Capping Rule 2: Aggregate weight of all constituents whose individual weights exceed 4.5% cannot exceed 45%",
+      "Reconstituted annually in June alongside Russell reconstitution, with quarterly capping reviews in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Direct underlying benchmark for the $25.4B+ iShares U.S. Technology ETF (Ticker: IYW)",
+      "ICB classification incorporates major digital platforms (e.g., Meta, Alphabet) that GICS excludes from pure tech indices like XLK",
+      "Quarterly 22.5/45 concentration caps manage mega-cap concentration risk and maintain RIC tax-diversified status",
+      "Broad US tech coverage spanning ~148 large- and mid-cap technology leaders",
+    ],
+    tags: [
+      "Technology",
+      "IYW",
+      "Sector",
+      "Russell 1000",
+      "FTSE Russell",
+      "Mega Cap Tech",
+      "Semiconductors",
+      "Software",
+      "ICB",
+      "RIC Capped",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
+  },
+  {
     id: "russell-3000",
     symbol: "RUA",
     altSymbols: [

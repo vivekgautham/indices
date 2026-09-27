@@ -106,7 +106,8 @@ const userRequestedTickers = [
   "VFMO", "ONEO", "IWD", "VONV",
   "AGG", "BND", "TLT", "IEF", "SHY", "BIL", "LQD", "HYG",
   "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX",
-  "AVUV", "AVLV", "AVUS", "AVDV", "AVIV", "AVES", "AVEM", "AVSC", "AVLC"
+  "AVUV", "AVLV", "AVUS", "AVDV", "AVIV", "AVES", "AVEM", "AVSC", "AVLC",
+  "IYW"
 ];
 
 for (const ticker of userRequestedTickers) {
