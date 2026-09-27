@@ -1467,15 +1467,20 @@ export const INDICES_DATA: MarketIndex[] = [
       { ticker: "IWM", name: "iShares Russell 2000 ETF", aum: "$81B+" },
       { ticker: "VTWO", name: "Vanguard Russell 2000 ETF", aum: "$17B+" },
       {
+        ticker: "AVSC",
+        name: "Avantis U.S. Small Cap Equity ETF (Active Prospectus Benchmark)",
+        aum: "$1.8B+",
+      },
+      {
         ticker: "TNA",
         name: "Direxion Daily Small Cap Bull 3X Shares",
         aum: "$2B+",
       },
     ],
     summary:
-      "The industry-defining benchmark for US small-cap equity funds, measuring the performance of the 2,000 smallest companies in the Russell 3000 Index.",
+      "The industry-defining benchmark for US small-cap equity funds, measuring the performance of the 2,000 smallest companies in the Russell 3000 Index, underlying IWM, VTWO, and Avantis AVSC.",
     description:
-      "The Russell 2000 Index measures the performance of the small-cap segment of the US equity universe. It represents approximately 10% of the total market capitalization of the Russell 3000 Index and is the most widely quoted measure of small-cap company performance globally.",
+      "The Russell 2000 Index measures the performance of the small-cap segment of the US equity universe. It represents approximately 10% of the total market capitalization of the Russell 3000 Index and is the most widely quoted measure of small-cap company performance globally, underlying $100B+ across passive ETFs (IWM, VTWO) and active factor strategies like Avantis AVSC.",
     eligibilityCriteria: [
       "Companies ranked 1,001 through 3,000 by market capitalization in the annual Russell US Index reconstitution",
       "Must be incorporated in the US or designated as US-benefit entity",
@@ -1483,13 +1488,17 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Purely rules-based market cap rank methodology with annual June Reconstitution",
-      "The #1 institutional benchmark for small-cap active asset managers",
+      "The #1 institutional benchmark for small-cap active asset managers and factor ETFs like Avantis AVSC",
     ],
     tags: [
       "Small Cap",
       "US Equities",
       "Russell Reconstitution",
       "Institutional Benchmark",
+      "IWM",
+      "VTWO",
+      "AVSC",
+      "Avantis",
     ],
     officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
   },
@@ -1508,17 +1517,31 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1984,
     trackingEtfs: [
       { ticker: "IWB", name: "iShares Russell 1000 ETF", aum: "$49B+" },
+      {
+        ticker: "AVLC",
+        name: "Avantis U.S. Large Cap Equity ETF (Active Prospectus Benchmark)",
+        aum: "$2.1B+",
+      },
       { ticker: "VONE", name: "Vanguard Russell 1000 ETF", aum: "$9B+" },
     ],
     summary:
-      "Captures the 1,000 largest publicly traded companies in the US equity universe, representing ~93% of the total US equity market value.",
+      "Captures the 1,000 largest publicly traded companies in the US equity universe, representing ~93% of the total US equity market value, underlying IWB, VONE, and Avantis AVLC.",
     description:
-      "The Russell 1000 Index is designed to represent the large-cap universe of the US equity market. It serves as the foundation for the prestigious Russell 1000 Growth and Russell 1000 Value style benchmarks.",
+      "The Russell 1000 Index is designed to represent the large-cap universe of the US equity market. It serves as the foundation for passive leaders like iShares IWB and Vanguard VONE, as well as the benchmark for systematic active factor ETFs like Avantis AVLC.",
     keyCharacteristics: [
       "Represents approximately 93% of the investable US equity market",
       "Spans mega-cap and mid-cap equities with transparent ranking rules",
     ],
-    tags: ["Large Cap", "US Core", "Foundation Index", "Style Benchmarks"],
+    tags: [
+      "Large Cap",
+      "US Core",
+      "Foundation Index",
+      "Style Benchmarks",
+      "IWB",
+      "VONE",
+      "AVLC",
+      "Avantis",
+    ],
     officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
   },
   {
@@ -1561,6 +1584,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Russell 1000 Value",
       "IWD Benchmark",
       "VONV Benchmark",
+      "AVLV Benchmark",
       "Russell Value",
     ],
     name: "Russell 1000 Value Index",
@@ -1579,15 +1603,20 @@ export const INDICES_DATA: MarketIndex[] = [
         aum: "$58B+",
       },
       {
+        ticker: "AVLV",
+        name: "Avantis U.S. Large Cap Value ETF (Active Prospectus Benchmark)",
+        aum: "$7.5B+",
+      },
+      {
         ticker: "VONV",
         name: "Vanguard Russell 1000 Value ETF",
         aum: "$11B+",
       },
     ],
     summary:
-      "The institutional benchmark for US large-cap value investing, selecting companies with lower price-to-book ratios and lower forecasted growth.",
+      "The institutional benchmark for US large-cap value investing, selecting companies with lower price-to-book ratios and lower forecasted growth, underlying IWD, VONV, and Avantis AVLV.",
     description:
-      "The Russell 1000 Value Index measures the performance of large- and mid-cap US equities exhibiting value characteristics. Constructed from the broad Russell 1000 universe, it screens constituents based on low price-to-book ratios and lower medium-term growth expectations from I/B/E/S. It forms one half of the iconic Russell style box alongside the Russell 1000 Growth Index, serving as the benchmark for over $70B+ in tracking ETFs including iShares IWD and Vanguard VONV.",
+      "The Russell 1000 Value Index measures the performance of large- and mid-cap US equities exhibiting value characteristics. Constructed from the broad Russell 1000 universe, it screens constituents based on low price-to-book ratios and lower medium-term growth expectations from I/B/E/S. It serves as the primary benchmark for over $75B+ in investments including iShares IWD, Vanguard VONV, and the actively managed factor ETF Avantis AVLV.",
     eligibilityCriteria: [
       "Constituent of the parent Russell 1000 Index",
       "Calculated multi-variable value score based on low price-to-book (P/B) ratio and historical sales per share growth",
@@ -1596,6 +1625,7 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Underlying benchmark for the $58B+ iShares Russell 1000 Value ETF (IWD) and $11B+ Vanguard VONV",
+      "Official prospectus benchmark for the $7.5B+ Avantis U.S. Large Cap Value ETF (AVLV)",
       "Primary institutional standard for US large-cap value asset managers and pension allocations",
       "High sector representation in financials, industrials, healthcare, and energy",
     ],
@@ -1603,7 +1633,9 @@ export const INDICES_DATA: MarketIndex[] = [
       "Value",
       "Large Cap",
       "IWD",
+      "AVLV",
       "VONV",
+      "Avantis",
       "Russell 1000",
       "Style Benchmark",
       "Dividends",
@@ -1671,6 +1703,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "^RUA",
       "Russell 3K",
       "VFMO Benchmark",
+      "AVUS Benchmark",
       "Vanguard Factor Benchmark",
     ],
     name: "Russell 3000 Index",
@@ -1686,15 +1719,20 @@ export const INDICES_DATA: MarketIndex[] = [
       { ticker: "IWV", name: "iShares Russell 3000 ETF", aum: "$20B+" },
       { ticker: "VTHR", name: "Vanguard Russell 3000 ETF", aum: "$5B+" },
       {
+        ticker: "AVUS",
+        name: "Avantis U.S. Equity ETF (Active Prospectus Benchmark)",
+        aum: "$7.8B+",
+      },
+      {
         ticker: "VFMO",
         name: "Vanguard U.S. Momentum Factor ETF (Active Prospectus Benchmark)",
         aum: "$1.9B+",
       },
     ],
     summary:
-      "Comprehensive measure of the entire US equity market (~98% coverage), serving as the underlying index for IWV and VTHR, and the official regulatory prospectus benchmark for VFMO.",
+      "Comprehensive measure of the entire US equity market (~98% coverage), serving as the underlying index for IWV and VTHR, and the official regulatory prospectus benchmark for Avantis AVUS and Vanguard VFMO.",
     description:
-      "The Russell 3000 Index combines the Russell 1000 and Russell 2000, providing an unbiased benchmark for the entire US equity opportunity set. In addition to being replicated by broad market ETFs like iShares IWV and Vanguard VTHR, it serves as the official regulatory benchmark against which Vanguard actively manages and evaluates the $1.9B+ Vanguard U.S. Momentum Factor ETF (VFMO).",
+      "The Russell 3000 Index combines the Russell 1000 and Russell 2000, providing an unbiased benchmark for the entire US equity opportunity set. In addition to being replicated by broad market ETFs like iShares IWV and Vanguard VTHR, it serves as the official regulatory benchmark against which Avantis evaluates the $7.8B+ Avantis U.S. Equity ETF (AVUS) and Vanguard actively manages the $1.9B+ Vanguard U.S. Momentum Factor ETF (VFMO).",
     eligibilityCriteria: [
       "All US common stocks meeting Russell market cap eligibility requirements",
       "Covers approximately 98% of investable domestic equity securities",
@@ -1702,7 +1740,7 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Covers 98% of the investable US equity market across large, mid, and small caps",
-      "Underlying index for IWV and VTHR, and official prospectus benchmark for Vanguard U.S. Momentum Factor ETF (VFMO)",
+      "Underlying index for IWV and VTHR, and official prospectus benchmark for Avantis AVUS and Vanguard VFMO",
       "Famous for the annual Russell Reconstitution in June, the highest volume trading day of the year",
     ],
     tags: [
@@ -1710,7 +1748,9 @@ export const INDICES_DATA: MarketIndex[] = [
       "US Equities",
       "Comprehensive",
       "Broad Market",
+      "AVUS",
       "VFMO",
+      "Avantis",
       "Momentum",
       "Active Benchmark",
     ],
@@ -2105,29 +2145,45 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1988,
     trackingEtfs: [
       {
+        ticker: "IEMG",
+        name: "iShares Core MSCI Emerging Markets ETF",
+        aum: "$161B+",
+      },
+      {
         ticker: "EEM",
         name: "iShares MSCI Emerging Markets ETF",
         aum: "$18B+",
       },
       {
-        ticker: "IEMG",
-        name: "iShares Core MSCI Emerging Markets ETF",
-        aum: "$161B+",
+        ticker: "AVES",
+        name: "Avantis Emerging Markets Value ETF (Active Prospectus Benchmark)",
+        aum: "$5.8B+",
+      },
+      {
+        ticker: "AVEM",
+        name: "Avantis Emerging Markets Equity ETF (Active Prospectus Benchmark)",
+        aum: "$4.6B+",
       },
     ],
     summary:
-      "The primary global institutional gauge for emerging market equities across 24 developing economies.",
+      "The primary global institutional gauge for emerging market equities across 24 developing economies, underlying IEMG, EEM, and Avantis AVES/AVEM.",
     description:
-      "Launched in 1988 with 10 countries representing less than 1% of world market cap, MSCI EM now spans 24 countries with heavy weights in China, India, Taiwan, South Korea, and Brazil.",
+      "Launched in 1988 with 10 countries representing less than 1% of world market cap, MSCI EM now spans 24 countries with heavy weights in China, India, Taiwan, South Korea, and Brazil. It underpins massive institutional funds like iShares IEMG and serves as the regulatory performance benchmark for active factor ETFs like Avantis AVES and AVEM.",
     keyCharacteristics: [
       "Includes South Korea (classified as Emerging by MSCI)",
       "High exposure to semiconductor leaders (TSMC, Samsung) and Indian growth equities",
+      "Benchmark standard for active factor strategies like Avantis AVES and AVEM",
     ],
     tags: [
       "Emerging Markets",
       "Asia Heavy",
       "High Growth",
       "Institutional Benchmark",
+      "IEMG",
+      "EEM",
+      "AVES",
+      "AVEM",
+      "Avantis",
     ],
     officialUrl: "https://www.msci.com/our-solutions/indexes/emerging-markets",
   },
@@ -4101,5 +4157,184 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.bloomberg.com/professional/product/indices/bloomberg-fixed-income-indices/",
+  },
+  {
+    id: "russell-2000-value",
+    symbol: "RUJ",
+    altSymbols: [
+      "^RUJ",
+      "Russell 2000 Value",
+      "AVUV Benchmark",
+      "IWN Benchmark",
+      "VTWV Benchmark",
+      "Small Cap Value",
+    ],
+    name: "Russell 2000 Value Index",
+    providerId: "ftse",
+    category: "Small-Cap Value",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 1400,
+    weightingMethodology: "Float-Adjusted Market Cap with Style Probability",
+    rebalanceFrequency: "Annual Reconstitution (June)",
+    launchYear: 1987,
+    trackingEtfs: [
+      {
+        ticker: "AVUV",
+        name: "Avantis U.S. Small Cap Value ETF (Active Prospectus Benchmark)",
+        aum: "$16.4B+",
+      },
+      {
+        ticker: "IWN",
+        name: "iShares Russell 2000 Value ETF",
+        aum: "$13.2B+",
+      },
+      {
+        ticker: "VTWV",
+        name: "Vanguard Russell 2000 Value ETF",
+        aum: "$1.1B+",
+      },
+    ],
+    summary:
+      "The premier US small-cap value benchmark, selecting small-cap equities with lower price-to-book ratios and lower forecasted growth, underlying Avantis AVUV and iShares IWN.",
+    description:
+      "The Russell 2000 Value Index measures the performance of the small-cap value segment of the US equity market. Derived from the parent Russell 2000 Index, constituents are selected based on low price-to-book (P/B) ratios, lower historical sales per share growth, and lower medium-term growth forecasts. It is one of the most prominent factor benchmarks in financial history, serving as the official regulatory prospectus benchmark for the $16.4B+ Avantis U.S. Small Cap Value ETF (AVUV) and the underlying index for iShares IWN.",
+    eligibilityCriteria: [
+      "Must be a constituent of the parent Russell 2000 Index",
+      "Multi-variable value score derived from low price-to-book ratio and historical growth metrics",
+      "Constituents receive 100% value weighting or fractional probability shared with the Growth index",
+      "Annual reconstitution in June alongside the Russell Index Reconstitution",
+    ],
+    keyCharacteristics: [
+      "Official prospectus benchmark for the $16.4B+ Avantis U.S. Small Cap Value ETF (AVUV)",
+      "Underlying index for the $13.2B+ iShares Russell 2000 Value ETF (IWN) and Vanguard VTWV",
+      "Captures the historical Small-Cap Value size and value premiums identified in academic asset pricing (Fama-French)",
+    ],
+    tags: [
+      "Small Cap",
+      "Value",
+      "AVUV",
+      "IWN",
+      "VTWV",
+      "Avantis",
+      "Russell 2000",
+      "Factor Investing",
+      "Fama-French",
+      "Size Premium",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
+  },
+  {
+    id: "msci-world-ex-usa-small-cap",
+    symbol: "M1WDXUS",
+    altSymbols: [
+      "MSCI World ex US Small Cap",
+      "AVDV Benchmark",
+      "SCZ Benchmark",
+      "International Small Cap",
+    ],
+    name: "MSCI World ex USA Small Cap Index",
+    providerId: "msci",
+    category: "International Small-Cap Equity",
+    assetClass: "Equity",
+    region: "Developed Markets",
+    constituentsCount: 2400,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly Index Reviews",
+    launchYear: 2007,
+    trackingEtfs: [
+      {
+        ticker: "AVDV",
+        name: "Avantis International Small Cap Value ETF (Active Prospectus Benchmark)",
+        aum: "$9.2B+",
+      },
+      {
+        ticker: "SCZ",
+        name: "iShares MSCI EAFE Small-Cap ETF",
+        aum: "$11.5B+",
+      },
+    ],
+    summary:
+      "Captures small-cap representation across 22 developed markets excluding the US, serving as the official prospectus benchmark for the $9B+ Avantis AVDV.",
+    description:
+      "The MSCI World ex USA Small Cap Index captures small-cap equity representation across developed market countries outside the United States, spanning Japan, the UK, Europe, Canada, and Australia. Covering the lower 14% of free float-adjusted market capitalization in each market, it serves as the official prospectus benchmark against which Avantis systematically manages the industry-leading $9.2B+ Avantis International Small Cap Value ETF (AVDV).",
+    eligibilityCriteria: [
+      "Companies located in Developed Markets outside the United States",
+      "Market capitalization targets the 85th to 99th percentile of free-float adjusted universe (small-cap segment)",
+      "Minimum liquidity and free-float restrictions per MSCI GIMI methodology",
+    ],
+    keyCharacteristics: [
+      "Official prospectus benchmark for the $9.2B+ Avantis International Small Cap Value ETF (AVDV)",
+      "Underlying benchmark standard for developed markets international small-cap equities",
+      "Deep geographic diversification across Europe, Japan, and the Commonwealth",
+    ],
+    tags: [
+      "International",
+      "Small Cap",
+      "AVDV",
+      "SCZ",
+      "Avantis",
+      "MSCI",
+      "Developed Markets",
+      "Ex-US",
+      "Factor Investing",
+    ],
+    officialUrl: "https://www.msci.com/our-solutions/indexes/developed-markets",
+  },
+  {
+    id: "msci-world-ex-usa-value",
+    symbol: "M1WDXUV",
+    altSymbols: [
+      "MSCI World ex US Value",
+      "AVIV Benchmark",
+      "EFV Benchmark",
+      "International Value",
+    ],
+    name: "MSCI World ex USA Value Index",
+    providerId: "msci",
+    category: "International Value",
+    assetClass: "Equity",
+    region: "Developed Markets",
+    constituentsCount: 500,
+    weightingMethodology: "Float-Adjusted Market Cap with Style Allocation",
+    rebalanceFrequency: "Semi-Annual Index Reviews",
+    launchYear: 1997,
+    trackingEtfs: [
+      {
+        ticker: "EFV",
+        name: "iShares MSCI EAFE Value ETF",
+        aum: "$16.8B+",
+      },
+      {
+        ticker: "AVIV",
+        name: "Avantis International Large Cap Value ETF (Active Prospectus Benchmark)",
+        aum: "$2.8B+",
+      },
+    ],
+    summary:
+      "Measures large- and mid-cap securities exhibiting value style characteristics across 22 developed markets outside the US, underlying EFV and benchmarking Avantis AVIV.",
+    description:
+      "The MSCI World ex USA Value Index targets equities exhibiting overall value style characteristics across non-US developed markets. Value characteristics are determined by book value-to-price, 12-month forward earnings-to-price, and dividend yield. It serves as the official benchmark against which Avantis evaluates the Avantis International Large Cap Value ETF (AVIV), offering deep international exposure to cash-flow-rich industrials, financials, and consumer enterprises.",
+    eligibilityCriteria: [
+      "Constituent of parent MSCI World ex USA Index",
+      "Value style score calculated using three variables: book-to-price, 12-month forward earnings yield, and dividend yield",
+      "Semi-annual rebalance in May and November",
+    ],
+    keyCharacteristics: [
+      "Official benchmark for Avantis International Large Cap Value ETF (AVIV, $2.8B+ AUM)",
+      "Primary benchmark for non-US developed market large-cap value investing",
+      "High weightings in European and Japanese financial and industrial leaders",
+    ],
+    tags: [
+      "International",
+      "Value",
+      "AVIV",
+      "EFV",
+      "Avantis",
+      "MSCI",
+      "Developed Markets",
+      "Dividends",
+    ],
+    officialUrl: "https://www.msci.com/our-solutions/indexes/developed-markets",
   },
 ];

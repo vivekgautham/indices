@@ -105,7 +105,8 @@ const userRequestedTickers = [
   "IGM", "IXN",
   "VFMO", "ONEO", "IWD", "VONV",
   "AGG", "BND", "TLT", "IEF", "SHY", "BIL", "LQD", "HYG",
-  "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX"
+  "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX",
+  "AVUV", "AVLV", "AVUS", "AVDV", "AVIV", "AVES", "AVEM", "AVSC", "AVLC"
 ];
 
 for (const ticker of userRequestedTickers) {
@@ -160,6 +161,7 @@ const suggestions = [
   "Profitability Screen",
   "Dividend Growth",
   "Momentum",
+  "Factor / Avantis",
   "GARP",
   "Semiconductor",
   "Precious Metals",
