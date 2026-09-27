@@ -32,6 +32,7 @@ const POPULAR_SEARCH_SUGGESTIONS = [
   "GARP",
   "Semiconductor",
   "Precious Metals",
+  "Bonds / Fixed Income",
   "Treasury / Cash",
   "Cybersecurity",
   "Volatility / VIX",

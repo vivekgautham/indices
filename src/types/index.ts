@@ -1,5 +1,12 @@
 export type ProviderId =
-  "sp" | "ftse" | "msci" | "nasdaq" | "crsp" | "ice" | "marketvector";
+  | "sp"
+  | "ftse"
+  | "msci"
+  | "nasdaq"
+  | "crsp"
+  | "ice"
+  | "marketvector"
+  | "bloomberg";
 
 export interface IndexProvider {
   id: ProviderId;

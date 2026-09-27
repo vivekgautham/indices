@@ -103,7 +103,9 @@ const userRequestedTickers = [
   "XLI", "VIS",
   "SGOV",
   "IGM", "IXN",
-  "VFMO", "ONEO", "IWD", "VONV"
+  "VFMO", "ONEO", "IWD", "VONV",
+  "AGG", "BND", "TLT", "IEF", "SHY", "BIL", "LQD", "HYG",
+  "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX"
 ];
 
 for (const ticker of userRequestedTickers) {

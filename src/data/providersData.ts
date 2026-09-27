@@ -169,6 +169,31 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     marketShareSummary:
       "Underpins many of the largest thematic equity ETFs globally, most notably the $66B+ VanEck Semiconductor ETF (SMH).",
   },
+  bloomberg: {
+    id: "bloomberg",
+    name: "Bloomberg Index Services",
+    shortName: "Bloomberg",
+    logoText: "Bloomberg",
+    tagline:
+      "Pioneering global fixed income, multi-asset, and ESG benchmarks.",
+    description:
+      "Bloomberg Index Services Limited (BISL) calculates and administers thousands of benchmarks across fixed income, equities, commodities, and currencies. Home to the legendary Bloomberg U.S. Aggregate Bond Index ('The Agg')—originally created by Lehman Brothers in 1973—Bloomberg is the preeminent benchmark standard for global institutional bond and fixed-income investing.",
+    headquarters: "New York, NY, USA",
+    founded: "1973 (Lehman) / 2016 (Bloomberg)",
+    website: "https://www.bloomberg.com/professional/product/indices/",
+    accentColor: "#f97316",
+    badgeBg: "rgba(249, 115, 22, 0.15)",
+    keyEtfPartners: [
+      "BlackRock (iShares)",
+      "Vanguard",
+      "State Street (SPDR)",
+      "Charles Schwab",
+    ],
+    coverage:
+      "US & Global Fixed Income, Aggregate Bonds, US Treasuries, Corporate Credit, High Yield, Inflation-Linked (TIPS)",
+    marketShareSummary:
+      "Underpins the multi-trillion-dollar institutional fixed income world, including the $120B+ iShares Core U.S. Aggregate Bond ETF (AGG) and the $330B+ Vanguard Total Bond Market fund (BND).",
+  },
 };
 
 export const PROVIDERS_LIST: IndexProvider[] = [
@@ -179,4 +204,5 @@ export const PROVIDERS_LIST: IndexProvider[] = [
   PROVIDERS_DATA.crsp,
   PROVIDERS_DATA.ice,
   PROVIDERS_DATA.marketvector,
+  PROVIDERS_DATA.bloomberg,
 ];
