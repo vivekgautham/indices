@@ -1,4 +1,4 @@
-default_stages: [pre-commit, pre-push]
+default_stages: [pre-commit, pre-push, commit-msg]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -15,3 +15,10 @@ repos:
         stages: [pre-commit, pre-push]
       - id: check-added-large-files
         stages: [pre-commit, pre-push]
+  - repo: local
+    hooks:
+      - id: commitlint
+        name: commitlint
+        entry: npx --no -- commitlint --edit
+        language: system
+        stages: [commit-msg]
