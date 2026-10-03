@@ -47,8 +47,7 @@ export const CopyrightBadge: React.FC<CopyrightBadgeProps> = ({
           borderRadius: "8px",
           border: "1px solid",
           borderColor: "var(--indices-border, rgba(255, 255, 255, 0.08))",
-          backgroundColor:
-            "var(--indices-subtle-bg, rgba(30, 41, 59, 0.35))",
+          backgroundColor: "var(--indices-subtle-bg, rgba(30, 41, 59, 0.35))",
           backdropFilter: "blur(8px)",
           fontSize: "0.74rem",
           fontWeight: 600,
