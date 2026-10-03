@@ -145,6 +145,7 @@ const aumMap = {
   FNDF: "$14.3B+",
   VWOB: "$5.2B+",
   SPHQ: "$14.0B+",
+  SCHM: "$14.4B+",
 };
 
 

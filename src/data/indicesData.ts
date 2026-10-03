@@ -368,6 +368,61 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-large-cap-total-stock-market-index/",
   },
   {
+    id: "dow-jones-us-mid-cap-total-stock-market",
+    symbol: "DJUSM",
+    altSymbols: [
+      "DWMT",
+      "^DJUSM",
+      "DJ Mid Cap",
+      "SCHM Benchmark",
+      "Dow Jones Mid-Cap",
+      "Dow Jones Mid Cap Total Stock Market",
+    ],
+    name: "Dow Jones U.S. Mid-Cap Total Stock Market Index",
+    providerId: "sp",
+    category: "Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 500,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2005,
+    trackingEtfs: [
+      {
+        ticker: "SCHM",
+        name: "Schwab U.S. Mid-Cap ETF",
+        aum: "$14.4B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the mid-cap segment of the US equity market (stocks ranked 501–1,000 by market capitalization), serving as the primary underlying benchmark for the Schwab U.S. Mid-Cap ETF (SCHM).",
+    description:
+      "The Dow Jones U.S. Mid-Cap Total Stock Market Index is a subset of the Dow Jones U.S. Total Stock Market Index designed to measure the performance of mid-cap US equity securities. It captures companies ranked 501 through 1,000 by full market capitalization within the universe, weighted by float-adjusted market capitalization. It offers comprehensive, low-cost mid-cap exposure and serves as the primary benchmark for the $14B+ Schwab U.S. Mid-Cap ETF (SCHM).",
+    eligibilityCriteria: [
+      "Constituent of the parent Dow Jones U.S. Total Stock Market Index",
+      "Ranked 501 through 1,000 by full market capitalization within the total market universe",
+      "US companies listed on major US stock exchanges (NYSE, NASDAQ) meeting liquidity and trading volume thresholds",
+      "Buffer rules applied during quarterly rebalancings to control turnover",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the low-cost Schwab U.S. Mid-Cap ETF (SCHM)",
+      "Captures approximately 500 mid-sized US companies between large-cap and small-cap segments",
+      "Float-adjusted market cap weighting designed for high tax efficiency and minimal turnover",
+      "Quarterly rebalancings ensure disciplined size coverage while buffers minimize unnecessary transaction costs",
+    ],
+    tags: [
+      "Mid Cap",
+      "Schwab",
+      "SCHM",
+      "Core",
+      "US Mid Cap",
+      "Benchmark",
+      "Top 1000",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-mid-cap-total-stock-market-index/",
+  },
+  {
     id: "sp-500-equal-weight",
     symbol: "SPXEW",
     altSymbols: ["^SP500EW"],
