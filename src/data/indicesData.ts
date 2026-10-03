@@ -709,6 +709,63 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-momentum-index/",
   },
   {
+    id: "sp-500-quality",
+    symbol: "SPXQUAL",
+    altSymbols: [
+      "^SPXQUAL",
+      "SP5QUT",
+      "SPXQUT",
+      "SPHQ Benchmark",
+      "S&P 500 Quality",
+    ],
+    name: "S&P 500 Quality Index",
+    providerId: "sp",
+    category: "Factor / Quality Large-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 100,
+    weightingMethodology:
+      "Market Cap Weight × Quality Score (5% Single-Stock Cap)",
+    rebalanceFrequency: "Semi-Annually (June and December)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "SPHQ",
+        name: "Invesco S&P 500 Quality ETF",
+        aum: "$14.0B+",
+      },
+    ],
+    summary:
+      "Tracks the 100 highest-quality companies in the S&P 500 based on return on equity, conservative accruals, and low financial leverage. Benchmark for Invesco SPHQ.",
+    description:
+      "The S&P 500 Quality Index is designed to measure the performance of the 100 highest-quality stocks in the S&P 500. Constituents are selected by evaluating a composite quality score based on three fundamental pillars: Return on Equity (ROE, measuring profitability and capital efficiency), Accruals Ratio (measuring earnings quality and conservative accounting), and Financial Leverage Ratio (measuring debt management and balance sheet resilience). Constituents are weighted by the product of their market capitalization and quality score, subject to individual security caps of 5% and sector constraints. It serves as the primary underlying benchmark for the $14B+ Invesco S&P 500 Quality ETF (SPHQ).",
+    eligibilityCriteria: [
+      "Constituent of the parent S&P 500 Index",
+      "Composite Quality Score calculated across three fundamental metrics: Return on Equity (ROE), Accruals Ratio, and Financial Leverage Ratio",
+      "Top 100 securities with highest quality scores are selected",
+      "Individual constituent weights capped at 5% at semi-annual rebalancing in June and December",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the $14B+ Invesco S&P 500 Quality ETF (SPHQ)",
+      "High exposure to cash-flow generative market leaders with robust balance sheets and low leverage",
+      "Accruals screen penalizes companies with aggressive accounting practices or uncollected revenues",
+      "Semi-annual reconstitution maintains high factor purity while curbing excessive turnover",
+    ],
+    tags: [
+      "Quality",
+      "Factor",
+      "Smart Beta",
+      "SPHQ",
+      "Invesco",
+      "S&P 500",
+      "Large Cap",
+      "Balance Sheet",
+      "Top 100",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/strategy/sp-500-quality-index/",
+  },
+  {
     id: "fidelity-us-momentum-factor",
     symbol: "FIDMOM",
     altSymbols: [

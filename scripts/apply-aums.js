@@ -144,6 +144,7 @@ const aumMap = {
   VIGI: "$6.5B+",
   FNDF: "$14.3B+",
   VWOB: "$5.2B+",
+  SPHQ: "$14.0B+",
 };
 
 
