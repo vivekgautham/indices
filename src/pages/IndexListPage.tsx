@@ -18,7 +18,7 @@ import {
 import { useMemo, useState } from "react";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
-import CopyrightBadge from "../components/layout/CopyrightBadge";
+import SiteFooter from "../components/layout/SiteFooter";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { IndexCard } from "../components/IndexCard";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
@@ -133,7 +133,7 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Top Right Header Controls: Copyright, Color Theme & App Version */}
+      {/* Top Right Header Controls: Color Theme & App Version */}
       <Box
         sx={{
           display: "flex",
@@ -144,7 +144,6 @@ export default function IndexListPage() {
           mb: { xs: 1, sm: 1.5 },
         }}
       >
-        <CopyrightBadge />
         <ThemeSelector />
         <AppVersionBadge />
       </Box>
@@ -495,6 +494,9 @@ export default function IndexListPage() {
           </Box>
         )}
       </Box>
+
+      {/* Page Footer */}
+      <SiteFooter />
     </Container>
   );
 }

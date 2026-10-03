@@ -29,7 +29,7 @@ export const CopyrightBadge: React.FC<CopyrightBadgeProps> = ({
         </Box>
       }
       arrow
-      placement="bottom-end"
+      placement="top-start"
     >
       <Box
         component="a"

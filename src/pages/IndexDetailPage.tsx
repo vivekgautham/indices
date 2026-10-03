@@ -20,7 +20,7 @@ import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
-import CopyrightBadge from "../components/layout/CopyrightBadge";
+import SiteFooter from "../components/layout/SiteFooter";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { ProviderLogo } from "../components/ProviderLogo";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
@@ -203,7 +203,6 @@ export default function IndexDetailPage() {
           alignItems="center"
           flexWrap="wrap"
         >
-          <CopyrightBadge />
           <ThemeSelector />
           <AppVersionBadge compact />
           {index.officialUrl && (
@@ -1036,6 +1035,9 @@ export default function IndexDetailPage() {
           </Box>
         )}
       </Stack>
+
+      {/* Page Footer */}
+      <SiteFooter />
     </Container>
   );
 }
