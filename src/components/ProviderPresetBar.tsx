@@ -97,18 +97,18 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
             borderColor:
               selectedProvider === "all"
                 ? "primary.main"
-                : "rgba(255, 255, 255, 0.12)",
+                : "var(--indices-border, rgba(255, 255, 255, 0.12))",
             backgroundColor:
               selectedProvider === "all"
                 ? "primary.main"
-                : "rgba(30, 41, 59, 0.6)",
+                : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
             backdropFilter: "blur(8px)",
             transition: "all 0.2s ease",
             "&:hover": {
               backgroundColor:
                 selectedProvider === "all"
                   ? "primary.dark"
-                  : "rgba(30, 41, 59, 0.9)",
+                  : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.9))",
               transform: "translateY(-2px)",
             },
           }}
@@ -164,10 +164,10 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 border: "1.5px solid",
                 borderColor: isSelected
                   ? provider.accentColor
-                  : "rgba(255, 255, 255, 0.12)",
+                  : "var(--indices-border, rgba(255, 255, 255, 0.12))",
                 backgroundColor: isSelected
                   ? provider.accentColor
-                  : "rgba(30, 41, 59, 0.6)",
+                  : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
                 boxShadow: isSelected
                   ? `0 0 20px ${provider.accentColor}55`
                   : "none",
@@ -176,7 +176,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 "&:hover": {
                   backgroundColor: isSelected
                     ? provider.accentColor
-                    : "rgba(30, 41, 59, 0.9)",
+                    : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.9))",
                   borderColor: provider.accentColor,
                   transform: "translateY(-2px)",
                 },

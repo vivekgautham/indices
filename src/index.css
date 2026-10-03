@@ -5,14 +5,30 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0f172a;
+  color-scheme: dark;
+  color: var(--indices-text-primary, #f8fafc);
+  background-color: var(--indices-bg-default, #0f172a);
+
+  --indices-bg-default: #0f172a;
+  --indices-bg-paper: #1e293b;
+  --indices-card-bg: rgba(30, 41, 59, 0.65);
+  --indices-card-hover-bg: rgba(30, 41, 59, 0.9);
+  --indices-subtle-bg: rgba(30, 41, 59, 0.4);
+  --indices-border: rgba(255, 255, 255, 0.08);
+  --indices-text-primary: #f8fafc;
+  --indices-text-secondary: #94a3b8;
+  --indices-primary: #6366f1;
+  --indices-primary-light: #818cf8;
+  --indices-primary-dark: #4f46e5;
+  --indices-accent-preview: #6366f1;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 *,
@@ -27,11 +43,12 @@ textarea {
 
 a {
   font-weight: 500;
-  color: #6366f1;
+  color: var(--indices-primary, #6366f1);
   text-decoration: inherit;
+  transition: color 0.2s ease;
 }
 a:hover {
-  color: #818cf8;
+  color: var(--indices-primary-light, #818cf8);
 }
 
 body {
@@ -39,4 +56,9 @@ body {
   padding: 0;
   min-width: 100vw;
   min-height: 100vh;
+  background-color: var(--indices-bg-default, #0f172a);
+  color: var(--indices-text-primary, #f8fafc);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }

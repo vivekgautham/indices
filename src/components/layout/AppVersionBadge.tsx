@@ -19,7 +19,7 @@ export default function AppVersionBadge({
           </Box>
           <Box
             sx={{
-              color: "rgba(255, 255, 255, 0.6)",
+              color: "text.secondary",
               fontSize: "0.68rem",
               mt: 0.25,
             }}
@@ -37,13 +37,14 @@ export default function AppVersionBadge({
           display: "inline-flex",
           alignItems: "center",
           color: "text.secondary",
-          opacity: 0.75,
+          opacity: 0.8,
           transition: "all 0.2s ease-in-out",
           px: 1,
           py: 0.35,
           borderRadius: "8px",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
-          backgroundColor: "rgba(30, 41, 59, 0.35)",
+          border: "1px solid",
+          borderColor: "var(--indices-border, rgba(255, 255, 255, 0.08))",
+          backgroundColor: "var(--indices-subtle-bg, rgba(30, 41, 59, 0.35))",
           backdropFilter: "blur(8px)",
           fontSize: "0.74rem",
           fontWeight: 600,
@@ -52,8 +53,9 @@ export default function AppVersionBadge({
           "&:hover": {
             opacity: 1,
             color: "primary.light",
-            borderColor: "rgba(99, 102, 241, 0.35)",
-            backgroundColor: "rgba(99, 102, 241, 0.08)",
+            borderColor: "primary.main",
+            backgroundColor:
+              "var(--indices-card-hover-bg, rgba(99, 102, 241, 0.1))",
           },
         }}
       >

@@ -20,6 +20,7 @@ import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
+import ThemeSelector from "../components/layout/ThemeSelector";
 import { ProviderLogo } from "../components/ProviderLogo";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
@@ -98,7 +99,8 @@ export default function IndexDetailPage() {
             p: 8,
             textAlign: "center",
             borderRadius: 4,
-            backgroundColor: "rgba(30, 41, 59, 0.3)",
+            backgroundColor: "var(--indices-subtle-bg, rgba(30, 41, 59, 0.3))",
+            borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
             borderStyle: "dashed",
           }}
         >
@@ -122,7 +124,8 @@ export default function IndexDetailPage() {
             p: 6,
             textAlign: "center",
             borderRadius: 4,
-            backgroundColor: "rgba(30, 41, 59, 0.3)",
+            backgroundColor: "var(--indices-subtle-bg, rgba(30, 41, 59, 0.3))",
+            borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
             borderStyle: "dashed",
           }}
         >
@@ -179,12 +182,13 @@ export default function IndexDetailPage() {
             color: "text.secondary",
             px: 2,
             py: 0.75,
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            backgroundColor: "rgba(30, 41, 59, 0.5)",
+            border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.1))",
+            backgroundColor: "var(--indices-subtle-bg, rgba(30, 41, 59, 0.5))",
             backdropFilter: "blur(8px)",
             "&:hover": {
-              color: "#ffffff",
-              backgroundColor: "rgba(30, 41, 59, 0.85)",
+              color: "text.primary",
+              backgroundColor:
+                "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.85))",
               borderColor: "primary.light",
             },
           }}
@@ -193,6 +197,7 @@ export default function IndexDetailPage() {
         </Button>
 
         <Stack direction="row" spacing={1.5} alignItems="center">
+          <ThemeSelector />
           <AppVersionBadge compact />
           {index.officialUrl && (
             <Button
@@ -229,7 +234,7 @@ export default function IndexDetailPage() {
           mb: 4,
           p: { xs: 2.5, sm: 4 },
           borderRadius: 4,
-          background: `linear-gradient(135deg, ${provider?.badgeBg || "rgba(99, 102, 241, 0.15)"} 0%, rgba(15, 23, 42, 0.95) 100%)`,
+          background: `linear-gradient(135deg, ${provider?.badgeBg || "rgba(99, 102, 241, 0.15)"} 0%, var(--indices-card-bg, rgba(15, 23, 42, 0.95)) 100%)`,
           backdropFilter: "blur(20px)",
           border: `1.5px solid ${accentColor}33`,
           boxShadow: `0 12px 36px rgba(0, 0, 0, 0.4), 0 0 30px ${accentColor}18`,
@@ -371,9 +376,10 @@ export default function IndexDetailPage() {
             sx={{
               p: 2.5,
               borderRadius: 3,
-              backgroundColor: "rgba(30, 41, 59, 0.6)",
+              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
               backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              border:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
             }}
           >
             <Typography
@@ -388,7 +394,7 @@ export default function IndexDetailPage() {
             </Typography>
             <Typography
               variant="h4"
-              sx={{ fontWeight: 800, color: "#f8fafc", mt: 0.5 }}
+              sx={{ fontWeight: 800, color: "text.primary", mt: 0.5 }}
             >
               {typeof index.constituentsCount === "number"
                 ? index.constituentsCount.toLocaleString()
@@ -404,9 +410,10 @@ export default function IndexDetailPage() {
             sx={{
               p: 2.5,
               borderRadius: 3,
-              backgroundColor: "rgba(30, 41, 59, 0.6)",
+              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
               backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              border:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
             }}
           >
             <Typography
@@ -423,7 +430,7 @@ export default function IndexDetailPage() {
               variant="h6"
               sx={{
                 fontWeight: 800,
-                color: "#f8fafc",
+                color: "text.primary",
                 mt: 0.5,
                 lineHeight: 1.3,
               }}
@@ -440,9 +447,10 @@ export default function IndexDetailPage() {
             sx={{
               p: 2.5,
               borderRadius: 3,
-              backgroundColor: "rgba(30, 41, 59, 0.6)",
+              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
               backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              border:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
             }}
           >
             <Typography
@@ -459,7 +467,7 @@ export default function IndexDetailPage() {
               variant="h6"
               sx={{
                 fontWeight: 800,
-                color: "#f8fafc",
+                color: "text.primary",
                 mt: 0.5,
                 lineHeight: 1.3,
               }}
@@ -476,9 +484,10 @@ export default function IndexDetailPage() {
             sx={{
               p: 2.5,
               borderRadius: 3,
-              backgroundColor: "rgba(30, 41, 59, 0.6)",
+              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
               backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              border:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
             }}
           >
             <Typography
@@ -493,7 +502,7 @@ export default function IndexDetailPage() {
             </Typography>
             <Typography
               variant="h4"
-              sx={{ fontWeight: 800, color: "#f8fafc", mt: 0.5 }}
+              sx={{ fontWeight: 800, color: "text.primary", mt: 0.5 }}
             >
               {index.launchYear}
             </Typography>
@@ -519,19 +528,21 @@ export default function IndexDetailPage() {
               sx={{
                 p: { xs: 2.5, sm: 3.5 },
                 borderRadius: 3.5,
-                backgroundColor: "rgba(30, 41, 59, 0.6)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
+                backgroundColor:
+                  "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
+                border:
+                  "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ fontWeight: 800, color: "#f8fafc", mb: 1.5 }}
+                sx={{ fontWeight: 800, color: "text.primary", mb: 1.5 }}
               >
                 📖 Benchmark Methodology & Description
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ color: "#cbd5e1", lineHeight: 1.75 }}
+                sx={{ color: "text.secondary", lineHeight: 1.75 }}
               >
                 {index.description}
               </Typography>
@@ -545,13 +556,15 @@ export default function IndexDetailPage() {
                   sx={{
                     p: { xs: 2.5, sm: 3.5 },
                     borderRadius: 3.5,
-                    backgroundColor: "rgba(30, 41, 59, 0.6)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    backgroundColor:
+                      "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
+                    border:
+                      "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
                   }}
                 >
                   <Typography
                     variant="h6"
-                    sx={{ fontWeight: 800, color: "#f8fafc", mb: 2 }}
+                    sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}
                   >
                     📋 Constituent Inclusion & Eligibility Criteria
                   </Typography>
@@ -575,7 +588,7 @@ export default function IndexDetailPage() {
                         />
                         <Typography
                           variant="body1"
-                          sx={{ color: "#cbd5e1", lineHeight: 1.5 }}
+                          sx={{ color: "text.secondary", lineHeight: 1.5 }}
                         >
                           {crit}
                         </Typography>
@@ -593,13 +606,15 @@ export default function IndexDetailPage() {
                   sx={{
                     p: { xs: 2.5, sm: 3.5 },
                     borderRadius: 3.5,
-                    backgroundColor: "rgba(30, 41, 59, 0.6)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    backgroundColor:
+                      "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
+                    border:
+                      "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
                   }}
                 >
                   <Typography
                     variant="h6"
-                    sx={{ fontWeight: 800, color: "#f8fafc", mb: 2 }}
+                    sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}
                   >
                     ⭐ Key Benchmark Highlights
                   </Typography>
@@ -663,13 +678,15 @@ export default function IndexDetailPage() {
                 sx={{
                   p: { xs: 2.5, sm: 3 },
                   borderRadius: 3.5,
-                  backgroundColor: "rgba(30, 41, 59, 0.6)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  backgroundColor:
+                    "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
+                  border:
+                    "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
                 }}
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: 800, color: "#f8fafc", mb: 2 }}
+                  sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}
                 >
                   📦 Benchmark Tracking ETFs & Funds
                 </Typography>
@@ -680,12 +697,15 @@ export default function IndexDetailPage() {
                       sx={{
                         p: 1.75,
                         borderRadius: 2.5,
-                        backgroundColor: "rgba(15, 23, 42, 0.7)",
-                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        backgroundColor:
+                          "var(--indices-subtle-bg, rgba(15, 23, 42, 0.7))",
+                        border:
+                          "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
                         transition: "all 0.2s ease",
                         "&:hover": {
                           borderColor: "primary.light",
-                          backgroundColor: "rgba(15, 23, 42, 0.95)",
+                          backgroundColor:
+                            "var(--indices-card-hover-bg, rgba(15, 23, 42, 0.95))",
                         },
                       }}
                     >
@@ -920,8 +940,10 @@ export default function IndexDetailPage() {
                   variant="outlined"
                   sx={{
                     borderRadius: 3,
-                    backgroundColor: "rgba(30, 41, 59, 0.6)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    backgroundColor:
+                      "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
+                    border:
+                      "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
                     transition: "all 0.2s ease",
                     "&:hover": {
                       borderColor: accentColor,

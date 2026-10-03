@@ -43,11 +43,11 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "rgba(30, 41, 59, 0.6)",
+        backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
         backdropFilter: "blur(12px)",
-        border: "1px solid rgba(255, 255, 255, 0.08)",
+        border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
         transition:
-          "transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease",
+          "transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease, background-color 0.25s ease",
         "&:hover": {
           transform: "translateY(-4px)",
           borderColor: accentColor,
@@ -167,7 +167,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                 fontWeight: 800,
                 fontSize: "1.08rem",
                 lineHeight: 1.3,
-                color: "#f8fafc",
+                color: "text.primary",
                 mb: 0.5,
               }}
             >
@@ -197,8 +197,10 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
               gap: 1,
               p: 1.25,
               borderRadius: 2,
-              backgroundColor: "rgba(15, 23, 42, 0.6)",
-              border: "1px solid rgba(255, 255, 255, 0.05)",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(15, 23, 42, 0.6))",
+              border:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
             }}
           >
             <Box>
@@ -214,7 +216,11 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ fontWeight: 700, color: "#f8fafc", fontSize: "0.82rem" }}
+                sx={{
+                  fontWeight: 700,
+                  color: "text.primary",
+                  fontSize: "0.82rem",
+                }}
               >
                 {typeof index.constituentsCount === "number"
                   ? index.constituentsCount.toLocaleString()
@@ -237,7 +243,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                 variant="body2"
                 sx={{
                   fontWeight: 700,
-                  color: "#f8fafc",
+                  color: "text.primary",
                   fontSize: "0.82rem",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
@@ -339,7 +345,8 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
             alignItems="center"
             sx={{
               pt: 1,
-              borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+              borderTop:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.06))",
               color: "text.secondary",
             }}
           >

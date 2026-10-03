@@ -18,6 +18,7 @@ import {
 import { useMemo, useState } from "react";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
+import ThemeSelector from "../components/layout/ThemeSelector";
 import { IndexCard } from "../components/IndexCard";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
@@ -131,15 +132,17 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Subtle App Version at Top Right */}
+      {/* Top Right Header Controls: Color Theme & App Version */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
+          gap: { xs: 1, sm: 1.25 },
           mb: { xs: 1, sm: 1.5 },
         }}
       >
+        <ThemeSelector />
         <AppVersionBadge />
       </Box>
 
@@ -225,11 +228,13 @@ export default function IndexListPage() {
                 ) : null,
                 sx: {
                   borderRadius: 3.5,
-                  backgroundColor: "rgba(30, 41, 59, 0.7)",
+                  backgroundColor:
+                    "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
                   backdropFilter: "blur(12px)",
                   fontSize: "0.95rem",
                   "& fieldset": {
-                    borderColor: "rgba(255, 255, 255, 0.12)",
+                    borderColor:
+                      "var(--indices-border, rgba(255, 255, 255, 0.12))",
                   },
                   "&:hover fieldset": {
                     borderColor: "primary.light",
@@ -279,14 +284,15 @@ export default function IndexListPage() {
                       borderRadius: 1.5,
                       borderColor: isActive
                         ? "primary.main"
-                        : "rgba(255, 255, 255, 0.1)",
+                        : "var(--indices-border, rgba(255, 255, 255, 0.1))",
                       backgroundColor: isActive
                         ? "primary.main"
-                        : "rgba(30, 41, 59, 0.4)",
+                        : "var(--indices-subtle-bg, rgba(30, 41, 59, 0.4))",
                       "&:hover": {
                         backgroundColor: isActive
                           ? "primary.dark"
-                          : "rgba(30, 41, 59, 0.8)",
+                          : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
+                        borderColor: "primary.light",
                       },
                     }}
                   />
@@ -417,7 +423,9 @@ export default function IndexListPage() {
               p: 6,
               textAlign: "center",
               borderRadius: 4,
-              backgroundColor: "rgba(30, 41, 59, 0.3)",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(30, 41, 59, 0.3))",
+              borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
               borderStyle: "dashed",
             }}
           >
