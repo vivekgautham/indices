@@ -18,6 +18,7 @@ import {
 import { useMemo, useState } from "react";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
+import CopyrightBadge from "../components/layout/CopyrightBadge";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { IndexCard } from "../components/IndexCard";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
@@ -132,16 +133,18 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Top Right Header Controls: Color Theme & App Version */}
+      {/* Top Right Header Controls: Copyright, Color Theme & App Version */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
-          gap: { xs: 1, sm: 1.25 },
+          flexWrap: "wrap",
+          gap: { xs: 0.75, sm: 1.25 },
           mb: { xs: 1, sm: 1.5 },
         }}
       >
+        <CopyrightBadge />
         <ThemeSelector />
         <AppVersionBadge />
       </Box>

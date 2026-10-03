@@ -20,6 +20,7 @@ import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
+import CopyrightBadge from "../components/layout/CopyrightBadge";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { ProviderLogo } from "../components/ProviderLogo";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
@@ -196,7 +197,13 @@ export default function IndexDetailPage() {
           Back to Indices
         </Button>
 
-        <Stack direction="row" spacing={1.5} alignItems="center">
+        <Stack
+          direction="row"
+          spacing={{ xs: 1, sm: 1.5 }}
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          <CopyrightBadge />
           <ThemeSelector />
           <AppVersionBadge compact />
           {index.officialUrl && (
