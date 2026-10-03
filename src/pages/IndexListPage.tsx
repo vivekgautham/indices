@@ -91,6 +91,9 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Value",
       "International",
       "Emerging Markets",
+      "Japan",
+      "India",
+      "China",
     ],
   },
 ];

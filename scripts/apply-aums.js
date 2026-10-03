@@ -130,6 +130,20 @@ const aumMap = {
   VBR: "$32B+",
   VSIAX: "$60B+ Total Fund",
   MOAT: "$16.5B+",
+  IXUS: "$40.5B+",
+  ACWX: "$5.5B+",
+  VEU: "$35.2B+",
+  IDEV: "$16.2B+",
+  EWJ: "$17.4B+",
+  INDA: "$11.2B+",
+  MCHI: "$8.1B+",
+  FXI: "$7.4B+",
+  EWT: "$6.2B+",
+  EWU: "$4.5B+",
+  EFG: "$14.1B+",
+  VIGI: "$6.5B+",
+  FNDF: "$14.3B+",
+  VWOB: "$5.2B+",
 };
 
 

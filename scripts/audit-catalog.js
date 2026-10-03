@@ -108,7 +108,8 @@ const userRequestedTickers = [
   "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX",
   "AVUV", "AVLV", "AVUS", "AVDV", "AVIV", "AVES", "AVEM", "AVSC", "AVLC",
   "IYW",
-  "MGK", "VOT", "VOE", "VBK", "VBR", "MOAT"
+  "MGK", "VOT", "VOE", "VBK", "VBR", "MOAT",
+  "IXUS", "ACWX", "VEU", "IDEV", "EWJ", "INDA", "MCHI", "FXI", "EWT", "EWU", "EFG", "VIGI", "FNDF", "VWOB"
 ];
 
 for (const ticker of userRequestedTickers) {
@@ -192,6 +193,9 @@ const suggestions = [
   "Value",
   "International",
   "Emerging Markets",
+  "Japan",
+  "India",
+  "China",
 ];
 
 for (const term of suggestions) {
