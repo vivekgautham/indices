@@ -119,6 +119,17 @@ const aumMap = {
   VONV: "$11B+",
   VFVA: "$1.2B+",
   DWAS: "$420M+",
+  MGK: "$24B+",
+  VMGAX: "$35B+ Total Fund",
+  VOT: "$16B+",
+  VMGMX: "$28B+ Total Fund",
+  VOE: "$19B+",
+  VMVAX: "$40B+ Total Fund",
+  VBK: "$18B+",
+  VSGAX: "$32B+ Total Fund",
+  VBR: "$32B+",
+  VSIAX: "$60B+ Total Fund",
+  MOAT: "$16.5B+",
 };
 
 

@@ -107,7 +107,8 @@ const userRequestedTickers = [
   "AGG", "BND", "TLT", "IEF", "SHY", "BIL", "LQD", "HYG",
   "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX",
   "AVUV", "AVLV", "AVUS", "AVDV", "AVIV", "AVES", "AVEM", "AVSC", "AVLC",
-  "IYW"
+  "IYW",
+  "MGK", "VOT", "VOE", "VBK", "VBR", "MOAT"
 ];
 
 for (const ticker of userRequestedTickers) {
@@ -169,7 +170,8 @@ const suggestions = [
   "Bonds / Fixed Income",
   "Treasury / Cash",
   "Cybersecurity",
-  "Volatility / VIX"
+  "Volatility / VIX",
+  "Wide Moat"
 ];
 
 for (const term of suggestions) {

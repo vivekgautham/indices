@@ -118,9 +118,12 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     website: "https://www.crsp.org",
     accentColor: "#f59e0b",
     badgeBg: "rgba(245, 158, 11, 0.15)",
-    keyEtfPartners: ["The Vanguard Group (Exclusive Index Fund Partner)"],
+    keyEtfPartners: [
+      "The Vanguard Group",
+      "VanEck",
+    ],
     coverage:
-      "US Total Market, Large Cap, Mid Cap, Small Cap, Micro Cap, Value & Growth Style Dimensions",
+      "US Total Market, Mega Cap, Large Cap, Mid Cap, Small Cap, Value & Growth Style Dimensions, Morningstar Economic Moat",
     marketShareSummary:
       "Primary benchmark underlying Vanguard's core US index funds, including the $1.9+ trillion Vanguard Total Stock Market (VTI / VTSAX).",
   },
