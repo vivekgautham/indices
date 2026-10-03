@@ -33,7 +33,11 @@ export interface MarketIndex {
   providerId: ProviderId;
   category: string;
   assetClass:
-    "Equity" | "Fixed Income" | "Commodity" | "Volatility" | "Multi-Asset";
+    | "Equity"
+    | "Fixed Income"
+    | "Commodity"
+    | "Volatility"
+    | "Multi-Asset";
   region:
     | "United States"
     | "Global"

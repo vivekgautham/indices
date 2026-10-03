@@ -68,6 +68,7 @@ const aumMap = {
   VB: "$81B+",
   VSMAX: "$160B+ Total Fund",
   SCHB: "$44B+",
+  SCHX: "$74B+",
   SOXQ: "$2.9B+",
   SMH: "$66.8B+",
   PSI: "$2.5B+",

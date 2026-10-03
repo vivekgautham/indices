@@ -316,6 +316,58 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-broad-stock-market-index/",
   },
   {
+    id: "dow-jones-us-large-cap-total-stock-market",
+    symbol: "DJUSL",
+    altSymbols: [
+      "DWL",
+      "DJ Large Cap",
+      "SCHX Benchmark",
+      "Dow Jones Large-Cap",
+      "Dow Jones Large Cap Total Stock Market",
+    ],
+    name: "Dow Jones U.S. Large-Cap Total Stock Market Index",
+    providerId: "sp",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 750,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2005,
+    trackingEtfs: [
+      {
+        ticker: "SCHX",
+        name: "Schwab U.S. Large-Cap ETF",
+        aum: "$74B+",
+      },
+    ],
+    summary:
+      "Measures the performance of the largest 750 US companies by float-adjusted market capitalization, serving as the primary underlying benchmark for the Schwab U.S. Large-Cap ETF (SCHX).",
+    description:
+      "The Dow Jones U.S. Large-Cap Total Stock Market Index is a subset of the Dow Jones U.S. Total Stock Market Index designed to measure the performance of the 750 largest US equity securities by float-adjusted market capitalization. It captures the core large-cap segment of the US stock market with ultra-low portfolio turnover, serving as the underlying benchmark for the $74B+ Schwab U.S. Large-Cap ETF (SCHX).",
+    eligibilityCriteria: [
+      "US companies listed on major US stock exchanges (NYSE, NASDAQ, etc.)",
+      "Ranked among the top 750 largest US equities by float-adjusted market capitalization within the Dow Jones U.S. Total Stock Market universe",
+      "Strict minimum liquidity, seasoning, and public float requirements",
+    ],
+    keyCharacteristics: [
+      "Tracks the top 750 US equities, offering broader large-cap coverage than the S&P 500 (~500 stocks)",
+      "Primary underlying benchmark for the low-cost Schwab U.S. Large-Cap ETF (SCHX)",
+      "Float-adjusted market cap weighting designed for high tax efficiency and minimal turnover",
+    ],
+    tags: [
+      "Large Cap",
+      "Schwab",
+      "SCHX",
+      "Core",
+      "US Core",
+      "Benchmark",
+      "Top 750",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-large-cap-total-stock-market-index/",
+  },
+  {
     id: "sp-500-equal-weight",
     symbol: "SPXEW",
     altSymbols: ["^SP500EW"],

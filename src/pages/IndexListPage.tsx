@@ -144,7 +144,10 @@ export default function IndexListPage() {
       </Box>
 
       {/* Header Section */}
-      <Box component="header" sx={{ mb: 3.5, textAlign: "center", width: "100%" }}>
+      <Box
+        component="header"
+        sx={{ mb: 3.5, textAlign: "center", width: "100%" }}
+      >
         <Stack spacing={2} alignItems="center" sx={{ width: "100%" }}>
           <Typography
             variant="h3"
@@ -199,7 +202,7 @@ export default function IndexListPage() {
             <TextField
               fullWidth
               variant="outlined"
-              placeholder="Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, SCHD), methodology (packeting, price-weighted, equal weight), criteria..."
+              placeholder="Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, SCHD, SCHX), methodology (packeting, price-weighted, equal weight), criteria..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               InputProps={{
@@ -403,9 +406,7 @@ export default function IndexListPage() {
           >
             <Stack spacing={2} alignItems="center">
               <CircularProgress color="primary" />
-              <Typography color="text.secondary">
-                Loading indices...
-              </Typography>
+              <Typography color="text.secondary">Loading indices...</Typography>
             </Stack>
           </Paper>
         ) : filteredIndices.length === 0 ? (
@@ -434,7 +435,7 @@ export default function IndexListPage() {
                     indices were found across other providers.
                   </>
                 ) : (
-                  "Try searching by ticker (e.g. SPX, NDX, RUT, VTI, SCHD), weighting methodology (e.g. Equal Weight, Packeting, Price-Weighted), or constituent criteria."
+                  "Try searching by ticker (e.g. SPX, NDX, RUT, VTI, SCHD, SCHX), weighting methodology (e.g. Equal Weight, Packeting, Price-Weighted), or constituent criteria."
                 )}
               </Typography>
 

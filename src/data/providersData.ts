@@ -19,6 +19,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
       "BlackRock (iShares)",
       "Vanguard",
       "Invesco",
+      "Charles Schwab",
     ],
     coverage:
       "Global Equities, Fixed Income, Real Estate, Commodities, Strategy & Factor",
@@ -174,8 +175,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     name: "Bloomberg Index Services",
     shortName: "Bloomberg",
     logoText: "Bloomberg",
-    tagline:
-      "Pioneering global fixed income, multi-asset, and ESG benchmarks.",
+    tagline: "Pioneering global fixed income, multi-asset, and ESG benchmarks.",
     description:
       "Bloomberg Index Services Limited (BISL) calculates and administers thousands of benchmarks across fixed income, equities, commodities, and currencies. Home to the legendary Bloomberg U.S. Aggregate Bond Index ('The Agg')—originally created by Lehman Brothers in 1973—Bloomberg is the preeminent benchmark standard for global institutional bond and fixed-income investing.",
     headquarters: "New York, NY, USA",

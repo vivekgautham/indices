@@ -79,7 +79,7 @@ console.log("\n3. User Requested Tickers Verification");
 const userRequestedTickers = [
   "SPYM", "VOO", "IVV",
   "VTI",
-  "SCHB", "ITOT",
+  "SCHB", "SCHX", "ITOT",
   "SPTM",
   "VONE",
   "SOXQ", "SOXX", "SMH", "PSI", "DRAM",
