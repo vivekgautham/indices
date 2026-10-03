@@ -158,20 +158,40 @@ function runSearch(term) {
 }
 
 const suggestions = [
-  "Float-Adjusted",
-  "Equal Weight",
-  "Profitability Screen",
-  "Dividend Growth",
+  // Themes
   "Momentum",
-  "Factor / Avantis",
+  "Dividend Growth",
+  "Equal Weight",
   "GARP",
   "Semiconductor",
+  "Wide Moat",
+  "Quality",
+  "High Dividend",
+  "Cybersecurity",
   "Precious Metals",
   "Bonds / Fixed Income",
   "Treasury / Cash",
-  "Cybersecurity",
   "Volatility / VIX",
-  "Wide Moat"
+  "Profitability Screen",
+  // ETF Providers
+  "Vanguard",
+  "iShares",
+  "Schwab",
+  "Invesco",
+  "SPDR",
+  "Avantis",
+  "VanEck",
+  "Fidelity",
+  // Market Exposure
+  "Broad Market",
+  "Large Cap",
+  "Mega Cap",
+  "Mid Cap",
+  "Small Cap",
+  "Growth",
+  "Value",
+  "International",
+  "Emerging Markets",
 ];
 
 for (const term of suggestions) {

@@ -1,4 +1,6 @@
 import ClearIcon from "@mui/icons-material/Clear";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LanguageIcon from "@mui/icons-material/Language";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,8 +16,10 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
@@ -25,20 +29,70 @@ import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import { MarketIndex, ProviderId } from "../types";
 
-const POPULAR_SEARCH_SUGGESTIONS = [
-  "Float-Adjusted",
-  "Equal Weight",
-  "Profitability Screen",
-  "Dividend Growth",
-  "Momentum",
-  "Factor / Avantis",
-  "GARP",
-  "Semiconductor",
-  "Precious Metals",
-  "Bonds / Fixed Income",
-  "Treasury / Cash",
-  "Cybersecurity",
-  "Volatility / VIX",
+export interface SearchCategory {
+  id: "themes" | "etf-providers" | "market-exposure";
+  label: string;
+  icon: string;
+  description: string;
+  terms: string[];
+}
+
+export const SEARCH_CATEGORIES: SearchCategory[] = [
+  {
+    id: "themes",
+    label: "Themes",
+    icon: "🏷️",
+    description: "Strategies, factor tilts, and industry themes",
+    terms: [
+      "Momentum",
+      "Dividend Growth",
+      "Equal Weight",
+      "GARP",
+      "Semiconductor",
+      "Wide Moat",
+      "Quality",
+      "High Dividend",
+      "Cybersecurity",
+      "Precious Metals",
+      "Bonds / Fixed Income",
+      "Treasury / Cash",
+      "Volatility / VIX",
+      "Profitability Screen",
+    ],
+  },
+  {
+    id: "etf-providers",
+    label: "ETF Providers",
+    icon: "🏛️",
+    description: "Major asset managers and fund sponsors",
+    terms: [
+      "Vanguard",
+      "iShares",
+      "Schwab",
+      "Invesco",
+      "SPDR",
+      "Avantis",
+      "VanEck",
+      "Fidelity",
+    ],
+  },
+  {
+    id: "market-exposure",
+    label: "Market Exposure",
+    icon: "🌐",
+    description: "Cap tiers, styles, and geographic reach",
+    terms: [
+      "Broad Market",
+      "Large Cap",
+      "Mega Cap",
+      "Mid Cap",
+      "Small Cap",
+      "Growth",
+      "Value",
+      "International",
+      "Emerging Markets",
+    ],
+  },
 ];
 
 // Helper to check if a market index matches a multi-term query
@@ -79,6 +133,20 @@ export default function IndexListPage() {
     "all",
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [visibleRows, setVisibleRows] = useState(3);
+  const [activeCategory, setActiveCategory] = useState<
+    "all" | "themes" | "etf-providers" | "market-exposure"
+  >("all");
+
+  const theme = useTheme();
+  const isXl = useMediaQuery(theme.breakpoints.up("xl"));
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
+
+  // Reset pagination to 3 rows whenever filter or search query changes
+  useEffect(() => {
+    setVisibleRows(3);
+  }, [searchTerm, selectedProvider]);
 
   // Calculate index counts per provider
   const indexCounts = useMemo(() => {
@@ -120,6 +188,16 @@ export default function IndexListPage() {
     }
     return list;
   }, [allProviderMatches, selectedProvider]);
+
+  // Responsive column count and visible indices for 3-row batches
+  const columns = isXl ? 4 : isMd ? 3 : isSm ? 2 : 1;
+  const batchSize = columns * 3;
+  const visibleCount = visibleRows * columns;
+  const visibleIndices = useMemo(() => {
+    return filteredIndices.slice(0, visibleCount);
+  }, [filteredIndices, visibleCount]);
+  const hasMore = visibleCount < filteredIndices.length;
+  const remainingCount = filteredIndices.length - visibleCount;
 
   const isLoading = loadingProviders || loadingIndices;
 
@@ -245,62 +323,215 @@ export default function IndexListPage() {
               }}
             />
 
-            {/* Quick Methodology Search Chips */}
-            <Stack
-              direction="row"
-              flexWrap="wrap"
-              justifyContent="center"
-              alignItems="center"
-              gap={0.75}
-              sx={{ mt: 1.25 }}
-            >
-              <Typography
-                variant="caption"
-                sx={{
-                  color: "text.secondary",
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  mr: 0.5,
-                }}
+            {/* Categorized Suggested Searches */}
+            <Box sx={{ mt: 1.75, width: "100%" }}>
+              {/* Category Filter Buttons */}
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                flexWrap="wrap"
+                gap={0.75}
+                sx={{ mb: 1.25 }}
               >
-                Suggested searches:
-              </Typography>
-              {POPULAR_SEARCH_SUGGESTIONS.map((term) => {
-                const isActive =
-                  searchTerm.toLowerCase() === term.toLowerCase();
-                return (
-                  <Chip
-                    key={term}
-                    label={term}
-                    size="small"
-                    clickable
-                    onClick={() =>
-                      setSearchTerm((prev) => (prev === term ? "" : term))
-                    }
-                    variant={isActive ? "filled" : "outlined"}
-                    color={isActive ? "primary" : "default"}
-                    sx={{
-                      fontSize: "0.72rem",
-                      fontWeight: 600,
-                      height: 24,
-                      borderRadius: 1.5,
-                      borderColor: isActive
-                        ? "primary.main"
-                        : "var(--indices-border, rgba(255, 255, 255, 0.1))",
-                      backgroundColor: isActive
-                        ? "primary.main"
-                        : "var(--indices-subtle-bg, rgba(30, 41, 59, 0.4))",
-                      "&:hover": {
-                        backgroundColor: isActive
-                          ? "primary.dark"
-                          : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
-                        borderColor: "primary.light",
-                      },
-                    }}
-                  />
-                );
-              })}
-            </Stack>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: "text.secondary",
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    mr: 0.5,
+                  }}
+                >
+                  Suggested searches:
+                </Typography>
+
+                <Button
+                  size="small"
+                  variant={activeCategory === "all" ? "contained" : "outlined"}
+                  onClick={() => setActiveCategory("all")}
+                  sx={{
+                    borderRadius: 2,
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    py: 0.25,
+                    px: 1.1,
+                    minHeight: 24,
+                    textTransform: "none",
+                  }}
+                >
+                  All Categories
+                </Button>
+
+                {SEARCH_CATEGORIES.map((cat) => {
+                  const isCatActive = activeCategory === cat.id;
+                  const hasActiveTerm = cat.terms.some(
+                    (t) => t.toLowerCase() === searchTerm.toLowerCase()
+                  );
+                  return (
+                    <Button
+                      key={cat.id}
+                      size="small"
+                      variant={isCatActive ? "contained" : "outlined"}
+                      onClick={() => setActiveCategory(cat.id)}
+                      sx={{
+                        borderRadius: 2,
+                        fontSize: "0.72rem",
+                        fontWeight: 700,
+                        py: 0.25,
+                        px: 1.1,
+                        minHeight: 24,
+                        textTransform: "none",
+                        borderColor: hasActiveTerm
+                          ? "primary.main"
+                          : undefined,
+                      }}
+                    >
+                      <Box component="span" sx={{ mr: 0.4 }}>
+                        {cat.icon}
+                      </Box>
+                      {cat.label} ({cat.terms.length})
+                    </Button>
+                  );
+                })}
+              </Stack>
+
+              {/* Grouped or Filtered Chips View */}
+              {activeCategory === "all" ? (
+                /* All categories grouped by category label */
+                <Stack spacing={0.9} sx={{ width: "100%" }}>
+                  {SEARCH_CATEGORIES.map((cat) => (
+                    <Stack
+                      key={cat.id}
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="center"
+                      flexWrap="wrap"
+                      gap={0.6}
+                    >
+                      <Chip
+                        label={`${cat.icon} ${cat.label}`}
+                        size="small"
+                        onClick={() => setActiveCategory(cat.id)}
+                        sx={{
+                          fontWeight: 700,
+                          fontSize: "0.68rem",
+                          height: 22,
+                          cursor: "pointer",
+                          color: "primary.light",
+                          backgroundColor:
+                            "var(--indices-card-hover-bg, rgba(99, 102, 241, 0.12))",
+                          borderColor: "rgba(99, 102, 241, 0.3)",
+                          borderWidth: "1px",
+                          borderStyle: "solid",
+                          "&:hover": {
+                            backgroundColor: "primary.main",
+                            color: "#fff",
+                          },
+                        }}
+                      />
+                      {cat.terms.map((term) => {
+                        const isActive =
+                          searchTerm.toLowerCase() === term.toLowerCase();
+                        return (
+                          <Chip
+                            key={term}
+                            label={term}
+                            size="small"
+                            clickable
+                            onClick={() =>
+                              setSearchTerm((prev) =>
+                                prev.toLowerCase() === term.toLowerCase()
+                                  ? ""
+                                  : term
+                              )
+                            }
+                            variant={isActive ? "filled" : "outlined"}
+                            color={isActive ? "primary" : "default"}
+                            sx={{
+                              fontSize: "0.71rem",
+                              fontWeight: 600,
+                              height: 23,
+                              borderRadius: 1.5,
+                              borderColor: isActive
+                                ? "primary.main"
+                                : "var(--indices-border, rgba(255, 255, 255, 0.1))",
+                              backgroundColor: isActive
+                                ? "primary.main"
+                                : "var(--indices-subtle-bg, rgba(30, 41, 59, 0.4))",
+                              "&:hover": {
+                                backgroundColor: isActive
+                                  ? "primary.dark"
+                                  : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
+                                borderColor: "primary.light",
+                              },
+                            }}
+                          />
+                        );
+                      })}
+                    </Stack>
+                  ))}
+                </Stack>
+              ) : (
+                /* Focused single category view */
+                (() => {
+                  const currentCat = SEARCH_CATEGORIES.find(
+                    (c) => c.id === activeCategory
+                  );
+                  if (!currentCat) return null;
+                  return (
+                    <Stack
+                      direction="row"
+                      flexWrap="wrap"
+                      justifyContent="center"
+                      alignItems="center"
+                      gap={0.7}
+                      sx={{ mt: 0.5 }}
+                    >
+                      {currentCat.terms.map((term) => {
+                        const isActive =
+                          searchTerm.toLowerCase() === term.toLowerCase();
+                        return (
+                          <Chip
+                            key={term}
+                            label={term}
+                            size="small"
+                            clickable
+                            onClick={() =>
+                              setSearchTerm((prev) =>
+                                prev.toLowerCase() === term.toLowerCase()
+                                  ? ""
+                                  : term
+                              )
+                            }
+                            variant={isActive ? "filled" : "outlined"}
+                            color={isActive ? "primary" : "default"}
+                            sx={{
+                              fontSize: "0.72rem",
+                              fontWeight: 600,
+                              height: 24,
+                              borderRadius: 1.5,
+                              borderColor: isActive
+                                ? "primary.main"
+                                : "var(--indices-border, rgba(255, 255, 255, 0.1))",
+                              backgroundColor: isActive
+                                ? "primary.main"
+                                : "var(--indices-subtle-bg, rgba(30, 41, 59, 0.4))",
+                              "&:hover": {
+                                backgroundColor: isActive
+                                  ? "primary.dark"
+                                  : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
+                                borderColor: "primary.light",
+                              },
+                            }}
+                          />
+                        );
+                      })}
+                    </Stack>
+                  );
+                })()
+              )}
+            </Box>
           </Box>
         </Stack>
       </Box>
@@ -474,24 +705,148 @@ export default function IndexListPage() {
             </Stack>
           </Paper>
         ) : (
-          /* Indices Grid */
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
-                lg: "repeat(3, 1fr)",
-                xl: "repeat(4, 1fr)",
-              },
-              gap: 2,
-            }}
-          >
-            {filteredIndices.map((index) => (
-              <IndexCard key={index.id} index={index} />
-            ))}
-          </Box>
+          /* Indices Grid & Pagination */
+          <>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "repeat(2, 1fr)",
+                  md: "repeat(3, 1fr)",
+                  lg: "repeat(3, 1fr)",
+                  xl: "repeat(4, 1fr)",
+                },
+                gap: 2,
+              }}
+            >
+              {visibleIndices.map((index) => (
+                <IndexCard key={index.id} index={index} />
+              ))}
+            </Box>
+
+            {/* Pagination / Show More... Controls */}
+            {hasMore ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mt: 4,
+                  mb: 1.5,
+                  gap: 1.5,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "text.secondary",
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  Showing {visibleIndices.length} of {filteredIndices.length} indices
+                </Typography>
+
+                <Stack
+                  direction="row"
+                  spacing={1.5}
+                  alignItems="center"
+                  flexWrap="wrap"
+                  justifyContent="center"
+                >
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={() => setVisibleRows((prev) => prev + 3)}
+                    endIcon={<ExpandMoreIcon />}
+                    sx={{
+                      px: 3.5,
+                      py: 1,
+                      borderRadius: 2.5,
+                      fontWeight: 700,
+                      fontSize: "0.92rem",
+                      textTransform: "none",
+                      boxShadow: "0 4px 14px 0 rgba(99, 102, 241, 0.35)",
+                    }}
+                  >
+                    Show More ({remainingCount} remaining)...
+                  </Button>
+
+                  {remainingCount > batchSize && (
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      onClick={() =>
+                        setVisibleRows(
+                          Math.ceil(filteredIndices.length / columns)
+                        )
+                      }
+                      sx={{
+                        px: 2.5,
+                        py: 1,
+                        borderRadius: 2.5,
+                        fontWeight: 600,
+                        fontSize: "0.88rem",
+                        textTransform: "none",
+                        borderColor:
+                          "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                        color: "text.secondary",
+                        "&:hover": {
+                          borderColor: "primary.main",
+                          color: "text.primary",
+                        },
+                      }}
+                    >
+                      Show All ({filteredIndices.length})
+                    </Button>
+                  )}
+                </Stack>
+              </Box>
+            ) : (
+              filteredIndices.length > batchSize && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    mt: 4,
+                    mb: 1,
+                    gap: 1,
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "text.secondary",
+                      fontSize: "0.8rem",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Showing all {filteredIndices.length} indices
+                  </Typography>
+                  <Button
+                    variant="text"
+                    size="small"
+                    startIcon={<ExpandLessIcon />}
+                    onClick={() => {
+                      setVisibleRows(3);
+                      window.scrollTo({ top: 380, behavior: "smooth" });
+                    }}
+                    sx={{
+                      fontSize: "0.8rem",
+                      color: "text.secondary",
+                      textTransform: "none",
+                      "&:hover": { color: "primary.light" },
+                    }}
+                  >
+                    Show Less (Collapse to 3 rows)
+                  </Button>
+                </Box>
+              )
+            )}
+          </>
         )}
       </Box>
 
