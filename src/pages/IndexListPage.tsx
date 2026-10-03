@@ -136,7 +136,7 @@ export default function IndexListPage() {
   const [visibleRows, setVisibleRows] = useState(3);
   const [activeCategory, setActiveCategory] = useState<
     "all" | "themes" | "etf-providers" | "market-exposure"
-  >("all");
+  >("themes");
 
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up("xl"));
@@ -346,23 +346,6 @@ export default function IndexListPage() {
                   Suggested searches:
                 </Typography>
 
-                <Button
-                  size="small"
-                  variant={activeCategory === "all" ? "contained" : "outlined"}
-                  onClick={() => setActiveCategory("all")}
-                  sx={{
-                    borderRadius: 2,
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    py: 0.25,
-                    px: 1.1,
-                    minHeight: 24,
-                    textTransform: "none",
-                  }}
-                >
-                  All Categories
-                </Button>
-
                 {SEARCH_CATEGORIES.map((cat) => {
                   const isCatActive = activeCategory === cat.id;
                   const hasActiveTerm = cat.terms.some(
@@ -394,6 +377,23 @@ export default function IndexListPage() {
                     </Button>
                   );
                 })}
+
+                <Button
+                  size="small"
+                  variant={activeCategory === "all" ? "contained" : "outlined"}
+                  onClick={() => setActiveCategory("all")}
+                  sx={{
+                    borderRadius: 2,
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    py: 0.25,
+                    px: 1.1,
+                    minHeight: 24,
+                    textTransform: "none",
+                  }}
+                >
+                  All Categories
+                </Button>
               </Stack>
 
               {/* Grouped or Filtered Chips View */}
