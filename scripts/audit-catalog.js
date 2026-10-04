@@ -111,7 +111,11 @@ const userRequestedTickers = [
   "MGK", "VOT", "VOE", "VBK", "VBR", "MOAT",
   "IXUS", "ACWX", "VEU", "IDEV", "EWJ", "INDA", "MCHI", "FXI", "EWT", "EWU", "EFG", "VIGI", "FNDF", "VWOB",
   "SPHQ",
-  "SCHM"
+  "SCHM",
+  "IEMG",
+  "EMXC",
+  "SPEM",
+  "SCHE"
 ];
 
 for (const ticker of userRequestedTickers) {

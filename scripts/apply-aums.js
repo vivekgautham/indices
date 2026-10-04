@@ -146,6 +146,10 @@ const aumMap = {
   VWOB: "$5.2B+",
   SPHQ: "$14.0B+",
   SCHM: "$14.4B+",
+  EMXC: "$25.5B+",
+  SPEM: "$17.5B+",
+  SCHE: "$12.8B+",
+  EIMI: "$20B+",
 };
 
 

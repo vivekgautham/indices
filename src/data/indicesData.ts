@@ -2072,6 +2072,58 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl: "https://www.ftserussell.com/products/indices/geis",
   },
   {
+    id: "ftse-emerging-index",
+    symbol: "FTSE-EM",
+    altSymbols: [
+      "AWAXUS",
+      "SCHE Benchmark",
+      "FTSE Emerging",
+      "FTSE Emerging Markets Index",
+    ],
+    name: "FTSE Emerging Index",
+    providerId: "ftse",
+    category: "Emerging Markets",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 2200,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2000,
+    trackingEtfs: [
+      {
+        ticker: "SCHE",
+        name: "Schwab Emerging Markets Equity ETF",
+        aum: "$12.8B+",
+      },
+    ],
+    summary:
+      "Captures large- and mid-cap emerging market equities across 20+ countries, excluding South Korea. Benchmark for the $12B+ Schwab SCHE.",
+    description:
+      "The FTSE Emerging Index is a market-capitalization-weighted index that represents the performance of large- and mid-cap companies in advanced and secondary emerging markets. Crucially, FTSE classifies South Korea as a Developed Market (unlike MSCI and S&P), meaning Korean companies like Samsung are excluded, resulting in higher allocations to China, India, Taiwan, and Brazil. It serves as the primary underlying benchmark for the low-cost $12B+ Schwab Emerging Markets Equity ETF (SCHE).",
+    eligibilityCriteria: [
+      "Constituents of the FTSE Global Equity Index Series (GEIS) located in countries designated as Advanced or Secondary Emerging",
+      "Large- and mid-cap companies meeting free-float and liquidity criteria",
+      "Excludes South Korea (classified as Developed by FTSE Russell since 2009)",
+      "Semi-annual index reviews in March and September",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the low-cost $12B+ Schwab Emerging Markets Equity ETF (SCHE)",
+      "Excludes South Korea, differentiating country allocations versus MSCI benchmarks",
+      "Complement to FTSE Emerging All Cap (which includes small caps for VWO)",
+      "High exposure to financial, technology, and consumer discretionary sectors across developing markets",
+    ],
+    tags: [
+      "Emerging Markets",
+      "SCHE",
+      "Schwab",
+      "FTSE Russell",
+      "Large Cap",
+      "Mid Cap",
+      "Core",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/geis",
+  },
+  {
     id: "ftse-global-all-cap",
     symbol: "GEIS",
     altSymbols: ["VT Benchmark"],
@@ -2369,11 +2421,6 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1988,
     trackingEtfs: [
       {
-        ticker: "IEMG",
-        name: "iShares Core MSCI Emerging Markets ETF",
-        aum: "$161B+",
-      },
-      {
         ticker: "EEM",
         name: "iShares MSCI Emerging Markets ETF",
         aum: "$18B+",
@@ -2390,9 +2437,9 @@ export const INDICES_DATA: MarketIndex[] = [
       },
     ],
     summary:
-      "The primary global institutional gauge for emerging market equities across 24 developing economies, underlying IEMG, EEM, and Avantis AVES/AVEM.",
+      "The primary global institutional gauge for large- and mid-cap emerging market equities across 24 developing economies, underlying EEM and active benchmarks like Avantis AVES/AVEM.",
     description:
-      "Launched in 1988 with 10 countries representing less than 1% of world market cap, MSCI EM now spans 24 countries with heavy weights in China, India, Taiwan, South Korea, and Brazil. It underpins massive institutional funds like iShares IEMG and serves as the regulatory performance benchmark for active factor ETFs like Avantis AVES and AVEM.",
+      "Launched in 1988 with 10 countries representing less than 1% of world market cap, MSCI EM now spans 24 countries with heavy weights in China, India, Taiwan, South Korea, and Brazil. It underpins institutional funds like iShares EEM ($18B+) and serves as the regulatory performance benchmark for active factor ETFs like Avantis AVES and AVEM.",
     keyCharacteristics: [
       "Includes South Korea (classified as Emerging by MSCI)",
       "High exposure to semiconductor leaders (TSMC, Samsung) and Indian growth equities",
@@ -2403,13 +2450,124 @@ export const INDICES_DATA: MarketIndex[] = [
       "Asia Heavy",
       "High Growth",
       "Institutional Benchmark",
-      "IEMG",
       "EEM",
       "AVES",
       "AVEM",
       "Avantis",
     ],
     officialUrl: "https://www.msci.com/our-solutions/indexes/emerging-markets",
+  },
+  {
+    id: "msci-emerging-markets-imi",
+    symbol: "M1EFIM",
+    altSymbols: [
+      "^M1EFIM",
+      "IEMG Benchmark",
+      "MSCI EM IMI",
+      "MSCI Emerging Markets IMI",
+      "MSCI Emerging Markets Investable Market Index",
+    ],
+    name: "MSCI Emerging Markets Investable Market Index (IMI)",
+    providerId: "msci",
+    category: "Emerging Markets",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 3016,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly Index Reviews (Feb, May, Aug, Nov)",
+    launchYear: 2007,
+    trackingEtfs: [
+      {
+        ticker: "IEMG",
+        name: "iShares Core MSCI Emerging Markets ETF",
+        aum: "$161B+",
+      },
+      {
+        ticker: "EIMI",
+        name: "iShares Core MSCI Emerging Markets IMI UCITS ETF",
+        aum: "$20B+",
+      },
+    ],
+    summary:
+      "Comprehensive benchmark capturing large-, mid-, and small-cap equities across 24 emerging market countries, covering ~99% of free float-adjusted market capitalization. Benchmark for the $160B+ iShares IEMG.",
+    description:
+      "The MSCI Emerging Markets Investable Market Index (IMI) represents the full market-cap opportunity set across developing economies. Spanning large-, mid-, and small-cap securities across 24 emerging market countries, it covers approximately 99% of the free float-adjusted market capitalization in each market. Unlike the standard MSCI Emerging Markets Index (which only covers large and mid caps), the IMI includes thousands of small-cap emerging market companies. It is the primary underlying benchmark for BlackRock's flagship low-cost $160B+ iShares Core MSCI Emerging Markets ETF (IEMG).",
+    eligibilityCriteria: [
+      "Eligible securities in 24 emerging market countries defined by MSCI Global Investable Market Indexes (GIMI) methodology",
+      "Spans large-, mid-, and small-cap tiers targeting 99% cumulative free float-adjusted market capitalization in each country",
+      "Rigorous minimum size and liquidity thresholds (including 3-month and 12-month Annualized Traded Value Ratios)",
+      "Quarterly Index Reviews in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the $160B+ iShares Core MSCI Emerging Markets ETF (IEMG)",
+      "Includes small-cap equities for true all-cap exposure across developing economies",
+      "Includes South Korea (classified as Emerging by MSCI, representing ~11-12% of the index)",
+      "Heavy concentration in global tech titans like TSMC, Samsung Electronics, and Tencent",
+    ],
+    tags: [
+      "Emerging Markets",
+      "IEMG",
+      "iShares",
+      "MSCI",
+      "All Cap",
+      "Small Cap",
+      "Core",
+      "Global",
+      "Asia Heavy",
+    ],
+    officialUrl: "https://www.msci.com/our-solutions/indexes/emerging-markets",
+  },
+  {
+    id: "msci-emerging-markets-ex-china",
+    symbol: "M1CXBRV",
+    altSymbols: [
+      "EMXC Benchmark",
+      "MSCI EM ex China",
+      "MSCI Emerging Markets ex-China",
+    ],
+    name: "MSCI Emerging Markets ex China Index",
+    providerId: "msci",
+    category: "Emerging Markets / Ex-China",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 670,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly Index Reviews (Feb, May, Aug, Nov)",
+    launchYear: 2017,
+    trackingEtfs: [
+      {
+        ticker: "EMXC",
+        name: "iShares MSCI Emerging Markets ex China ETF",
+        aum: "$25.5B+",
+      },
+    ],
+    summary:
+      "Captures large- and mid-cap representation across 23 emerging market countries while excluding China. Underlying benchmark for the $25B+ iShares EMXC.",
+    description:
+      "The MSCI Emerging Markets ex China Index captures large and mid-cap representation across 23 of the 24 Emerging Markets countries, excluding China. With over 670 constituents, the index covers approximately 85% of the free float-adjusted market capitalization in each country outside of China, leading to significant allocations in India, Taiwan, and South Korea (especially tech leaders TSMC and Samsung). It is the underlying benchmark for the rapidly growing $25B+ iShares MSCI Emerging Markets ex China ETF (EMXC).",
+    eligibilityCriteria: [
+      "Eligible securities in 23 emerging market countries, completely excluding companies domiciled, incorporated, or listed in China",
+      "Large- and mid-cap coverage targeting approximately 85% of the free float-adjusted market capitalization in each country",
+      "Quarterly Index Reviews in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the $25B+ iShares MSCI Emerging Markets ex China ETF (EMXC)",
+      "Allows investors to unbundle China from emerging markets and tailor country allocations independently",
+      "Elevates allocations to India (~26%), Taiwan (~24%), and South Korea (~16%)",
+      "Overweight in semiconductor manufacturing and high-growth Indian domestic consumption",
+    ],
+    tags: [
+      "Emerging Markets",
+      "Ex-China",
+      "EMXC",
+      "iShares",
+      "MSCI",
+      "India",
+      "Taiwan",
+      "Geopolitical",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/emerging-markets-ex-china",
   },
   {
     id: "msci-usa-esg-leaders",
@@ -5370,6 +5528,60 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-global-ex-us-dividend-growers-index/",
+  },
+  {
+    id: "sp-emerging-bmi",
+    symbol: "SEMUN",
+    altSymbols: [
+      "SPTRBMI",
+      "SPEM Benchmark",
+      "S&P Emerging BMI",
+      "S&P Emerging Markets BMI",
+    ],
+    name: "S&P Emerging BMI",
+    providerId: "sp",
+    category: "Emerging Markets",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 4500,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 1989,
+    trackingEtfs: [
+      {
+        ticker: "SPEM",
+        name: "SPDR Portfolio Emerging Markets ETF",
+        aum: "$17.5B+",
+      },
+    ],
+    summary:
+      "Comprehensive market-cap index capturing large-, mid-, and small-cap equities across 20+ emerging countries. Benchmark for State Street's $17B+ SPEM.",
+    description:
+      "The S&P Emerging BMI (Broad Market Index) is a comprehensive, rules-based, float-adjusted market capitalization-weighted index designed to measure the performance of publicly traded companies in emerging markets. Spanning large-, mid-, and small-cap stocks across more than 20 developing economies, it requires a minimum float-adjusted market cap of USD 100 million and robust liquidity screening. It serves as the primary underlying benchmark for State Street's low-cost $17B+ SPDR Portfolio Emerging Markets ETF (SPEM).",
+    eligibilityCriteria: [
+      "Securities domiciled in emerging market nations defined by S&P Dow Jones Indices global country classification",
+      "Minimum float-adjusted market capitalization of at least USD 100M",
+      "Minimum 6-month and 12-month median value traded requirements",
+      "Semi-annual reconstitution in March and September",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for State Street's low-cost $17B+ SPDR Portfolio Emerging Markets ETF (SPEM)",
+      "Broad market coverage spanning large, mid, and small caps",
+      "Classifies South Korea as an Emerging Market (aligning with MSCI)",
+      "Low turnover design with liquidity buffers",
+    ],
+    tags: [
+      "Emerging Markets",
+      "SPEM",
+      "SPDR",
+      "State Street",
+      "S&P",
+      "All Cap",
+      "Small Cap",
+      "Core",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-emerging-bmi/",
   },
   {
     id: "russell-rafi-developed-ex-us-large",
