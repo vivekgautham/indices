@@ -14,6 +14,7 @@ import {
 import React, { useState } from "react";
 import { IndexProvider } from "../types";
 import { ProviderLogo } from "./ProviderLogo";
+import ShareButton from "./ShareButton";
 
 interface ProviderHeroBannerProps {
   provider?: IndexProvider;
@@ -112,6 +113,25 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
           </Box>
 
           <Stack direction="row" alignItems="center" spacing={1}>
+            <ShareButton
+              item={{
+                title: `${provider.name} (${provider.shortName}) | Market Indices`,
+                text: `Explore ${provider.name} market benchmark indices, ETF tracking vehicles, and methodologies. ${provider.tagline}`,
+                path: `/?provider=${provider.id}`,
+              }}
+              variant="outlined"
+              size="small"
+              label="Share"
+              color={provider.accentColor}
+              tooltip={`Share ${provider.shortName} overview`}
+              sx={{
+                fontSize: "0.75rem",
+                borderRadius: 2,
+                px: 1.5,
+                py: 0.5,
+              }}
+            />
+
             <Button
               variant="outlined"
               size="small"

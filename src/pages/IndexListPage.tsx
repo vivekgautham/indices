@@ -20,6 +20,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
@@ -27,6 +28,8 @@ import ThemeSelector from "../components/layout/ThemeSelector";
 import { IndexCard } from "../components/IndexCard";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
+import ShareButton from "../components/ShareButton";
+import { PROVIDERS_DATA } from "../data/providersData";
 import { MarketIndex, ProviderId } from "../types";
 
 export interface SearchCategory {
@@ -131,15 +134,33 @@ export default function IndexListPage() {
     useProvidersData();
   const { data: indices = [], isLoading: loadingIndices } = useIndicesData();
 
-  // Preset selected provider, default to all providers
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Initialize filter and search state from URL query parameters
+  const urlProvider = searchParams.get("provider");
+  const initialProvider: ProviderId | "all" =
+    urlProvider && (urlProvider in PROVIDERS_DATA || urlProvider === "all")
+      ? (urlProvider as ProviderId)
+      : "all";
+
+  const initialSearch = searchParams.get("q") || "";
+  const urlCategory = searchParams.get("cat");
+  const initialCategory: "all" | "themes" | "etf-providers" | "market-exposure" =
+    urlCategory === "all" ||
+    urlCategory === "themes" ||
+    urlCategory === "etf-providers" ||
+    urlCategory === "market-exposure"
+      ? urlCategory
+      : "themes";
+
   const [selectedProvider, setSelectedProvider] = useState<ProviderId | "all">(
-    "all",
+    initialProvider,
   );
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [visibleRows, setVisibleRows] = useState(3);
   const [activeCategory, setActiveCategory] = useState<
     "all" | "themes" | "etf-providers" | "market-exposure"
-  >("themes");
+  >(initialCategory);
 
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up("xl"));
@@ -150,6 +171,59 @@ export default function IndexListPage() {
   useEffect(() => {
     setVisibleRows(3);
   }, [searchTerm, selectedProvider]);
+
+  // Synchronize state changes to URL query parameters
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedProvider !== "all") {
+      params.set("provider", selectedProvider);
+    }
+    if (searchTerm.trim()) {
+      params.set("q", searchTerm.trim());
+    }
+    if (activeCategory !== "themes") {
+      params.set("cat", activeCategory);
+    }
+
+    const currentStr = searchParams.toString();
+    const newStr = params.toString();
+    if (currentStr !== newStr) {
+      setSearchParams(params, { replace: true });
+    }
+  }, [
+    selectedProvider,
+    searchTerm,
+    activeCategory,
+    searchParams,
+    setSearchParams,
+  ]);
+
+  // Synchronize when user navigates with browser Back/Forward buttons
+  useEffect(() => {
+    const p = searchParams.get("provider");
+    const validP: ProviderId | "all" =
+      p && (p in PROVIDERS_DATA || p === "all") ? (p as ProviderId) : "all";
+    if (validP !== selectedProvider) {
+      setSelectedProvider(validP);
+    }
+
+    const q = searchParams.get("q") || "";
+    if (q !== searchTerm) {
+      setSearchTerm(q);
+    }
+
+    const cat = searchParams.get("cat");
+    const validCat =
+      cat === "all" ||
+      cat === "themes" ||
+      cat === "etf-providers" ||
+      cat === "market-exposure"
+        ? cat
+        : "themes";
+    if (validCat !== activeCategory) {
+      setActiveCategory(validCat);
+    }
+  }, [searchParams]);
 
   // Calculate index counts per provider
   const indexCounts = useMemo(() => {
@@ -204,6 +278,18 @@ export default function IndexListPage() {
 
   const isLoading = loadingProviders || loadingIndices;
 
+  // Update document title dynamically based on active filter or search
+  useEffect(() => {
+    if (activeProviderObj) {
+      document.title = `${activeProviderObj.name} Indices | Market Indices Explorer`;
+    } else if (searchTerm.trim()) {
+      document.title = `Search: "${searchTerm.trim()}" | Market Indices Explorer`;
+    } else {
+      document.title =
+        "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
+    }
+  }, [activeProviderObj, searchTerm]);
+
   return (
     <Container
       maxWidth={false}
@@ -214,7 +300,7 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Top Right Header Controls: Color Theme & App Version */}
+      {/* Top Right Header Controls: Share View, Color Theme & App Version */}
       <Box
         sx={{
           display: "flex",
@@ -225,6 +311,34 @@ export default function IndexListPage() {
           mb: { xs: 1, sm: 1.5 },
         }}
       >
+        <ShareButton
+          item={{
+            title: activeProviderObj
+              ? `${activeProviderObj.name} Benchmark Indices | Market Indices Explorer`
+              : searchTerm.trim()
+                ? `Indices matching "${searchTerm.trim()}" | Market Indices Explorer`
+                : "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers",
+            text: activeProviderObj
+              ? `Explore ${activeProviderObj.name} market benchmark indices, tracking ETFs, and methodologies.`
+              : searchTerm.trim()
+                ? `Search results for "${searchTerm.trim()}" across global market benchmarks.`
+                : "Explore and compare global market benchmark indices, tracking ETFs, and constituent methodologies.",
+          }}
+          variant="outlined"
+          size="small"
+          label={
+            selectedProvider !== "all" || searchTerm.trim()
+              ? "Share View"
+              : "Share Page"
+          }
+          tooltip="Share current page or filtered view"
+          color={activeProviderObj?.accentColor}
+          sx={{
+            borderRadius: 2,
+            px: 1.5,
+            py: 0.4,
+          }}
+        />
         <ThemeSelector />
         <AppVersionBadge />
       </Box>

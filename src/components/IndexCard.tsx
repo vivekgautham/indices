@@ -16,6 +16,7 @@ import { PROVIDERS_DATA } from "../data/providersData";
 import { MarketIndex } from "../types";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 import { ProviderLogo } from "./ProviderLogo";
+import ShareButton from "./ShareButton";
 
 interface IndexCardProps {
   index: MarketIndex;
@@ -120,17 +121,30 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                 />
               </Stack>
 
-              <Chip
-                label={index.assetClass}
-                size="small"
-                sx={{
-                  fontSize: "0.68rem",
-                  fontWeight: 600,
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  color: "text.secondary",
-                  borderRadius: 1,
-                }}
-              />
+              <Stack direction="row" alignItems="center" spacing={0.75}>
+                <Chip
+                  label={index.assetClass}
+                  size="small"
+                  sx={{
+                    fontSize: "0.68rem",
+                    fontWeight: 600,
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    color: "text.secondary",
+                    borderRadius: 1,
+                  }}
+                />
+                <ShareButton
+                  item={{
+                    title: `${index.name} (${index.symbol}) | Market Indices`,
+                    text: `Explore ${index.name} (${index.symbol}) - ${index.summary}`,
+                    path: `/index/${index.id}`,
+                  }}
+                  variant="icon"
+                  size="small"
+                  color={accentColor}
+                  tooltip={`Share ${index.symbol}`}
+                />
+              </Stack>
             </Stack>
 
             {/* Category Chip on dedicated line to prevent overflow */}

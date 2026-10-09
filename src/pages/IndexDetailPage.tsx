@@ -23,6 +23,7 @@ import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { ProviderLogo } from "../components/ProviderLogo";
+import ShareButton from "../components/ShareButton";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
 export default function IndexDetailPage() {
@@ -54,6 +55,18 @@ export default function IndexDetailPage() {
       ) || null
     );
   }, [indices, indexId]);
+
+  // Update document title for index page
+  useEffect(() => {
+    if (index) {
+      document.title = `${index.name} (${index.symbol}) | Market Indices`;
+    } else {
+      document.title = "Market Indices Explorer";
+    }
+    return () => {
+      document.title = "Market Indices Explorer";
+    };
+  }, [index]);
 
   // Provider object
   const provider = useMemo(() => {
@@ -203,6 +216,24 @@ export default function IndexDetailPage() {
           alignItems="center"
           flexWrap="wrap"
         >
+          <ShareButton
+            item={{
+              title: `${index.name} (${index.symbol}) | Market Indices`,
+              text: `Explore ${index.name} (${index.symbol}) - ${index.summary}`,
+              path: `/index/${index.id}`,
+            }}
+            variant="outlined"
+            label="Share"
+            color={accentColor}
+            tooltip={`Share ${index.symbol} index profile`}
+            sx={{
+              borderRadius: 2.5,
+              fontWeight: 700,
+              fontSize: "0.82rem",
+              px: 2,
+              py: 0.75,
+            }}
+          />
           <ThemeSelector />
           <AppVersionBadge compact />
           {index.officialUrl && (
