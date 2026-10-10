@@ -116,7 +116,8 @@ const userRequestedTickers = [
   "EMXC",
   "SPEM",
   "SCHE",
-  "IUSV"
+  "IUSV",
+  "IUSG"
 ];
 
 for (const ticker of userRequestedTickers) {

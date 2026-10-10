@@ -761,6 +761,42 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-900-value",
   },
   {
+    id: "sp-900-growth",
+    symbol: "SPTRNG",
+    altSymbols: ["S&P 900 Growth", "IUSG Benchmark"],
+    name: "S&P 900 Growth Index",
+    providerId: "sp",
+    category: "Large/Mid-Cap Growth Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 520,
+    weightingMethodology: "Float-Adjusted Market Cap (Growth Factor Weighted)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1995,
+    trackingEtfs: [
+      {
+        ticker: "IUSG",
+        name: "iShares Core S&P U.S. Growth ETF",
+        aum: "$34.8B+",
+      },
+    ],
+    summary:
+      "Measures the growth segment of the S&P 900 (S&P 500 + S&P MidCap 400), screening for strong growth metrics.",
+    description:
+      "The S&P 900 Growth Index aggregates the growth segments of the S&P 500 and the S&P MidCap 400. It measures the performance of U.S. large- and mid-cap companies exhibiting robust growth characteristics, such as strong sales growth, earnings change to price, and momentum. It is the underlying benchmark for the iShares Core S&P U.S. Growth ETF (IUSG).",
+    eligibilityCriteria: [
+      "Must be a constituent of the parent S&P 900 Index (S&P 500 or S&P MidCap 400)",
+      "Ranked in the growth style tier based on sales growth, earnings change to price, and momentum",
+      "Constituents with blended characteristics have weight apportioned between Growth and Value",
+    ],
+    keyCharacteristics: [
+      "Captures approximately 50% of the market capitalization of the S&P 900",
+      "Provides broader market growth exposure by including both large-cap and mid-cap stocks",
+    ],
+    tags: ["Growth", "S&P 900", "Large Cap", "Mid Cap", "US Equity"],
+    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-900-growth",
+  },
+  {
     id: "sp-500-momentum",
     symbol: "SP500MO",
     altSymbols: ["SPAMO", "SPMO Benchmark", "S&P 500 Momentum"],
