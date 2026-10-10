@@ -150,6 +150,7 @@ const aumMap = {
   SPEM: "$17.5B+",
   SCHE: "$12.8B+",
   EIMI: "$20B+",
+  IUSV: "$16.5B+",
 };
 
 

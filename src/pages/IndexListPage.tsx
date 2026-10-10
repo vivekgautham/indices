@@ -30,7 +30,7 @@ import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import ShareButton from "../components/ShareButton";
 import { PROVIDERS_DATA } from "../data/providersData";
-import { MarketIndex, ProviderId } from "../types";
+import { ProviderId } from "../types";
 
 export interface SearchCategory {
   id: "themes" | "etf-providers" | "market-exposure";
@@ -101,33 +101,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
   },
 ];
 
-// Helper to check if a market index matches a multi-term query
-function matchIndex(idx: MarketIndex, tokens: string[]): boolean {
-  // Build a rich searchable text blob covering all index metadata & methodology
-  const searchableText = [
-    idx.name,
-    idx.symbol,
-    ...(idx.altSymbols || []),
-    idx.providerId,
-    idx.category,
-    idx.assetClass,
-    idx.region,
-    idx.weightingMethodology,
-    idx.rebalanceFrequency,
-    String(idx.launchYear),
-    idx.summary,
-    idx.description,
-    ...(idx.eligibilityCriteria || []),
-    ...(idx.keyCharacteristics || []),
-    ...idx.tags,
-    ...(idx.trackingEtfs || []).map((etf) => `${etf.ticker} ${etf.name}`),
-  ]
-    .join(" ")
-    .toLowerCase();
-
-  // Every search token must be present in the searchable blob (AND match)
-  return tokens.every((token) => searchableText.includes(token));
-}
+// The rich searchable text blob is now pre-computed in indicesApi to avoid O(N) concatenation on every keystroke
 
 export default function IndexListPage() {
   const { data: providers = [], isLoading: loadingProviders } =
@@ -223,6 +197,7 @@ export default function IndexListPage() {
     if (validCat !== activeCategory) {
       setActiveCategory(validCat);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // Calculate index counts per provider
@@ -254,7 +229,10 @@ export default function IndexListPage() {
   // Matches across ALL providers (for global search discovery)
   const allProviderMatches = useMemo(() => {
     if (searchTokens.length === 0) return indices;
-    return indices.filter((idx) => matchIndex(idx, searchTokens));
+    return indices.filter((idx) => {
+      const text = idx._searchableText || "";
+      return searchTokens.every((token) => text.includes(token));
+    });
   }, [indices, searchTokens]);
 
   // Filtered indices list for the current provider selection

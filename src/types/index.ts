@@ -57,4 +57,5 @@ export interface MarketIndex {
   keyCharacteristics?: string[];
   tags: string[];
   officialUrl?: string;
+  _searchableText?: string;
 }

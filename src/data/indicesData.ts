@@ -724,6 +724,42 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-value/",
   },
   {
+    id: "sp-900-value",
+    symbol: "SPTRNV",
+    altSymbols: ["S&P 900 Value", "IUSV Benchmark"],
+    name: "S&P 900 Value Index",
+    providerId: "sp",
+    category: "Large/Mid-Cap Value Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 750,
+    weightingMethodology: "Float-Adjusted Market Cap (Value Factor Weighted)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1995,
+    trackingEtfs: [
+      {
+        ticker: "IUSV",
+        name: "iShares Core S&P U.S. Value ETF",
+        aum: "$16.5B+",
+      },
+    ],
+    summary:
+      "Measures the value segment of the S&P 900 (S&P 500 + S&P MidCap 400), screening for attractive valuation metrics.",
+    description:
+      "The S&P 900 Value Index aggregates the value segments of the S&P 500 and the S&P MidCap 400. It measures the performance of U.S. large- and mid-cap companies exhibiting value characteristics such as low price-to-book, price-to-earnings, and price-to-sales ratios. It is the underlying benchmark for the iShares Core S&P U.S. Value ETF (IUSV).",
+    eligibilityCriteria: [
+      "Must be a constituent of the parent S&P 900 Index (S&P 500 or S&P MidCap 400)",
+      "Ranked in the value style tier based on book value to price, earnings to price, and sales to price",
+      "Constituents with blended characteristics have weight apportioned between Growth and Value",
+    ],
+    keyCharacteristics: [
+      "Captures approximately 50% of the market capitalization of the S&P 900",
+      "Provides broader market value exposure by including both large-cap and mid-cap stocks",
+    ],
+    tags: ["Value", "S&P 900", "Large Cap", "Mid Cap", "US Equity"],
+    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-900-value",
+  },
+  {
     id: "sp-500-momentum",
     symbol: "SP500MO",
     altSymbols: ["SPAMO", "SPMO Benchmark", "S&P 500 Momentum"],
