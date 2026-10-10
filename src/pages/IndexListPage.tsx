@@ -15,10 +15,14 @@ import {
   Paper,
   Stack,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
@@ -26,6 +30,7 @@ import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { IndexCard } from "../components/IndexCard";
+import { IndexTableView } from "../components/IndexTableView";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import ShareButton from "../components/ShareButton";
@@ -131,6 +136,9 @@ export default function IndexListPage() {
       ? urlCategory
       : "themes";
 
+  const urlView = searchParams.get("view");
+  const initialView = urlView === "table" ? "table" : "card";
+
   const [selectedProvider, setSelectedProvider] = useState<ProviderId | "all">(
     initialProvider,
   );
@@ -139,6 +147,7 @@ export default function IndexListPage() {
   const [activeCategory, setActiveCategory] = useState<
     "all" | "themes" | "etf-providers" | "market-exposure"
   >(initialCategory);
+  const [viewMode, setViewMode] = useState<"card" | "table">(initialView);
 
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up("xl"));
@@ -172,6 +181,12 @@ export default function IndexListPage() {
       params.delete("cat");
     }
 
+    if (viewMode !== "card") {
+      params.set("view", viewMode);
+    } else {
+      params.delete("view");
+    }
+
     const currentStr = searchParams.toString();
     const newStr = params.toString();
     if (currentStr !== newStr) {
@@ -181,6 +196,7 @@ export default function IndexListPage() {
     selectedProvider,
     searchTerm,
     activeCategory,
+    viewMode,
     searchParams,
     setSearchParams,
   ]);
@@ -209,6 +225,12 @@ export default function IndexListPage() {
         : "themes";
     if (validCat !== activeCategory) {
       setActiveCategory(validCat);
+    }
+
+    const view = searchParams.get("view");
+    const validView = view === "table" ? "table" : "card";
+    if (validView !== viewMode) {
+      setViewMode(validView);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -718,23 +740,54 @@ export default function IndexListPage() {
             {searchTerm && ` • Matching "${searchTerm}"`}
           </Typography>
 
-          {(searchTerm || selectedProvider !== "all") && (
-            <Button
-              size="small"
-              startIcon={<ReplayIcon fontSize="small" />}
-              onClick={() => {
-                setSelectedProvider("all");
-                setSearchTerm("");
+          <Stack direction="row" spacing={1.5} alignItems="center">
+            {(searchTerm || selectedProvider !== "all") && (
+              <Button
+                size="small"
+                startIcon={<ReplayIcon fontSize="small" />}
+                onClick={() => {
+                  setSelectedProvider("all");
+                  setSearchTerm("");
+                }}
+                sx={{
+                  fontSize: "0.75rem",
+                  color: "text.secondary",
+                  "&:hover": { color: "#ffffff" },
+                }}
+              >
+                Reset Filters
+              </Button>
+            )}
+
+            <ToggleButtonGroup
+              value={viewMode}
+              exclusive
+              onChange={(_, newMode) => {
+                if (newMode) setViewMode(newMode);
               }}
+              size="small"
               sx={{
-                fontSize: "0.75rem",
-                color: "text.secondary",
-                "&:hover": { color: "#ffffff" },
+                height: 28,
+                "& .MuiToggleButton-root": {
+                  px: 1,
+                  py: 0,
+                  color: "text.secondary",
+                  borderColor: "var(--indices-border, rgba(255, 255, 255, 0.1))",
+                  "&.Mui-selected": {
+                    color: "primary.light",
+                    backgroundColor: "rgba(99, 102, 241, 0.15)",
+                  },
+                },
               }}
             >
-              Reset Filters
-            </Button>
-          )}
+              <ToggleButton value="card" aria-label="card view">
+                <ViewModuleIcon sx={{ fontSize: 18 }} />
+              </ToggleButton>
+              <ToggleButton value="table" aria-label="table view">
+                <ViewListIcon sx={{ fontSize: 18 }} />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Stack>
         </Stack>
 
         {/* Loading State */}
@@ -813,23 +866,29 @@ export default function IndexListPage() {
         ) : (
           /* Indices Grid & Pagination */
           <>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  sm: "repeat(2, 1fr)",
-                  md: "repeat(3, 1fr)",
-                  lg: "repeat(3, 1fr)",
-                  xl: "repeat(4, 1fr)",
-                },
-                gap: 2,
-              }}
-            >
-              {visibleIndices.map((index) => (
-                <IndexCard key={index.id} index={index} />
-              ))}
-            </Box>
+            {viewMode === "card" ? (
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "repeat(2, 1fr)",
+                    md: "repeat(3, 1fr)",
+                    lg: "repeat(3, 1fr)",
+                    xl: "repeat(4, 1fr)",
+                  },
+                  gap: 2,
+                }}
+              >
+                {visibleIndices.map((index) => (
+                  <IndexCard key={index.id} index={index} />
+                ))}
+              </Box>
+            ) : (
+              <Box sx={{ mt: 1 }}>
+                <IndexTableView indices={visibleIndices} />
+              </Box>
+            )}
 
             {/* Pagination / Show More... Controls */}
             {hasMore ? (
