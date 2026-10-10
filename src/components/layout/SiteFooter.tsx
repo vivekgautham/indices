@@ -1,8 +1,6 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
-import { REPO_URL } from "../../constants/version";
 import CopyrightBadge from "./CopyrightBadge";
 
 interface SiteFooterProps {
@@ -50,7 +48,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
         </Typography>
       </Stack>
 
-      {/* Bottom Right: Quick Links / Scroll to Top */}
+      {/* Bottom Right: Scroll to Top */}
       <Stack
         direction="row"
         alignItems="center"
@@ -59,28 +57,6 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
           alignSelf: { xs: "flex-start", sm: "auto" },
         }}
       >
-        <Button
-          component="a"
-          href={REPO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          size="small"
-          startIcon={<GitHubIcon sx={{ fontSize: 16 }} />}
-          sx={{
-            fontSize: "0.75rem",
-            color: "text.secondary",
-            borderRadius: "8px",
-            textTransform: "none",
-            "&:hover": {
-              color: "text.primary",
-              backgroundColor:
-                "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.05))",
-            },
-          }}
-        >
-          Source Code
-        </Button>
-
         <Button
           size="small"
           onClick={handleScrollTop}
