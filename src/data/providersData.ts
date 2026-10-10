@@ -118,10 +118,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     website: "https://www.crsp.org",
     accentColor: "#f59e0b",
     badgeBg: "rgba(245, 158, 11, 0.15)",
-    keyEtfPartners: [
-      "The Vanguard Group",
-      "VanEck",
-    ],
+    keyEtfPartners: ["The Vanguard Group", "VanEck"],
     coverage:
       "US Total Market, Mega Cap, Large Cap, Mid Cap, Small Cap, Value & Growth Style Dimensions, Morningstar Economic Moat",
     marketShareSummary:

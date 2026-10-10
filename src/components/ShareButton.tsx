@@ -234,9 +234,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
         variant={muiVariant}
         size={size}
         onClick={handleOpen}
-        startIcon={
-          <ShareIcon sx={{ fontSize: size === "small" ? 14 : 16 }} />
-        }
+        startIcon={<ShareIcon sx={{ fontSize: size === "small" ? 14 : 16 }} />}
         aria-haspopup="true"
         aria-expanded={isOpen ? "true" : undefined}
         sx={{
@@ -247,9 +245,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
             ? `${color}66`
             : "var(--indices-border, rgba(255, 255, 255, 0.15))",
           color: color || "text.primary",
-          backgroundColor: color
-            ? `${color}10`
-            : "rgba(255, 255, 255, 0.04)",
+          backgroundColor: color ? `${color}10` : "rgba(255, 255, 255, 0.04)",
           backdropFilter: "blur(8px)",
           px: size === "small" ? 1.5 : 2,
           py: size === "small" ? 0.5 : 0.75,
@@ -257,9 +253,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
           transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           "&:hover": {
             borderColor: color || "primary.light",
-            backgroundColor: color
-              ? `${color}22`
-              : "rgba(99, 102, 241, 0.15)",
+            backgroundColor: color ? `${color}22` : "rgba(99, 102, 241, 0.15)",
             color: color || "#ffffff",
           },
           ...sx,
@@ -301,8 +295,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
             sx: {
               borderRadius: 2.75,
               minWidth: 210,
-              backgroundColor:
-                "var(--indices-card-bg, rgba(15, 23, 42, 0.95))",
+              backgroundColor: "var(--indices-card-bg, rgba(15, 23, 42, 0.95))",
               backdropFilter: "blur(20px)",
               border:
                 "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",

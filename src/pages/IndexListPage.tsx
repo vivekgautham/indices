@@ -119,7 +119,11 @@ export default function IndexListPage() {
 
   const initialSearch = searchParams.get("q") || "";
   const urlCategory = searchParams.get("cat");
-  const initialCategory: "all" | "themes" | "etf-providers" | "market-exposure" =
+  const initialCategory:
+    | "all"
+    | "themes"
+    | "etf-providers"
+    | "market-exposure" =
     urlCategory === "all" ||
     urlCategory === "themes" ||
     urlCategory === "etf-providers" ||
@@ -148,15 +152,24 @@ export default function IndexListPage() {
 
   // Synchronize state changes to URL query parameters
   useEffect(() => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams);
+
     if (selectedProvider !== "all") {
       params.set("provider", selectedProvider);
+    } else {
+      params.delete("provider");
     }
+
     if (searchTerm.trim()) {
       params.set("q", searchTerm.trim());
+    } else {
+      params.delete("q");
     }
+
     if (activeCategory !== "themes") {
       params.set("cat", activeCategory);
+    } else {
+      params.delete("cat");
     }
 
     const currentStr = searchParams.toString();
@@ -444,7 +457,7 @@ export default function IndexListPage() {
                 {SEARCH_CATEGORIES.map((cat) => {
                   const isCatActive = activeCategory === cat.id;
                   const hasActiveTerm = cat.terms.some(
-                    (t) => t.toLowerCase() === searchTerm.toLowerCase()
+                    (t) => t.toLowerCase() === searchTerm.toLowerCase(),
                   );
                   return (
                     <Button
@@ -460,9 +473,7 @@ export default function IndexListPage() {
                         px: 1.1,
                         minHeight: 24,
                         textTransform: "none",
-                        borderColor: hasActiveTerm
-                          ? "primary.main"
-                          : undefined,
+                        borderColor: hasActiveTerm ? "primary.main" : undefined,
                       }}
                     >
                       <Box component="span" sx={{ mr: 0.4 }}>
@@ -538,7 +549,7 @@ export default function IndexListPage() {
                               setSearchTerm((prev) =>
                                 prev.toLowerCase() === term.toLowerCase()
                                   ? ""
-                                  : term
+                                  : term,
                               )
                             }
                             variant={isActive ? "filled" : "outlined"}
@@ -571,7 +582,7 @@ export default function IndexListPage() {
                 /* Focused single category view */
                 (() => {
                   const currentCat = SEARCH_CATEGORIES.find(
-                    (c) => c.id === activeCategory
+                    (c) => c.id === activeCategory,
                   );
                   if (!currentCat) return null;
                   return (
@@ -596,7 +607,7 @@ export default function IndexListPage() {
                               setSearchTerm((prev) =>
                                 prev.toLowerCase() === term.toLowerCase()
                                   ? ""
-                                  : term
+                                  : term,
                               )
                             }
                             variant={isActive ? "filled" : "outlined"}
@@ -841,7 +852,8 @@ export default function IndexListPage() {
                     fontWeight: 600,
                   }}
                 >
-                  Showing {visibleIndices.length} of {filteredIndices.length} indices
+                  Showing {visibleIndices.length} of {filteredIndices.length}{" "}
+                  indices
                 </Typography>
 
                 <Stack
@@ -875,7 +887,7 @@ export default function IndexListPage() {
                       size="large"
                       onClick={() =>
                         setVisibleRows(
-                          Math.ceil(filteredIndices.length / columns)
+                          Math.ceil(filteredIndices.length / columns),
                         )
                       }
                       sx={{

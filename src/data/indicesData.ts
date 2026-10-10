@@ -757,7 +757,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Provides broader market value exposure by including both large-cap and mid-cap stocks",
     ],
     tags: ["Value", "S&P 900", "Large Cap", "Mid Cap", "US Equity"],
-    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-900-value",
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-900-value",
   },
   {
     id: "sp-500-momentum",
@@ -5100,7 +5101,11 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "ftse-all-world-ex-us",
     symbol: "FTAWXUS",
-    altSymbols: ["VEU Benchmark", "FTSE All-World ex US", "FTSE All World ex USA"],
+    altSymbols: [
+      "VEU Benchmark",
+      "FTSE All-World ex US",
+      "FTSE All World ex USA",
+    ],
     name: "FTSE All-World ex US Index",
     providerId: "ftse",
     category: "Broad International Equity",
@@ -5147,7 +5152,11 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "msci-world-ex-usa-imi",
     symbol: "M1WDXUS-IMI",
-    altSymbols: ["IDEV Benchmark", "MSCI World ex US IMI", "MSCI Dev ex US IMI"],
+    altSymbols: [
+      "IDEV Benchmark",
+      "MSCI World ex US IMI",
+      "MSCI Dev ex US IMI",
+    ],
     name: "MSCI World ex USA Investable Market Index (IMI)",
     providerId: "msci",
     category: "Developed International Equity",
@@ -5477,7 +5486,8 @@ export const INDICES_DATA: MarketIndex[] = [
     assetClass: "Equity",
     region: "Developed Markets",
     constituentsCount: 400,
-    weightingMethodology: "Float-Adjusted Market Cap with Growth Style Probability",
+    weightingMethodology:
+      "Float-Adjusted Market Cap with Growth Style Probability",
     rebalanceFrequency: "Semi-Annual (May and November)",
     launchYear: 2001,
     trackingEtfs: [

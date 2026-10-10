@@ -36,7 +36,7 @@ export function useIndicesData() {
             ...(idx.keyCharacteristics || []),
             ...idx.tags,
             ...(idx.trackingEtfs || []).map(
-              (etf) => `${etf.ticker} ${etf.name}`
+              (etf) => `${etf.ticker} ${etf.name}`,
             ),
           ]
             .join(" ")
@@ -53,9 +53,10 @@ export function useIndicesByProvider(providerId: ProviderId | "all") {
   return useQuery<MarketIndex[]>({
     queryKey: ["indices", providerId],
     queryFn: async () => {
-      const data = providerId === "all"
-        ? INDICES_DATA
-        : INDICES_DATA.filter((idx) => idx.providerId === providerId);
+      const data =
+        providerId === "all"
+          ? INDICES_DATA
+          : INDICES_DATA.filter((idx) => idx.providerId === providerId);
 
       return data.map((idx) => {
         if (!idx._searchableText) {
@@ -76,7 +77,7 @@ export function useIndicesByProvider(providerId: ProviderId | "all") {
             ...(idx.keyCharacteristics || []),
             ...idx.tags,
             ...(idx.trackingEtfs || []).map(
-              (etf) => `${etf.ticker} ${etf.name}`
+              (etf) => `${etf.ticker} ${etf.name}`,
             ),
           ]
             .join(" ")
