@@ -2205,6 +2205,68 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl: "https://www.ftserussell.com/products/indices/geis",
   },
   {
+    id: "ftse-emerging-ex-china",
+    symbol: "FTSE-EMXC",
+    altSymbols: [
+      "VEXC Benchmark",
+      "EXCN Benchmark",
+      "FTSE Emerging ex China",
+      "FTSE Emerging ex China RIC 22.5/45 Capped Index",
+      "FTSE Emerging ex China Index",
+    ],
+    name: "FTSE Emerging ex China Index",
+    providerId: "ftse",
+    category: "Emerging Markets / Ex-China",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 1010,
+    weightingMethodology:
+      "Float-Adjusted Market Cap (RIC 22.5/45 Capped for Fund Variant)",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2022,
+    trackingEtfs: [
+      {
+        ticker: "VEXC",
+        name: "Vanguard Emerging Markets ex-China ETF",
+        aum: "$280M+",
+      },
+      {
+        ticker: "EXCN",
+        name: "Franklin FTSE Emerging ex China UCITS ETF",
+        aum: "$1.4B+",
+      },
+    ],
+    summary:
+      "Measures large- and mid-cap equities across emerging markets excluding China. Underlying benchmark for Vanguard's VEXC and Franklin's EXCN.",
+    description:
+      "The FTSE Emerging ex China Index captures large- and mid-cap companies across advanced and secondary emerging market countries, while completely excluding companies domiciled or listed in China. Part of the FTSE Global Equity Index Series (GEIS), the benchmark enables investors to isolate emerging market growth dynamics (such as Taiwan's advanced semiconductor manufacturing, India's consumption boom, and Latin American natural resources) without exposure to Chinese regulatory, macroeconomic, or geopolitical risks. It serves as the benchmark foundation for the low-cost Vanguard Emerging Markets ex-China ETF (VEXC, which tracks the FTSE Emerging ex China RIC 22.5/45 Capped Index to adhere to IRS regulated investment company diversification rules) and the Franklin FTSE Emerging ex China UCITS ETF (EXCN). Note that like other FTSE emerging benchmarks, South Korea is classified as a Developed Market and therefore excluded.",
+    eligibilityCriteria: [
+      "Constituents of the FTSE Global Equity Index Series (GEIS) in countries classified as Advanced or Secondary Emerging",
+      "Completely excludes companies domiciled, incorporated, or classified in China",
+      "Excludes South Korea (classified as Developed by FTSE Russell since 2009)",
+      "Large- and mid-cap companies meeting strict free-float and liquidity criteria",
+      "Semi-annual index reviews in March and September",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the Vanguard Emerging Markets ex-China ETF (VEXC) and Franklin EXCN",
+      "Enables precise unbundling of China from global emerging markets portfolios",
+      "Top country weightings led by Taiwan (~35-40%) and India (~28-32%), followed by Brazil and Saudi Arabia",
+      "RIC 22.5/45 capping applied in the regulated fund variant to limit single-issuer concentration (max 22.5% single stock, 45% sum of >4.5% holdings)",
+    ],
+    tags: [
+      "Emerging Markets",
+      "Ex-China",
+      "VEXC",
+      "EXCN",
+      "Vanguard",
+      "Franklin Templeton",
+      "FTSE Russell",
+      "Large Cap",
+      "Mid Cap",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/geis",
+  },
+  {
     id: "ftse-global-all-cap",
     symbol: "GEIS",
     altSymbols: ["VT Benchmark"],
@@ -5791,6 +5853,62 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-emerging-bmi/",
+  },
+  {
+    id: "sp-emerging-ex-china-bmi",
+    symbol: "SEMUXC",
+    altSymbols: [
+      "XCNY Benchmark",
+      "S&P Emerging ex-China BMI",
+      "S&P Emerging Markets ex-China",
+      "SP Emerging ex-China",
+    ],
+    name: "S&P Emerging ex-China BMI",
+    providerId: "sp",
+    category: "Emerging Markets / Ex-China",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 3100,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Semi-Annually (March and September)",
+    launchYear: 2018,
+    trackingEtfs: [
+      {
+        ticker: "XCNY",
+        name: "SPDR S&P Emerging Markets ex-China ETF",
+        aum: "$35M+",
+      },
+    ],
+    summary:
+      "Comprehensive broad market index tracking large-, mid-, and small-cap equities across 20+ emerging countries excluding China. Benchmark for State Street's XCNY.",
+    description:
+      "The S&P Emerging ex-China BMI (Broad Market Index) is a comprehensive, rules-based, float-adjusted market capitalization-weighted index designed to measure the performance of publicly traded companies in emerging markets, explicitly excluding companies domiciled in China. Spanning large-, mid-, and small-cap stocks across more than 20 developing economies, it provides comprehensive coverage of the investable universe outside China. Crucially, S&P Dow Jones Indices classifies South Korea as an Emerging Market (contrasting with FTSE Russell), giving the index significant exposure to South Korean market leaders (such as Samsung Electronics and SK Hynix) alongside Taiwanese semiconductor manufacturers and Indian enterprises. It serves as the primary underlying benchmark for State Street's SPDR S&P Emerging Markets ex-China ETF (XCNY).",
+    eligibilityCriteria: [
+      "Securities domiciled in emerging market nations defined by S&P Dow Jones Indices global country classification",
+      "Completely excludes companies domiciled in China",
+      "Includes South Korea (classified as an Emerging Market by S&P Dow Jones Indices)",
+      "Minimum float-adjusted market capitalization of at least USD 100M with robust liquidity screening",
+      "Semi-annual reconstitution in March and September",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the SPDR S&P Emerging Markets ex-China ETF (XCNY)",
+      "Comprehensive all-cap coverage including large, mid, and small-cap emerging market enterprises",
+      "Classifies South Korea as an Emerging Market, retaining major allocations to Korean tech and industrials",
+      "Allows investors to manage Chinese market exposure separately without sacrificing broader EM diversification",
+    ],
+    tags: [
+      "Emerging Markets",
+      "Ex-China",
+      "XCNY",
+      "SPDR",
+      "State Street",
+      "S&P",
+      "All Cap",
+      "Small Cap",
+      "Core",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-emerging-ex-china-bmi/",
   },
   {
     id: "russell-rafi-developed-ex-us-large",

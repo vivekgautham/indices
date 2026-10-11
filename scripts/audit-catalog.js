@@ -116,6 +116,8 @@ const userRequestedTickers = [
   "EMXC",
   "SPEM",
   "SCHE",
+  "VEXC",
+  "XCNY",
   "IUSV",
   "IUSG",
   "STPZ",
