@@ -152,6 +152,11 @@ const aumMap = {
   EIMI: "$20B+",
   IUSV: "$16.5B+",
   IUSG: "$34.8B+",
+  STPZ: "$538M+",
+  VFQY: "$505M+",
+  BSV: "$31.5B+",
+  FLTB: "$480M+",
+  FTLB: "$480M+",
 };
 
 

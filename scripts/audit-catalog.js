@@ -117,7 +117,11 @@ const userRequestedTickers = [
   "SPEM",
   "SCHE",
   "IUSV",
-  "IUSG"
+  "IUSG",
+  "STPZ",
+  "VFQY",
+  "FLTB",
+  "FTLB"
 ];
 
 for (const ticker of userRequestedTickers) {
