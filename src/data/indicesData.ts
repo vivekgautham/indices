@@ -1784,7 +1784,12 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "russell-1000-growth",
     symbol: "RLG",
-    altSymbols: ["IWF Benchmark"],
+    altSymbols: [
+      "^RLG",
+      "Russell 1000 Growth",
+      "IWF Benchmark",
+      "VONG Benchmark",
+    ],
     name: "Russell 1000 Growth Index",
     providerId: "ftse",
     category: "Growth Style",
@@ -1799,18 +1804,29 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "VONG",
         name: "Vanguard Russell 1000 Growth ETF",
-        aum: "$25B+",
+        aum: "$46B+",
       },
     ],
     summary:
-      "The preeminent institutional benchmark for US large-cap growth managers, selecting stocks exhibiting higher price-to-book ratios and forecasted growth.",
+      "The preeminent institutional benchmark for US large-cap growth managers, selecting stocks exhibiting higher price-to-book ratios and forecasted growth, underlying IWF and Vanguard VONG.",
     description:
       "Measures the performance of large-cap US equities that exhibit growth characteristics. Uses a multi-variable score based on I/B/E/S forecast long-term growth and historical sales growth.",
     keyCharacteristics: [
       "Industry standard benchmark for US growth mutual funds and asset managers",
       "Heavily weighted towards technology, consumer discretionary, and communication services",
+      "Primary underlying benchmark for the $126B+ iShares Russell 1000 Growth ETF (IWF) and $46B+ Vanguard VONG",
     ],
-    tags: ["Growth", "Large Cap", "Momentum", "Tech Heavy", "Style Benchmark"],
+    tags: [
+      "Growth",
+      "Large Cap",
+      "Momentum",
+      "Tech Heavy",
+      "Style Benchmark",
+      "IWF",
+      "VONG",
+      "Russell 1000",
+      "Vanguard",
+    ],
     officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
   },
   {
