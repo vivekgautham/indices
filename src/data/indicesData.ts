@@ -677,6 +677,52 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-large-cap-growth-total-stock-market-index/",
   },
   {
+    id: "dow-jones-us-large-cap-value",
+    symbol: "DJUSVL",
+    altSymbols: [
+      "DJUSV",
+      "DWLV",
+      "SCHV Benchmark",
+      "Dow Jones Large Cap Value",
+    ],
+    name: "Dow Jones U.S. Large-Cap Value Total Stock Market Index",
+    providerId: "sp",
+    category: "Large-Cap Value Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 350,
+    weightingMethodology:
+      "Float-Adjusted Market Cap (Multi-Factor Value Weighted)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2005,
+    trackingEtfs: [
+      {
+        ticker: "SCHV",
+        name: "Schwab U.S. Large-Cap Value ETF",
+        aum: "$15.5B+",
+      },
+    ],
+    summary:
+      "Tracks large-cap US value equities drawn from the top 750 US companies, selecting stocks exhibiting lower valuation multiples and stable fundamentals.",
+    description:
+      "The Dow Jones U.S. Large-Cap Value Total Stock Market Index measures the performance of large-cap US value equities drawn from the 750 largest companies in the Dow Jones U.S. Total Stock Market Index. Constituents are selected and classified based on a multi-factor value model evaluating book-to-price, projected price-to-earnings, trailing earnings-to-price, and dividend yield metrics. It serves as the primary underlying benchmark for the $15.5B+ low-cost Schwab U.S. Large-Cap Value ETF (SCHV).",
+    eligibilityCriteria: [
+      "Drawn from the 750 largest US companies ranked by full market capitalization in the Dow Jones U.S. Total Stock Market Index",
+      "Multi-factor value ranking combining price-to-book (P/B), projected P/E, trailing earnings-to-price, and dividend yield",
+      "Float-adjusted market capitalization weighting with minimum liquidity criteria",
+      "Quarterly reweighting and annual reconstitution",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the low-cost $15.5B+ Schwab U.S. Large-Cap Value ETF (SCHV)",
+      "Substantial exposure to classic value sectors including financials, healthcare, industrials, and energy",
+      "Low expense ratio complement to Schwab's flagship large-cap growth benchmark underlying SCHG",
+      "Rules-based multi-factor valuation discipline helps protect against value traps",
+    ],
+    tags: ["Large Cap", "Value", "Schwab", "SCHV", "Style", "Dividends", "Financials"],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-large-cap-value-total-stock-market-index/",
+  },
+  {
     id: "sp-500-value",
     symbol: "SP500V",
     altSymbols: ["^SP500V", "SVX", "S&P 500 Value", "SPYV Benchmark"],

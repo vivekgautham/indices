@@ -149,6 +149,7 @@ const aumMap = {
   EMXC: "$25.5B+",
   SPEM: "$17.5B+",
   SCHE: "$12.8B+",
+  SCHV: "$15.5B+",
   VEXC: "$280M+",
   XCNY: "$35M+",
   EIMI: "$20B+",
