@@ -488,7 +488,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Strict 25-year dividend growth barrier to entry",
       "Historically exhibits superior downside protection during market downturns",
     ],
-    tags: ["Dividends", "Quality", "Aristocrats", "Income", "Defensive"],
+    tags: ["Dividends", "Quality", "Aristocrats", "Income", "Defensive", "Value"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-dividend-aristocrats/",
   },
@@ -534,6 +534,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Quality",
       "Dividend Growth",
       "Cash Flow",
+      "Value",
       "S&P DJI",
     ],
     officialUrl:

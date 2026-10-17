@@ -1,5 +1,6 @@
 import { INDICES_DATA } from "../src/data/indicesData.ts";
 import { PROVIDERS_DATA } from "../src/data/providersData.ts";
+import { isGrowthIndex, isValueIndex } from "../src/utils/styleFilter.ts";
 
 console.log("=================================================");
 console.log("🔍 FULL CATALOG AUDIT & VERIFICATION REPORT");
@@ -262,6 +263,30 @@ for (const index of INDICES_DATA) {
 }
 if (indicesWithZeroRelated === 0) {
   console.log(`   ✓ All ${INDICES_DATA.length} indices have at least 1-6 related benchmarks (100% coverage)`);
+}
+
+// 6. Test Growth and Value Style Filters
+console.log("\n6. Style Filter Classification Test");
+const growthIndices = INDICES_DATA.filter(isGrowthIndex);
+const valueIndices = INDICES_DATA.filter(isValueIndex);
+if (growthIndices.length === 0) {
+  console.error("❌ No growth indices found by style filter!");
+  errors++;
+} else {
+  console.log(`   ✓ Found ${growthIndices.length} Growth indices (${growthIndices.map((i) => i.symbol).slice(0, 5).join(", ")}...)`);
+}
+if (valueIndices.length === 0) {
+  console.error("❌ No value indices found by style filter!");
+  errors++;
+} else {
+  console.log(`   ✓ Found ${valueIndices.length} Value indices (${valueIndices.map((i) => i.symbol).slice(0, 5).join(", ")}...)`);
+}
+const overlap = growthIndices.filter((g) => valueIndices.some((v) => v.id === g.id));
+if (overlap.length > 0) {
+  console.error(`❌ Overlap detected between Growth and Value: ${overlap.map((i) => i.id).join(", ")}`);
+  errors++;
+} else {
+  console.log("   ✓ Zero overlap between Growth and Value classifications");
 }
 
 console.log("\n=================================================");

@@ -33,9 +33,15 @@ import { IndexCard } from "../components/IndexCard";
 import { IndexTableView } from "../components/IndexTableView";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
+import { StyleQuickFilter } from "../components/StyleQuickFilter";
 import ShareButton from "../components/ShareButton";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { ProviderId } from "../types";
+import {
+  isGrowthIndex,
+  isValueIndex,
+  StyleFilter,
+} from "../utils/styleFilter";
 
 export interface SearchCategory {
   id: "themes" | "etf-providers" | "market-exposure";
@@ -139,9 +145,14 @@ export default function IndexListPage() {
   const urlView = searchParams.get("view");
   const initialView = urlView === "table" ? "table" : "card";
 
+  const urlStyle = searchParams.get("style");
+  const initialStyle: StyleFilter =
+    urlStyle === "growth" || urlStyle === "value" ? urlStyle : "all";
+
   const [selectedProvider, setSelectedProvider] = useState<ProviderId | "all">(
     initialProvider,
   );
+  const [selectedStyle, setSelectedStyle] = useState<StyleFilter>(initialStyle);
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [visibleRows, setVisibleRows] = useState(3);
   const [activeCategory, setActiveCategory] = useState<
@@ -157,7 +168,7 @@ export default function IndexListPage() {
   // Reset pagination to 3 rows whenever filter or search query changes
   useEffect(() => {
     setVisibleRows(3);
-  }, [searchTerm, selectedProvider]);
+  }, [searchTerm, selectedProvider, selectedStyle]);
 
   // Synchronize state changes to URL query parameters
   useEffect(() => {
@@ -167,6 +178,12 @@ export default function IndexListPage() {
       params.set("provider", selectedProvider);
     } else {
       params.delete("provider");
+    }
+
+    if (selectedStyle !== "all") {
+      params.set("style", selectedStyle);
+    } else {
+      params.delete("style");
     }
 
     if (searchTerm.trim()) {
@@ -194,6 +211,7 @@ export default function IndexListPage() {
     }
   }, [
     selectedProvider,
+    selectedStyle,
     searchTerm,
     activeCategory,
     viewMode,
@@ -208,6 +226,12 @@ export default function IndexListPage() {
       p && (p in PROVIDERS_DATA || p === "all") ? (p as ProviderId) : "all";
     if (validP !== selectedProvider) {
       setSelectedProvider(validP);
+    }
+
+    const s = searchParams.get("style");
+    const validS: StyleFilter = s === "growth" || s === "value" ? s : "all";
+    if (validS !== selectedStyle) {
+      setSelectedStyle(validS);
     }
 
     const q = searchParams.get("q") || "";
@@ -235,16 +259,35 @@ export default function IndexListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // Calculate index counts per provider
+  // Calculate index counts per provider (accounting for selectedStyle)
   const indexCounts = useMemo(() => {
+    let list = indices;
+    if (selectedStyle === "growth") {
+      list = list.filter(isGrowthIndex);
+    } else if (selectedStyle === "value") {
+      list = list.filter(isValueIndex);
+    }
     const counts: Record<string, number> = {
-      all: indices.length,
+      all: list.length,
     };
-    indices.forEach((idx) => {
+    list.forEach((idx) => {
       counts[idx.providerId] = (counts[idx.providerId] || 0) + 1;
     });
     return counts;
-  }, [indices]);
+  }, [indices, selectedStyle]);
+
+  // Calculate style counts (Growth / Value) for the currently selected provider
+  const styleCounts = useMemo(() => {
+    const list =
+      selectedProvider === "all"
+        ? indices
+        : indices.filter((idx) => idx.providerId === selectedProvider);
+    return {
+      all: list.length,
+      growth: list.filter(isGrowthIndex).length,
+      value: list.filter(isValueIndex).length,
+    };
+  }, [indices, selectedProvider]);
 
   // Current active provider object if a single provider is selected
   const activeProviderObj = useMemo(() => {
@@ -261,14 +304,20 @@ export default function IndexListPage() {
       .filter((t) => t.length > 0 && /[a-z0-9]/i.test(t));
   }, [searchTerm]);
 
-  // Matches across ALL providers (for global search discovery)
+  // Matches across ALL providers (for global search discovery), filtered by selectedStyle
   const allProviderMatches = useMemo(() => {
-    if (searchTokens.length === 0) return indices;
-    return indices.filter((idx) => {
+    let list = indices;
+    if (selectedStyle === "growth") {
+      list = list.filter(isGrowthIndex);
+    } else if (selectedStyle === "value") {
+      list = list.filter(isValueIndex);
+    }
+    if (searchTokens.length === 0) return list;
+    return list.filter((idx) => {
       const text = idx._searchableText || "";
       return searchTokens.every((token) => text.includes(token));
     });
-  }, [indices, searchTokens]);
+  }, [indices, selectedStyle, searchTokens]);
 
   // Filtered indices list for the current provider selection
   const filteredIndices = useMemo(() => {
@@ -293,15 +342,48 @@ export default function IndexListPage() {
 
   // Update document title dynamically based on active filter or search
   useEffect(() => {
+    const stylePrefix =
+      selectedStyle === "growth"
+        ? "Growth "
+        : selectedStyle === "value"
+          ? "Value "
+          : "";
     if (activeProviderObj) {
-      document.title = `${activeProviderObj.name} Indices | Market Indices Explorer`;
+      document.title = `${stylePrefix}${activeProviderObj.name} Indices | Market Indices Explorer`;
+    } else if (selectedStyle !== "all" && !searchTerm.trim()) {
+      document.title = `${stylePrefix}Market Indices | Global Benchmark Catalog`;
     } else if (searchTerm.trim()) {
       document.title = `Search: "${searchTerm.trim()}" | Market Indices Explorer`;
     } else {
       document.title =
         "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
     }
-  }, [activeProviderObj, searchTerm]);
+  }, [activeProviderObj, searchTerm, selectedStyle]);
+
+  // Handle clicking on suggested search terms, integrating StyleFilter for Growth & Value
+  const handleTermClick = (term: string) => {
+    const lower = term.toLowerCase();
+    if (lower === "growth") {
+      setSelectedStyle((prev) => (prev === "growth" ? "all" : "growth"));
+      if (searchTerm.toLowerCase() === "growth") setSearchTerm("");
+    } else if (lower === "value") {
+      setSelectedStyle((prev) => (prev === "value" ? "all" : "value"));
+      if (searchTerm.toLowerCase() === "value") setSearchTerm("");
+    } else {
+      setSearchTerm((prev) => (prev.toLowerCase() === lower ? "" : term));
+    }
+  };
+
+  const isTermActive = (term: string) => {
+    const lower = term.toLowerCase();
+    if (lower === "growth") {
+      return selectedStyle === "growth";
+    }
+    if (lower === "value") {
+      return selectedStyle === "value";
+    }
+    return searchTerm.toLowerCase() === lower;
+  };
 
   return (
     <Container
@@ -410,6 +492,13 @@ export default function IndexListPage() {
             indexCounts={indexCounts}
           />
 
+          {/* Quick Filter: Value and Growth Indices */}
+          <StyleQuickFilter
+            selectedStyle={selectedStyle}
+            onSelectStyle={(s) => setSelectedStyle(s)}
+            styleCounts={styleCounts}
+          />
+
           {/* Search Bar */}
           <Box sx={{ width: "100%", mt: 0.5 }}>
             <TextField
@@ -478,9 +567,7 @@ export default function IndexListPage() {
 
                 {SEARCH_CATEGORIES.map((cat) => {
                   const isCatActive = activeCategory === cat.id;
-                  const hasActiveTerm = cat.terms.some(
-                    (t) => t.toLowerCase() === searchTerm.toLowerCase(),
-                  );
+                  const hasActiveTerm = cat.terms.some((t) => isTermActive(t));
                   return (
                     <Button
                       key={cat.id}
@@ -559,21 +646,14 @@ export default function IndexListPage() {
                         }}
                       />
                       {cat.terms.map((term) => {
-                        const isActive =
-                          searchTerm.toLowerCase() === term.toLowerCase();
+                        const isActive = isTermActive(term);
                         return (
                           <Chip
                             key={term}
                             label={term}
                             size="small"
                             clickable
-                            onClick={() =>
-                              setSearchTerm((prev) =>
-                                prev.toLowerCase() === term.toLowerCase()
-                                  ? ""
-                                  : term,
-                              )
-                            }
+                            onClick={() => handleTermClick(term)}
                             variant={isActive ? "filled" : "outlined"}
                             color={isActive ? "primary" : "default"}
                             sx={{
@@ -617,21 +697,14 @@ export default function IndexListPage() {
                       sx={{ mt: 0.5 }}
                     >
                       {currentCat.terms.map((term) => {
-                        const isActive =
-                          searchTerm.toLowerCase() === term.toLowerCase();
+                        const isActive = isTermActive(term);
                         return (
                           <Chip
                             key={term}
                             label={term}
                             size="small"
                             clickable
-                            onClick={() =>
-                              setSearchTerm((prev) =>
-                                prev.toLowerCase() === term.toLowerCase()
-                                  ? ""
-                                  : term,
-                              )
-                            }
+                            onClick={() => handleTermClick(term)}
                             variant={isActive ? "filled" : "outlined"}
                             color={isActive ? "primary" : "default"}
                             sx={{
@@ -734,6 +807,9 @@ export default function IndexListPage() {
             }}
           >
             Showing {filteredIndices.length} famous{" "}
+            {selectedStyle !== "all"
+              ? `${selectedStyle === "growth" ? "Growth" : "Value"} `
+              : ""}
             {selectedProvider !== "all"
               ? `${activeProviderObj?.shortName || ""} indices`
               : "indices across major providers"}
@@ -741,12 +817,15 @@ export default function IndexListPage() {
           </Typography>
 
           <Stack direction="row" spacing={1.5} alignItems="center">
-            {(searchTerm || selectedProvider !== "all") && (
+            {(searchTerm ||
+              selectedProvider !== "all" ||
+              selectedStyle !== "all") && (
               <Button
                 size="small"
                 startIcon={<ReplayIcon fontSize="small" />}
                 onClick={() => {
                   setSelectedProvider("all");
+                  setSelectedStyle("all");
                   setSearchTerm("");
                 }}
                 sx={{
@@ -855,6 +934,7 @@ export default function IndexListPage() {
                   startIcon={<ReplayIcon />}
                   onClick={() => {
                     setSelectedProvider("all");
+                    setSelectedStyle("all");
                     setSearchTerm("");
                   }}
                 >
