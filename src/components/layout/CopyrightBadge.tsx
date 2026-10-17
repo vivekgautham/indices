@@ -1,7 +1,7 @@
 import CopyrightIcon from "@mui/icons-material/Copyright";
 import { Box, Tooltip, Typography } from "@mui/material";
 import React from "react";
-import { APP_AUTHOR, COPYRIGHT_YEAR, REPO_URL } from "../../constants/version";
+import { APP_AUTHOR, COPYRIGHT_YEAR } from "../../constants/version";
 
 interface CopyrightBadgeProps {
   compact?: boolean;
@@ -24,7 +24,7 @@ export const CopyrightBadge: React.FC<CopyrightBadgeProps> = ({
               mt: 0.25,
             }}
           >
-            MIT License • Open Source
+            All rights reserved • Global Market Index Explorer
           </Box>
         </Box>
       }
@@ -32,15 +32,12 @@ export const CopyrightBadge: React.FC<CopyrightBadgeProps> = ({
       placement="top-start"
     >
       <Box
-        component="a"
-        href={REPO_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+        component="span"
         sx={{
           display: "inline-flex",
           alignItems: "center",
           color: "text.secondary",
-          opacity: 0.8,
+          opacity: 0.85,
           transition: "all 0.2s ease-in-out",
           px: 1,
           py: 0.35,
@@ -51,16 +48,12 @@ export const CopyrightBadge: React.FC<CopyrightBadgeProps> = ({
           backdropFilter: "blur(8px)",
           fontSize: "0.74rem",
           fontWeight: 600,
-          textDecoration: "none",
-          cursor: "pointer",
+          cursor: "default",
           userSelect: "none",
           "&:hover": {
             opacity: 1,
-            color: "primary.light",
-            borderColor: "primary.main",
-            backgroundColor:
-              "var(--indices-card-hover-bg, rgba(99, 102, 241, 0.1))",
-            transform: "translateY(-1px)",
+            color: "text.primary",
+            borderColor: "rgba(255, 255, 255, 0.16)",
           },
         }}
       >
@@ -79,7 +72,6 @@ export const CopyrightBadge: React.FC<CopyrightBadgeProps> = ({
             <Box
               component="span"
               sx={{
-                display: { xs: "none", sm: "inline" },
                 ml: 0.5,
               }}
             >

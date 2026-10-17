@@ -8,7 +8,7 @@ export const BUILD_DATE =
 
 export const APP_NAME = "Indices";
 
-export const APP_AUTHOR = "Vivek Soundararaj";
+export const APP_AUTHOR = "MarketIndices.xyz";
 
 export const COPYRIGHT_YEAR = "2026";
 
