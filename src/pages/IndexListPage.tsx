@@ -38,6 +38,9 @@ import ShareButton from "../components/ShareButton";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { ProviderId } from "../types";
 import {
+  OTHER_PROVIDER_IDS,
+} from "../utils/providerClassification";
+import {
   isGrowthIndex,
   isValueIndex,
   StyleFilter,
@@ -123,9 +126,12 @@ export default function IndexListPage() {
 
   // Initialize filter and search state from URL query parameters
   const urlProvider = searchParams.get("provider");
-  const initialProvider: ProviderId | "all" =
-    urlProvider && (urlProvider in PROVIDERS_DATA || urlProvider === "all")
-      ? (urlProvider as ProviderId)
+  const initialProvider: ProviderId | "others" | "all" =
+    urlProvider &&
+    (urlProvider in PROVIDERS_DATA ||
+      urlProvider === "all" ||
+      urlProvider === "others")
+      ? (urlProvider as ProviderId | "others")
       : "all";
 
   const initialSearch = searchParams.get("q") || "";
@@ -149,9 +155,9 @@ export default function IndexListPage() {
   const initialStyle: StyleFilter =
     urlStyle === "growth" || urlStyle === "value" ? urlStyle : "all";
 
-  const [selectedProvider, setSelectedProvider] = useState<ProviderId | "all">(
-    initialProvider,
-  );
+  const [selectedProvider, setSelectedProvider] = useState<
+    ProviderId | "others" | "all"
+  >(initialProvider);
   const [selectedStyle, setSelectedStyle] = useState<StyleFilter>(initialStyle);
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [visibleRows, setVisibleRows] = useState(3);
@@ -222,8 +228,10 @@ export default function IndexListPage() {
   // Synchronize when user navigates with browser Back/Forward buttons
   useEffect(() => {
     const p = searchParams.get("provider");
-    const validP: ProviderId | "all" =
-      p && (p in PROVIDERS_DATA || p === "all") ? (p as ProviderId) : "all";
+    const validP: ProviderId | "others" | "all" =
+      p && (p in PROVIDERS_DATA || p === "all" || p === "others")
+        ? (p as ProviderId | "others")
+        : "all";
     if (validP !== selectedProvider) {
       setSelectedProvider(validP);
     }
@@ -269,9 +277,13 @@ export default function IndexListPage() {
     }
     const counts: Record<string, number> = {
       all: list.length,
+      others: 0,
     };
     list.forEach((idx) => {
       counts[idx.providerId] = (counts[idx.providerId] || 0) + 1;
+      if (OTHER_PROVIDER_IDS.has(idx.providerId)) {
+        counts.others = (counts.others || 0) + 1;
+      }
     });
     return counts;
   }, [indices, selectedStyle]);
@@ -281,7 +293,9 @@ export default function IndexListPage() {
     const list =
       selectedProvider === "all"
         ? indices
-        : indices.filter((idx) => idx.providerId === selectedProvider);
+        : selectedProvider === "others"
+          ? indices.filter((idx) => OTHER_PROVIDER_IDS.has(idx.providerId))
+          : indices.filter((idx) => idx.providerId === selectedProvider);
     return {
       all: list.length,
       growth: list.filter(isGrowthIndex).length,
@@ -291,7 +305,7 @@ export default function IndexListPage() {
 
   // Current active provider object if a single provider is selected
   const activeProviderObj = useMemo(() => {
-    if (selectedProvider === "all") return undefined;
+    if (selectedProvider === "all" || selectedProvider === "others") return undefined;
     return providers.find((p) => p.id === selectedProvider);
   }, [providers, selectedProvider]);
 
@@ -322,7 +336,9 @@ export default function IndexListPage() {
   // Filtered indices list for the current provider selection
   const filteredIndices = useMemo(() => {
     let list = allProviderMatches;
-    if (selectedProvider !== "all") {
+    if (selectedProvider === "others") {
+      list = list.filter((idx) => OTHER_PROVIDER_IDS.has(idx.providerId));
+    } else if (selectedProvider !== "all") {
       list = list.filter((idx) => idx.providerId === selectedProvider);
     }
     return list;
@@ -350,6 +366,8 @@ export default function IndexListPage() {
           : "";
     if (activeProviderObj) {
       document.title = `${stylePrefix}${activeProviderObj.name} Indices | Market Indices Explorer`;
+    } else if (selectedProvider === "others") {
+      document.title = `${stylePrefix}Other Benchmark Providers (Bloomberg, Nasdaq, MarketVector) | Market Indices Explorer`;
     } else if (selectedStyle !== "all" && !searchTerm.trim()) {
       document.title = `${stylePrefix}Market Indices | Global Benchmark Catalog`;
     } else if (searchTerm.trim()) {
@@ -358,7 +376,7 @@ export default function IndexListPage() {
       document.title =
         "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
     }
-  }, [activeProviderObj, searchTerm, selectedStyle]);
+  }, [activeProviderObj, selectedProvider, searchTerm, selectedStyle]);
 
   // Handle clicking on suggested search terms, integrating StyleFilter for Growth & Value
   const handleTermClick = (term: string) => {
@@ -410,14 +428,18 @@ export default function IndexListPage() {
           item={{
             title: activeProviderObj
               ? `${activeProviderObj.name} Benchmark Indices | Market Indices Explorer`
-              : searchTerm.trim()
-                ? `Indices matching "${searchTerm.trim()}" | Market Indices Explorer`
-                : "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers",
+              : selectedProvider === "others"
+                ? "Other Benchmark Providers (Bloomberg, Nasdaq, MarketVector) | Market Indices Explorer"
+                : searchTerm.trim()
+                  ? `Indices matching "${searchTerm.trim()}" | Market Indices Explorer`
+                  : "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers",
             text: activeProviderObj
               ? `Explore ${activeProviderObj.name} market benchmark indices, tracking ETFs, and methodologies.`
-              : searchTerm.trim()
-                ? `Search results for "${searchTerm.trim()}" across global market benchmarks.`
-                : "Explore and compare global market benchmark indices, tracking ETFs, and constituent methodologies.",
+              : selectedProvider === "others"
+                ? "Explore Bloomberg, Nasdaq, and MarketVector market benchmark indices, tracking ETFs, and methodologies."
+                : searchTerm.trim()
+                  ? `Search results for "${searchTerm.trim()}" across global market benchmarks.`
+                  : "Explore and compare global market benchmark indices, tracking ETFs, and constituent methodologies.",
           }}
           variant="outlined"
           size="small"
@@ -427,7 +449,7 @@ export default function IndexListPage() {
               : "Share Page"
           }
           tooltip="Share current page or filtered view"
-          color={activeProviderObj?.accentColor}
+          color={activeProviderObj?.accentColor || (selectedProvider === "others" ? "#8b5cf6" : undefined)}
           sx={{
             borderRadius: 2,
             px: 1.5,
@@ -768,9 +790,14 @@ export default function IndexListPage() {
                 sx={{ color: "primary.light", fontSize: "0.85rem" }}
               >
                 🔍 Found <strong>{filteredIndices.length}</strong> matching
-                under <strong>{activeProviderObj?.shortName}</strong>, and{" "}
-                <strong>{allProviderMatches.length}</strong> matches across{" "}
-                <strong>All Providers</strong>.
+                under{" "}
+                <strong>
+                  {selectedProvider === "others"
+                    ? "Other Providers"
+                    : activeProviderObj?.shortName}
+                </strong>
+                , and <strong>{allProviderMatches.length}</strong> matches
+                across <strong>All Providers</strong>.
               </Typography>
               <Button
                 size="small"
@@ -811,7 +838,9 @@ export default function IndexListPage() {
               ? `${selectedStyle === "growth" ? "Growth" : "Value"} `
               : ""}
             {selectedProvider !== "all"
-              ? `${activeProviderObj?.shortName || ""} indices`
+              ? selectedProvider === "others"
+                ? "Other Providers (Bloomberg, Nasdaq, MarketVector) indices"
+                : `${activeProviderObj?.shortName || ""} indices`
               : "indices across major providers"}
             {searchTerm && ` • Matching "${searchTerm}"`}
           </Typography>
@@ -909,8 +938,12 @@ export default function IndexListPage() {
                 {selectedProvider !== "all" && allProviderMatches.length > 0 ? (
                   <>
                     No matches under{" "}
-                    <strong>{activeProviderObj?.shortName}</strong>, but{" "}
-                    <strong>{allProviderMatches.length}</strong> matching
+                    <strong>
+                      {selectedProvider === "others"
+                        ? "Other Providers"
+                        : activeProviderObj?.shortName}
+                    </strong>
+                    , but <strong>{allProviderMatches.length}</strong> matching
                     indices were found across other providers.
                   </>
                 ) : (

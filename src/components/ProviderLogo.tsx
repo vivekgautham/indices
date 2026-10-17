@@ -3,7 +3,7 @@ import React from "react";
 import { ProviderId } from "../types";
 
 export interface ProviderLogoProps {
-  providerId: ProviderId | "all";
+  providerId: ProviderId | "all" | "others";
   size?: number;
   sx?: SxProps<Theme>;
 }
@@ -11,13 +11,19 @@ export interface ProviderLogoProps {
 const BASE = import.meta.env.BASE_URL;
 
 const LOGO_CONFIG: Record<
-  ProviderId | "all",
+  ProviderId | "all" | "others",
   { src: string; alt: string; bg: string; paddingRatio: number }
 > = {
   all: {
     src: `${BASE}logos/all.svg`,
     alt: "All Providers",
     bg: "#6366f1",
+    paddingRatio: 0.12,
+  },
+  others: {
+    src: `${BASE}logos/all.svg`,
+    alt: "Other Providers",
+    bg: "#8b5cf6",
     paddingRatio: 0.12,
   },
   sp: {
