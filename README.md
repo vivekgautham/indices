@@ -2,7 +2,7 @@
 
 A modern, high-performance web application to explore major financial and market index providers and the indices they offer worldwide (e.g., S&P Dow Jones, MSCI, FTSE Russell, Nasdaq, STOXX, Bloomberg, and more).
 
-🌐 **Live Demo:** [https://vivekgautham.github.io/indices](https://vivekgautham.github.io/indices)
+🌐 **Live Demo:** [https://marketindices.xyz](https://marketindices.xyz)
 
 ---
 
