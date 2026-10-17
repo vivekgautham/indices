@@ -6,7 +6,16 @@ export type ProviderId =
   | "crsp"
   | "ice"
   | "marketvector"
-  | "bloomberg";
+  | "bloomberg"
+  | "stoxx"
+  | "euronext"
+  | "six"
+  | "nikkei"
+  | "hangseng"
+  | "nse"
+  | "csi"
+  | "krx"
+  | "tsx";
 
 export interface IndexProvider {
   id: ProviderId;
@@ -23,6 +32,13 @@ export interface IndexProvider {
   keyEtfPartners: string[];
   coverage: string;
   marketShareSummary: string;
+}
+
+export interface TrackingEtf {
+  ticker: string;
+  name: string;
+  aum?: string;
+  hasStockAnalysis?: boolean;
 }
 
 export interface MarketIndex {
@@ -50,7 +66,7 @@ export interface MarketIndex {
   weightingMethodology: string;
   rebalanceFrequency: string;
   launchYear: number | string;
-  trackingEtfs: { ticker: string; name: string; aum?: string }[];
+  trackingEtfs: TrackingEtf[];
   summary: string;
   description: string;
   eligibilityCriteria?: string[];

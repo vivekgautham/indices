@@ -286,56 +286,92 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                 Top Tracking ETFs:
               </Typography>
               <Stack direction="row" flexWrap="wrap" gap={0.6}>
-                {index.trackingEtfs.slice(0, 3).map((etf) => (
-                  <Tooltip
-                    key={etf.ticker}
-                    title={`View ${etf.ticker} on Stock Analysis`}
-                    arrow
-                    placement="top"
-                  >
-                    <Chip
-                      component="a"
-                      href={getStockAnalysisEtfUrl(etf.ticker)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      clickable
-                      label={
-                        <Stack
-                          direction="row"
-                          alignItems="center"
-                          spacing={0.3}
-                        >
-                          <span>{etf.ticker}</span>
-                          <LaunchIcon
-                            sx={{
-                              fontSize: "10px !important",
-                              opacity: 0.75,
-                            }}
-                          />
-                        </Stack>
+                {index.trackingEtfs.slice(0, 3).map((etf) => {
+                  const url = getStockAnalysisEtfUrl(
+                    etf.ticker,
+                    etf.hasStockAnalysis
+                  );
+                  if (url) {
+                    return (
+                      <Tooltip
+                        key={etf.ticker}
+                        title={`View ${etf.ticker} on Stock Analysis`}
+                        arrow
+                        placement="top"
+                      >
+                        <Chip
+                          component="a"
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          clickable
+                          label={
+                            <Stack
+                              direction="row"
+                              alignItems="center"
+                              spacing={0.3}
+                            >
+                              <span>{etf.ticker}</span>
+                              <LaunchIcon
+                                sx={{
+                                  fontSize: "10px !important",
+                                  opacity: 0.75,
+                                }}
+                              />
+                            </Stack>
+                          }
+                          size="small"
+                          sx={{
+                            height: 20,
+                            fontSize: "0.68rem",
+                            fontWeight: 700,
+                            backgroundColor: "rgba(99, 102, 241, 0.15)",
+                            color: "primary.light",
+                            border: "1px solid rgba(99, 102, 241, 0.25)",
+                            borderRadius: 1,
+                            textDecoration: "none",
+                            cursor: "pointer",
+                            "& .MuiChip-label": { px: 0.6 },
+                            "&:hover": {
+                              backgroundColor: "rgba(99, 102, 241, 0.35)",
+                              borderColor: "primary.light",
+                              color: "#ffffff",
+                            },
+                          }}
+                        />
+                      </Tooltip>
+                    );
+                  }
+
+                  return (
+                    <Tooltip
+                      key={etf.ticker}
+                      title={
+                        etf.name
+                          ? `${etf.name}${etf.aum ? ` (${etf.aum})` : ""}`
+                          : etf.ticker
                       }
-                      size="small"
-                      sx={{
-                        height: 20,
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        backgroundColor: "rgba(99, 102, 241, 0.15)",
-                        color: "primary.light",
-                        border: "1px solid rgba(99, 102, 241, 0.25)",
-                        borderRadius: 1,
-                        textDecoration: "none",
-                        cursor: "pointer",
-                        "& .MuiChip-label": { px: 0.6 },
-                        "&:hover": {
-                          backgroundColor: "rgba(99, 102, 241, 0.35)",
-                          borderColor: "primary.light",
-                          color: "#ffffff",
-                        },
-                      }}
-                    />
-                  </Tooltip>
-                ))}
+                      arrow
+                      placement="top"
+                    >
+                      <Chip
+                        label={etf.ticker}
+                        size="small"
+                        sx={{
+                          height: 20,
+                          fontSize: "0.68rem",
+                          fontWeight: 700,
+                          backgroundColor: "rgba(148, 163, 184, 0.12)",
+                          color: "text.secondary",
+                          border: "1px solid rgba(148, 163, 184, 0.2)",
+                          borderRadius: 1,
+                          "& .MuiChip-label": { px: 0.6 },
+                        }}
+                      />
+                    </Tooltip>
+                  );
+                })}
                 {index.trackingEtfs.length > 3 && (
                   <Typography
                     variant="caption"

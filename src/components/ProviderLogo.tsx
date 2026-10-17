@@ -74,6 +74,60 @@ const LOGO_CONFIG: Record<
     bg: "#ffffff",
     paddingRatio: 0.06,
   },
+  stoxx: {
+    src: `${BASE}logos/stoxx.svg`,
+    alt: "STOXX",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  euronext: {
+    src: `${BASE}logos/euronext.svg`,
+    alt: "Euronext",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  six: {
+    src: `${BASE}logos/six.svg`,
+    alt: "SIX",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  nikkei: {
+    src: `${BASE}logos/nikkei.svg`,
+    alt: "Nikkei / JPX",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  hangseng: {
+    src: `${BASE}logos/hangseng.svg`,
+    alt: "Hang Seng",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  nse: {
+    src: `${BASE}logos/nse.svg`,
+    alt: "NSE India",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  csi: {
+    src: `${BASE}logos/csi.svg`,
+    alt: "CSI",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  krx: {
+    src: `${BASE}logos/krx.svg`,
+    alt: "KRX",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  tsx: {
+    src: `${BASE}logos/tsx.svg`,
+    alt: "TSX",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
 };
 
 export const ProviderLogo: React.FC<ProviderLogoProps> = ({
