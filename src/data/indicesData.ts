@@ -30,19 +30,16 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "CSPX",
         name: "iShares Core S&P 500 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$100B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "VUAA",
         name: "Vanguard S&P 500 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$15B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "VUSA",
         name: "Vanguard S&P 500 UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$45B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -95,7 +92,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "CIND",
         name: "iShares Dow Jones Industrial Average UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$1.1B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -136,13 +132,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SPY4",
         name: "SPDR S&P 400 U.S. Mid Cap UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$1.8B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "IJPH",
         name: "iShares S&P MidCap 400 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$1.2B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -195,7 +189,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "ISP6",
         name: "iShares S&P SmallCap 600 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$2.5B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -490,13 +483,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "EWSP",
         name: "Invesco S&P 500 Equal Weight UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$6B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "ISPE",
         name: "iShares S&P 500 Equal Weight UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$1.5B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -535,7 +526,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "USDV",
         name: "SPDR S&P U.S. Dividend Aristocrats UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$4.5B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1349,13 +1339,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "IUIT",
         name: "iShares S&P 500 Information Technology Sector UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$8.5B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "XLKT",
         name: "SPDR S&P U.S. Technology Select Sector UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$1.5B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1408,7 +1396,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "IUCS",
         name: "iShares S&P 500 Consumer Staples Sector UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$550M+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1460,7 +1447,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "IUEN",
         name: "iShares S&P 500 Energy Sector UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$1.6B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1513,7 +1499,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "IUID",
         name: "iShares S&P 500 Industrials Sector UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$850M+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1973,7 +1958,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "R2US",
         name: "iShares Russell 2000 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$3.1B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -2563,13 +2547,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "VWRA",
         name: "Vanguard FTSE All-World UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$25B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "VWRD",
         name: "Vanguard FTSE All-World UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$10B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -2612,13 +2594,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "VHYA",
         name: "Vanguard FTSE All-World High Dividend Yield UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$4B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "VHYD",
         name: "Vanguard FTSE All-World High Dividend Yield UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$2B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -2773,7 +2753,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SSAC",
         name: "iShares MSCI ACWI UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$13B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -3414,19 +3393,16 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "CNDX",
         name: "iShares Nasdaq 100 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$16B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "EQQQ",
         name: "Invesco EQQQ Nasdaq-100 UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$13B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "EQAC",
         name: "Invesco Nasdaq-100 UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$8B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "TQQQ",
@@ -4282,7 +4258,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "IB01",
         name: "iShares $ Treasury Bond 0-1yr UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$18B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -4681,7 +4656,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SMGB",
         name: "VanEck Semiconductor UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$3.5B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -4917,7 +4891,6 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SUAG",
         name: "iShares Core U.S. Aggregate Bond UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$4.2B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -5052,13 +5025,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "DTLA",
         name: "iShares $ Treasury Bond 20+yr UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$4.5B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "IDTL",
         name: "iShares $ Treasury Bond 20+yr UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$2.5B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -5129,13 +5100,11 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "IBTM",
         name: "iShares $ Treasury Bond 7-10yr UCITS ETF (Dist, Ireland Domiciled)",
         aum: "$3.2B+",
-        hasStockAnalysis: false,
       },
       {
         ticker: "CTYM",
         name: "iShares $ Treasury Bond 7-10yr UCITS ETF (Acc, Ireland Domiciled)",
         aum: "$2.1B+",
-        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -7037,7 +7006,7 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1983,
     trackingEtfs: [
       { ticker: "EWN", name: "iShares MSCI Netherlands ETF / AEX Proxy", aum: "$280M+" },
-      { ticker: "IAEX", name: "iShares AEX UCITS ETF", aum: "$3.2B+", hasStockAnalysis: false },
+      { ticker: "IAEX", name: "iShares AEX UCITS ETF", aum: "$3.2B+" },
     ],
     summary:
       "The blue-chip index of Euronext Amsterdam, tracking 25 Dutch market leaders including semiconductor pioneer ASML. Basis for Dutch proxy EWN.",
