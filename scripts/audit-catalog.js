@@ -127,7 +127,17 @@ const userRequestedTickers = [
   "FTLB",
   "HACK",
   "CIBR",
-  "BUG"
+  "BUG",
+  "XME",
+  "ICOP",
+  "COPX",
+  "CPER",
+  "JJCTF",
+  "GDX",
+  "GDXJ",
+  "REMX",
+  "PPLT",
+  "PALL"
 ];
 
 for (const ticker of userRequestedTickers) {
@@ -188,6 +198,10 @@ const suggestions = [
   "High Dividend",
   "Cybersecurity",
   "Precious Metals",
+  "Copper",
+  "Gold Miners",
+  "Metals & Mining",
+  "Industrial Metals",
   "Bonds / Fixed Income",
   "Treasury / Cash",
   "Volatility / VIX",

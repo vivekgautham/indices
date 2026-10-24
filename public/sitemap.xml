@@ -217,6 +217,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/sp-metals-and-mining-select-industry</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/sp-north-american-expanded-technology</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -553,13 +559,49 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/lbma-platinum-price</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/lbma-palladium-price</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/mvis-us-semiconductor-25</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/marketvector-global-gold-miners</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/marketvector-global-junior-gold-miners</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/marketvector-global-rare-earth-strategic-metals</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/bloomberg-us-aggregate</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/bloomberg-copper-subindex</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -770,6 +812,12 @@
   </url>
   <url>
     <loc>https://marketindices.xyz/index/dax-40</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/stoxx-global-copper-and-metals-mining</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

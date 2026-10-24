@@ -147,9 +147,9 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
       "Invesco",
     ],
     coverage:
-      "Fixed Income (BofA), U.S. Treasuries, Precious Metals & Commodities (LBMA), Equities & Semiconductors",
+      "Fixed Income (BofA), U.S. Treasuries, Precious Metals & Commodities (LBMA Gold/Silver/Platinum/Palladium), Equities & Semiconductors",
     marketShareSummary:
-      "Administers the world's physical gold & silver bullion benchmarks (LBMA Gold & Silver), the leading short-term US Treasury index ($110B+ SGOV), and ICE Semiconductor Index ($40B+ SOXX).",
+      "Administers the world's physical precious metals bullion benchmarks (LBMA Gold, Silver, Platinum, Palladium), the leading short-term US Treasury index ($110B+ SGOV), and ICE Semiconductor Index ($40B+ SOXX).",
   },
   marketvector: {
     id: "marketvector",
@@ -159,17 +159,17 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     tagline:
       "Pioneering specialized, liquid thematic, industry, and digital asset benchmarks.",
     description:
-      "MarketVector Indexes (formerly MVIS), a subsidiary of VanEck founded in Frankfurt, Germany, develops and maintains specialized benchmarks designed specifically to underpin investable ETFs. It is renowned for the MVIS US Listed Semiconductor 25 Index underlying the $66B+ VanEck Semiconductor ETF (SMH), as well as major mining and digital asset benchmarks.",
+      "MarketVector Indexes (formerly MVIS), a subsidiary of VanEck founded in Frankfurt, Germany, develops and maintains specialized benchmarks designed specifically to underpin investable ETFs. It is renowned for the MVIS US Listed Semiconductor 25 Index underlying the $66B+ VanEck Semiconductor ETF (SMH), as well as major gold mining, critical materials, and digital asset benchmarks.",
     headquarters: "Frankfurt am Main, Germany",
     founded: "2011",
     website: "https://www.marketvector.com",
     accentColor: "#ea580c",
     badgeBg: "rgba(234, 88, 12, 0.15)",
-    keyEtfPartners: ["VanEck"],
+    keyEtfPartners: ["VanEck (SMH / GDX / GDXJ / REMX)"],
     coverage:
-      "Thematic & Industry Equities (Semiconductors, Mining, Clean Energy), Digital Assets & Crypto",
+      "Thematic & Industry Equities (Semiconductors, Gold Mining, Rare Earths, Clean Energy), Digital Assets & Crypto",
     marketShareSummary:
-      "Underpins many of the largest thematic equity ETFs globally, most notably the $66B+ VanEck Semiconductor ETF (SMH).",
+      "Underpins many of the largest thematic equity ETFs globally, most notably the $66B+ VanEck Semiconductor ETF (SMH) and $26B+ VanEck Gold Miners ETF (GDX).",
   },
   bloomberg: {
     id: "bloomberg",

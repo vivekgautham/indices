@@ -1627,6 +1627,61 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-pharmaceuticals-index/",
   },
   {
+    id: "sp-metals-and-mining-select-industry",
+    symbol: "SPSIMIN",
+    altSymbols: [
+      "SPSIMM",
+      "XME Benchmark",
+      "S&P Metals & Mining",
+      "S&P Select Industry Metals & Mining",
+    ],
+    name: "S&P Metals & Mining Select Industry Index",
+    providerId: "sp",
+    category: "Industry Equity / Metals & Mining",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 40,
+    weightingMethodology: "Modified Equal Weighted",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "XME",
+        name: "SPDR S&P Metals & Mining ETF",
+        aum: "$4B+",
+      },
+    ],
+    summary:
+      "Equal-weighted benchmark of US metals and mining companies spanning steel, aluminum, copper, coal, and precious metal producers. Underlying index for SPDR XME.",
+    description:
+      "The S&P Metals & Mining Select Industry Index represents the metals and mining sub-industry portion of the S&P Total Market Index. Spanning large, mid, and small-cap US corporations, it includes domestic steel manufacturers (Nucor, Steel Dynamics, Cleveland-Cliffs), aluminum producers (Alcoa), copper miners (Freeport-McMoRan), and precious metal royalty firms. Using a modified equal-weighting methodology, it prevents mega-cap domination and gives balanced exposure to cyclical mining and materials expansion. Benchmark for the $4B+ SPDR S&P Metals & Mining ETF (XME).",
+    eligibilityCriteria: [
+      "Must be a member of the broad S&P Total Market Index",
+      "Classified under the GICS Metals & Mining sub-industry (steel, aluminum, copper, coal & consumable fuels, precious metals)",
+      "Float-adjusted market capitalization must meet minimum liquidity and turnover thresholds",
+      "Rebalanced quarterly with modified equal-weighting to maintain balanced representation across company market caps",
+    ],
+    keyCharacteristics: [
+      "Underlying index for the flagship $4B+ SPDR S&P Metals & Mining ETF (XME)",
+      "Equal-weighted design captures high beta across mid-cap steelmakers and miners",
+      "Pure-play exposure to US industrial infrastructure, defense procurement, and metals reshoring",
+    ],
+    tags: [
+      "Metals",
+      "Mining",
+      "XME",
+      "Steel",
+      "Copper",
+      "Aluminum",
+      "Equal Weight",
+      "SPDR",
+      "S&P",
+      "Materials",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-metals-mining-select-industry-index/",
+  },
+  {
     id: "sp-north-american-expanded-technology",
     symbol: "SPNETX",
     altSymbols: [
@@ -4267,6 +4322,114 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl:
       "https://www.lbma.org.uk/prices-and-data/precious-metal-prices",
   },
+  {
+    id: "lbma-platinum-price",
+    symbol: "PLAT",
+    altSymbols: [
+      "XPT",
+      "LBMA Platinum",
+      "Platinum Fix",
+      "PPLT Benchmark",
+      "London Platinum Fix",
+    ],
+    name: "LBMA Platinum Price (London Platinum Fix)",
+    providerId: "ice",
+    category: "Physical Precious Metals",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Electronic Auction Equilibrium Price (USD per Troy Ounce)",
+    rebalanceFrequency: "Twice Daily (09:45 AM & 2:00 PM London Time)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "PPLT",
+        name: "abrdn Physical Platinum Shares ETF",
+        aum: "$1.1B+",
+      },
+    ],
+    summary:
+      "The globally recognized institutional benchmark for physical platinum bullion pricing, administered by ICE Benchmark Administration and the LME.",
+    description:
+      "The LBMA Platinum Price is the internationally recognized benchmark used to value physical platinum bullion and settle over-the-counter contracts. Administered electronically by the London Metal Exchange and ICE Benchmark Administration via twice-daily auctions, it determines the official benchmark price for Good Delivery platinum ingots delivered in London. Underlying benchmark for the $1.1B+ abrdn Physical Platinum Shares ETF (PPLT).",
+    eligibilityCriteria: [
+      "Physical platinum bullion meeting LBMA / LPPM Good Delivery standards (minimum 99.95% fine platinum purity)",
+      "Standard plate or ingot bar specifications",
+      "Auction clearing price determined through participating direct institutional bank bidding rounds",
+    ],
+    keyCharacteristics: [
+      "The premier global benchmark for physical platinum bullion pricing",
+      "Underlying benchmark for the $1.1B+ abrdn Physical Platinum Shares ETF (PPLT)",
+      "Critical industrial metal driven by automotive catalytic converters, hydrogen economy fuel cells, and jewelry",
+    ],
+    tags: [
+      "Platinum",
+      "PPLT",
+      "Commodity",
+      "Precious Metals",
+      "Industrial Metals",
+      "Hydrogen",
+      "LBMA",
+      "ICE",
+    ],
+    officialUrl:
+      "https://www.lbma.org.uk/prices-and-data/precious-metal-prices",
+  },
+  {
+    id: "lbma-palladium-price",
+    symbol: "PALL",
+    altSymbols: [
+      "XPD",
+      "LBMA Palladium",
+      "Palladium Fix",
+      "PALL Benchmark",
+      "London Palladium Fix",
+    ],
+    name: "LBMA Palladium Price (London Palladium Fix)",
+    providerId: "ice",
+    category: "Physical Precious Metals",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Electronic Auction Equilibrium Price (USD per Troy Ounce)",
+    rebalanceFrequency: "Twice Daily (09:45 AM & 2:00 PM London Time)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "PALL",
+        name: "abrdn Physical Palladium Shares ETF",
+        aum: "$250M+",
+      },
+    ],
+    summary:
+      "The global institutional valuation benchmark for physical palladium bullion pricing, administered via electronic auction clearing.",
+    description:
+      "The LBMA Palladium Price is the primary pricing standard for unallocated physical palladium bullion delivered in London. Operated through electronic auction clearing matching institutional bids and offers, it establishes the settlement standard for commercial transactions and underlies physically backed investment funds such as the abrdn Physical Palladium Shares ETF (PALL).",
+    eligibilityCriteria: [
+      "Physical palladium bullion meeting LBMA / LPPM Good Delivery standards (minimum 99.95% fine palladium purity)",
+      "Standard plate or ingot bar specifications",
+      "Auction clearing price determined through electronic multi-round bank auction platform",
+    ],
+    keyCharacteristics: [
+      "Globally recognized benchmark for physical palladium bullion pricing",
+      "Underpins the abrdn Physical Palladium Shares ETF (PALL)",
+      "Essential strategic precious metal heavily utilized in gasoline catalytic converters and electronics manufacturing",
+    ],
+    tags: [
+      "Palladium",
+      "PALL",
+      "Commodity",
+      "Precious Metals",
+      "Industrial Metals",
+      "Automotive",
+      "LBMA",
+      "ICE",
+    ],
+    officialUrl:
+      "https://www.lbma.org.uk/prices-and-data/precious-metal-prices",
+  },
 
   // ==========================================
   // MARKETVECTOR INDEXES (MVIS)
@@ -4324,6 +4487,169 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.marketvector.com/indexes/sector/mvis-us-listed-semiconductor-25",
+  },
+  {
+    id: "marketvector-global-gold-miners",
+    symbol: "MVGDXTR",
+    altSymbols: [
+      "MVGDX",
+      "GDM",
+      "NYSE Arca Gold Miners",
+      "GDX Benchmark",
+      "VanEck Gold Miners Benchmark",
+    ],
+    name: "MarketVector Global Gold Miners Index",
+    providerId: "marketvector",
+    category: "Precious Metals & Gold Mining Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 55,
+    weightingMethodology:
+      "Modified Free-Float Market Cap (20% Top Cap, 4.5% Subsequent Caps)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2004,
+    trackingEtfs: [
+      {
+        ticker: "GDX",
+        name: "VanEck Gold Miners ETF",
+        aum: "$26B+",
+      },
+    ],
+    summary:
+      "The definitive institutional benchmark for global gold and precious metal mining equities. Underlying benchmark for the $26B+ VanEck GDX ETF.",
+    description:
+      "The MarketVector Global Gold Miners Index is the world's most widely tracked benchmark for gold mining corporations. Maintained by MarketVector Indexes (a VanEck subsidiary), it tracks the largest and most liquid publicly traded companies globally that generate at least 50% of their revenues from gold mining and related silver operations. Featuring industry leaders such as Agnico Eagle Mines, Newmont, Barrick Gold, Franco-Nevada, and Wheaton Precious Metals, it provides leveraged upside to gold price appreciation and serves as the benchmark for the $26B+ VanEck Gold Miners ETF (GDX).",
+    eligibilityCriteria: [
+      "Companies must generate at least 50% of their revenues from gold mining or royalty/streaming activities",
+      "Minimum full market capitalization of $750 million and three-month average daily trading volume of at least $1 million",
+      "Single-stock weight capped at 20% with smaller constituent caps to maintain regulatory diversification",
+      "Rebalanced and reconstituted quarterly in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the world's largest gold mining ETF, VanEck GDX ($26B+ AUM)",
+      "Provides operational leverage to physical gold bullion prices",
+      "Balances top global senior producers with royalty and streaming corporations",
+    ],
+    tags: [
+      "Gold Miners",
+      "GDX",
+      "Gold",
+      "Precious Metals",
+      "Mining",
+      "VanEck",
+      "MarketVector",
+      "Natural Resources",
+    ],
+    officialUrl:
+      "https://www.marketvector.com/indexes/sector/marketvector-global-gold-miners",
+  },
+  {
+    id: "marketvector-global-junior-gold-miners",
+    symbol: "MVGDXJTR",
+    altSymbols: [
+      "MVGDXJ",
+      "GDXJ Benchmark",
+      "Junior Gold Miners",
+      "VanEck Junior Gold Miners",
+    ],
+    name: "MarketVector Global Junior Gold Miners Index",
+    providerId: "marketvector",
+    category: "Precious Metals & Small-Cap Mining Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 95,
+    weightingMethodology: "Modified Free-Float Market Cap (8% Single-Stock Cap)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2009,
+    trackingEtfs: [
+      {
+        ticker: "GDXJ",
+        name: "VanEck Junior Gold Miners ETF",
+        aum: "$6B+",
+      },
+    ],
+    summary:
+      "High-beta benchmark tracking small- and mid-cap junior gold and silver exploration and development companies. Underlying index for VanEck GDXJ.",
+    description:
+      "The MarketVector Global Junior Gold Miners Index tracks the performance of the most liquid small- and mid-cap companies globally that are active in gold and silver exploration, development, and early-stage production. Junior miners typically exhibit higher operational leverage and explosive sensitivity to gold price rallies compared to established senior producers, while also serving as prime acquisition targets for major mining conglomerates. Underlying benchmark for the $6B+ VanEck Junior Gold Miners ETF (GDXJ).",
+    eligibilityCriteria: [
+      "Small- and mid-cap companies generating at least 50% of revenue from gold and/or silver mining or exploration",
+      "Minimum market capitalization of $150 million and minimum average daily volume screens",
+      "Maximum component weight capped at 8% to ensure diversification across junior exploration names",
+      "Rebalanced and reconstituted quarterly in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Underlying index for the flagship $6B+ VanEck Junior Gold Miners ETF (GDXJ)",
+      "Offers amplified beta and exploration upside relative to physical gold and senior miners",
+      "Major exposure to Canadian, Australian, and US development-stage mineral deposits",
+    ],
+    tags: [
+      "Junior Gold Miners",
+      "GDXJ",
+      "Gold",
+      "Precious Metals",
+      "Small Cap",
+      "Mining",
+      "Exploration",
+      "VanEck",
+      "MarketVector",
+    ],
+    officialUrl:
+      "https://www.marketvector.com/indexes/sector/marketvector-global-junior-gold-miners",
+  },
+  {
+    id: "marketvector-global-rare-earth-strategic-metals",
+    symbol: "MVREMXTR",
+    altSymbols: [
+      "MVREMX",
+      "REMX Benchmark",
+      "Rare Earths",
+      "Critical Materials",
+      "Strategic Metals",
+    ],
+    name: "MarketVector Global Rare Earth/Strategic Metals Index",
+    providerId: "marketvector",
+    category: "Critical Materials & Strategic Metals Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 25,
+    weightingMethodology: "Modified Free-Float Market Cap (8% Single-Stock Cap)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2010,
+    trackingEtfs: [
+      {
+        ticker: "REMX",
+        name: "VanEck Rare Earth and Strategic Metals ETF",
+        aum: "$350M+",
+      },
+    ],
+    summary:
+      "Tracks global pure-plays engaged in producing, refining, and recycling rare earth and strategic metals essential for clean energy, defense, and electronics.",
+    description:
+      "The MarketVector Global Rare Earth/Strategic Metals Index provides focused exposure to international mining and processing companies involved in rare earth elements, lithium, titanium, tungsten, cobalt, and other critical mineral supply chains. These metals are vital inputs for permanent magnets in wind turbines, electric vehicle traction motors, advanced military guidance systems, and semiconductor fabrication. Serves as the benchmark for the VanEck Rare Earth and Strategic Metals ETF (REMX).",
+    eligibilityCriteria: [
+      "Companies must generate at least 50% of their revenues from rare earth and strategic metals or projects with substantial strategic reserves",
+      "Minimum market capitalization of $150 million and three-month average daily turnover of at least $1 million",
+      "Single-stock weight capped at 8%",
+      "Quarterly rebalancing and reconstitution in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Premier benchmark for global critical mineral supply chain security and strategic resource independence",
+      "Underlying index for the VanEck Rare Earth and Strategic Metals ETF (REMX)",
+      "Direct exposure to high-tech neodymium, lithium, titanium, and defense-critical rare earths",
+    ],
+    tags: [
+      "Rare Earths",
+      "REMX",
+      "Critical Minerals",
+      "Strategic Metals",
+      "Lithium",
+      "Clean Energy",
+      "Defense",
+      "MarketVector",
+    ],
+    officialUrl:
+      "https://www.marketvector.com/indexes/sector/marketvector-global-rare-earth-strategic-metals",
   },
   {
     id: "bloomberg-us-aggregate",
@@ -4393,6 +4719,66 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.bloomberg.com/professional/product/indices/bloomberg-fixed-income-indices/",
+  },
+  {
+    id: "bloomberg-copper-subindex",
+    symbol: "BCOMHG",
+    altSymbols: [
+      "BCOMHGTR",
+      "BCOMCO",
+      "CPER Benchmark",
+      "JJCTF Benchmark",
+      "Bloomberg Copper",
+      "COMEX Copper",
+    ],
+    name: "Bloomberg Copper Subindex",
+    providerId: "bloomberg",
+    category: "Industrial Metals Commodity Futures",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "COMEX Copper Futures Contract (Production & Liquidity Weighted within BCOM)",
+    rebalanceFrequency:
+      "Monthly Futures Roll Schedule with Annual Reweighting",
+    launchYear: 1998,
+    trackingEtfs: [
+      {
+        ticker: "CPER",
+        name: "United States Copper Index Fund",
+        aum: "$170M+",
+      },
+      {
+        ticker: "JJCTF",
+        name: "iPath Series B Bloomberg Copper Subindex Total Return ETN",
+        aum: "$60M+",
+      },
+    ],
+    summary:
+      "The premier institutional commodity benchmark tracking the price performance of physical copper via COMEX copper futures contracts.",
+    description:
+      "The Bloomberg Copper Subindex is a single-commodity sub-index of the Bloomberg Commodity Index (BCOM), designed to track the performance of COMEX-traded high-grade copper futures contracts. Widely known across global markets as 'Doctor Copper' for its uncanny ability to diagnose the overall health of the world economy, copper futures provide pure exposure to physical base metal pricing without individual corporate equity risk. Serves as the benchmark for US copper funds including CPER and JJCTF.",
+    eligibilityCriteria: [
+      "Composed of high-grade copper futures contracts traded on the Commodity Exchange (COMEX)",
+      "Systematic roll process between the 6th and 10th business days of contract expiration months to avoid physical delivery",
+      "Governed by the overarching BCOM index oversight committee rules",
+    ],
+    keyCharacteristics: [
+      "Institutional standard benchmark for 'Doctor Copper' and global industrial metal pricing",
+      "Directly reflects global manufacturing activity, clean energy demand, and physical supply dynamics",
+      "Underpins the United States Copper Index Fund (CPER) and iPath Bloomberg Copper ETN (JJCTF)",
+    ],
+    tags: [
+      "Copper",
+      "CPER",
+      "JJCTF",
+      "Industrial Metals",
+      "Doctor Copper",
+      "Commodity",
+      "Futures",
+      "Bloomberg",
+    ],
+    officialUrl: "https://www.bloomberg.com/quote/BCOMHG:IND",
   },
   {
     id: "ice-us-treasury-20-plus-year",
@@ -6269,6 +6655,65 @@ export const INDICES_DATA: MarketIndex[] = [
       "Blue Chip",
     ],
     officialUrl: "https://www.stoxx.com/index-details?symbol=DAX",
+  },
+  {
+    id: "stoxx-global-copper-and-metals-mining",
+    symbol: "SXGCMM",
+    altSymbols: [
+      "STXCOPRV",
+      "ICOP Benchmark",
+      "COPX Benchmark",
+      "STOXX Copper",
+      "Global Copper Miners",
+    ],
+    name: "STOXX Global Copper and Metals Mining Index",
+    providerId: "stoxx",
+    category: "Copper & Metal Mining Thematic Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 35,
+    weightingMethodology:
+      "Free-Float Market Capitalization (FactSet RBICS Revenue-Screened)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2023,
+    trackingEtfs: [
+      {
+        ticker: "ICOP",
+        name: "iShares Copper and Metals Mining ETF",
+        aum: "$120M+",
+      },
+      {
+        ticker: "COPX",
+        name: "Global X Copper Miners ETF",
+        aum: "$2.5B+",
+      },
+    ],
+    summary:
+      "Global benchmark tracking companies actively engaged in copper and metal ore mining, powering global electrification and energy transition.",
+    description:
+      "The STOXX Global Copper and Metals Mining Index selects international companies heavily involved in the copper and industrial metal mining sectors using FactSet Revere (RBICS) granular revenue classification. Copper is indispensable for electric vehicles, renewable power grids, and data center electrification. The index serves as the benchmark for BlackRock's iShares Copper and Metals Mining ETF (ICOP) and is closely correlated with the Global X Copper Miners ETF (COPX).",
+    eligibilityCriteria: [
+      "Screened from the STOXX Global Total Market universe",
+      "Minimum revenue threshold or market share derived from copper mining or metal ore mining via FactSet RBICS",
+      "Liquidity and minimum float market-capitalization requirements",
+      "Quarterly review in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Primary thematic benchmark for global copper miners and electrification infrastructure",
+      "Underlying index for iShares Copper and Metals Mining ETF (ICOP) and primary peer to COPX",
+      "Direct structural exposure to renewable energy, EV infrastructure, and global grid expansion",
+    ],
+    tags: [
+      "Copper",
+      "COPX",
+      "ICOP",
+      "Mining",
+      "Industrial Metals",
+      "Energy Transition",
+      "Electrification",
+      "STOXX",
+    ],
+    officialUrl: "https://www.stoxx.com/index-details?symbol=STXCOPRV",
   },
   // ==========================================
   // EURONEXT
