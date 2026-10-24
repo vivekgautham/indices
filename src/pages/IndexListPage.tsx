@@ -66,6 +66,8 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Equal Weight",
       "GARP",
       "Semiconductor",
+      "Software",
+      "Cloud",
       "Wide Moat",
       "Quality",
       "High Dividend",
@@ -78,6 +80,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Treasury / Cash",
       "Volatility / VIX",
       "Profitability Screen",
+      "UCITS",
     ],
   },
   {

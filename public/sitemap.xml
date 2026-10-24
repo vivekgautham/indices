@@ -229,6 +229,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/sp-north-american-expanded-technology-software</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/sp-global-1200-information-technology</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>

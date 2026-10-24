@@ -7,7 +7,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-500",
     symbol: "SPX",
-    altSymbols: ["^GSPC", "S&P 500"],
+    altSymbols: ["^GSPC", "S&P 500", "CSPX", "VUAA", "VUSA", "SXR8"],
     name: "S&P 500 Index",
     providerId: "sp",
     category: "Large-Cap Equity",
@@ -26,6 +26,24 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "State Street SPDR Portfolio S&P 500 ETF (formerly SPLG)",
         aum: "$157B+",
       },
+      {
+        ticker: "CSPX",
+        name: "iShares Core S&P 500 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$100B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "VUAA",
+        name: "Vanguard S&P 500 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$15B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "VUSA",
+        name: "Vanguard S&P 500 UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$45B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The premier benchmark for large-cap US equities, measuring the performance of 500 leading companies representing ~80% of available market cap.",
@@ -40,7 +58,7 @@ export const INDICES_DATA: MarketIndex[] = [
     keyCharacteristics: [
       "Represents approximately 80% of total US market capitalization",
       "Determined by the S&P Index Committee with mandatory earnings profitability screening",
-      "Foundation for futures (ES), options (SPX), and hundreds of ETFs globally",
+      "Foundation for futures (ES), options (SPX), and hundreds of ETFs globally including multi-billion dollar Irish-domiciled UCITS funds (CSPX, VUAA, VUSA)",
     ],
     tags: [
       "Large Cap",
@@ -49,13 +67,15 @@ export const INDICES_DATA: MarketIndex[] = [
       "Blue Chip",
       "Profitability Screen",
       "S&P Committee",
+      "UCITS",
+      "Irish Domiciled",
     ],
     officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
   },
   {
     id: "djia",
     symbol: "DJIA",
-    altSymbols: ["^DJI", "Dow 30"],
+    altSymbols: ["^DJI", "Dow 30", "CIND", "DIA Benchmark"],
     name: "Dow Jones Industrial Average",
     providerId: "sp",
     category: "Mega-Cap Equity",
@@ -71,6 +91,12 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "SPDR Dow Jones Industrial Average ETF Trust",
         aum: "$35B+",
       },
+      {
+        ticker: "CIND",
+        name: "iShares Dow Jones Industrial Average UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$1.1B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The oldest continuous equity benchmark in the world, tracking 30 blue-chip US corporate market leaders across all sectors except Transportation and Utilities.",
@@ -85,14 +111,14 @@ export const INDICES_DATA: MarketIndex[] = [
       "Contains 30 iconic American industrial and economic leaders",
       "Most quoted financial index in mainstream news media worldwide",
     ],
-    tags: ["Blue Chip", "Mega Cap", "Price-Weighted", "Iconic", "Historic"],
+    tags: ["Blue Chip", "Mega Cap", "Price-Weighted", "Iconic", "Historic", "UCITS"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-industrial-average/",
   },
   {
     id: "sp-midcap-400",
     symbol: "MID",
-    altSymbols: ["^MID", "S&P 400"],
+    altSymbols: ["^MID", "S&P 400", "SPY4", "IJPH"],
     name: "S&P MidCap 400 Index",
     providerId: "sp",
     category: "Mid-Cap Equity",
@@ -106,6 +132,18 @@ export const INDICES_DATA: MarketIndex[] = [
       { ticker: "IJH", name: "iShares Core S&P Mid-Cap ETF", aum: "$126B+" },
       { ticker: "MDY", name: "SPDR S&P MidCap 400 ETF Trust", aum: "$26B+" },
       { ticker: "IVOO", name: "Vanguard S&P Mid-Cap 400 ETF", aum: "$4B+" },
+      {
+        ticker: "SPY4",
+        name: "SPDR S&P 400 U.S. Mid Cap UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$1.8B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "IJPH",
+        name: "iShares S&P MidCap 400 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$1.2B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "Serves as the barometer for the US mid-cap equity sector, covering 400 companies representing ~7% of the total US market cap.",
@@ -127,6 +165,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Growth & Value",
       "Profitability Screen",
       "Core",
+      "UCITS",
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-midcap-400/",
@@ -134,7 +173,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-smallcap-600",
     symbol: "SML",
-    altSymbols: ["^SML", "S&P 600"],
+    altSymbols: ["^SML", "S&P 600", "ISP6"],
     name: "S&P SmallCap 600 Index",
     providerId: "sp",
     category: "Small-Cap Equity",
@@ -152,6 +191,12 @@ export const INDICES_DATA: MarketIndex[] = [
         aum: "$12B+",
       },
       { ticker: "VIOO", name: "Vanguard S&P Small-Cap 600 ETF", aum: "$4.2B+" },
+      {
+        ticker: "ISP6",
+        name: "iShares S&P SmallCap 600 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$2.5B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "Measures the small-cap segment of the US equity market, enforcing a strict profitability screen that eliminates unprofitable speculative firms.",
@@ -425,7 +470,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-500-equal-weight",
     symbol: "SPXEW",
-    altSymbols: ["^SP500EW"],
+    altSymbols: ["^SP500EW", "EWSP", "ISPE", "RSP Benchmark"],
     name: "S&P 500 Equal Weight Index",
     providerId: "sp",
     category: "Smart Beta / Factor",
@@ -441,6 +486,18 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "Invesco S&P 500 Equal Weight ETF",
         aum: "$101B+",
       },
+      {
+        ticker: "EWSP",
+        name: "Invesco S&P 500 Equal Weight UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$6B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "ISPE",
+        name: "iShares S&P 500 Equal Weight UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$1.5B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "An equal-weighted alternative to the market-cap S&P 500, giving each constituent identical weight (0.2%) to reduce concentration in top mega-cap tech stocks.",
@@ -450,14 +507,14 @@ export const INDICES_DATA: MarketIndex[] = [
       "Eliminates mega-cap single-stock concentration risk",
       "Inherent contrarian rebalance: trims winners and buys underperformers every quarter",
     ],
-    tags: ["Equal Weight", "Smart Beta", "Size Factor", "Anti-Concentration"],
+    tags: ["Equal Weight", "Smart Beta", "Size Factor", "Anti-Concentration", "UCITS"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-equal-weight-index/",
   },
   {
     id: "sp-500-dividend-aristocrats",
     symbol: "SPDAUDP",
-    altSymbols: ["NOBL Index"],
+    altSymbols: ["NOBL Index", "NOBL Benchmark", "USDV", "SPYD"],
     name: "S&P 500 Dividend Aristocrats Index",
     providerId: "sp",
     category: "Dividend & Quality",
@@ -474,6 +531,12 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "ProShares S&P 500 Dividend Aristocrats ETF",
         aum: "$12B+",
       },
+      {
+        ticker: "USDV",
+        name: "SPDR S&P U.S. Dividend Aristocrats UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$4.5B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "Tracks high-quality S&P 500 companies that have consistently increased dividend payouts every single year for at least 25 consecutive years.",
@@ -488,7 +551,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Strict 25-year dividend growth barrier to entry",
       "Historically exhibits superior downside protection during market downturns",
     ],
-    tags: ["Dividends", "Quality", "Aristocrats", "Income", "Defensive", "Value"],
+    tags: ["Dividends", "Quality", "Aristocrats", "Income", "Defensive", "Value", "UCITS"],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-dividend-aristocrats/",
   },
@@ -1266,7 +1329,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-technology-select-sector",
     symbol: "IXT",
-    altSymbols: ["XLK", "^IXT", "Technology Select Sector", "XLK Benchmark"],
+    altSymbols: ["XLK", "^IXT", "Technology Select Sector", "XLK Benchmark", "IUIT", "XLKT"],
     name: "Technology Select Sector Index",
     providerId: "sp",
     category: "Technology Sector Equity",
@@ -1281,6 +1344,18 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "XLK",
         name: "Technology Select Sector SPDR Fund",
         aum: "$119.4B+",
+      },
+      {
+        ticker: "IUIT",
+        name: "iShares S&P 500 Information Technology Sector UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$8.5B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "XLKT",
+        name: "SPDR S&P U.S. Technology Select Sector UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$1.5B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1305,6 +1380,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Semiconductors",
       "Software",
       "GICS IT",
+      "UCITS",
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/technology-select-sector-index/",
@@ -1312,7 +1388,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-consumer-staples-select-sector",
     symbol: "IXR",
-    altSymbols: ["XLP", "^IXR", "Consumer Staples Select", "XLP Benchmark"],
+    altSymbols: ["XLP", "^IXR", "Consumer Staples Select", "XLP Benchmark", "IUCS"],
     name: "Consumer Staples Select Sector Index",
     providerId: "sp",
     category: "Consumer Staples Sector Equity",
@@ -1327,6 +1403,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "XLP",
         name: "Consumer Staples Select Sector SPDR Fund",
         aum: "$14.2B+",
+      },
+      {
+        ticker: "IUCS",
+        name: "iShares S&P 500 Consumer Staples Sector UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$550M+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1350,6 +1432,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Dividends",
       "Sector",
       "S&P 500",
+      "UCITS",
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/consumer-staples-select-sector-index/",
@@ -1357,7 +1440,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-energy-select-sector",
     symbol: "IXE",
-    altSymbols: ["XLE", "^IXE", "Energy Select Sector", "XLE Benchmark"],
+    altSymbols: ["XLE", "^IXE", "Energy Select Sector", "XLE Benchmark", "IUEN"],
     name: "Energy Select Sector Index",
     providerId: "sp",
     category: "Energy Sector Equity",
@@ -1372,6 +1455,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "XLE",
         name: "Energy Select Sector SPDR Fund",
         aum: "$41.8B+",
+      },
+      {
+        ticker: "IUEN",
+        name: "iShares S&P 500 Energy Sector UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$1.6B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1396,6 +1485,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "S&P 500",
       "Commodities",
       "Dividends",
+      "UCITS",
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/energy-select-sector-index/",
@@ -1403,7 +1493,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-industrial-select-sector",
     symbol: "IXI",
-    altSymbols: ["XLI", "^IXI", "Industrial Select Sector", "XLI Benchmark"],
+    altSymbols: ["XLI", "^IXI", "Industrial Select Sector", "XLI Benchmark", "IUID"],
     name: "Industrial Select Sector Index",
     providerId: "sp",
     category: "Industrial Sector Equity",
@@ -1418,6 +1508,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "XLI",
         name: "Industrial Select Sector SPDR Fund",
         aum: "$30.5B+",
+      },
+      {
+        ticker: "IUID",
+        name: "iShares S&P 500 Industrials Sector UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$850M+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -1734,6 +1830,64 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-north-american-expanded-technology-sector-index/",
   },
   {
+    id: "sp-north-american-expanded-technology-software",
+    symbol: "SPNASE",
+    altSymbols: [
+      "SPNASEUT",
+      "SPNASEUP",
+      "SPNASEUN",
+      "IGV Benchmark",
+      "S&P Expanded Software",
+      "North American Software Index",
+    ],
+    name: "S&P North American Expanded Technology Software Index",
+    providerId: "sp",
+    category: "Software & Cloud Services Equity",
+    assetClass: "Equity",
+    region: "Americas",
+    constituentsCount: 115,
+    weightingMethodology:
+      "Modified Market Capitalization (8.5% Single Issuer Cap)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2001,
+    trackingEtfs: [
+      {
+        ticker: "IGV",
+        name: "iShares Expanded Tech-Software Sector ETF",
+        aum: "$14.5B+",
+      },
+    ],
+    summary:
+      "The definitive institutional benchmark for North American enterprise software, SaaS, and cloud computing leaders, tracked by the $14B+ iShares IGV ETF.",
+    description:
+      "The S&P North American Expanded Technology Software Index measures the performance of US- and Canadian-listed software companies. It captures industry leaders across enterprise applications, systems software, database infrastructure, cybersecurity, and cloud platforms—featuring titans like Microsoft, Oracle, Salesforce, Adobe, Palantir, CrowdStrike, and ServiceNow. Applying an 8.5% single-stock capping methodology, it balances mega-cap enterprise stalwarts with fast-growing SaaS innovators and serves as the benchmark for BlackRock's $14B+ iShares Expanded Tech-Software Sector ETF (IGV).",
+    eligibilityCriteria: [
+      "Common stock listed on a major US or Canadian stock exchange with market capitalization >$250M",
+      "Classified under GICS Application Software, Systems Software, or eligible interactive home entertainment and media/services sub-industries",
+      "Minimum three-month average daily value traded of at least $5 million",
+      "Modified market capitalization weighting capped at 8.5% for individual issuers to prevent single-stock domination",
+      "Reconstituted and rebalanced quarterly in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $14B+ iShares Expanded Tech-Software Sector ETF (IGV)",
+      "Pure-play enterprise software, cloud infrastructure, AI platforms, and SaaS exposure",
+      "8.5% single-stock capping ensures balanced exposure across enterprise titans (Microsoft, Oracle, Salesforce) and high-growth mid-cap software innovators",
+      "One of the longest-running and highest-volume software sector ETF benchmarks, established in 2001",
+    ],
+    tags: [
+      "Software",
+      "IGV",
+      "Cloud",
+      "SaaS",
+      "Enterprise Tech",
+      "Artificial Intelligence",
+      "iShares",
+      "S&P",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-north-american-expanded-technology-software-index/",
+  },
+  {
     id: "sp-global-1200-information-technology",
     symbol: "SGIT",
     altSymbols: [
@@ -1792,7 +1946,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "russell-2000",
     symbol: "RUT",
-    altSymbols: ["^RUT", "Russell 2K"],
+    altSymbols: ["^RUT", "Russell 2K", "R2US", "IWM Benchmark"],
     name: "Russell 2000 Index",
     providerId: "ftse",
     category: "Small-Cap Equity",
@@ -1814,6 +1968,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "TNA",
         name: "Direxion Daily Small Cap Bull 3X Shares",
         aum: "$2B+",
+      },
+      {
+        ticker: "R2US",
+        name: "iShares Russell 2000 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$3.1B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -2387,7 +2547,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "ftse-global-all-cap",
     symbol: "GEIS",
-    altSymbols: ["VT Benchmark"],
+    altSymbols: ["VT Benchmark", "VWRA", "VWRD"],
     name: "FTSE Global All Cap Index",
     providerId: "ftse",
     category: "Global All-Cap",
@@ -2399,6 +2559,18 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 2003,
     trackingEtfs: [
       { ticker: "VT", name: "Vanguard Total World Stock ETF", aum: "$82B+" },
+      {
+        ticker: "VWRA",
+        name: "Vanguard FTSE All-World UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$25B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "VWRD",
+        name: "Vanguard FTSE All-World UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$10B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The definitive single-index coverage of world equities, tracking over 10,000 stocks across 49 Developed and Emerging countries.",
@@ -2406,15 +2578,15 @@ export const INDICES_DATA: MarketIndex[] = [
       "Part of the FTSE Global Equity Index Series (GEIS), this index captures 98% of the world's investable market capitalization across large, mid, and small-cap segments.",
     keyCharacteristics: [
       "Covers 98% of global investable equity market capitalization",
-      "Ultimate one-stop global portfolio benchmark",
+      "Ultimate one-stop global portfolio benchmark underlying Vanguard VT and flagship Irish UCITS funds (VWRA/VWRD)",
     ],
-    tags: ["Global", "All World", "Total Market", "Complete Universe"],
+    tags: ["Global", "All World", "Total Market", "Complete Universe", "UCITS", "Irish Domiciled"],
     officialUrl: "https://www.ftserussell.com/products/indices/geis",
   },
   {
     id: "ftse-high-dividend-yield",
     symbol: "FTHDY",
-    altSymbols: ["FTSEHDY", "VYM Benchmark"],
+    altSymbols: ["FTSEHDY", "VYM Benchmark", "VHYA", "VHYD"],
     name: "FTSE® High Dividend Yield Index",
     providerId: "ftse",
     category: "Dividend & Income",
@@ -2435,6 +2607,18 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "VHYAX",
         name: "Vanguard High Dividend Yield Index Admiral Fund",
         aum: "$105B+ Total Fund",
+      },
+      {
+        ticker: "VHYA",
+        name: "Vanguard FTSE All-World High Dividend Yield UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$4B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "VHYD",
+        name: "Vanguard FTSE All-World High Dividend Yield UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$2B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -2568,7 +2752,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "msci-acwi",
     symbol: "MSCI-ACWI",
-    altSymbols: ["ACWI", "MSCI AC World"],
+    altSymbols: ["ACWI", "MSCI AC World", "SSAC"],
     name: "MSCI ACWI (All Country World Index)",
     providerId: "msci",
     category: "Global Equity",
@@ -2585,6 +2769,12 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "SPDR Portfolio MSCI Global Stock Market ETF",
         aum: "$2.5B+",
       },
+      {
+        ticker: "SSAC",
+        name: "iShares MSCI ACWI UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$13B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "MSCI's flagship global equity benchmark, capturing large and mid-cap representation across 23 Developed Markets and 24 Emerging Markets.",
@@ -2599,7 +2789,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "The standard institutional benchmark for global equity funds worldwide",
       "Classifies South Korea and Taiwan within Emerging Markets",
     ],
-    tags: ["Global", "ACWI", "Institutional Standard", "Developed & Emerging"],
+    tags: ["Global", "ACWI", "Institutional Standard", "Developed & Emerging", "UCITS"],
     officialUrl: "https://www.msci.com/our-solutions/indexes/acwi",
   },
   {
@@ -3196,7 +3386,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "nasdaq-100",
     symbol: "NDX",
-    altSymbols: ["^NDX", "QQQ Benchmark", "IQQ", "QNDX"],
+    altSymbols: ["^NDX", "QQQ Benchmark", "IQQ", "QNDX", "CNDX", "EQQQ", "EQAC", "CSNDX"],
     name: "Nasdaq-100 Index",
     providerId: "nasdaq",
     category: "Large-Cap Tech & Innovation",
@@ -3221,6 +3411,24 @@ export const INDICES_DATA: MarketIndex[] = [
         aum: "$1B+",
       },
       {
+        ticker: "CNDX",
+        name: "iShares Nasdaq 100 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$16B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "EQQQ",
+        name: "Invesco EQQQ Nasdaq-100 UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$13B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "EQAC",
+        name: "Invesco Nasdaq-100 UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$8B+",
+        hasStockAnalysis: false,
+      },
+      {
         ticker: "TQQQ",
         name: "ProShares UltraPro QQQ (3x Leveraged)",
         aum: "$25B+",
@@ -3243,9 +3451,9 @@ export const INDICES_DATA: MarketIndex[] = [
     keyCharacteristics: [
       "Excludes financial institutions entirely",
       "Home to the world's largest mega-cap tech innovators (Apple, Microsoft, NVIDIA, Amazon, Alphabet, Meta)",
-      "One of the highest-performing major equity benchmarks of the past 2 decades",
+      "Underlying index for the $480B+ Invesco QQQ and Europe's largest Irish-domiciled tech UCITS ETFs (CNDX, EQQQ, EQAC)",
     ],
-    tags: ["Tech", "Mega Cap", "Innovation", "QQQ", "Growth"],
+    tags: ["Tech", "Mega Cap", "Innovation", "QQQ", "Growth", "UCITS", "Irish Domiciled"],
     officialUrl: "https://www.nasdaq.com/solutions/nasdaq-100",
   },
   {
@@ -4053,6 +4261,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "ICE 0-3M Treasury",
       "SGOV Benchmark",
       "0-3 Month Treasury",
+      "IB01",
     ],
     name: "ICE 0-3 Month US Treasury Securities Index",
     providerId: "ice",
@@ -4068,6 +4277,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SGOV",
         name: "iShares 0-3 Month Treasury Bond ETF",
         aum: "$110.5B+",
+      },
+      {
+        ticker: "IB01",
+        name: "iShares $ Treasury Bond 0-1yr UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$18B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -4094,6 +4309,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Fixed Income",
       "Risk-Free Rate",
       "ICE",
+      "UCITS",
     ],
     officialUrl: "https://indices.ice.com/",
   },
@@ -4442,6 +4658,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "SMH Benchmark",
       "MarketVector Semiconductor",
       "MVIS Semi 25",
+      "SMGB",
+      "VVSM",
     ],
     name: "MVIS US Listed Semiconductor 25 Index",
     providerId: "marketvector",
@@ -4458,6 +4676,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SMH",
         name: "VanEck Semiconductor ETF",
         aum: "$66.8B+",
+      },
+      {
+        ticker: "SMGB",
+        name: "VanEck Semiconductor UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$3.5B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -4661,6 +4885,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Barclays Agg",
       "Lehman Agg",
       "Bloomberg Agg",
+      "SUAG",
+      "IUAG",
     ],
     name: "Bloomberg U.S. Aggregate Bond Index",
     providerId: "bloomberg",
@@ -4686,6 +4912,12 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SCHZ",
         name: "Schwab U.S. Aggregate Bond ETF",
         aum: "$11.2B+",
+      },
+      {
+        ticker: "SUAG",
+        name: "iShares Core U.S. Aggregate Bond UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$4.2B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -4788,6 +5020,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "TMF Benchmark",
       "ICE 20+ Year Treasury",
       "Long Treasury Index",
+      "DTLA",
+      "IDTL",
     ],
     name: "ICE U.S. Treasury 20+ Year Bond Index",
     providerId: "ice",
@@ -4813,6 +5047,18 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "VGLT",
         name: "Vanguard Long-Term Treasury ETF",
         aum: "$14.8B+",
+      },
+      {
+        ticker: "DTLA",
+        name: "iShares $ Treasury Bond 20+yr UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$4.5B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "IDTL",
+        name: "iShares $ Treasury Bond 20+yr UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$2.5B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
@@ -4851,6 +5097,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "IEF Benchmark",
       "ICE 7-10 Year Treasury",
       "10-Year Treasury Index",
+      "IBTM",
+      "CTYM",
     ],
     name: "ICE U.S. Treasury 7-10 Year Bond Index",
     providerId: "ice",
@@ -4876,6 +5124,18 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "SCHR",
         name: "Schwab Intermediate-Term U.S. Treasury ETF",
         aum: "$9.4B+",
+      },
+      {
+        ticker: "IBTM",
+        name: "iShares $ Treasury Bond 7-10yr UCITS ETF (Dist, Ireland Domiciled)",
+        aum: "$3.2B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "CTYM",
+        name: "iShares $ Treasury Bond 7-10yr UCITS ETF (Acc, Ireland Domiciled)",
+        aum: "$2.1B+",
+        hasStockAnalysis: false,
       },
     ],
     summary:
