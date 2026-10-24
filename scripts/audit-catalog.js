@@ -124,7 +124,10 @@ const userRequestedTickers = [
   "STPZ",
   "VFQY",
   "FLTB",
-  "FTLB"
+  "FTLB",
+  "HACK",
+  "CIBR",
+  "BUG"
 ];
 
 for (const ticker of userRequestedTickers) {

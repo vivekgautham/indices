@@ -94,6 +94,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     badgeBg: "rgba(6, 182, 212, 0.15)",
     keyEtfPartners: [
       "Invesco (QQQ/QQQM)",
+      "Amplify (HACK)",
       "First Trust",
       "Global X",
       "ProShares",

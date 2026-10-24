@@ -55,6 +55,7 @@ const aumMap = {
   QQQJ: "$1.2B+",
   BUG: "$1.7B+",
   CIBR: "$16B+",
+  HACK: "$3.5B+",
   VTI: "$690B+ (ETF) / $1.9T (Fund)",
   VTSAX: "$1.9T Total Fund",
   VV: "$54B+",

@@ -3316,7 +3316,7 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "nasdaq-cybersecurity",
     symbol: "NQCYBR",
-    altSymbols: ["CBR", "HACK / BUG Benchmark"],
+    altSymbols: ["CIBR", "CIBR Benchmark", "First Trust Cybersecurity"],
     name: "Nasdaq CTA Cybersecurity Index",
     providerId: "nasdaq",
     category: "Cybersecurity & Software",
@@ -3341,6 +3341,62 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: ["Cybersecurity", "Cloud Security", "Thematic", "Software"],
     officialUrl:
       "https://www.nasdaq.com/solutions/nasdaq-cta-cybersecurity-index",
+  },
+  {
+    id: "nasdaq-ise-cyber-security-select",
+    symbol: "HXRXL",
+    altSymbols: [
+      "HXR",
+      "HXRX",
+      "HXRXLTR",
+      "HACK Benchmark",
+      "Nasdaq ISE Cyber Security",
+      "ISE Cyber Security Index",
+    ],
+    name: "Nasdaq ISE Cyber Security Select Index",
+    providerId: "nasdaq",
+    category: "Cybersecurity & Software",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 24,
+    weightingMethodology:
+      "Adjusted Market Capitalization (Revenue-Score Weighted)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "HACK",
+        name: "Amplify Cybersecurity ETF",
+        aum: "$3.5B+",
+      },
+    ],
+    summary:
+      "Pioneering benchmark tracking global cybersecurity leaders that develop cybersecurity software, hardware, and defense services.",
+    description:
+      "The Nasdaq ISE Cyber Security Select Index is designed to track the performance of companies that are direct service providers or developers in cybersecurity, where cyber activities represent a primary revenue driver. Components are drawn from the foundational ISE Cyber Security Index universe and weighted based on an adjusted market-capitalization methodology using a cybersecurity Revenue Contribution Score. It serves as the benchmark for the pioneer Amplify Cybersecurity ETF (HACK), which originally launched in November 2014 as the first cybersecurity exchange-traded fund.",
+    eligibilityCriteria: [
+      "Securities must be classified as cybersecurity hardware, software, or service providers by the Cyber Security Index Classification Committee",
+      "Must have a minimum market capitalization of at least $100 million and three-month average daily trading volume of at least $1 million",
+      "Must meet a minimum cybersecurity Revenue Contribution Score threshold of at least 1.25%",
+      "Individual component weights are capped to maintain diversification and regulatory compliance",
+      "Reconstituted and rebalanced quarterly in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Benchmark for the pioneering $3.5B+ Amplify Cybersecurity ETF (HACK), the world's first cybersecurity ETF",
+      "Focuses specifically on cybersecurity pure-plays and dedicated defense/security enterprise leaders",
+      "Uses a cybersecurity Revenue Contribution Score to ensure high thematic purity",
+      "Parent index ISE Cyber Security Index (HXR) launched in 2014",
+    ],
+    tags: [
+      "Cybersecurity",
+      "HACK",
+      "Software",
+      "Cloud Security",
+      "Thematic",
+      "Technology",
+      "Defense Tech",
+    ],
+    officialUrl: "https://indexes.nasdaqomx.com/Index/Overview/HXRXL",
   },
   {
     id: "nasdaq-dorsey-wright-technical-leaders",
