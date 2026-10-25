@@ -76,9 +76,8 @@ if (fs.existsSync(distDir)) {
 if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
   const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
 
-  // A. Enhance dist/index.html with crawlable semantic content inside <div id="root">
+  // A. Enhance dist/index.html with crawlable semantic content inside <noscript>
   const homepagePrerender = `
-    <div id="root">
       <main style="max-width: 1100px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
         <header style="margin-bottom: 32px; text-align: center;">
           <h1 style="font-size: 32px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">MarketIndices.xyz – Benchmark Directory &amp; Tracking ETF Guide</h1>
@@ -114,12 +113,14 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
             `).join("")}
           </ul>
         </section>
-      </main>
-    </div>`;
+      </main>`;
 
-  const enhancedHomepageHtml = baseHtml.replace(/<div id="root"><\/div>/i, homepagePrerender.trim());
+  const enhancedHomepageHtml = baseHtml.replace(
+    /<div id="root"><\/div>/i,
+    `<div id="root"></div>\n    <noscript>\n${homepagePrerender.trim()}\n    </noscript>`
+  );
   fs.writeFileSync(path.join(distDir, "index.html"), enhancedHomepageHtml, "utf8");
-  console.log("✓ Prerendered crawlable directory into dist/index.html");
+  console.log("✓ Injected crawlable directory inside <noscript> into dist/index.html");
 
   // Create dist/404.html
   fs.writeFileSync(path.join(distDir, "404.html"), enhancedHomepageHtml, "utf8");
@@ -296,9 +297,8 @@ ${JSON.stringify(faqSchema, null, 2)}
 
     pageHtml = pageHtml.replace("</head>", ldJsonScript);
 
-    // Prerender semantic, fully accessible content inside <div id="root">
+    // Prerender semantic, fully accessible content inside <noscript>
     const prerenderContent = `
-    <div id="root">
       <main style="max-width: 960px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
         <nav aria-label="Breadcrumb" style="font-size: 14px; margin-bottom: 16px; color: #64748b;">
           <a href="/" style="color: #4f46e5; text-decoration: none;">Home</a> /
@@ -380,10 +380,12 @@ ${JSON.stringify(faqSchema, null, 2)}
         <footer style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 14px; color: #64748b;">
           <p>Explore all 150+ market indices, methodology guides, and tracking ETFs on <a href="/" style="color: #4f46e5; text-decoration: none;">MarketIndices.xyz</a>.</p>
         </footer>
-      </main>
-    </div>`;
+      </main>`;
 
-    pageHtml = pageHtml.replace(/<div id="root"><\/div>/i, prerenderContent.trim());
+    pageHtml = pageHtml.replace(
+      /<div id="root"><\/div>/i,
+      `<div id="root"></div>\n    <noscript>\n${prerenderContent.trim()}\n    </noscript>`
+    );
 
     fs.writeFileSync(path.join(pageDir, "index.html"), pageHtml, "utf8");
     generatedPages++;
