@@ -70,17 +70,16 @@ export async function copyTextToClipboard(text: string): Promise<boolean> {
 }
 
 /**
- * Resolves full shareable URL respecting HashRouter and GitHub Pages basePath.
+ * Resolves full shareable clean URL for pages and indices.
  */
 export function resolveFullUrl(path?: string, explicitUrl?: string): string {
   if (explicitUrl) return explicitUrl;
   if (!path) return window.location.href;
 
   const origin = window.location.origin;
-  const pathname = window.location.pathname.replace(/\/+$/, "");
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
 
-  return `${origin}${pathname}/#${cleanPath}`;
+  return `${origin}${cleanPath}`;
 }
 
 export const ShareButton: React.FC<ShareButtonProps> = ({
