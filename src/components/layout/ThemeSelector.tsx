@@ -24,6 +24,10 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
 }) => {
   const { themeId, activeTheme, setThemeId, availableThemes } = useColorTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [modeFilter, setModeFilter] = useState<"all" | "dark" | "light">("all");
+
+  const darkCount = availableThemes.filter((t) => t.type === "dark").length;
+  const lightCount = availableThemes.filter((t) => t.type === "light").length;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,6 +44,12 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
 
   const open = Boolean(anchorEl);
   const popoverId = open ? "theme-selector-popover" : undefined;
+
+  const displayedThemes = availableThemes.filter((preset) => {
+    if (modeFilter === "dark") return preset.type === "dark";
+    if (modeFilter === "light") return preset.type === "light";
+    return true;
+  });
 
   return (
     <>
@@ -195,6 +205,84 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           />
         </Stack>
 
+        {/* Mode Filter Bar (All / Dark / Light) */}
+        <Stack
+          direction="row"
+          spacing={0.5}
+          sx={{
+            p: 0.4,
+            mb: 1.25,
+            borderRadius: 2,
+            backgroundColor:
+              "var(--indices-subtle-bg, rgba(255, 255, 255, 0.05))",
+            border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+          }}
+        >
+          <ButtonBase
+            onClick={() => setModeFilter("all")}
+            sx={{
+              flex: 1,
+              py: 0.5,
+              borderRadius: 1.5,
+              fontSize: "0.7rem",
+              fontWeight: modeFilter === "all" ? 800 : 600,
+              color:
+                modeFilter === "all"
+                  ? activeTheme.primary.main
+                  : "text.secondary",
+              backgroundColor:
+                modeFilter === "all"
+                  ? "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.12))"
+                  : "transparent",
+              transition: "all 0.15s ease",
+            }}
+          >
+            All ({availableThemes.length})
+          </ButtonBase>
+          <ButtonBase
+            onClick={() => setModeFilter("dark")}
+            sx={{
+              flex: 1,
+              py: 0.5,
+              borderRadius: 1.5,
+              fontSize: "0.7rem",
+              fontWeight: modeFilter === "dark" ? 800 : 600,
+              color:
+                modeFilter === "dark"
+                  ? activeTheme.primary.main
+                  : "text.secondary",
+              backgroundColor:
+                modeFilter === "dark"
+                  ? "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.12))"
+                  : "transparent",
+              transition: "all 0.15s ease",
+            }}
+          >
+            🌙 Dark ({darkCount})
+          </ButtonBase>
+          <ButtonBase
+            onClick={() => setModeFilter("light")}
+            sx={{
+              flex: 1,
+              py: 0.5,
+              borderRadius: 1.5,
+              fontSize: "0.7rem",
+              fontWeight: modeFilter === "light" ? 800 : 600,
+              color:
+                modeFilter === "light"
+                  ? activeTheme.primary.main
+                  : "text.secondary",
+              backgroundColor:
+                modeFilter === "light"
+                  ? "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.12))"
+                  : "transparent",
+              transition: "all 0.15s ease",
+            }}
+          >
+            ☀️ Light ({lightCount})
+          </ButtonBase>
+        </Stack>
+
         <Divider
           sx={{
             mb: 1,
@@ -204,141 +292,173 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
 
         {/* Theme Options List */}
         <Stack spacing={0.6}>
-          {availableThemes.map((preset: ThemePreset) => {
+          {displayedThemes.map((preset: ThemePreset, index: number) => {
             const isSelected = preset.id === themeId;
+            const isFirstLight =
+              modeFilter === "all" &&
+              preset.type === "light" &&
+              displayedThemes[index - 1]?.type === "dark";
 
             return (
-              <ButtonBase
-                key={preset.id}
-                onClick={() => handleSelectTheme(preset.id)}
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  p: 1,
-                  borderRadius: 2,
-                  textAlign: "left",
-                  border: "1px solid",
-                  borderColor: isSelected ? preset.primary.main : "transparent",
-                  backgroundColor: isSelected
-                    ? "var(--indices-subtle-bg, rgba(255, 255, 255, 0.08))"
-                    : "transparent",
-                  transition: "all 0.18s ease-in-out",
-                  "&:hover": {
-                    backgroundColor:
-                      "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.05))",
-                    borderColor: isSelected
-                      ? preset.primary.main
-                      : "var(--indices-border, rgba(255, 255, 255, 0.15))",
-                    transform: "translateX(2px)",
-                  },
-                }}
-              >
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1.25}
-                  sx={{ minWidth: 0, flexGrow: 1 }}
-                >
-                  {/* Theme Swatch */}
-                  <Box
-                    sx={{
-                      width: 26,
-                      height: 26,
-                      borderRadius: "50%",
-                      background: `linear-gradient(135deg, ${preset.bgPreview} 50%, ${preset.accentPreview} 50%)`,
-                      border: "2px solid",
-                      borderColor: isSelected
-                        ? preset.primary.main
-                        : "var(--indices-border, rgba(255, 255, 255, 0.2))",
-                      boxShadow: isSelected
-                        ? `0 0 10px ${preset.accentPreview}66`
-                        : "none",
-                      flexShrink: 0,
-                    }}
-                  />
-
-                  {/* Theme Details */}
-                  <Box sx={{ minWidth: 0, flexGrow: 1 }}>
-                    <Stack direction="row" alignItems="center" spacing={0.75}>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: isSelected ? 800 : 600,
-                          fontSize: "0.82rem",
-                          color: isSelected ? "text.primary" : "text.primary",
-                          fontFamily: "inherit",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {preset.name}
-                      </Typography>
-
-                      {preset.badgeLabel && (
-                        <Chip
-                          label={preset.badgeLabel}
-                          size="small"
-                          sx={{
-                            height: 16,
-                            fontSize: "0.62rem",
-                            fontWeight: 700,
-                            borderRadius: 0.75,
-                            backgroundColor:
-                              preset.badgeLabel === "Light"
-                                ? "rgba(79, 70, 229, 0.15)"
-                                : preset.badgeLabel === "OLED"
-                                  ? "rgba(56, 189, 248, 0.15)"
-                                  : "rgba(99, 102, 241, 0.15)",
-                            color:
-                              preset.badgeLabel === "Light"
-                                ? "#6366f1"
-                                : preset.badgeLabel === "OLED"
-                                  ? "#38bdf8"
-                                  : "#818cf8",
-                            "& .MuiChip-label": { px: 0.6 },
-                          }}
-                        />
-                      )}
-                    </Stack>
-
+              <React.Fragment key={preset.id}>
+                {isFirstLight && (
+                  <Box sx={{ pt: 1, pb: 0.5 }}>
+                    <Divider
+                      sx={{
+                        mb: 1,
+                        borderColor:
+                          "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                      }}
+                    />
                     <Typography
                       variant="caption"
                       sx={{
-                        color: "text.secondary",
+                        px: 0.75,
                         fontSize: "0.68rem",
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                        color: "text.secondary",
                         display: "block",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
                       }}
                     >
-                      {preset.tagline}
+                      ☀️ Light Modes ({lightCount})
                     </Typography>
                   </Box>
-                </Stack>
-
-                {/* Selected Indicator */}
-                {isSelected && (
-                  <Box
-                    sx={{
-                      ml: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: 20,
-                      height: 20,
-                      borderRadius: "50%",
-                      backgroundColor: preset.primary.main,
-                      color: preset.primary.contrastText,
-                      boxShadow: `0 0 8px ${preset.accentPreview}88`,
-                      flexShrink: 0,
-                    }}
-                  >
-                    <CheckIcon sx={{ fontSize: 13, strokeWidth: 1.5 }} />
-                  </Box>
                 )}
-              </ButtonBase>
+
+                <ButtonBase
+                  onClick={() => handleSelectTheme(preset.id)}
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    p: 1,
+                    borderRadius: 2,
+                    textAlign: "left",
+                    border: "1px solid",
+                    borderColor: isSelected ? preset.primary.main : "transparent",
+                    backgroundColor: isSelected
+                      ? "var(--indices-subtle-bg, rgba(255, 255, 255, 0.08))"
+                      : "transparent",
+                    transition: "all 0.18s ease-in-out",
+                    "&:hover": {
+                      backgroundColor:
+                        "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.05))",
+                      borderColor: isSelected
+                        ? preset.primary.main
+                        : "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                      transform: "translateX(2px)",
+                    },
+                  }}
+                >
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1.25}
+                    sx={{ minWidth: 0, flexGrow: 1 }}
+                  >
+                    {/* Theme Swatch */}
+                    <Box
+                      sx={{
+                        width: 26,
+                        height: 26,
+                        borderRadius: "50%",
+                        background: `linear-gradient(135deg, ${preset.bgPreview} 50%, ${preset.accentPreview} 50%)`,
+                        border: "2px solid",
+                        borderColor: isSelected
+                          ? preset.primary.main
+                          : "var(--indices-border, rgba(255, 255, 255, 0.2))",
+                        boxShadow: isSelected
+                          ? `0 0 10px ${preset.accentPreview}66`
+                          : "none",
+                        flexShrink: 0,
+                      }}
+                    />
+
+                    {/* Theme Details */}
+                    <Box sx={{ minWidth: 0, flexGrow: 1 }}>
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontWeight: isSelected ? 800 : 600,
+                            fontSize: "0.82rem",
+                            color: "text.primary",
+                            fontFamily: "inherit",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {preset.name}
+                        </Typography>
+
+                        {preset.badgeLabel && (
+                          <Chip
+                            label={preset.badgeLabel}
+                            size="small"
+                            sx={{
+                              height: 16,
+                              fontSize: "0.62rem",
+                              fontWeight: 700,
+                              borderRadius: 0.75,
+                              backgroundColor:
+                                preset.type === "light"
+                                  ? `${preset.primary.main}1c`
+                                  : preset.badgeLabel === "OLED"
+                                    ? "rgba(56, 189, 248, 0.15)"
+                                    : `${preset.primary.main}1c`,
+                              color:
+                                preset.type === "light"
+                                  ? preset.primary.main
+                                  : preset.badgeLabel === "OLED"
+                                    ? "#38bdf8"
+                                    : preset.primary.light,
+                              border: `1px solid ${preset.primary.main}33`,
+                              "& .MuiChip-label": { px: 0.6 },
+                            }}
+                          />
+                        )}
+                      </Stack>
+
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: "text.secondary",
+                          fontSize: "0.68rem",
+                          display: "block",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {preset.tagline}
+                      </Typography>
+                    </Box>
+                  </Stack>
+
+                  {/* Selected Indicator */}
+                  {isSelected && (
+                    <Box
+                      sx={{
+                        ml: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: 20,
+                        height: 20,
+                        borderRadius: "50%",
+                        backgroundColor: preset.primary.main,
+                        color: preset.primary.contrastText,
+                        boxShadow: `0 0 8px ${preset.accentPreview}88`,
+                        flexShrink: 0,
+                      }}
+                    >
+                      <CheckIcon sx={{ fontSize: 13, strokeWidth: 1.5 }} />
+                    </Box>
+                  )}
+                </ButtonBase>
+              </React.Fragment>
             );
           })}
         </Stack>

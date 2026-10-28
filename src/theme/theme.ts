@@ -8,7 +8,12 @@ export type ThemeId =
   | "amber"
   | "rose"
   | "midnight"
-  | "light";
+  | "light"
+  | "nordic"
+  | "sage"
+  | "sandstone"
+  | "lavender"
+  | "coral";
 
 export interface ThemePreset {
   id: ThemeId;
@@ -281,14 +286,14 @@ export const THEME_PRESETS: Record<ThemeId, ThemePreset> = {
   },
   light: {
     id: "light",
-    name: "Clean Light",
+    name: "Clean Indigo",
     shortName: "Light",
     tagline: "Crisp modern light workspace with bold indigo",
     type: "light",
     primary: {
-      main: "#4f46e5",
+      main: "#4338ca",
       light: "#6366f1",
-      dark: "#3730a3",
+      dark: "#312e81",
       contrastText: "#ffffff",
     },
     secondary: {
@@ -301,7 +306,7 @@ export const THEME_PRESETS: Record<ThemeId, ThemePreset> = {
       default: "#f8fafc",
       paper: "#ffffff",
     },
-    cardBg: "rgba(255, 255, 255, 0.9)",
+    cardBg: "rgba(255, 255, 255, 0.95)",
     cardHoverBg: "#ffffff",
     subtleBg: "rgba(241, 245, 249, 0.85)",
     border: "rgba(15, 23, 42, 0.12)",
@@ -311,6 +316,176 @@ export const THEME_PRESETS: Record<ThemeId, ThemePreset> = {
     },
     accentPreview: "#4f46e5",
     bgPreview: "#f8fafc",
+    badgeLabel: "Light",
+  },
+  nordic: {
+    id: "nordic",
+    name: "Nordic Frost",
+    shortName: "Frost",
+    tagline: "Cool polar daylight with crisp cerulean & ocean blue",
+    type: "light",
+    primary: {
+      main: "#0284c7",
+      light: "#38bdf8",
+      dark: "#0369a1",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#0891b2",
+      light: "#22d3ee",
+      dark: "#0e7490",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#f0f9ff",
+      paper: "#ffffff",
+    },
+    cardBg: "rgba(255, 255, 255, 0.95)",
+    cardHoverBg: "#ffffff",
+    subtleBg: "rgba(224, 242, 254, 0.65)",
+    border: "rgba(2, 132, 199, 0.18)",
+    text: {
+      primary: "#0c4a6e",
+      secondary: "#475569",
+    },
+    accentPreview: "#0284c7",
+    bgPreview: "#f0f9ff",
+    badgeLabel: "Light",
+  },
+  sage: {
+    id: "sage",
+    name: "Botanical Sage",
+    shortName: "Sage",
+    tagline: "Calming botanical mint with crisp forest & jade accents",
+    type: "light",
+    primary: {
+      main: "#059669",
+      light: "#34d399",
+      dark: "#047857",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#0d9488",
+      light: "#2dd4bf",
+      dark: "#0f766e",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#f0fdf4",
+      paper: "#ffffff",
+    },
+    cardBg: "rgba(255, 255, 255, 0.95)",
+    cardHoverBg: "#ffffff",
+    subtleBg: "rgba(220, 252, 231, 0.65)",
+    border: "rgba(5, 150, 105, 0.18)",
+    text: {
+      primary: "#064e3b",
+      secondary: "#475569",
+    },
+    accentPreview: "#059669",
+    bgPreview: "#f0fdf4",
+    badgeLabel: "Light",
+  },
+  sandstone: {
+    id: "sandstone",
+    name: "Desert Sandstone",
+    shortName: "Sandstone",
+    tagline: "Warm editorial parchment with rich bronze & amber tones",
+    type: "light",
+    primary: {
+      main: "#b45309",
+      light: "#f59e0b",
+      dark: "#92400e",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#c2410c",
+      light: "#fb923c",
+      dark: "#9a3412",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#fdfbf7",
+      paper: "#ffffff",
+    },
+    cardBg: "rgba(255, 255, 255, 0.95)",
+    cardHoverBg: "#ffffff",
+    subtleBg: "rgba(254, 243, 199, 0.6)",
+    border: "rgba(180, 83, 9, 0.18)",
+    text: {
+      primary: "#451a03",
+      secondary: "#57534e",
+    },
+    accentPreview: "#b45309",
+    bgPreview: "#fdfbf7",
+    badgeLabel: "Light",
+  },
+  lavender: {
+    id: "lavender",
+    name: "Lavender Mist",
+    shortName: "Lavender",
+    tagline: "Soft pastel lilac canvas with royal purple & amethyst",
+    type: "light",
+    primary: {
+      main: "#7c3aed",
+      light: "#a78bfa",
+      dark: "#6d28d9",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#9333ea",
+      light: "#c084fc",
+      dark: "#7e22ce",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#faf5ff",
+      paper: "#ffffff",
+    },
+    cardBg: "rgba(255, 255, 255, 0.95)",
+    cardHoverBg: "#ffffff",
+    subtleBg: "rgba(243, 232, 255, 0.7)",
+    border: "rgba(124, 58, 237, 0.18)",
+    text: {
+      primary: "#3b0764",
+      secondary: "#581c87",
+    },
+    accentPreview: "#7c3aed",
+    bgPreview: "#faf5ff",
+    badgeLabel: "Light",
+  },
+  coral: {
+    id: "coral",
+    name: "Sunset Coral",
+    shortName: "Coral",
+    tagline: "Porcelain canvas with bright sunset coral & rose highlights",
+    type: "light",
+    primary: {
+      main: "#e11d48",
+      light: "#fb7185",
+      dark: "#be123c",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#f43f5e",
+      light: "#fda4af",
+      dark: "#9f1239",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#fff5f5",
+      paper: "#ffffff",
+    },
+    cardBg: "rgba(255, 255, 255, 0.95)",
+    cardHoverBg: "#ffffff",
+    subtleBg: "rgba(255, 228, 230, 0.65)",
+    border: "rgba(225, 29, 72, 0.18)",
+    text: {
+      primary: "#4c0519",
+      secondary: "#57534e",
+    },
+    accentPreview: "#e11d48",
+    bgPreview: "#fff5f5",
     badgeLabel: "Light",
   },
 };

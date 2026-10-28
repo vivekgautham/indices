@@ -93,7 +93,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 component="h2"
                 sx={{
                   fontWeight: 800,
-                  color: "#f8fafc",
+                  color: "text.primary",
                   fontSize: { xs: "1.1rem", sm: "1.25rem" },
                 }}
               >
@@ -245,7 +245,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 700, color: "#f8fafc" }}
+                  sx={{ fontWeight: 700, color: "text.primary" }}
                 >
                   {provider.headquarters}
                 </Typography>
@@ -259,8 +259,8 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                   gap: { xs: 0.25, sm: 1.5 },
                   p: 1.25,
                   borderRadius: 2,
-                  backgroundColor: "rgba(15, 23, 42, 0.5)",
-                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                  backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.5))",
+                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
                 }}
               >
                 <Typography
@@ -276,7 +276,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 700, color: "#f8fafc" }}
+                  sx={{ fontWeight: 700, color: "text.primary" }}
                 >
                   {provider.founded}
                 </Typography>
@@ -290,8 +290,8 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                   gap: { xs: 0.25, sm: 1.5 },
                   p: 1.25,
                   borderRadius: 2,
-                  backgroundColor: "rgba(15, 23, 42, 0.5)",
-                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                  backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.5))",
+                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
                 }}
               >
                 <Typography
@@ -307,7 +307,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 700, color: "#f8fafc" }}
+                  sx={{ fontWeight: 700, color: "text.primary" }}
                 >
                   {provider.keyEtfPartners.join(", ")}
                 </Typography>

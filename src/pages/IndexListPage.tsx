@@ -11,19 +11,19 @@ import {
   CircularProgress,
   Container,
   IconButton,
-  InputAdornment,
+  InputBase,
   Paper,
   Stack,
-  TextField,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import AppVersionBadge from "../components/layout/AppVersionBadge";
@@ -41,6 +41,7 @@ import {
   OTHER_PROVIDER_IDS,
 } from "../utils/providerClassification";
 import {
+  isFactorIndex,
   isGrowthIndex,
   isValueIndex,
   StyleFilter,
@@ -112,6 +113,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Small Cap",
       "Growth",
       "Value",
+      "Factor",
       "International",
       "Emerging Markets",
       "Japan",
@@ -159,18 +161,27 @@ export default function IndexListPage() {
 
   const urlStyle = searchParams.get("style");
   const initialStyle: StyleFilter =
-    urlStyle === "growth" || urlStyle === "value" ? urlStyle : "all";
+    urlStyle === "growth" || urlStyle === "value" || urlStyle === "factor"
+      ? urlStyle
+      : "all";
+
+  const urlTerms = searchParams.get("terms");
+  const initialTerms: string[] = urlTerms
+    ? urlTerms.split(",").map((t) => t.trim()).filter(Boolean)
+    : [];
 
   const [selectedProvider, setSelectedProvider] = useState<
     ProviderId | "others" | "all"
   >(initialProvider);
   const [selectedStyle, setSelectedStyle] = useState<StyleFilter>(initialStyle);
+  const [selectedTerms, setSelectedTerms] = useState<string[]>(initialTerms);
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [visibleRows, setVisibleRows] = useState(3);
   const [activeCategory, setActiveCategory] = useState<
     "all" | "themes" | "etf-providers" | "market-exposure"
   >(initialCategory);
   const [viewMode, setViewMode] = useState<"card" | "table">(initialView);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up("xl"));
@@ -180,7 +191,7 @@ export default function IndexListPage() {
   // Reset pagination to 3 rows whenever filter or search query changes
   useEffect(() => {
     setVisibleRows(3);
-  }, [searchTerm, selectedProvider, selectedStyle]);
+  }, [searchTerm, selectedTerms, selectedProvider, selectedStyle]);
 
   // Synchronize state changes to URL query parameters
   useEffect(() => {
@@ -196,6 +207,12 @@ export default function IndexListPage() {
       params.set("style", selectedStyle);
     } else {
       params.delete("style");
+    }
+
+    if (selectedTerms.length > 0) {
+      params.set("terms", selectedTerms.join(","));
+    } else {
+      params.delete("terms");
     }
 
     if (searchTerm.trim()) {
@@ -224,6 +241,7 @@ export default function IndexListPage() {
   }, [
     selectedProvider,
     selectedStyle,
+    selectedTerms,
     searchTerm,
     activeCategory,
     viewMode,
@@ -243,9 +261,18 @@ export default function IndexListPage() {
     }
 
     const s = searchParams.get("style");
-    const validS: StyleFilter = s === "growth" || s === "value" ? s : "all";
+    const validS: StyleFilter =
+      s === "growth" || s === "value" || s === "factor" ? s : "all";
     if (validS !== selectedStyle) {
       setSelectedStyle(validS);
+    }
+
+    const tParam = searchParams.get("terms") || "";
+    const parsedTerms = tParam
+      ? tParam.split(",").map((t) => t.trim()).filter(Boolean)
+      : [];
+    if (JSON.stringify(parsedTerms) !== JSON.stringify(selectedTerms)) {
+      setSelectedTerms(parsedTerms);
     }
 
     const q = searchParams.get("q") || "";
@@ -280,6 +307,8 @@ export default function IndexListPage() {
       list = list.filter(isGrowthIndex);
     } else if (selectedStyle === "value") {
       list = list.filter(isValueIndex);
+    } else if (selectedStyle === "factor") {
+      list = list.filter(isFactorIndex);
     }
     const counts: Record<string, number> = {
       all: list.length,
@@ -294,7 +323,7 @@ export default function IndexListPage() {
     return counts;
   }, [indices, selectedStyle]);
 
-  // Calculate style counts (Growth / Value) for the currently selected provider
+  // Calculate style counts (Growth / Value / Factor) for the currently selected provider
   const styleCounts = useMemo(() => {
     const list =
       selectedProvider === "all"
@@ -306,6 +335,7 @@ export default function IndexListPage() {
       all: list.length,
       growth: list.filter(isGrowthIndex).length,
       value: list.filter(isValueIndex).length,
+      factor: list.filter(isFactorIndex).length,
     };
   }, [indices, selectedProvider]);
 
@@ -314,6 +344,11 @@ export default function IndexListPage() {
     if (selectedProvider === "all" || selectedProvider === "others") return undefined;
     return providers.find((p) => p.id === selectedProvider);
   }, [providers, selectedProvider]);
+
+  // Quick-selected term tokens
+  const quickTermTokens = useMemo(() => {
+    return selectedTerms.map((t) => t.trim().toLowerCase()).filter(Boolean);
+  }, [selectedTerms]);
 
   // Tokenized search query (splitting by whitespace and slashes, filtering non-alphanumeric)
   const searchTokens = useMemo(() => {
@@ -324,20 +359,33 @@ export default function IndexListPage() {
       .filter((t) => t.length > 0 && /[a-z0-9]/i.test(t));
   }, [searchTerm]);
 
-  // Matches across ALL providers (for global search discovery), filtered by selectedStyle
+  // Matches across ALL providers (for global search discovery), filtered by selectedStyle, selectedTerms, and searchTokens
   const allProviderMatches = useMemo(() => {
     let list = indices;
     if (selectedStyle === "growth") {
       list = list.filter(isGrowthIndex);
     } else if (selectedStyle === "value") {
       list = list.filter(isValueIndex);
+    } else if (selectedStyle === "factor") {
+      list = list.filter(isFactorIndex);
     }
-    if (searchTokens.length === 0) return list;
-    return list.filter((idx) => {
-      const text = idx._searchableText || "";
-      return searchTokens.every((token) => text.includes(token));
-    });
-  }, [indices, selectedStyle, searchTokens]);
+
+    if (quickTermTokens.length > 0) {
+      list = list.filter((idx) => {
+        const text = idx._searchableText || "";
+        return quickTermTokens.every((token) => text.includes(token));
+      });
+    }
+
+    if (searchTokens.length > 0) {
+      list = list.filter((idx) => {
+        const text = idx._searchableText || "";
+        return searchTokens.every((token) => text.includes(token));
+      });
+    }
+
+    return list;
+  }, [indices, selectedStyle, quickTermTokens, searchTokens]);
 
   // Filtered indices list for the current provider selection
   const filteredIndices = useMemo(() => {
@@ -369,33 +417,65 @@ export default function IndexListPage() {
         ? "Growth "
         : selectedStyle === "value"
           ? "Value "
-          : "";
+          : selectedStyle === "factor"
+            ? "Factor "
+            : "";
+    const filterDesc = [
+      ...selectedTerms,
+      searchTerm.trim() ? `"${searchTerm.trim()}"` : "",
+    ]
+      .filter(Boolean)
+      .join(" + ");
+
     if (activeProviderObj) {
       document.title = `${stylePrefix}${activeProviderObj.name} Indices | Market Indices Explorer`;
     } else if (selectedProvider === "others") {
       document.title = `${stylePrefix}Other Benchmark Providers (Bloomberg, Nasdaq, MarketVector) | Market Indices Explorer`;
-    } else if (selectedStyle !== "all" && !searchTerm.trim()) {
+    } else if (filterDesc) {
+      document.title = `${stylePrefix}Filter: ${filterDesc} | Market Indices Explorer`;
+    } else if (selectedStyle !== "all") {
       document.title = `${stylePrefix}Market Indices | Global Benchmark Catalog`;
-    } else if (searchTerm.trim()) {
-      document.title = `Search: "${searchTerm.trim()}" | Market Indices Explorer`;
     } else {
       document.title =
         "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
     }
-  }, [activeProviderObj, selectedProvider, searchTerm, selectedStyle]);
+  }, [activeProviderObj, selectedProvider, searchTerm, selectedTerms, selectedStyle]);
 
-  // Handle clicking on suggested search terms, integrating StyleFilter for Growth & Value
+  // Handle clicking on suggested search terms, integrating StyleFilter for Growth, Value, Factor
   const handleTermClick = (term: string) => {
     const lower = term.toLowerCase();
     if (lower === "growth") {
       setSelectedStyle((prev) => (prev === "growth" ? "all" : "growth"));
-      if (searchTerm.toLowerCase() === "growth") setSearchTerm("");
     } else if (lower === "value") {
       setSelectedStyle((prev) => (prev === "value" ? "all" : "value"));
-      if (searchTerm.toLowerCase() === "value") setSearchTerm("");
+    } else if (lower === "factor") {
+      setSelectedStyle((prev) => (prev === "factor" ? "all" : "factor"));
     } else {
-      setSearchTerm((prev) => (prev.toLowerCase() === lower ? "" : term));
+      setSelectedTerms((prev) => {
+        const exists = prev.some((t) => t.toLowerCase() === lower);
+        if (exists) {
+          return prev.filter((t) => t.toLowerCase() !== lower);
+        } else {
+          return [...prev, term];
+        }
+      });
     }
+
+    // If user had typed this exact word in the search input, clean it so it doesn't duplicate
+    if (searchTerm.trim().toLowerCase() === lower) {
+      setSearchTerm("");
+    }
+  };
+
+  const handleRemoveTerm = (termToRemove: string) => {
+    const lower = termToRemove.toLowerCase();
+    setSelectedTerms((prev) => prev.filter((t) => t.toLowerCase() !== lower));
+  };
+
+  const handleClearAllSearchAndFilters = () => {
+    setSearchTerm("");
+    setSelectedTerms([]);
+    setSelectedStyle("all");
   };
 
   const isTermActive = (term: string) => {
@@ -406,7 +486,10 @@ export default function IndexListPage() {
     if (lower === "value") {
       return selectedStyle === "value";
     }
-    return searchTerm.toLowerCase() === lower;
+    if (lower === "factor") {
+      return selectedStyle === "factor";
+    }
+    return selectedTerms.some((t) => t.toLowerCase() === lower);
   };
 
   return (
@@ -450,7 +533,10 @@ export default function IndexListPage() {
           variant="outlined"
           size="small"
           label={
-            selectedProvider !== "all" || searchTerm.trim()
+            selectedProvider !== "all" ||
+            selectedStyle !== "all" ||
+            selectedTerms.length > 0 ||
+            searchTerm.trim()
               ? "Share View"
               : "Share Page"
           }
@@ -529,46 +615,196 @@ export default function IndexListPage() {
 
           {/* Search Bar */}
           <Box sx={{ width: "100%", mt: 0.5 }}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, SCHD, SCHX), methodology (packeting, price-weighted, equal weight), criteria..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon sx={{ color: "text.secondary" }} />
-                  </InputAdornment>
-                ),
-                endAdornment: searchTerm ? (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="Clear search"
-                      onClick={() => setSearchTerm("")}
-                      edge="end"
-                      size="small"
-                    >
-                      <ClearIcon fontSize="small" />
-                    </IconButton>
-                  </InputAdornment>
-                ) : null,
-                sx: {
-                  borderRadius: 3.5,
-                  backgroundColor:
-                    "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
-                  backdropFilter: "blur(12px)",
-                  fontSize: "0.95rem",
-                  "& fieldset": {
-                    borderColor:
-                      "var(--indices-border, rgba(255, 255, 255, 0.12))",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "primary.light",
-                  },
+            <Box
+              onClick={() => searchInputRef.current?.focus()}
+              sx={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 0.75,
+                minHeight: 52,
+                py: 0.75,
+                px: 1.5,
+                borderRadius: 3.5,
+                backgroundColor:
+                  "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
+                backdropFilter: "blur(12px)",
+                border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
+                cursor: "text",
+                transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                "&:hover": {
+                  borderColor: "primary.light",
+                },
+                "&:focus-within": {
+                  borderColor: "primary.main",
+                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
                 },
               }}
-            />
+            >
+              <SearchIcon
+                sx={{
+                  color: "text.secondary",
+                  fontSize: 20,
+                  flexShrink: 0,
+                  mr: 0.25,
+                }}
+              />
+
+              {/* Active Style Chip */}
+              {selectedStyle !== "all" && (
+                <Chip
+                  size="small"
+                  label={
+                    selectedStyle === "growth"
+                      ? "📈 Growth"
+                      : selectedStyle === "value"
+                        ? "💎 Value"
+                        : "⚡ Factor"
+                  }
+                  onDelete={(e) => {
+                    e.stopPropagation();
+                    setSelectedStyle("all");
+                  }}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "0.76rem",
+                    height: 28,
+                    borderRadius: 2,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    flexShrink: 0,
+                    backgroundColor:
+                      selectedStyle === "growth"
+                        ? "rgba(16, 185, 129, 0.15)"
+                        : selectedStyle === "value"
+                          ? "rgba(139, 92, 246, 0.15)"
+                          : "rgba(245, 158, 11, 0.15)",
+                    color:
+                      selectedStyle === "growth"
+                        ? "#10b981"
+                        : selectedStyle === "value"
+                          ? "#a855f7"
+                          : "#f59e0b",
+                    border: `1px solid ${
+                      selectedStyle === "growth"
+                        ? "#10b981"
+                        : selectedStyle === "value"
+                          ? "#8b5cf6"
+                          : "#f59e0b"
+                    }`,
+                    "& .MuiChip-label": {
+                      px: 1,
+                      lineHeight: 1,
+                    },
+                    "& .MuiChip-deleteIcon": {
+                      color: "inherit",
+                      fontSize: 16,
+                      mr: 0.5,
+                      ml: -0.25,
+                      opacity: 0.75,
+                      "&:hover": {
+                        opacity: 1,
+                        color: "text.primary",
+                      },
+                    },
+                  }}
+                />
+              )}
+
+              {/* Active Selected Term Chips */}
+              {selectedTerms.map((term) => (
+                <Chip
+                  key={term}
+                  size="small"
+                  label={term}
+                  onDelete={(e) => {
+                    e.stopPropagation();
+                    handleRemoveTerm(term);
+                  }}
+                  color="primary"
+                  variant="filled"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "0.76rem",
+                    height: 28,
+                    borderRadius: 2,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    flexShrink: 0,
+                    "& .MuiChip-label": {
+                      px: 1,
+                      lineHeight: 1,
+                    },
+                    "& .MuiChip-deleteIcon": {
+                      fontSize: 16,
+                      mr: 0.5,
+                      ml: -0.25,
+                      opacity: 0.75,
+                      "&:hover": {
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                />
+              ))}
+
+              {/* Inline Search Input */}
+              <InputBase
+                inputRef={searchInputRef}
+                fullWidth={false}
+                placeholder={
+                  selectedStyle !== "all" || selectedTerms.length > 0
+                    ? "Type additional keywords, tickers (e.g. SPMO, VOO)..."
+                    : "Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, SCHD, SCHX), methodology, criteria..."
+                }
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Backspace" && searchTerm === "") {
+                    if (selectedTerms.length > 0) {
+                      handleRemoveTerm(selectedTerms[selectedTerms.length - 1]);
+                    } else if (selectedStyle !== "all") {
+                      setSelectedStyle("all");
+                    }
+                  }
+                }}
+                sx={{
+                  flex: 1,
+                  minWidth: { xs: 140, sm: 220 },
+                  fontSize: "0.95rem",
+                  color: "text.primary",
+                  "& input": {
+                    py: 0.5,
+                    px: 0.5,
+                    lineHeight: 1.5,
+                  },
+                }}
+              />
+
+              {/* Clear Action Button */}
+              {(searchTerm ||
+                selectedTerms.length > 0 ||
+                selectedStyle !== "all") && (
+                <Tooltip title="Clear search and filters">
+                  <IconButton
+                    aria-label="Clear search and filters"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleClearAllSearchAndFilters();
+                    }}
+                    size="small"
+                    sx={{
+                      color: "text.secondary",
+                      ml: "auto",
+                      "&:hover": { color: "text.primary" },
+                    }}
+                  >
+                    <ClearIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Box>
 
             {/* Categorized Suggested Searches */}
             <Box sx={{ mt: 1.75, width: "100%" }}>
@@ -841,18 +1077,27 @@ export default function IndexListPage() {
           >
             Showing {filteredIndices.length} famous{" "}
             {selectedStyle !== "all"
-              ? `${selectedStyle === "growth" ? "Growth" : "Value"} `
+              ? `${
+                  selectedStyle === "growth"
+                    ? "Growth"
+                    : selectedStyle === "value"
+                      ? "Value"
+                      : "Factor"
+                } `
               : ""}
             {selectedProvider !== "all"
               ? selectedProvider === "others"
                 ? "Other Providers (Bloomberg, Nasdaq, MarketVector) indices"
                 : `${activeProviderObj?.shortName || ""} indices`
               : "indices across major providers"}
+            {selectedTerms.length > 0 &&
+              ` • Filtered by [${selectedTerms.join(", ")}]`}
             {searchTerm && ` • Matching "${searchTerm}"`}
           </Typography>
 
           <Stack direction="row" spacing={1.5} alignItems="center">
             {(searchTerm ||
+              selectedTerms.length > 0 ||
               selectedProvider !== "all" ||
               selectedStyle !== "all") && (
               <Button
@@ -861,6 +1106,7 @@ export default function IndexListPage() {
                 onClick={() => {
                   setSelectedProvider("all");
                   setSelectedStyle("all");
+                  setSelectedTerms([]);
                   setSearchTerm("");
                 }}
                 sx={{

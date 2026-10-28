@@ -375,7 +375,7 @@ export default function IndexDetailPage() {
               sx={{
                 fontWeight: 800,
                 letterSpacing: "-0.02em",
-                color: "#f8fafc",
+                color: "text.primary",
                 fontSize: { xs: "1.85rem", sm: "2.5rem" },
                 mb: 1,
               }}
@@ -386,7 +386,7 @@ export default function IndexDetailPage() {
             <Typography
               variant="body1"
               sx={{
-                color: "#cbd5e1",
+                color: "text.secondary",
                 fontSize: { xs: "0.95rem", sm: "1.1rem" },
                 lineHeight: 1.65,
                 maxWidth: 1050,
@@ -907,7 +907,7 @@ export default function IndexDetailPage() {
                       </Stack>
                       <Typography
                         variant="body2"
-                        sx={{ fontWeight: 600, color: "#f8fafc" }}
+                        sx={{ fontWeight: 600, color: "text.primary" }}
                       >
                         {etf.name}
                       </Typography>
@@ -938,7 +938,7 @@ export default function IndexDetailPage() {
                 sx={{
                   p: { xs: 2.5, sm: 3 },
                   borderRadius: 3.5,
-                  background: `linear-gradient(135deg, ${provider.badgeBg} 0%, rgba(15, 23, 42, 0.85) 100%)`,
+                  background: `linear-gradient(135deg, ${provider.badgeBg} 0%, var(--indices-card-bg, rgba(15, 23, 42, 0.85)) 100%)`,
                   border: `1.5px solid ${accentColor}33`,
                 }}
               >
@@ -959,7 +959,7 @@ export default function IndexDetailPage() {
                         />
                         <Typography
                           variant="subtitle1"
-                          sx={{ fontWeight: 800, color: "#f8fafc" }}
+                          sx={{ fontWeight: 800, color: "text.primary" }}
                         >
                           {provider.name}
                         </Typography>
@@ -985,7 +985,7 @@ export default function IndexDetailPage() {
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: 700, color: "#f8fafc" }}
+                      sx={{ fontWeight: 700, color: "text.primary" }}
                     >
                       {provider.headquarters}
                     </Typography>
@@ -1000,7 +1000,7 @@ export default function IndexDetailPage() {
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: 700, color: "#f8fafc" }}
+                      sx={{ fontWeight: 700, color: "text.primary" }}
                     >
                       {provider.founded}
                     </Typography>
@@ -1040,7 +1040,7 @@ export default function IndexDetailPage() {
             <Typography
               variant="h5"
               component="h2"
-              sx={{ fontWeight: 800, color: "#f8fafc", mb: 2 }}
+              sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}
             >
               {isSameProviderOnly
                 ? `🔗 More Famous Indices from ${provider?.shortName || "Same Provider"}`
@@ -1127,7 +1127,7 @@ export default function IndexDetailPage() {
 
                       <Typography
                         variant="subtitle1"
-                        sx={{ fontWeight: 800, color: "#f8fafc", mb: 0.5 }}
+                        sx={{ fontWeight: 800, color: "text.primary", mb: 0.5 }}
                       >
                         {rel.name}
                       </Typography>

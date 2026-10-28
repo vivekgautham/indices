@@ -1,3 +1,4 @@
+import BoltIcon from "@mui/icons-material/Bolt";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import LayersIcon from "@mui/icons-material/Layers";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
@@ -12,6 +13,7 @@ export interface StyleQuickFilterProps {
     all: number;
     growth: number;
     value: number;
+    factor: number;
   };
 }
 
@@ -64,6 +66,18 @@ export const StyleQuickFilter: React.FC<StyleQuickFilterProps> = ({
         selectedStyle === "value"
           ? "rgba(255, 255, 255, 0.25)"
           : "rgba(139, 92, 246, 0.15)",
+    },
+    {
+      id: "factor",
+      label: "Factor / Smart Beta",
+      icon: <BoltIcon sx={{ fontSize: 16 }} />,
+      count: styleCounts.factor,
+      activeColor: "#f59e0b",
+      activeBg: "#f59e0b",
+      badgeBg:
+        selectedStyle === "factor"
+          ? "rgba(255, 255, 255, 0.25)"
+          : "rgba(245, 158, 11, 0.15)",
     },
   ];
 
