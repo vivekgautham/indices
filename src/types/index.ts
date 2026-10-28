@@ -34,11 +34,15 @@ export interface IndexProvider {
   marketShareSummary: string;
 }
 
+export type TrackingEtfType = "passive" | "active";
+
 export interface TrackingEtf {
   ticker: string;
   name: string;
   aum?: string;
   hasStockAnalysis?: boolean;
+  trackingType?: TrackingEtfType;
+  strategyNote?: string;
 }
 
 export interface MarketIndex {

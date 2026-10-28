@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { INDICES_DATA } from "../src/data/indicesData.ts";
 import { PROVIDERS_DATA } from "../src/data/providersData.ts";
+import { isActivelyManagedEtf } from "../src/utils/etfClassification.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -350,17 +351,29 @@ ${JSON.stringify(faqSchema, null, 2)}
                 <tr style="border-bottom: 2px solid #cbd5e1; background: #f1f5f9;">
                   <th style="padding: 10px 12px;">Ticker</th>
                   <th style="padding: 10px 12px;">Fund Name</th>
+                  <th style="padding: 10px 12px;">Strategy / Type</th>
                   <th style="padding: 10px 12px;">AUM</th>
                 </tr>
               </thead>
               <tbody>
-                ${index.trackingEtfs.map(etf => `
+                ${index.trackingEtfs.map(etf => {
+                  const isActive = isActivelyManagedEtf(etf);
+                  return `
                 <tr style="border-bottom: 1px solid #e2e8f0;">
                   <td style="padding: 10px 12px; font-weight: 700; color: #4f46e5;">${escapeHtml(etf.ticker)}</td>
-                  <td style="padding: 10px 12px;">${escapeHtml(etf.name)}</td>
+                  <td style="padding: 10px 12px;">
+                    <div>${escapeHtml(etf.name)}</div>
+                    ${etf.strategyNote ? `<div style="font-size: 12px; color: #64748b; margin-top: 3px; font-style: italic;">${escapeHtml(etf.strategyNote)}</div>` : ""}
+                  </td>
+                  <td style="padding: 10px 12px;">
+                    <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; ${isActive ? 'background: rgba(245, 158, 11, 0.15); color: #b45309; border: 1px solid rgba(245, 158, 11, 0.35);' : 'background: rgba(16, 185, 129, 0.12); color: #047857; border: 1px solid rgba(16, 185, 129, 0.3);'}">
+                      ${isActive ? "Active Benchmark" : "Passive Replication"}
+                    </span>
+                  </td>
                   <td style="padding: 10px 12px; color: #64748b;">${escapeHtml(etf.aum || "N/A")}</td>
                 </tr>
-                `).join("")}
+                `;
+                }).join("")}
               </tbody>
             </table>
           </div>

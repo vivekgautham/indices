@@ -1948,6 +1948,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVSC",
         name: "Avantis U.S. Small Cap Equity ETF (Active Prospectus Benchmark)",
         aum: "$1.8B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF targeting small-cap companies with higher profitability and lower relative valuation.",
       },
       {
         ticker: "TNA",
@@ -2004,6 +2007,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVLC",
         name: "Avantis U.S. Large Cap Equity ETF (Active Prospectus Benchmark)",
         aum: "$2.1B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF targeting large-cap companies with higher profitability and lower relative valuation.",
       },
       { ticker: "VONE", name: "Vanguard Russell 1000 ETF", aum: "$9B+" },
     ],
@@ -2105,6 +2111,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVLV",
         name: "Avantis U.S. Large Cap Value ETF (Active Prospectus Benchmark)",
         aum: "$7.5B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF applying value and profitability tilts against the Russell 1000 Value Index.",
       },
       {
         ticker: "VONV",
@@ -2282,16 +2291,25 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVUS",
         name: "Avantis U.S. Equity ETF (Active Prospectus Benchmark)",
         aum: "$7.8B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF designed to capture broad US equity market returns with factor tilts toward value and high profitability.",
       },
       {
         ticker: "VFMO",
         name: "Vanguard U.S. Momentum Factor ETF (Active Prospectus Benchmark)",
         aum: "$1.9B+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed rules-based factor ETF targeting US common stocks with strong recent performance.",
       },
       {
         ticker: "VFQY",
         name: "Vanguard U.S. Quality Factor ETF (Active Prospectus Benchmark)",
         aum: "$505M+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed rules-based factor ETF investing in US stocks with strong fundamentals and high return on equity.",
       },
     ],
     summary:
@@ -2859,11 +2877,17 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVES",
         name: "Avantis Emerging Markets Value ETF (Active Prospectus Benchmark)",
         aum: "$5.8B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF targeting emerging market companies trading at lower relative valuations and higher profitability.",
       },
       {
         ticker: "AVEM",
         name: "Avantis Emerging Markets Equity ETF (Active Prospectus Benchmark)",
         aum: "$4.6B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF capturing broad emerging market exposure with value and profitability factor tilts.",
       },
     ],
     summary:
@@ -3501,6 +3525,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "DRAM",
         name: "Roundhill Memory ETF (Actively Managed AI Memory / Semiconductor Peer)",
         aum: "$25.8B+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed thematic ETF targeting semiconductor memory and hardware companies benefiting from AI infrastructure.",
       },
     ],
     summary:
@@ -4317,6 +4344,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "DRAM",
         name: "Roundhill Memory ETF (Actively Managed AI Memory Peer)",
         aum: "$25.8B+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed thematic ETF targeting semiconductor memory hardware companies benefiting from AI compute demand.",
       },
     ],
     summary:
@@ -5324,11 +5354,15 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "FLTB",
         name: "Fidelity Limited Term Bond ETF (Active Prospectus Benchmark)",
         aum: "$480M+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed short-duration bond ETF benchmarked against the Bloomberg 1-5 Year Government/Credit Index.",
       },
       {
         ticker: "FTLB",
         name: "Fidelity Limited Term Bond ETF (Common Alt/Typo Alias)",
         aum: "$480M+",
+        trackingType: "active",
       },
     ],
     summary:
@@ -5840,6 +5874,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVUV",
         name: "Avantis U.S. Small Cap Value ETF (Active Prospectus Benchmark)",
         aum: "$16.4B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF targeting US small-cap value companies with lower valuations and higher operating profitability.",
       },
       {
         ticker: "IWN",
@@ -5904,6 +5941,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVDV",
         name: "Avantis International Small Cap Value ETF (Active Prospectus Benchmark)",
         aum: "$9.2B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF targeting non-US developed market small-cap value companies with higher operating profitability.",
       },
       {
         ticker: "SCZ",
@@ -5966,6 +6006,9 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "AVIV",
         name: "Avantis International Large Cap Value ETF (Active Prospectus Benchmark)",
         aum: "$2.8B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF targeting non-US developed market large-cap value companies with high operating profitability.",
       },
     ],
     summary:

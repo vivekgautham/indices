@@ -24,6 +24,10 @@ import SiteFooter from "../components/layout/SiteFooter";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import { ProviderLogo } from "../components/ProviderLogo";
 import ShareButton from "../components/ShareButton";
+import {
+  getEtfStrategyDescription,
+  isActivelyManagedEtf,
+} from "../utils/etfClassification";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
 export default function IndexDetailPage() {
@@ -765,92 +769,126 @@ export default function IndexDetailPage() {
                               etf.ticker,
                               etf.hasStockAnalysis
                             );
-                            if (url) {
-                              return (
-                                <>
+                            const isActive = isActivelyManagedEtf(etf);
+                            const strategyDesc = getEtfStrategyDescription(etf);
+
+                            return (
+                              <>
+                                {url ? (
+                                  <>
+                                    <Chip
+                                      component="a"
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      clickable
+                                      label={etf.ticker}
+                                      size="small"
+                                      sx={{
+                                        fontWeight: 800,
+                                        backgroundColor:
+                                          "rgba(99, 102, 241, 0.25)",
+                                        color: "primary.light",
+                                        border:
+                                          "1px solid rgba(99, 102, 241, 0.4)",
+                                        borderRadius: 1.5,
+                                        cursor: "pointer",
+                                        textDecoration: "none",
+                                        "&:hover": {
+                                          backgroundColor:
+                                            "rgba(99, 102, 241, 0.4)",
+                                        },
+                                      }}
+                                    />
+                                    <Tooltip
+                                      title={`View ${etf.ticker} on Stock Analysis`}
+                                      arrow
+                                    >
+                                      <Button
+                                        component="a"
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        size="small"
+                                        endIcon={
+                                          <LaunchIcon
+                                            sx={{
+                                              fontSize: "11px !important",
+                                            }}
+                                          />
+                                        }
+                                        sx={{
+                                          textTransform: "none",
+                                          fontSize: "0.72rem",
+                                          fontWeight: 600,
+                                          color: "primary.light",
+                                          py: 0.2,
+                                          px: 0.9,
+                                          height: 24,
+                                          borderRadius: 1.5,
+                                          backgroundColor:
+                                            "rgba(99, 102, 241, 0.12)",
+                                          border:
+                                            "1px solid rgba(99, 102, 241, 0.25)",
+                                          textDecoration: "none",
+                                          "&:hover": {
+                                            backgroundColor:
+                                              "rgba(99, 102, 241, 0.25)",
+                                            color: "#ffffff",
+                                            borderColor:
+                                              "rgba(99, 102, 241, 0.5)",
+                                          },
+                                        }}
+                                      >
+                                        Stock Analysis
+                                      </Button>
+                                    </Tooltip>
+                                  </>
+                                ) : (
                                   <Chip
-                                    component="a"
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    clickable
                                     label={etf.ticker}
                                     size="small"
                                     sx={{
                                       fontWeight: 800,
                                       backgroundColor:
-                                        "rgba(99, 102, 241, 0.25)",
-                                      color: "primary.light",
+                                        "rgba(148, 163, 184, 0.12)",
+                                      color: "text.secondary",
                                       border:
-                                        "1px solid rgba(99, 102, 241, 0.4)",
+                                        "1px solid rgba(148, 163, 184, 0.25)",
                                       borderRadius: 1.5,
-                                      cursor: "pointer",
-                                      textDecoration: "none",
-                                      "&:hover": {
-                                        backgroundColor:
-                                          "rgba(99, 102, 241, 0.4)",
-                                      },
                                     }}
                                   />
-                                  <Tooltip
-                                    title={`View ${etf.ticker} on Stock Analysis`}
-                                    arrow
-                                  >
-                                    <Button
-                                      component="a"
-                                      href={url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      size="small"
-                                      endIcon={
-                                        <LaunchIcon
-                                          sx={{
-                                            fontSize: "11px !important",
-                                          }}
-                                        />
-                                      }
-                                      sx={{
-                                        textTransform: "none",
-                                        fontSize: "0.72rem",
-                                        fontWeight: 600,
-                                        color: "primary.light",
-                                        py: 0.2,
-                                        px: 0.9,
-                                        height: 24,
-                                        borderRadius: 1.5,
-                                        backgroundColor:
-                                          "rgba(99, 102, 241, 0.12)",
-                                        border:
-                                          "1px solid rgba(99, 102, 241, 0.25)",
-                                        textDecoration: "none",
-                                        "&:hover": {
-                                          backgroundColor:
-                                            "rgba(99, 102, 241, 0.25)",
-                                          color: "#ffffff",
-                                          borderColor:
-                                            "rgba(99, 102, 241, 0.5)",
-                                        },
-                                      }}
-                                    >
-                                      Stock Analysis
-                                    </Button>
-                                  </Tooltip>
-                                </>
-                              );
-                            }
+                                )}
 
-                            return (
-                              <Chip
-                                label={etf.ticker}
-                                size="small"
-                                sx={{
-                                  fontWeight: 800,
-                                  backgroundColor: "rgba(148, 163, 184, 0.12)",
-                                  color: "text.secondary",
-                                  border: "1px solid rgba(148, 163, 184, 0.25)",
-                                  borderRadius: 1.5,
-                                }}
-                              />
+                                <Tooltip
+                                  title={strategyDesc}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <Chip
+                                    label={
+                                      isActive
+                                        ? "Active Benchmark"
+                                        : "Passive Replication"
+                                    }
+                                    size="small"
+                                    sx={{
+                                      fontWeight: 700,
+                                      fontSize: "0.68rem",
+                                      height: 22,
+                                      borderRadius: 1,
+                                      backgroundColor: isActive
+                                        ? "rgba(245, 158, 11, 0.15)"
+                                        : "rgba(16, 185, 129, 0.12)",
+                                      color: isActive ? "#f59e0b" : "#10b981",
+                                      border: isActive
+                                        ? "1px solid rgba(245, 158, 11, 0.35)"
+                                        : "1px solid rgba(16, 185, 129, 0.28)",
+                                      cursor: "help",
+                                    }}
+                                  />
+                                </Tooltip>
+                              </>
                             );
                           })()}
                         </Stack>
@@ -873,6 +911,20 @@ export default function IndexDetailPage() {
                       >
                         {etf.name}
                       </Typography>
+                      {etf.strategyNote && (
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            mt: 0.5,
+                            color: "#94a3b8",
+                            fontSize: "0.74rem",
+                            fontStyle: "italic",
+                          }}
+                        >
+                          ℹ️ {etf.strategyNote}
+                        </Typography>
+                      )}
                     </Box>
                   ))}
                 </Stack>

@@ -8,11 +8,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { MarketIndex } from "../types";
+import { isActivelyManagedEtf } from "../utils/etfClassification";
 import { ProviderLogo } from "./ProviderLogo";
 
 export interface IndexTableViewProps {
@@ -174,21 +176,41 @@ export const IndexTableView: React.FC<IndexTableViewProps> = ({ indices }) => {
                       flexWrap: "wrap",
                     }}
                   >
-                    {idx.trackingEtfs.slice(0, 3).map((etf) => (
-                      <Chip
-                        key={etf.ticker}
-                        label={etf.ticker}
-                        size="small"
-                        sx={{
-                          height: 20,
-                          fontSize: "0.68rem",
-                          fontWeight: 700,
-                          backgroundColor: "rgba(34, 197, 94, 0.15)",
-                          color: "#4ade80",
-                          borderRadius: 1,
-                        }}
-                      />
-                    ))}
+                    {idx.trackingEtfs.slice(0, 3).map((etf) => {
+                      const isActive = isActivelyManagedEtf(etf);
+                      return (
+                        <Tooltip
+                          key={etf.ticker}
+                          title={
+                            isActive
+                              ? `${etf.ticker} (${etf.name}) - Active Benchmark / Factor Strategy`
+                              : `${etf.ticker} (${etf.name}) - Passive Tracker`
+                          }
+                          arrow
+                          placement="top"
+                        >
+                          <Chip
+                            label={
+                              isActive ? `${etf.ticker} (Act)` : etf.ticker
+                            }
+                            size="small"
+                            sx={{
+                              height: 20,
+                              fontSize: "0.68rem",
+                              fontWeight: 700,
+                              backgroundColor: isActive
+                                ? "rgba(245, 158, 11, 0.15)"
+                                : "rgba(34, 197, 94, 0.15)",
+                              color: isActive ? "#f59e0b" : "#4ade80",
+                              border: isActive
+                                ? "1px solid rgba(245, 158, 11, 0.35)"
+                                : "1px solid rgba(34, 197, 94, 0.3)",
+                              borderRadius: 1,
+                            }}
+                          />
+                        </Tooltip>
+                      );
+                    })}
                     {idx.trackingEtfs.length > 3 && (
                       <Chip
                         label={`+${idx.trackingEtfs.length - 3}`}

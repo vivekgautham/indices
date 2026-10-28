@@ -14,6 +14,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { MarketIndex } from "../types";
+import { isActivelyManagedEtf } from "../utils/etfClassification";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 import { ProviderLogo } from "./ProviderLogo";
 import ShareButton from "./ShareButton";
@@ -291,11 +292,16 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                     etf.ticker,
                     etf.hasStockAnalysis
                   );
+                  const isActive = isActivelyManagedEtf(etf);
                   if (url) {
                     return (
                       <Tooltip
                         key={etf.ticker}
-                        title={`View ${etf.ticker} on Stock Analysis`}
+                        title={
+                          isActive
+                            ? `${etf.ticker} (${etf.name}) - Active benchmark / factor ETF. Click to view on Stock Analysis.`
+                            : `View ${etf.ticker} on Stock Analysis`
+                        }
                         arrow
                         placement="top"
                       >
@@ -313,6 +319,21 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                               spacing={0.3}
                             >
                               <span>{etf.ticker}</span>
+                              {isActive && (
+                                <span
+                                  style={{
+                                    fontSize: "8.5px",
+                                    fontWeight: 700,
+                                    color: "#f59e0b",
+                                    marginLeft: "2px",
+                                    padding: "0 2px",
+                                    borderRadius: "2px",
+                                    background: "rgba(245, 158, 11, 0.2)",
+                                  }}
+                                >
+                                  Active
+                                </span>
+                              )}
                               <LaunchIcon
                                 sx={{
                                   fontSize: "10px !important",
@@ -326,16 +347,24 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                             height: 20,
                             fontSize: "0.68rem",
                             fontWeight: 700,
-                            backgroundColor: "rgba(99, 102, 241, 0.15)",
-                            color: "primary.light",
-                            border: "1px solid rgba(99, 102, 241, 0.25)",
+                            backgroundColor: isActive
+                              ? "rgba(245, 158, 11, 0.12)"
+                              : "rgba(99, 102, 241, 0.15)",
+                            color: isActive ? "#f59e0b" : "primary.light",
+                            border: isActive
+                              ? "1px solid rgba(245, 158, 11, 0.35)"
+                              : "1px solid rgba(99, 102, 241, 0.25)",
                             borderRadius: 1,
                             textDecoration: "none",
                             cursor: "pointer",
                             "& .MuiChip-label": { px: 0.6 },
                             "&:hover": {
-                              backgroundColor: "rgba(99, 102, 241, 0.35)",
-                              borderColor: "primary.light",
+                              backgroundColor: isActive
+                                ? "rgba(245, 158, 11, 0.25)"
+                                : "rgba(99, 102, 241, 0.35)",
+                              borderColor: isActive
+                                ? "#f59e0b"
+                                : "primary.light",
                               color: "#ffffff",
                             },
                           }}
@@ -348,23 +377,52 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                     <Tooltip
                       key={etf.ticker}
                       title={
-                        etf.name
-                          ? `${etf.name}${etf.aum ? ` (${etf.aum})` : ""}`
-                          : etf.ticker
+                        isActive
+                          ? `${etf.ticker} (${etf.name}) - Active benchmark / factor ETF`
+                          : etf.name
+                            ? `${etf.name}${etf.aum ? ` (${etf.aum})` : ""}`
+                            : etf.ticker
                       }
                       arrow
                       placement="top"
                     >
                       <Chip
-                        label={etf.ticker}
+                        label={
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={0.3}
+                          >
+                            <span>{etf.ticker}</span>
+                            {isActive && (
+                              <span
+                                style={{
+                                  fontSize: "8.5px",
+                                  fontWeight: 700,
+                                  color: "#f59e0b",
+                                  marginLeft: "2px",
+                                  padding: "0 2px",
+                                  borderRadius: "2px",
+                                  background: "rgba(245, 158, 11, 0.2)",
+                                }}
+                              >
+                                Active
+                              </span>
+                            )}
+                          </Stack>
+                        }
                         size="small"
                         sx={{
                           height: 20,
                           fontSize: "0.68rem",
                           fontWeight: 700,
-                          backgroundColor: "rgba(148, 163, 184, 0.12)",
-                          color: "text.secondary",
-                          border: "1px solid rgba(148, 163, 184, 0.2)",
+                          backgroundColor: isActive
+                            ? "rgba(245, 158, 11, 0.12)"
+                            : "rgba(148, 163, 184, 0.12)",
+                          color: isActive ? "#f59e0b" : "text.secondary",
+                          border: isActive
+                            ? "1px solid rgba(245, 158, 11, 0.35)"
+                            : "1px solid rgba(148, 163, 184, 0.2)",
                           borderRadius: 1,
                           "& .MuiChip-label": { px: 0.6 },
                         }}
