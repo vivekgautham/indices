@@ -112,6 +112,7 @@ const userRequestedTickers = [
   "MGK", "VOT", "VOE", "VBK", "VBR", "MOAT",
   "IXUS", "ACWX", "VEU", "IDEV", "EWJ", "INDA", "MCHI", "FXI", "EWT", "EWU", "EFG", "VIGI", "FNDF", "VWOB",
   "SPHQ",
+  "QUAL", "USMV", "VLUE", "EUSA", "EWZ", "ESGU",
   "SCHM",
   "IEMG",
   "EMXC",

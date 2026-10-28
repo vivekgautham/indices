@@ -6526,6 +6526,421 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl: "https://www.msci.com/our-solutions/indexes/style-indexes",
   },
   {
+    id: "msci-usa-quality",
+    symbol: "M1USSNQ",
+    altSymbols: [
+      "QUAL Benchmark",
+      "MSCI USA Quality",
+      "iShares QUAL",
+      "M1USQU",
+      "MSCI USA Sector Neutral Quality",
+    ],
+    name: "MSCI USA Sector Neutral Quality Index",
+    providerId: "msci",
+    category: "Factor / Quality Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 125,
+    weightingMethodology:
+      "Quality Score × Market Cap Weight (Sector Neutral Constrained)",
+    rebalanceFrequency: "Semi-Annually (May and November)",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "QUAL",
+        name: "iShares MSCI USA Quality Factor ETF",
+        aum: "$45.2B+",
+      },
+      {
+        ticker: "XDEQ",
+        name: "Xtrackers MSCI USA Quality UCITS ETF (Ireland Domiciled)",
+        aum: "$2.8B+",
+      },
+    ],
+    summary:
+      "Flagship institutional quality benchmark identifying large- and mid-cap US stocks with high ROE, low financial leverage, and stable earnings growth. Underpins the $45B+ iShares QUAL ETF.",
+    description:
+      "The MSCI USA Sector Neutral Quality Index measures the performance of high-quality US equities drawn from the parent MSCI USA Index. Candidates are scored on three fundamental metrics: high Return on Equity (ROE), low financial leverage (debt-to-equity ratio), and low earnings variability over the trailing five years. Stocks are weighted in proportion to their quality composite score multiplied by their market capitalization, constrained to match the sector weights of the parent MSCI USA Index to neutralize sector bias. It is the direct underlying benchmark for the $45B+ iShares MSCI USA Quality Factor ETF (QUAL).",
+    eligibilityCriteria: [
+      "Constituent of parent MSCI USA Index",
+      "Fundamental quality score calculated across 3 factors: Return on Equity (ROE), Debt-to-Equity (financial leverage), and 5-year earnings variability",
+      "Constituents weighted by Quality Z-score multiplied by float-adjusted market capitalization",
+      "Sector neutrality enforced relative to parent MSCI USA Index",
+      "Semi-annual rebalancing in May and November",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $45B+ iShares MSCI USA Quality Factor ETF (QUAL), the largest quality ETF globally",
+      "Eliminates sector bets by keeping sector allocations identical to the broader market while capturing quality premium",
+      "Strong defensive resilience during market pullbacks and earnings recessions",
+    ],
+    tags: [
+      "Quality",
+      "Factor",
+      "Smart Beta",
+      "QUAL",
+      "iShares",
+      "MSCI",
+      "Large Cap",
+      "US Equity",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa-sector-neutral-quality/704944",
+  },
+  {
+    id: "msci-usa-minimum-volatility",
+    symbol: "M1USMVOL",
+    altSymbols: [
+      "USMV Benchmark",
+      "MSCI USA Min Vol",
+      "iShares USMV",
+      "MSCI USA Low Volatility",
+    ],
+    name: "MSCI USA Minimum Volatility (USD) Index",
+    providerId: "msci",
+    category: "Factor / Low Volatility Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 170,
+    weightingMethodology:
+      "Barra Minimum-Variance Optimization (Sector & Turnover Constrained)",
+    rebalanceFrequency: "Semi-Annually (May and November)",
+    launchYear: 2011,
+    trackingEtfs: [
+      {
+        ticker: "USMV",
+        name: "iShares MSCI USA Min Vol Factor ETF",
+        aum: "$25.1B+",
+      },
+      {
+        ticker: "MVOL",
+        name: "iShares Edge MSCI USA Minimum Volatility UCITS ETF (Ireland Domiciled)",
+        aum: "$1.4B+",
+      },
+    ],
+    summary:
+      "Flagship low-beta benchmark optimized for the lowest absolute return volatility using the Barra multi-factor risk model. Benchmark for the $25B+ iShares USMV ETF.",
+    description:
+      "The MSCI USA Minimum Volatility (USD) Index aims to deliver the lowest total risk profile (variance) for a given portfolio of US equities. Starting from the MSCI USA Index, it uses the Barra multi-factor risk model and open optimizer to calculate the minimum-variance portfolio subject to strict constraints: constituent weights between 0.05% and 1.5%, sector weights within ±5% of the parent index, and one-way semi-annual turnover capped at 10%. It is the underlying index for the $25B+ iShares MSCI USA Min Vol Factor ETF (USMV).",
+    eligibilityCriteria: [
+      "Drawn from the large- and mid-cap constituents of the parent MSCI USA Index",
+      "Constructed using quadratic optimization to minimize overall portfolio variance based on the Barra US Total Market Equity Model",
+      "Stock weights capped between 0.05% and min(1.5%, 20x parent weight)",
+      "Sector weights constrained to within ±5% of parent MSCI USA",
+      "One-way turnover capped at 10% per semi-annual rebalancing",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $25B+ iShares MSCI USA Min Vol Factor ETF (USMV)",
+      "Systematically lowers portfolio beta (historically ~0.70-0.75 vs S&P 500) and cushions downside drawdowns",
+      "Maintains sector diversification to prevent overconcentration in traditionally defensive sectors like utilities",
+    ],
+    tags: [
+      "Low Volatility",
+      "Factor",
+      "Smart Beta",
+      "Minimum Volatility",
+      "USMV",
+      "iShares",
+      "MSCI",
+      "Defensive",
+      "Large Cap",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa-minimum-volatility-usd/702787",
+  },
+  {
+    id: "msci-usa-enhanced-value",
+    symbol: "M1USEV",
+    altSymbols: [
+      "VLUE Benchmark",
+      "MSCI USA Value Factor",
+      "iShares VLUE",
+      "Enhanced Value",
+    ],
+    name: "MSCI USA Enhanced Value Index",
+    providerId: "msci",
+    category: "Factor / Value Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 150,
+    weightingMethodology:
+      "Value Score × Market Cap Weight (Sector Neutral Constrained)",
+    rebalanceFrequency: "Semi-Annually (May and November)",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "VLUE",
+        name: "iShares MSCI USA Value Factor ETF",
+        aum: "$6.5B+",
+      },
+      {
+        ticker: "IUVE",
+        name: "iShares Edge MSCI USA Value Factor UCITS ETF (Ireland Domiciled)",
+        aum: "$2.1B+",
+      },
+    ],
+    summary:
+      "Targets US equities with attractive valuation multiples based on price-to-book, forward P/E, and enterprise value-to-cash flow. Benchmark for the $6.5B+ iShares VLUE ETF.",
+    description:
+      "The MSCI USA Enhanced Value Index captures the performance of large- and mid-cap US equities displaying strong value factor characteristics. Constituents are evaluated on three fundamental valuation metrics: price-to-book value (P/B), 12-month forward price-to-earnings (P/E), and enterprise value-to-operating cash flow (EV/CFO). Constituents are weighted by their composite value score multiplied by float-adjusted market capitalization, constrained to remain sector-neutral relative to the parent MSCI USA Index. It serves as the benchmark for the $6.5B+ iShares MSCI USA Value Factor ETF (VLUE).",
+    eligibilityCriteria: [
+      "Constituent of parent MSCI USA Index",
+      "Value score evaluated across 3 valuation metrics: P/B, 12M forward P/E, and Enterprise Value to Operating Cash Flow",
+      "Constituent weight calculated by Value Z-score multiplied by float-adjusted market capitalization",
+      "Sector neutrality enforced to match parent MSCI USA sector weights",
+      "Semi-annual rebalance in May and November",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $6.5B+ iShares MSCI USA Value Factor ETF (VLUE)",
+      "Direct factor counterpart to MTUM (Momentum) and QUAL (Quality)",
+      "Avoids unintended sector bets typically present in traditional value style box approaches",
+    ],
+    tags: [
+      "Value",
+      "Factor",
+      "Smart Beta",
+      "VLUE",
+      "iShares",
+      "MSCI",
+      "Value Tilt",
+      "Large Cap",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa-enhanced-value/704945",
+  },
+  {
+    id: "msci-usa",
+    symbol: "M1US",
+    altSymbols: [
+      "EUSA Benchmark",
+      "MSCI United States Index",
+      "MSCI US Large Mid Cap",
+    ],
+    name: "MSCI USA Index",
+    providerId: "msci",
+    category: "Large & Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 620,
+    weightingMethodology: "Free Float-Adjusted Market Capitalization",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 1969,
+    trackingEtfs: [
+      {
+        ticker: "EUSA",
+        name: "iShares MSCI USA ETF",
+        aum: "$4.5B+",
+      },
+      {
+        ticker: "CSUS",
+        name: "iShares MSCI USA UCITS ETF (Ireland Domiciled)",
+        aum: "$7.2B+",
+      },
+    ],
+    summary:
+      "The foundational US benchmark of MSCI's global equity framework covering approximately 85% of the US equity market. Represents the US component of MSCI World and ACWI.",
+    description:
+      "The MSCI USA Index is designed to measure the performance of the large- and mid-cap segments of the US equity market. With over 620 constituents, the index covers approximately 85% of the free float-adjusted market capitalization in the United States. It forms the US core within the iconic MSCI World Index (approx 71% weight) and the global MSCI ACWI Index (approx 63% weight), and serves as the parent universe for MSCI's flagship factor indexes including QUAL, MTUM, and USMV.",
+    eligibilityCriteria: [
+      "Incorporated or primary equity listing in the United States",
+      "Free float market capitalization ranked in the top 85% of the US investable equity universe",
+      "Minimum liquidity requirements (Annualized Traded Value Ratio >= 20%)",
+      "Quarterly reviews in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "Foundational benchmark representing ~70% of MSCI World and ~63% of MSCI ACWI",
+      "Parent universe for multi-billion factor ETFs like QUAL, MTUM, USMV, and VLUE",
+      "Tracked by the $4.5B+ iShares EUSA ETF and the $7B+ iShares CSUS UCITS ETF",
+    ],
+    tags: [
+      "Large Cap",
+      "Mid Cap",
+      "Broad Market",
+      "US Equity",
+      "MSCI",
+      "EUSA",
+      "Core",
+      "Global Standard",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa/984000",
+  },
+  {
+    id: "msci-brazil",
+    symbol: "M1BR",
+    altSymbols: [
+      "EWZ Benchmark",
+      "MSCI Brazil Index",
+      "iShares EWZ",
+      "MSCI Brazil 25/50",
+    ],
+    name: "MSCI Brazil 25/50 Index",
+    providerId: "msci",
+    category: "Latin American Single-Country Equity",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 50,
+    weightingMethodology:
+      "Free Float-Adjusted Market Cap (25/50 Regulated Investment Company Cap)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 1996,
+    trackingEtfs: [
+      {
+        ticker: "EWZ",
+        name: "iShares MSCI Brazil ETF",
+        aum: "$5.1B+",
+      },
+      {
+        ticker: "BRZ",
+        name: "Direxion Daily MSCI Brazil Bull 2X Shares",
+        aum: "$80M+",
+      },
+      {
+        ticker: "IBZL",
+        name: "iShares MSCI Brazil UCITS ETF (Ireland Domiciled)",
+        aum: "$420M+",
+      },
+    ],
+    summary:
+      "The primary global benchmark for Brazilian equities, tracking large and mid-cap leaders across energy, banking, and materials. Benchmark for the $5B+ iShares EWZ ETF.",
+    description:
+      "The MSCI Brazil 25/50 Index measures the performance of the large- and mid-cap segments of the Brazilian equity market. Covering roughly 85% of the float-adjusted market capitalization in Brazil, the index applies a 25/50 capping constraint to comply with US Regulated Investment Company (RIC) requirements: no single issuer exceeds 25% of the index weight, and the sum of all issuers with weights greater than 5% cannot exceed 50%. Major holdings include Petrobras (petroleum), Vale (iron ore mining), Itaú Unibanco, and Banco Bradesco. It is the underlying benchmark for the $5.1B+ iShares MSCI Brazil ETF (EWZ).",
+    eligibilityCriteria: [
+      "Incorporated or primary listing on B3 (Brasil, Bolsa, Balcão) in São Paulo",
+      "Free float market capitalization representing the top 85% of the Brazilian equity universe",
+      "25/50 diversification constraint applied at each quarterly review",
+      "Minimum liquidity screen to ensure investability for international foreign capital",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for the $5.1B+ iShares MSCI Brazil ETF (EWZ), the largest Latin American ETF globally",
+      "High exposure to commodities, banking, and global resource cycles (Vale, Petrobras)",
+      "Crucial component of the broader MSCI Emerging Markets Index",
+    ],
+    tags: [
+      "Brazil",
+      "Emerging Markets",
+      "Latin America",
+      "EWZ",
+      "iShares",
+      "Commodities Exposure",
+      "Single Country",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-brazil-25-50/700814",
+  },
+  {
+    id: "msci-korea",
+    symbol: "M1KR",
+    altSymbols: [
+      "EWY Benchmark",
+      "MSCI South Korea Index",
+      "iShares EWY",
+      "MSCI Korea 25/50",
+    ],
+    name: "MSCI Korea 25/50 Index",
+    providerId: "msci",
+    category: "Asia-Pacific Single-Country Equity",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 95,
+    weightingMethodology:
+      "Free Float-Adjusted Market Cap (25/50 Regulated Investment Company Cap)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 1996,
+    trackingEtfs: [
+      {
+        ticker: "EWY",
+        name: "iShares MSCI South Korea ETF",
+        aum: "$4.6B+",
+      },
+      {
+        ticker: "IKOR",
+        name: "iShares MSCI Korea UCITS ETF (Ireland Domiciled)",
+        aum: "$380M+",
+      },
+    ],
+    summary:
+      "The premier institutional international benchmark for South Korean equities, dominated by global technology and industrial leaders like Samsung and SK Hynix. Benchmark for the $4.6B+ iShares EWY ETF.",
+    description:
+      "The MSCI Korea 25/50 Index measures the performance of the large- and mid-cap segments of the South Korean stock market. Covering approximately 85% of the Korean equity universe listed on the Korea Exchange (KRX), it enforces a 25/50 capping mechanism where no single constituent exceeds 25% of index weight, preventing mega-cap single-stock concentration (particularly in Samsung Electronics). Heavyweights include Samsung Electronics, SK Hynix (memory semiconductors), Hyundai Motor, and POSCO. It serves as the underlying benchmark for the $4.6B+ iShares MSCI South Korea ETF (EWY).",
+    eligibilityCriteria: [
+      "Listed on the Korea Exchange (KRX / KOSPI)",
+      "Large and mid-cap universe targeting 85% of Korean float-adjusted market capitalization",
+      "25/50 concentration cap applied quarterly: single stock <= 25%, sum of stocks > 5% capped at 50%",
+      "Minimum foreign room and international liquidity screens",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $4.6B+ iShares MSCI South Korea ETF (EWY)",
+      "Heavy global semiconductor and high-tech supply chain concentration (Samsung Electronics, SK Hynix)",
+      "Key benchmark for global investors trading Asian tiger economies and memory chip cycles",
+    ],
+    tags: [
+      "South Korea",
+      "Korea",
+      "Semiconductors",
+      "EWY",
+      "iShares",
+      "Technology",
+      "Single Country",
+      "Asia",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-korea-25-50/700813",
+  },
+  {
+    id: "msci-usa-extended-esg-focus",
+    symbol: "M1USESF",
+    altSymbols: [
+      "ESGU Benchmark",
+      "MSCI USA ESG Focus",
+      "iShares ESGU",
+      "MSCI USA Extended ESG",
+    ],
+    name: "MSCI USA Extended ESG Focus Index",
+    providerId: "msci",
+    category: "ESG & Sustainability",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 310,
+    weightingMethodology:
+      "Barra Open Optimizer ESG Targeted (Sector & Risk Neutral Constrained)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2018,
+    trackingEtfs: [
+      {
+        ticker: "ESGU",
+        name: "iShares ESG Aware MSCI USA ETF",
+        aum: "$12.4B+",
+      },
+    ],
+    summary:
+      "Optimized US large/mid-cap equity benchmark maximizing Environmental, Social, and Governance (ESG) exposure while maintaining sector weights close to MSCI USA. Benchmark for the $12B+ iShares ESGU ETF.",
+    description:
+      "The MSCI USA Extended ESG Focus Index is designed to maximize exposure to positive Environmental, Social, and Governance (ESG) factors while exhibiting risk and return characteristics similar to the parent MSCI USA Index. It applies business involvement screens to exclude civilian firearms, controversial and nuclear weapons, tobacco, thermal coal, and oil sands, while using the Barra open optimizer to target companies with high MSCI ESG Ratings. It underpins the $12.4B+ iShares ESG Aware MSCI USA ETF (ESGU).",
+    eligibilityCriteria: [
+      "Derived from the parent MSCI USA Index",
+      "Excludes companies involved in controversial weapons, civilian firearms, tobacco, thermal coal mining, and severe UN Global Compact violations",
+      "Optimized to maximize aggregate MSCI ESG rating score while constraining tracking error and sector exposures relative to MSCI USA",
+      "Quarterly rebalancing in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the $12.4B+ iShares ESG Aware MSCI USA ETF (ESGU), one of the largest ESG ETFs in the world",
+      "Provides broad market exposure with enhanced ESG criteria and low tracking error",
+      "Rigorous exclusion of controversial weapons, tobacco, and thermal coal extraction",
+    ],
+    tags: [
+      "ESG",
+      "Sustainability",
+      "Responsible Investing",
+      "ESGU",
+      "iShares",
+      "MSCI",
+      "Large Cap",
+      "US Equity",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/msci-usa-extended-esg-focus/712396",
+  },
+  {
     id: "sp-global-ex-us-dividend-growers",
     symbol: "SPGXDGN",
     altSymbols: [
