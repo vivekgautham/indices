@@ -1614,6 +1614,7 @@ export const INDICES_DATA: MarketIndex[] = [
     tags: [
       "Aerospace & Defense",
       "ITA",
+      "DFEN",
       "Market Cap Weighted",
       "iShares",
       "Defense",
@@ -1621,6 +1622,59 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-aerospace-defense-index/",
+  },
+  {
+    id: "sp-biotechnology-select-industry",
+    symbol: "SPSIBI",
+    altSymbols: ["^SPSIBI", "XBI Benchmark", "S&P Biotech Index"],
+    name: "S&P Biotechnology Select Industry Index",
+    providerId: "sp",
+    category: "Industry Equity / Biotechnology",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 135,
+    weightingMethodology: "Modified Equal-Weighted",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "XBI",
+        name: "SPDR S&P Biotech ETF",
+        aum: "$6.8B+",
+      },
+      {
+        ticker: "LABU",
+        name: "Direxion Daily S&P Biotech Bull 3X Shares",
+        aum: "$1.1B+",
+      },
+    ],
+    summary:
+      "Equal-weighted benchmark of US biotechnology innovators drawn from the S&P Total Market Index, underlying the $6.8B+ SPDR XBI.",
+    description:
+      "The S&P Biotechnology Select Industry Index measures the performance of the biotechnology sub-industry drawn from the broad S&P Total Market Index. By employing a modified equal-weighting methodology, it grants small- and mid-cap clinical innovators equal weighting alongside mega-cap pharmaceutical giants. This provides pure, high-upside exposure to clinical trial breakthroughs and M&A buyouts, serving as the benchmark for the $6.8B+ SPDR S&P Biotech ETF (XBI) and Direxion Daily 3X Bull ETF (LABU).",
+    eligibilityCriteria: [
+      "Constituent of the S&P Total Market Index",
+      "Classified in the Biotechnology GICS sub-industry",
+      "Float-adjusted market capitalization of at least $500 million and float-adjusted liquidity ratio of at least 90%",
+      "Modified equal-weighted structure rebalanced quarterly",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the premier equal-weighted biotech fund: SPDR XBI ($6.8B+ AUM) and LABU ($1.1B+)",
+      "Equal-weighting delivers heightened sensitivity to drug approvals, clinical readouts, and biotech M&A activity",
+      "Eliminates mega-cap drug conglomerate dominance typical of market-cap weighted healthcare funds",
+    ],
+    tags: [
+      "Biotechnology",
+      "Biotech",
+      "XBI",
+      "LABU",
+      "Equal Weight",
+      "Healthcare",
+      "SPDR",
+      "S&P",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-biotechnology-select-industry-index/",
   },
   {
     id: "sp-pharmaceuticals-select-industry",
@@ -3775,6 +3829,61 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     officialUrl: "https://indexes.nasdaq.com/",
   },
+  {
+    id: "nasdaq-biotechnology",
+    symbol: "NBI",
+    altSymbols: ["^NBI", "IBBQ Benchmark", "Nasdaq Biotech Index"],
+    name: "Nasdaq Biotechnology Index",
+    providerId: "nasdaq",
+    category: "Industry Equity / Biotechnology",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 250,
+    weightingMethodology:
+      "Modified Market Capitalization (8% Top 5 / 4% Remainder Capped)",
+    rebalanceFrequency:
+      "Quarterly (March, June, September, December); Annual Reconstitution in December",
+    launchYear: 1993,
+    trackingEtfs: [
+      {
+        ticker: "IBBQ",
+        name: "Invesco Nasdaq Biotechnology ETF",
+        aum: "$110M+",
+      },
+      {
+        ticker: "BIB",
+        name: "ProShares Ultra Nasdaq Biotechnology 2X",
+        aum: "$98M+",
+      },
+    ],
+    summary:
+      "Historic Nasdaq benchmark tracking biotechnology and pharmaceutical leaders listed on The Nasdaq Stock Market since 1993.",
+    description:
+      "Established in November 1993, the Nasdaq Biotechnology Index (NBI) is the definitive benchmark for biotechnology and pharmaceutical securities listed exclusively on The Nasdaq Stock Market. It tracks over 240 corporations pioneering recombinant DNA technology, cell therapy, gene sequencing, and immunology. Historically tracked by IBB for two decades, NBI today directly underpins the Invesco Nasdaq Biotechnology ETF (IBBQ) and the ProShares Ultra Nasdaq Biotechnology ETF (BIB).",
+    eligibilityCriteria: [
+      "Exclusively listed on the Nasdaq Global Select Market or Nasdaq Global Market",
+      "Classified as Biotechnology or Pharmaceuticals under ICB standards",
+      "Minimum market capitalization of $200 million and minimum average daily trading volume of 100,000 shares",
+      "Must have traded for at least three full calendar months on Nasdaq",
+    ],
+    keyCharacteristics: [
+      "The historic 30+ year benchmark for the US biotechnology sector (launched in 1993)",
+      "Underlying benchmark for Invesco IBBQ and leveraged 2x ProShares BIB",
+      "Modified market-cap weighting with 8% / 4% single-stock capping rules",
+    ],
+    tags: [
+      "Biotechnology",
+      "Biotech",
+      "NBI",
+      "IBBQ",
+      "BIB",
+      "IBB",
+      "Healthcare",
+      "Nasdaq",
+    ],
+    officialUrl:
+      "https://www.nasdaq.com/solutions/global-indexes/nasdaq-biotechnology-index",
+  },
 
   // ==========================================
   // CRSP
@@ -5789,6 +5898,61 @@ export const INDICES_DATA: MarketIndex[] = [
       "ICE",
     ],
     officialUrl: "https://www.spadeindex.com/defense/",
+  },
+  {
+    id: "ice-biotechnology",
+    symbol: "ICEBIO",
+    altSymbols: [
+      "^ICEBIO",
+      "^BTK",
+      "IBB Benchmark",
+      "NYSE Biotechnology Index",
+      "ICE Biotech",
+    ],
+    name: "NYSE Biotechnology Index",
+    providerId: "ice",
+    category: "Industry Equity / Biotechnology",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 240,
+    weightingMethodology:
+      "Modified Market Capitalization (8% Top 5 / 4% Remainder Capped)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2021,
+    trackingEtfs: [
+      {
+        ticker: "IBB",
+        name: "iShares Biotechnology ETF",
+        aum: "$7.5B+",
+      },
+    ],
+    summary:
+      "Premier US biotechnology benchmark tracking clinical-stage and commercial therapeutic drug developers, underlying the $7.5B+ iShares IBB ETF.",
+    description:
+      "The NYSE Biotechnology Index (ICEBIO), calculated and maintained by ICE Data Indices, measures the performance of US-listed biotechnology and pharmaceutical companies involved in molecular therapeutics, genomics, oncology drug development, and monoclonal antibody synthesis. It serves as the primary underlying benchmark for the largest biotechnology fund in the world, the $7.5B+ iShares Biotechnology ETF (IBB), utilizing a two-tier capping structure that blends large-cap drug titans (like Vertex, Amgen, and Gilead) with dynamic clinical innovators.",
+    eligibilityCriteria: [
+      "Listed on the NYSE, NYSE American, or NASDAQ",
+      "Classified in the Biotechnology or specialized Pharmaceuticals industry sectors",
+      "Minimum market capitalization of $200 million and minimum average daily trading volume",
+      "Modified market-cap weighting capping the 5 largest components at 8% and all other constituents at 4%",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the world's largest biotech fund: iShares Biotechnology ETF (IBB, $7.5B+ AUM)",
+      "Balanced exposure between mature commercial biopharma cash flows and high-beta clinical drug pipelines",
+      "Quarterly rebalanced with strict concentration caps preventing single-stock dominance",
+    ],
+    tags: [
+      "Biotechnology",
+      "Biotech",
+      "IBB",
+      "Healthcare",
+      "Pharma",
+      "Therapeutics",
+      "iShares",
+      "ICE",
+      "NYSE",
+    ],
+    officialUrl: "https://www.nyse.com/indices/icebio",
   },
   {
     id: "sp-national-amt-free-municipal-bond",

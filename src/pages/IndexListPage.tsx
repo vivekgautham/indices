@@ -71,6 +71,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Equal Weight",
       "GARP",
       "Aerospace & Defense",
+      "Biotechnology",
       "Semiconductor",
       "Software",
       "Cloud",
