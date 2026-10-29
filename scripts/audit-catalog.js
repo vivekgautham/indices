@@ -278,6 +278,49 @@ for (const term of suggestions) {
   }
 }
 
+// Preset Chip Filtering Test (e.g. clicking chips in UI)
+function matchesPresetTerm(idx, term) {
+  const norm = term.trim().toLowerCase();
+  if (norm === "treasury / cash") {
+    if (idx.assetClass !== "Fixed Income") return false;
+    return (
+      /treasury|t-bill|cash alternative|inflation-protected|tips|government/i.test(idx.category) ||
+      (idx.tags || []).some(t => /treasury|t-bill|cash alternative|tips|risk-free/i.test(t)) ||
+      /treasury|treasury bill/i.test(idx.name)
+    );
+  }
+  if (norm === "bonds / fixed income") {
+    return (
+      idx.assetClass === "Fixed Income" ||
+      /bond|fixed income/i.test(idx.category) ||
+      (idx.tags || []).some(t => /bond|fixed income/i.test(t))
+    );
+  }
+  if (norm === "volatility / vix") {
+    return (
+      idx.symbol === "VIX" ||
+      (idx.altSymbols || []).includes("VIX") ||
+      (idx.tags || []).some(t => /volatility|vix/i.test(t)) ||
+      /volatility/i.test(idx.name)
+    );
+  }
+  if (norm.includes("/")) {
+    const alternatives = norm.split("/").map(p => p.trim()).filter(Boolean);
+    return alternatives.some(alt => runSearch(alt).some(i => i.id === idx.id));
+  }
+  return runSearch(norm).some(i => i.id === idx.id);
+}
+
+const chipTermsToTest = suggestions;
+for (const chip of chipTermsToTest) {
+  const chipResults = INDICES_DATA.filter(idx => matchesPresetTerm(idx, chip));
+  if (chipResults.length === 0) {
+    console.error(`❌ Preset Chip "${chip}" returned 0 matches!`);
+    errors++;
+  }
+}
+console.log(`   ✓ All ${chipTermsToTest.length} preset filter chips validated with active benchmark matches`);
+
 // Specifically test "Profitability Screen"
 const profitMatches = runSearch("Profitability Screen");
 const expectedProfitIds = ["sp-500", "sp-midcap-400", "sp-smallcap-600", "sp-composite-1500"];

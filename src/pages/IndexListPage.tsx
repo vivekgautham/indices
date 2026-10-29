@@ -48,7 +48,9 @@ import {
 } from "../utils/styleFilter";
 import {
   computeIndexRelevanceScore,
-  matchesSearchToken,
+  extractSearchTokens,
+  matchesPresetTerm,
+  matchesSearchQuery,
 } from "../utils/search";
 
 export interface SearchCategory {
@@ -351,18 +353,9 @@ export default function IndexListPage() {
     return providers.find((p) => p.id === selectedProvider);
   }, [providers, selectedProvider]);
 
-  // Quick-selected term tokens
-  const quickTermTokens = useMemo(() => {
-    return selectedTerms.map((t) => t.trim().toLowerCase()).filter(Boolean);
-  }, [selectedTerms]);
-
   // Tokenized search query (splitting by whitespace and slashes, filtering non-alphanumeric)
   const searchTokens = useMemo(() => {
-    return searchTerm
-      .trim()
-      .toLowerCase()
-      .split(/[\s/]+/)
-      .filter((t) => t.length > 0 && /[a-z0-9]/i.test(t));
+    return extractSearchTokens(searchTerm);
   }, [searchTerm]);
 
   // Matches across ALL providers (for global search discovery), filtered by selectedStyle, selectedTerms, and searchTokens
@@ -376,20 +369,30 @@ export default function IndexListPage() {
       list = list.filter(isFactorIndex);
     }
 
-    const activeTokens = [...quickTermTokens, ...searchTokens];
-    if (activeTokens.length > 0) {
+    if (selectedTerms.length > 0) {
       list = list.filter((idx) => {
-        return activeTokens.every((token) => matchesSearchToken(idx, token));
+        return selectedTerms.every((term) => matchesPresetTerm(idx, term));
       });
+    }
+
+    if (searchTokens.length > 0) {
+      list = list.filter((idx) => matchesSearchQuery(idx, searchTerm));
+    }
+
+    if (selectedTerms.length > 0 || searchTokens.length > 0) {
+      const scoringTokens = [
+        ...selectedTerms.flatMap((t) => extractSearchTokens(t)),
+        ...searchTokens,
+      ];
       list = [...list].sort((a, b) => {
-        const scoreB = computeIndexRelevanceScore(b, activeTokens);
-        const scoreA = computeIndexRelevanceScore(a, activeTokens);
+        const scoreB = computeIndexRelevanceScore(b, scoringTokens);
+        const scoreA = computeIndexRelevanceScore(a, scoringTokens);
         return scoreB - scoreA;
       });
     }
 
     return list;
-  }, [indices, selectedStyle, quickTermTokens, searchTokens]);
+  }, [indices, selectedStyle, selectedTerms, searchTokens, searchTerm]);
 
   // Filtered indices list for the current provider selection
   const filteredIndices = useMemo(() => {
@@ -468,6 +471,24 @@ export default function IndexListPage() {
     // If user had typed this exact word in the search input, clean it so it doesn't duplicate
     if (searchTerm.trim().toLowerCase() === lower) {
       setSearchTerm("");
+    }
+
+    // If a specific provider tab is active and has 0 matches for this newly selected term,
+    // switch selectedProvider to "all" so the user immediately sees matching results!
+    if (selectedProvider !== "all") {
+      const isActivating = !selectedTerms.some((t) => t.toLowerCase() === lower);
+      if (isActivating) {
+        const matchesInCurrentProvider = indices.some((idx) => {
+          const matchesProv =
+            selectedProvider === "others"
+              ? OTHER_PROVIDER_IDS.has(idx.providerId)
+              : idx.providerId === selectedProvider;
+          return matchesProv && matchesPresetTerm(idx, term);
+        });
+        if (!matchesInCurrentProvider) {
+          setSelectedProvider("all");
+        }
+      }
     }
   };
 

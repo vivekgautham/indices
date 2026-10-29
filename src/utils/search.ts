@@ -5,6 +5,17 @@ function escapeRegex(str: string): string {
 }
 
 /**
+ * Splits query string into normalized search tokens.
+ */
+export function extractSearchTokens(term: string): string[] {
+  return term
+    .trim()
+    .toLowerCase()
+    .split(/[\s/]+/)
+    .filter((t) => t.length > 0 && /[a-z0-9]/i.test(t));
+}
+
+/**
  * Checks if a market index matches a single search token.
  * For short tokens (<= 3 chars, e.g. "ita", "spy", "voo", "esg", "oil", "500"),
  * prevents false-positive substring matches inside long words (e.g. "cap-ITA-lization").
@@ -38,6 +49,120 @@ export function matchesSearchToken(idx: MarketIndex, token: string): boolean {
   // 4. For tokens >= 4 chars, full text search
   const text = idx._searchableText || "";
   return text.includes(token);
+}
+
+/**
+ * Evaluates a user search query against an index.
+ * Handles conjunctions (spaces = AND) and alternatives (slashes = OR).
+ */
+export function matchesSearchQuery(idx: MarketIndex, query: string): boolean {
+  const trimmed = query.trim();
+  if (!trimmed) return true;
+
+  if (!trimmed.includes("/")) {
+    const tokens = extractSearchTokens(trimmed);
+    return tokens.every((token) => matchesSearchToken(idx, token));
+  }
+
+  const segments = trimmed
+    .split("/")
+    .map((s) => extractSearchTokens(s))
+    .filter((tokens) => tokens.length > 0);
+
+  if (segments.length === 0) return true;
+  return segments.some((tokens) =>
+    tokens.every((token) => matchesSearchToken(idx, token)),
+  );
+}
+
+/**
+ * Checks if an index matches a preset filter term (chip) from SEARCH_CATEGORIES.
+ * Accurately handles compound categories, slash-separated synonyms ("Treasury / Cash"),
+ * and dedicated theme definitions.
+ */
+export function matchesPresetTerm(idx: MarketIndex, term: string): boolean {
+  const norm = term.trim().toLowerCase();
+
+  // "Treasury / Cash" -> Pure Treasuries, T-Bills, Cash Alternatives
+  if (norm === "treasury / cash") {
+    if (idx.assetClass !== "Fixed Income") return false;
+    return (
+      /treasury|t-bill|cash alternative|inflation-protected|tips|government/i.test(
+        idx.category,
+      ) ||
+      (idx.tags || []).some((t) =>
+        /treasury|t-bill|cash alternative|tips|risk-free/i.test(t),
+      ) ||
+      /treasury|treasury bill/i.test(idx.name)
+    );
+  }
+
+  // "Bonds / Fixed Income" -> All Fixed Income benchmarks
+  if (norm === "bonds / fixed income") {
+    return (
+      idx.assetClass === "Fixed Income" ||
+      /bond|fixed income/i.test(idx.category) ||
+      (idx.tags || []).some((t) => /bond|fixed income/i.test(t))
+    );
+  }
+
+  // "Volatility / VIX"
+  if (norm === "volatility / vix") {
+    return (
+      idx.symbol === "VIX" ||
+      (idx.altSymbols || []).includes("VIX") ||
+      (idx.tags || []).some((t) => /volatility|vix/i.test(t)) ||
+      /volatility/i.test(idx.name)
+    );
+  }
+
+  // "Aerospace & Defense"
+  if (norm === "aerospace & defense") {
+    return (
+      /aerospace/i.test(idx.category) ||
+      (idx.tags || []).some((t) => /aerospace|defense/i.test(t)) ||
+      /aerospace & defense/i.test(idx.name)
+    );
+  }
+
+  // "Metals & Mining"
+  if (norm === "metals & mining") {
+    return (
+      /metals & mining|mining/i.test(idx.category) ||
+      (idx.tags || []).some((t) => /metals & mining|mining/i.test(t)) ||
+      /metals & mining|mining/i.test(idx.name)
+    );
+  }
+
+  // "Profitability Screen"
+  if (norm === "profitability screen") {
+    return (
+      (idx.tags || []).some((t) => /profitability/i.test(t)) ||
+      (idx.eligibilityCriteria || []).some((c) =>
+        /profitability|positive earnings/i.test(c),
+      ) ||
+      (idx.keyCharacteristics || []).some((k) =>
+        /profitability|earnings/i.test(k),
+      ) ||
+      /profitability screen/i.test(idx._searchableText || "")
+    );
+  }
+
+  // If the term has slashes, treat as OR across slash alternatives
+  if (norm.includes("/")) {
+    const alternatives = norm
+      .split("/")
+      .map((p) => p.trim())
+      .filter(Boolean);
+    return alternatives.some((alt) => {
+      const tokens = extractSearchTokens(alt);
+      return tokens.every((token) => matchesSearchToken(idx, token));
+    });
+  }
+
+  // Standard term: split into tokens and match all tokens
+  const tokens = extractSearchTokens(norm);
+  return tokens.every((token) => matchesSearchToken(idx, token));
 }
 
 /**
