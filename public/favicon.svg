@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="55%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded Rect App Icon Background -->
+  <rect width="48" height="48" rx="10.5" fill="url(#bgGrad)" />
+  <rect x="0.75" y="0.75" width="46.5" height="46.5" rx="9.75" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
+
+  <!-- Index Benchmark Bars -->
+  <rect x="9.5" y="24" width="6.5" height="14" rx="2" fill="rgba(255,255,255,0.65)" />
+  <rect x="20.5" y="16" width="6.5" height="22" rx="2" fill="rgba(255,255,255,0.82)" />
+  <rect x="31.5" y="9.5" width="6.5" height="28.5" rx="2" fill="rgba(255,255,255,0.98)" />
+
+  <!-- Ascending Growth Trendline -->
+  <polyline points="7.5,26 18.5,21 28,24 39.5,9.5" fill="none" stroke="#34d399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="39.5" cy="9.5" r="2.8" fill="#ffffff" />
+</svg>
