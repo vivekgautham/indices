@@ -1589,7 +1589,12 @@ export const INDICES_DATA: MarketIndex[] = [
       {
         ticker: "ITA",
         name: "iShares U.S. Aerospace & Defense ETF",
-        aum: "$12.6B+",
+        aum: "$12.8B+",
+      },
+      {
+        ticker: "DFEN",
+        name: "Direxion Daily Aerospace & Defense Bull 3X Shares",
+        aum: "$420M+",
       },
     ],
     summary:
@@ -5738,6 +5743,52 @@ export const INDICES_DATA: MarketIndex[] = [
       "ICE",
     ],
     officialUrl: "https://indices.ice.com/",
+  },
+  {
+    id: "spade-defense-index",
+    symbol: "DXS",
+    altSymbols: ["^DXS", "DXSTR", "PPA Benchmark", "SPADE Defense Index"],
+    name: "SPADE Defense Index",
+    providerId: "ice",
+    category: "Industry Equity / Aerospace & Defense",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 54,
+    weightingMethodology: "Modified Market Capitalization Weighted",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1997,
+    trackingEtfs: [
+      {
+        ticker: "PPA",
+        name: "Invesco Aerospace & Defense ETF",
+        aum: "$5.2B+",
+      },
+    ],
+    summary:
+      "Tracks US companies involved in defense, military hardware, homeland security, and space systems, underlying the $5.2B+ Invesco PPA ETF.",
+    description:
+      "The SPADE Defense Index is a recognized barometer for the US defense, homeland security, and government space industrial base, calculated and disseminated via NYSE/ICE Data Services. Established in 1997, the benchmark tracks prime military contractors, tactical communications providers, missile and missile defense producers, and space launch suppliers. It serves as the underlying benchmark for the $5.2B+ Invesco Aerospace & Defense ETF (PPA).",
+    eligibilityCriteria: [
+      "Listed on the NYSE, NYSE American, or NASDAQ",
+      "Actively engaged in defense, military, homeland security, or government space missions",
+      "Minimum market capitalization of $250 million and minimum 3-month average daily trading volume of 50,000 shares",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for Invesco Aerospace & Defense ETF (PPA, $5.2B+ AUM)",
+      "Broader exposure to defense technology, cybersecurity, military communications, and government space beyond pure airframes",
+      "Modified market-cap weighting with single-stock capping limits to promote industrial diversification",
+    ],
+    tags: [
+      "Aerospace & Defense",
+      "PPA",
+      "Defense",
+      "Military",
+      "Homeland Security",
+      "Space",
+      "Invesco",
+      "ICE",
+    ],
+    officialUrl: "https://www.spadeindex.com/defense/",
   },
   {
     id: "sp-national-amt-free-municipal-bond",
