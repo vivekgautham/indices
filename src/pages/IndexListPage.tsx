@@ -46,6 +46,10 @@ import {
   isValueIndex,
   StyleFilter,
 } from "../utils/styleFilter";
+import {
+  computeIndexRelevanceScore,
+  matchesSearchToken,
+} from "../utils/search";
 
 export interface SearchCategory {
   id: "themes" | "etf-providers" | "market-exposure";
@@ -66,6 +70,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Dividend Growth",
       "Equal Weight",
       "GARP",
+      "Aerospace & Defense",
       "Semiconductor",
       "Software",
       "Cloud",
@@ -370,17 +375,15 @@ export default function IndexListPage() {
       list = list.filter(isFactorIndex);
     }
 
-    if (quickTermTokens.length > 0) {
+    const activeTokens = [...quickTermTokens, ...searchTokens];
+    if (activeTokens.length > 0) {
       list = list.filter((idx) => {
-        const text = idx._searchableText || "";
-        return quickTermTokens.every((token) => text.includes(token));
+        return activeTokens.every((token) => matchesSearchToken(idx, token));
       });
-    }
-
-    if (searchTokens.length > 0) {
-      list = list.filter((idx) => {
-        const text = idx._searchableText || "";
-        return searchTokens.every((token) => text.includes(token));
+      list = [...list].sort((a, b) => {
+        const scoreB = computeIndexRelevanceScore(b, activeTokens);
+        const scoreA = computeIndexRelevanceScore(a, activeTokens);
+        return scoreB - scoreA;
       });
     }
 
