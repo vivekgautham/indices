@@ -36,6 +36,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "chore: update benchmark tracker data [skip ci]"
+            git commit -m "Chore: update benchmark tracker data."
             git push
           fi
