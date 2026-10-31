@@ -240,7 +240,7 @@ export default function BenchmarkTrackerPage() {
               component="h1"
               sx={{
                 fontWeight: 800,
-                fontSize: { xs: "1.75rem", sm: "2.4rem" },
+                fontSize: { xs: "1.35rem", sm: "1.75rem" },
                 letterSpacing: "-0.03em",
                 lineHeight: 1.2,
               }}
@@ -252,8 +252,8 @@ export default function BenchmarkTrackerPage() {
               variant="body1"
               sx={{
                 color: "text.secondary",
-                fontSize: { xs: "0.92rem", sm: "1.05rem" },
-                lineHeight: 1.6,
+                fontSize: { xs: "0.82rem", sm: "0.9rem" },
+                lineHeight: 1.55,
               }}
             >
               Real-time barometer tracking <strong>S&amp;P 500</strong>,{" "}
@@ -273,8 +273,8 @@ export default function BenchmarkTrackerPage() {
                 sm: "repeat(3, 1fr)",
                 md: "repeat(6, 1fr)",
               },
-              gap: 1.25,
-              mt: 3,
+              gap: 1,
+              mt: 2.5,
             }}
           >
             {kpiSummary.sp && (
@@ -282,7 +282,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => setSelectedSeriesId("SP500")}
                 sx={{
-                  p: 1.25,
+                  p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
@@ -296,17 +296,17 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
                   S&amp;P 500
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
                   {formatSeriesValue(kpiSummary.sp.latestValue, "number", 2)}
                 </Typography>
                 <Typography
-                  variant="caption"
                   sx={{
                     color: kpiSummary.sp.change >= 0 ? "#10b981" : "#ef4444",
                     fontWeight: 700,
+                    fontSize: "0.72rem",
                   }}
                 >
                   {kpiSummary.sp.change >= 0 ? "+" : ""}
@@ -320,7 +320,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => setSelectedSeriesId("NASDAQ100")}
                 sx={{
-                  p: 1.25,
+                  p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
@@ -334,17 +334,17 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
                   NASDAQ 100
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
                   {formatSeriesValue(kpiSummary.ndx.latestValue, "number", 2)}
                 </Typography>
                 <Typography
-                  variant="caption"
                   sx={{
                     color: kpiSummary.ndx.change >= 0 ? "#10b981" : "#ef4444",
                     fontWeight: 700,
+                    fontSize: "0.72rem",
                   }}
                 >
                   {kpiSummary.ndx.change >= 0 ? "+" : ""}
@@ -358,7 +358,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => setSelectedSeriesId("NASDAQCOM")}
                 sx={{
-                  p: 1.25,
+                  p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
@@ -372,17 +372,17 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
                   Nasdaq Composite
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
                   {formatSeriesValue(kpiSummary.nasdaqCom.latestValue, "number", 2)}
                 </Typography>
                 <Typography
-                  variant="caption"
                   sx={{
                     color: kpiSummary.nasdaqCom.change >= 0 ? "#10b981" : "#ef4444",
                     fontWeight: 700,
+                    fontSize: "0.72rem",
                   }}
                 >
                   {kpiSummary.nasdaqCom.change >= 0 ? "+" : ""}
@@ -396,7 +396,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => setSelectedSeriesId("DJIA")}
                 sx={{
-                  p: 1.25,
+                  p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
@@ -410,17 +410,17 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
                   Dow Jones
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
                   {formatSeriesValue(kpiSummary.djia.latestValue, "number", 2)}
                 </Typography>
                 <Typography
-                  variant="caption"
                   sx={{
                     color: kpiSummary.djia.change >= 0 ? "#10b981" : "#ef4444",
                     fontWeight: 700,
+                    fontSize: "0.72rem",
                   }}
                 >
                   {kpiSummary.djia.change >= 0 ? "+" : ""}
@@ -434,7 +434,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => setSelectedSeriesId("RUI")}
                 sx={{
-                  p: 1.25,
+                  p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
@@ -448,17 +448,17 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
                   Russell 1000
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
                   {formatSeriesValue(kpiSummary.rui.latestValue, "number", 2)}
                 </Typography>
                 <Typography
-                  variant="caption"
                   sx={{
                     color: kpiSummary.rui.change >= 0 ? "#10b981" : "#ef4444",
                     fontWeight: 700,
+                    fontSize: "0.72rem",
                   }}
                 >
                   {kpiSummary.rui.change >= 0 ? "+" : ""}
@@ -472,7 +472,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => setSelectedSeriesId("VIXCLS")}
                 sx={{
-                  p: 1.25,
+                  p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
@@ -486,17 +486,17 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
                   VIX Volatility
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
                   {kpiSummary.vix.latestValue.toFixed(2)}
                 </Typography>
                 <Typography
-                  variant="caption"
                   sx={{
                     color: kpiSummary.vix.latestValue > 20 ? "#ef4444" : "#10b981",
                     fontWeight: 700,
+                    fontSize: "0.72rem",
                   }}
                 >
                   {kpiSummary.vix.change >= 0 ? "+" : ""}

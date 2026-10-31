@@ -98,12 +98,11 @@ export interface FredDataset {
   macroSeries: FredSeriesData[];
 }
 
-/**
- * Loads baseline dataset from local pre-computed data.
- */
-export function getInitialFredDataset(): FredDataset {
-  const rawSeries = (localFredData as unknown as { series?: Record<string, unknown> })
-    .series || {};
+export function parseRawDataset(rawJson: {
+  updatedAt?: string;
+  series?: Record<string, unknown>;
+}): FredDataset {
+  const rawSeries = rawJson?.series || {};
   const seriesMap: Record<string, FredSeriesData> = {};
 
   for (const meta of FRED_SERIES_LIST) {
@@ -113,12 +112,21 @@ export function getInitialFredDataset(): FredDataset {
 
   const seriesList = Object.values(seriesMap);
   return {
-    updatedAt: (localFredData as unknown as { updatedAt?: string }).updatedAt || new Date().toISOString(),
+    updatedAt: rawJson?.updatedAt || new Date().toISOString(),
     series: seriesMap,
     seriesList,
     equitySeries: seriesList.filter((s) => s.category === "equity"),
     macroSeries: seriesList.filter((s) => s.category === "macro"),
   };
+}
+
+/**
+ * Loads baseline dataset from local pre-computed data.
+ */
+export function getInitialFredDataset(): FredDataset {
+  return parseRawDataset(
+    localFredData as unknown as { updatedAt?: string; series?: Record<string, unknown> },
+  );
 }
 
 /**
@@ -186,9 +194,22 @@ export function useFredData() {
   return useQuery<FredDataset>({
     queryKey: ["fred_dataset"],
     queryFn: async () => {
+      try {
+        const res = await fetch(`/data/fred-data.json?t=${Date.now()}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.series) {
+            return parseRawDataset(json);
+          }
+        }
+      } catch {
+        // Fall back to local embedded JSON
+      }
       return getInitialFredDataset();
     },
-    staleTime: 1000 * 60 * 15, // 15 minutes
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchInterval: 1000 * 60 * 5, // Automatically re-fetch every 5 minutes in background
+    refetchOnWindowFocus: true, // Automatically refresh when window or tab regains focus
     initialData: getInitialFredDataset(),
   });
 }

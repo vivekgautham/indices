@@ -1,0 +1,41 @@
+name: Update Benchmark Tracker Data
+
+on:
+  schedule:
+    # Run at 22:00 UTC (6:00 PM ET) Monday through Friday after US market close
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch: # Allow manual trigger in GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  update-tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Latest Benchmark Tracker Data
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY || '2d9fe8dbad89dabfd5afba8ca6e5f4f6' }}
+        run: |
+          node scripts/fetch-fred-data.js
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/ src/data/
+          if git diff --staged --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore: update benchmark tracker data [skip ci]"
+            git push
+          fi

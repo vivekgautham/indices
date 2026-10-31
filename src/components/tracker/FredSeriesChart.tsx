@@ -198,13 +198,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
         >
           <Box>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-              <Typography sx={{ fontSize: "1.4rem" }}>{series.icon}</Typography>
+              <Typography sx={{ fontSize: "1.25rem" }}>{series.icon}</Typography>
               <Typography
                 variant="h5"
                 component="h2"
                 sx={{
                   fontWeight: 800,
-                  fontSize: { xs: "1.2rem", sm: "1.45rem" },
+                  fontSize: { xs: "1.1rem", sm: "1.3rem" },
                   letterSpacing: "-0.02em",
                 }}
               >
@@ -215,8 +215,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 size="small"
                 sx={{
                   fontWeight: 800,
-                  fontSize: "0.72rem",
-                  height: 22,
+                  fontSize: "0.7rem",
+                  height: 20,
                   backgroundColor: "rgba(99, 102, 241, 0.15)",
                   color: "primary.main",
                   border: "1px solid rgba(99, 102, 241, 0.3)",
@@ -225,7 +225,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             </Stack>
             <Typography
               variant="caption"
-              sx={{ color: "text.secondary", fontSize: "0.8rem" }}
+              sx={{ color: "text.secondary", fontSize: "0.75rem" }}
             >
               {series.subcategory} • Source: {series.source} • Frequency: {series.frequency}
             </Typography>
@@ -247,9 +247,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 border: "none",
                 borderRadius: 1.5,
                 fontWeight: 700,
-                fontSize: "0.75rem",
-                px: { xs: 1, sm: 1.5 },
-                py: 0.5,
+                fontSize: "0.72rem",
+                px: { xs: 0.8, sm: 1.25 },
+                py: 0.35,
                 color: "text.secondary",
                 "&:hover": {
                   backgroundColor: "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.08))",
@@ -290,7 +290,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           <Typography
             sx={{
               fontWeight: 800,
-              fontSize: { xs: "2rem", sm: "2.5rem" },
+              fontSize: { xs: "1.6rem", sm: "2rem" },
               letterSpacing: "-0.03em",
               lineHeight: 1,
               fontVariantNumeric: "tabular-nums",
@@ -303,9 +303,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             <Chip
               icon={
                 hoverDiff >= 0 ? (
-                  <TrendingUpIcon sx={{ fontSize: 16 }} />
+                  <TrendingUpIcon sx={{ fontSize: 15 }} />
                 ) : (
-                  <TrendingDownIcon sx={{ fontSize: 16 }} />
+                  <TrendingDownIcon sx={{ fontSize: 15 }} />
                 )
               }
               label={`${hoverDiff >= 0 ? "+" : ""}${formatSeriesValue(
@@ -316,8 +316,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               size="small"
               sx={{
                 fontWeight: 800,
-                fontSize: "0.82rem",
-                height: 26,
+                fontSize: "0.75rem",
+                height: 24,
                 backgroundColor: hoverDiff >= 0 ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)",
                 color: hoverDiff >= 0 ? "#10b981" : "#ef4444",
                 border: `1px solid ${hoverDiff >= 0 ? "rgba(16, 185, 129, 0.3)" : "rgba(239, 68, 68, 0.3)"}`,
@@ -456,15 +456,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           <Paper
             variant="outlined"
             sx={{
-              p: 1.25,
+              p: 1,
               borderRadius: 2,
               backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
               Period Low
             </Typography>
-            <Typography sx={{ fontWeight: 800, fontSize: "1rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography sx={{ fontWeight: 800, fontSize: "0.88rem", fontVariantNumeric: "tabular-nums" }}>
               {formatSeriesValue(min, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -472,15 +472,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           <Paper
             variant="outlined"
             sx={{
-              p: 1.25,
+              p: 1,
               borderRadius: 2,
               backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
               Period High
             </Typography>
-            <Typography sx={{ fontWeight: 800, fontSize: "1rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography sx={{ fontWeight: 800, fontSize: "0.88rem", fontVariantNumeric: "tabular-nums" }}>
               {formatSeriesValue(max, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -488,15 +488,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           <Paper
             variant="outlined"
             sx={{
-              p: 1.25,
+              p: 1,
               borderRadius: 2,
               backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
               Period Start ({startDate})
             </Typography>
-            <Typography sx={{ fontWeight: 800, fontSize: "1rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography sx={{ fontWeight: 800, fontSize: "0.88rem", fontVariantNumeric: "tabular-nums" }}>
               {formatSeriesValue(startValue, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -504,15 +504,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           <Paper
             variant="outlined"
             sx={{
-              p: 1.25,
+              p: 1,
               borderRadius: 2,
               backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
               52-Week Range
             </Typography>
-            <Typography sx={{ fontWeight: 700, fontSize: "0.85rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography sx={{ fontWeight: 700, fontSize: "0.8rem", fontVariantNumeric: "tabular-nums" }}>
               {formatSeriesValue(series.low52, series.format, series.decimals)} – {formatSeriesValue(series.high52, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -522,26 +522,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
         <Box
           sx={{
             mt: 2,
-            p: 1.75,
-            borderRadius: 2.5,
+            p: 1.5,
+            borderRadius: 2,
             backgroundColor: "var(--indices-subtle-bg, rgba(99, 102, 241, 0.06))",
             border: "1px solid rgba(99, 102, 241, 0.2)",
           }}
         >
           <Typography
-            variant="caption"
             sx={{
               fontWeight: 800,
+              fontSize: "0.7rem",
               color: "primary.light",
               display: "block",
               textTransform: "uppercase",
               letterSpacing: "0.05em",
-              mb: 0.5,
+              mb: 0.4,
             }}
           >
-            Macroeconomic Significance & Investor Context
+            Market Significance &amp; Investor Context
           </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.6 }}>
+          <Typography sx={{ color: "text.secondary", fontSize: "0.78rem", lineHeight: 1.55 }}>
             {series.marketSignificance} {series.description}
           </Typography>
         </Box>
