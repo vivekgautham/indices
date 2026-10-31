@@ -117,10 +117,10 @@ export default function BenchmarkTrackerPage() {
     const dgs10 = dataset.series.DGS10;
     const t10y2y = dataset.series.T10Y2Y;
     const fedfunds = dataset.series.FEDFUNDS;
-    const cpi = dataset.series.CPIAUCSL;
+    const dollar = dataset.series.DTWEXBGS;
     const vix = dataset.series.VIXCLS;
 
-    return { sp, dgs10, t10y2y, fedfunds, cpi, vix };
+    return { sp, dgs10, t10y2y, fedfunds, dollar, vix };
   }, [dataset]);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: FredCategory | "all") => {
@@ -467,33 +467,33 @@ export default function BenchmarkTrackerPage() {
               </Paper>
             )}
 
-            {kpiSummary.cpi && (
+            {kpiSummary.dollar && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("CPIAUCSL")}
+                onClick={() => setSelectedSeriesId("DTWEXBGS")}
                 sx={{
                   p: 1.25,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
-                    selectedSeriesId === "CPIAUCSL"
+                    selectedSeriesId === "DTWEXBGS"
                       ? "rgba(99, 102, 241, 0.15)"
                       : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
                   borderColor:
-                    selectedSeriesId === "CPIAUCSL"
+                    selectedSeriesId === "DTWEXBGS"
                       ? "primary.main"
                       : "var(--indices-border, rgba(255, 255, 255, 0.08))",
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
                 <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
-                  CPI Index Level
+                  U.S. Dollar
                 </Typography>
                 <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
-                  {kpiSummary.cpi.latestValue.toFixed(1)}
+                  {kpiSummary.dollar.latestValue.toFixed(2)}
                 </Typography>
                 <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 600 }}>
-                  Urban Consumers
+                  Trade-Weighted
                 </Typography>
               </Paper>
             )}

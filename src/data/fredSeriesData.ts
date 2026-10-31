@@ -223,26 +223,6 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#6366f1",
     icon: "🎯",
   },
-  CPIAUCSL: {
-    id: "CPIAUCSL",
-    name: "Consumer Price Index for All Urban Consumers",
-    shortName: "CPI Inflation",
-    category: "macro",
-    subcategory: "Inflation & Cost of Living",
-    units: "Index 1982-1984=100",
-    frequency: "Monthly",
-    source: "U.S. Bureau of Labor Statistics",
-    description:
-      "Measures the monthly change in prices paid by American urban consumers for a representative representative market basket of consumer goods and services.",
-    marketSignificance:
-      "The primary headline inflation metric in the United States, driving central bank policy decisions, cost-of-living adjustments (COLA), and TIPS bond principal adjustments.",
-    relatedIndexId: "bloomberg-us-tips",
-    trackingEtfs: ["TIP", "VTIP"],
-    format: "number",
-    decimals: 2,
-    badgeColor: "#f97316",
-    icon: "🛒",
-  },
   DTWEXBGS: {
     id: "DTWEXBGS",
     name: "Trade-Weighted U.S. Dollar Index (Broad Goods & Services)",

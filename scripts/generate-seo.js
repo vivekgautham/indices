@@ -143,7 +143,7 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
     )
     .replace(
       /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
-      `<meta name="description" content="Live &amp; historical tracker for major U.S. equity benchmarks (S&amp;P 500, Dow Jones, Nasdaq 100, VIX) and macroeconomic indexes (Treasury yields, yield curves, CPI inflation, Fed funds, crude oil) from the St. Louis Federal Reserve (FRED)." />`
+      `<meta name="description" content="Live &amp; historical tracker for major U.S. equity benchmarks (S&amp;P 500, Dow Jones, Nasdaq 100, VIX) and macroeconomic indexes (Treasury yields, yield curves, Fed funds, U.S. dollar, crude oil) from the St. Louis Federal Reserve (FRED)." />`
     )
     .replace(
       /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
@@ -177,7 +177,6 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
             <li><strong>2-Year Treasury Constant Maturity Yield (DGS2)</strong> – Near-term Fed policy rate expectation barometer.</li>
             <li><strong>10-Year minus 2-Year Treasury Yield Spread (T10Y2Y)</strong> – Premier yield curve recession indicator.</li>
             <li><strong>Federal Funds Effective Rate (FEDFUNDS)</strong> – Central bank overnight policy rate anchor.</li>
-            <li><strong>Consumer Price Index (CPIAUCSL)</strong> – Headline inflation and purchasing power measure.</li>
             <li><strong>Trade-Weighted U.S. Dollar Index (DTWEXBGS)</strong> – Global greenback foreign exchange valuation.</li>
             <li><strong>WTI Crude Oil Prices (DCOILWTICO)</strong> – Benchmark energy and transport commodity cost.</li>
             <li><strong>30-Year Fixed Mortgage Rate (MORTGAGE30US)</strong> – US housing borrowing benchmark.</li>
