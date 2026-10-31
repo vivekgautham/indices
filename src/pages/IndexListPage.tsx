@@ -198,49 +198,111 @@ export default function IndexListPage() {
     setVisibleRows(3);
   }, [searchTerm, selectedTerms, selectedProvider, selectedStyle]);
 
-  // Synchronize state changes to URL query parameters
+  // Guard against infinite feedback loops between external navigation and internal filter updates
+  const lastSearchStrRef = useRef(searchParams.toString());
+  const isSyncingFromUrlRef = useRef(false);
+
+  // 1. Synchronize external URL changes (e.g. clicking Market Indices logo, Home tab, or browser Back/Forward)
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    const currentParamStr = searchParams.toString();
+    if (currentParamStr === lastSearchStrRef.current) {
+      return;
+    }
+    lastSearchStrRef.current = currentParamStr;
+
+    const p = searchParams.get("provider");
+    const validP: ProviderId | "others" | "all" =
+      p && (p in PROVIDERS_DATA || p === "all" || p === "others")
+        ? (p as ProviderId | "others")
+        : "all";
+
+    const s = searchParams.get("style");
+    const validS: StyleFilter =
+      s === "growth" || s === "value" || s === "factor" ? s : "all";
+
+    const tParam = searchParams.get("terms") || "";
+    const parsedTerms = tParam
+      ? tParam.split(",").map((t) => t.trim()).filter(Boolean)
+      : [];
+
+    const q = searchParams.get("q") || "";
+
+    const cat = searchParams.get("cat");
+    const validCat =
+      cat === "all" ||
+      cat === "themes" ||
+      cat === "etf-providers" ||
+      cat === "market-exposure"
+        ? cat
+        : "themes";
+
+    const view = searchParams.get("view");
+    const validView = view === "table" ? "table" : "card";
+
+    const hasChanged =
+      validP !== selectedProvider ||
+      validS !== selectedStyle ||
+      JSON.stringify(parsedTerms) !== JSON.stringify(selectedTerms) ||
+      q !== searchTerm ||
+      validCat !== activeCategory ||
+      validView !== viewMode;
+
+    if (hasChanged) {
+      isSyncingFromUrlRef.current = true;
+      if (validP !== selectedProvider) setSelectedProvider(validP);
+      if (validS !== selectedStyle) setSelectedStyle(validS);
+      if (JSON.stringify(parsedTerms) !== JSON.stringify(selectedTerms)) setSelectedTerms(parsedTerms);
+      if (q !== searchTerm) setSearchTerm(q);
+      if (validCat !== activeCategory) setActiveCategory(validCat);
+      if (validView !== viewMode) setViewMode(validView);
+    }
+  }, [
+    searchParams,
+    selectedProvider,
+    selectedStyle,
+    selectedTerms,
+    searchTerm,
+    activeCategory,
+    viewMode,
+  ]);
+
+  // 2. Synchronize internal filter state changes to URL query parameters
+  useEffect(() => {
+    if (isSyncingFromUrlRef.current) {
+      isSyncingFromUrlRef.current = false;
+      return;
+    }
+
+    const params = new URLSearchParams();
 
     if (selectedProvider !== "all") {
       params.set("provider", selectedProvider);
-    } else {
-      params.delete("provider");
     }
 
     if (selectedStyle !== "all") {
       params.set("style", selectedStyle);
-    } else {
-      params.delete("style");
     }
 
     if (selectedTerms.length > 0) {
       params.set("terms", selectedTerms.join(","));
-    } else {
-      params.delete("terms");
     }
 
     if (searchTerm.trim()) {
       params.set("q", searchTerm.trim());
-    } else {
-      params.delete("q");
     }
 
     if (activeCategory !== "themes") {
       params.set("cat", activeCategory);
-    } else {
-      params.delete("cat");
     }
 
     if (viewMode !== "card") {
       params.set("view", viewMode);
-    } else {
-      params.delete("view");
     }
 
     const currentStr = searchParams.toString();
     const newStr = params.toString();
     if (currentStr !== newStr) {
+      lastSearchStrRef.current = newStr;
       setSearchParams(params, { replace: true });
     }
   }, [
@@ -253,57 +315,6 @@ export default function IndexListPage() {
     searchParams,
     setSearchParams,
   ]);
-
-  // Synchronize when user navigates with browser Back/Forward buttons
-  useEffect(() => {
-    const p = searchParams.get("provider");
-    const validP: ProviderId | "others" | "all" =
-      p && (p in PROVIDERS_DATA || p === "all" || p === "others")
-        ? (p as ProviderId | "others")
-        : "all";
-    if (validP !== selectedProvider) {
-      setSelectedProvider(validP);
-    }
-
-    const s = searchParams.get("style");
-    const validS: StyleFilter =
-      s === "growth" || s === "value" || s === "factor" ? s : "all";
-    if (validS !== selectedStyle) {
-      setSelectedStyle(validS);
-    }
-
-    const tParam = searchParams.get("terms") || "";
-    const parsedTerms = tParam
-      ? tParam.split(",").map((t) => t.trim()).filter(Boolean)
-      : [];
-    if (JSON.stringify(parsedTerms) !== JSON.stringify(selectedTerms)) {
-      setSelectedTerms(parsedTerms);
-    }
-
-    const q = searchParams.get("q") || "";
-    if (q !== searchTerm) {
-      setSearchTerm(q);
-    }
-
-    const cat = searchParams.get("cat");
-    const validCat =
-      cat === "all" ||
-      cat === "themes" ||
-      cat === "etf-providers" ||
-      cat === "market-exposure"
-        ? cat
-        : "themes";
-    if (validCat !== activeCategory) {
-      setActiveCategory(validCat);
-    }
-
-    const view = searchParams.get("view");
-    const validView = view === "table" ? "table" : "card";
-    if (validView !== viewMode) {
-      setViewMode(validView);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
 
   // Calculate index counts per provider (accounting for selectedStyle)
   const indexCounts = useMemo(() => {

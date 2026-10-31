@@ -12,7 +12,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   getInitialFredDataset,
@@ -45,18 +45,40 @@ export default function BenchmarkTrackerPage() {
       "Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
   }, []);
 
+  // Guard against infinite feedback loops between external navigation and internal state updates
+  const lastSearchStrRef = useRef(searchParams.toString());
+  const isSyncingFromUrlRef = useRef(false);
+
+  // Synchronize external URL changes (e.g. clicking tab, Back/Forward)
+  useEffect(() => {
+    const currentParamStr = searchParams.toString();
+    if (currentParamStr === lastSearchStrRef.current) {
+      return;
+    }
+    lastSearchStrRef.current = currentParamStr;
+    const s = searchParams.get("series") || "SP500";
+    if (s !== selectedSeriesId) {
+      isSyncingFromUrlRef.current = true;
+      setSelectedSeriesId(s);
+    }
+  }, [searchParams, selectedSeriesId]);
+
   // Synchronize state with URL search parameters
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    if (isSyncingFromUrlRef.current) {
+      isSyncingFromUrlRef.current = false;
+      return;
+    }
+
+    const params = new URLSearchParams();
     if (selectedSeriesId && selectedSeriesId !== "SP500") {
       params.set("series", selectedSeriesId);
-    } else {
-      params.delete("series");
     }
 
     const currentStr = searchParams.toString();
     const newStr = params.toString();
     if (currentStr !== newStr) {
+      lastSearchStrRef.current = newStr;
       setSearchParams(params, { replace: true });
     }
   }, [selectedSeriesId, searchParams, setSearchParams]);

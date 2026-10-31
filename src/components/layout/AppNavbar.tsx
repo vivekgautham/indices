@@ -113,6 +113,9 @@ export const AppNavbar: React.FC = () => {
             <Box
               component={Link}
               to="/"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -198,6 +201,9 @@ export const AppNavbar: React.FC = () => {
                   key={item.id}
                   component={Link}
                   to={item.to}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   startIcon={item.icon}
                   sx={{
                     position: "relative",
