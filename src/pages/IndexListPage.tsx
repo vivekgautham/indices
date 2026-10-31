@@ -4,7 +4,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LanguageIcon from "@mui/icons-material/Language";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SearchIcon from "@mui/icons-material/Search";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   Box,
   Button,
@@ -25,11 +24,9 @@ import {
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
-import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
-import ThemeSelector from "../components/layout/ThemeSelector";
 import { IndexCard } from "../components/IndexCard";
 import { IndexTableView } from "../components/IndexTableView";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
@@ -528,41 +525,15 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Top Right Header Controls: Share View, Color Theme & App Version */}
+      {/* Page Actions: Share View */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
-          flexWrap: "wrap",
-          gap: { xs: 0.75, sm: 1.25 },
           mb: { xs: 1, sm: 1.5 },
         }}
       >
-        <Button
-          component={Link}
-          to="/tracker"
-          variant="outlined"
-          size="small"
-          startIcon={<ShowChartIcon sx={{ fontSize: 16 }} />}
-          sx={{
-            borderRadius: 2,
-            px: 1.5,
-            py: 0.4,
-            fontWeight: 700,
-            fontSize: "0.8125rem",
-            textTransform: "none",
-            borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
-            color: "primary.main",
-            backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
-            "&:hover": {
-              backgroundColor: "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
-              borderColor: "primary.light",
-            },
-          }}
-        >
-          Benchmark Tracker
-        </Button>
         <ShareButton
           item={{
             title: activeProviderObj
@@ -598,8 +569,6 @@ export default function IndexListPage() {
             py: 0.4,
           }}
         />
-        <ThemeSelector />
-        <AppVersionBadge />
       </Box>
 
       {/* Header Section */}

@@ -1,7 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import LaunchIcon from "@mui/icons-material/Launch";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   Box,
   Button,
@@ -20,9 +19,7 @@ import {
 import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
-import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
-import ThemeSelector from "../components/layout/ThemeSelector";
 import { ProviderLogo } from "../components/ProviderLogo";
 import ShareButton from "../components/ShareButton";
 import {
@@ -221,29 +218,6 @@ export default function IndexDetailPage() {
           alignItems="center"
           flexWrap="wrap"
         >
-          <Button
-            component={RouterLink}
-            to="/tracker"
-            variant="outlined"
-            size="small"
-            startIcon={<ShowChartIcon sx={{ fontSize: 16 }} />}
-            sx={{
-              borderRadius: 2.5,
-              fontWeight: 700,
-              fontSize: "0.82rem",
-              px: 2,
-              py: 0.75,
-              borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
-              color: "text.primary",
-              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
-              "&:hover": {
-                backgroundColor: "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
-                borderColor: "primary.light",
-              },
-            }}
-          >
-            Benchmark Tracker
-          </Button>
           <ShareButton
             item={{
               title: `${index.name} (${index.symbol}) | Market Indices`,
@@ -262,8 +236,6 @@ export default function IndexDetailPage() {
               py: 0.75,
             }}
           />
-          <ThemeSelector />
-          <AppVersionBadge compact />
           {index.officialUrl && (
             <Button
               variant="outlined"

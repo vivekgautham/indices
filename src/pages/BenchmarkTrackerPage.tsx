@@ -1,4 +1,3 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import KeyIcon from "@mui/icons-material/Key";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import {
@@ -14,15 +13,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   getInitialFredDataset,
   getStoredFredApiKey,
   useFredData,
 } from "../api/fredApi";
-import AppVersionBadge from "../components/layout/AppVersionBadge";
 import SiteFooter from "../components/layout/SiteFooter";
-import ThemeSelector from "../components/layout/ThemeSelector";
 import ShareButton from "../components/ShareButton";
 import { FredApiKeyDialog } from "../components/tracker/FredApiKeyDialog";
 import {
@@ -102,104 +99,74 @@ export default function BenchmarkTrackerPage() {
           px: { xs: 1.5, sm: 3 },
         }}
       >
-        {/* Top Header Navigation Bar */}
+        {/* Dashboard Actions Bar */}
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: 1.5,
-            mb: { xs: 2, sm: 3 },
+            gap: 1.25,
+            mb: { xs: 1.5, sm: 2 },
           }}
         >
-          <Button
-            component={Link}
-            to="/"
-            startIcon={<ArrowBackIcon sx={{ fontSize: 16 }} />}
-            variant="outlined"
-            size="small"
-            sx={{
-              borderRadius: 2.5,
-              fontWeight: 700,
-              fontSize: "0.8rem",
-              px: 1.75,
-              py: 0.6,
-              borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
-              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
-              color: "text.primary",
-              "&:hover": {
-                backgroundColor: "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
-                borderColor: "primary.light",
-              },
-            }}
-          >
-            All Market Indices Catalog
-          </Button>
-
-          {/* Right Header Controls */}
-          <Stack direction="row" spacing={{ xs: 0.75, sm: 1.25 }} alignItems="center" flexWrap="wrap">
-            <Tooltip title="Configure St. Louis Fed FRED API Key (Optional)">
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => setApiKeyDialogOpen(true)}
-                startIcon={<KeyIcon sx={{ fontSize: 15 }} />}
-                sx={{
-                  borderRadius: 2,
-                  px: 1.25,
-                  py: 0.4,
-                  fontSize: "0.76rem",
-                  fontWeight: 700,
-                  borderColor: hasApiKey ? "#10b981" : "var(--indices-border, rgba(255, 255, 255, 0.15))",
-                  color: hasApiKey ? "#10b981" : "text.secondary",
-                  backgroundColor: hasApiKey ? "rgba(16, 185, 129, 0.08)" : undefined,
-                }}
-              >
-                {hasApiKey ? "FRED Key Active" : "API Key"}
-              </Button>
-            </Tooltip>
-
-            <Tooltip title="Refresh FRED Observations">
-              <IconButton
-                size="small"
-                onClick={() => refetch()}
-                disabled={isFetching}
-                sx={{
-                  borderRadius: 2,
-                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.15))",
-                  backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
-                  p: 0.75,
-                }}
-              >
-                {isFetching ? (
-                  <CircularProgress size={16} />
-                ) : (
-                  <RefreshIcon sx={{ fontSize: 16 }} />
-                )}
-              </IconButton>
-            </Tooltip>
-
-            <ShareButton
-              item={{
-                title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
-                text: "Explore live and historical charts for major US equity benchmarks, Treasury yield curves, inflation, and macroeconomic indicators from FRED.",
-                path: "/tracker",
-              }}
+          <Tooltip title="Configure St. Louis Fed FRED API Key (Optional)">
+            <Button
               variant="outlined"
               size="small"
-              label="Share Tracker"
-              tooltip="Share Benchmark Tracker"
+              onClick={() => setApiKeyDialogOpen(true)}
+              startIcon={<KeyIcon sx={{ fontSize: 15 }} />}
               sx={{
                 borderRadius: 2,
-                px: 1.5,
+                px: 1.25,
                 py: 0.4,
+                fontSize: "0.76rem",
+                fontWeight: 700,
+                borderColor: hasApiKey ? "#10b981" : "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                color: hasApiKey ? "#10b981" : "text.secondary",
+                backgroundColor: hasApiKey ? "rgba(16, 185, 129, 0.08)" : undefined,
               }}
-            />
+            >
+              {hasApiKey ? "FRED Key Active" : "API Key"}
+            </Button>
+          </Tooltip>
 
-            <ThemeSelector />
-            <AppVersionBadge />
-          </Stack>
+          <Tooltip title="Refresh Observations">
+            <IconButton
+              size="small"
+              onClick={() => refetch()}
+              disabled={isFetching}
+              sx={{
+                borderRadius: 2,
+                border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.15))",
+                backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
+                p: 0.75,
+              }}
+            >
+              {isFetching ? (
+                <CircularProgress size={16} />
+              ) : (
+                <RefreshIcon sx={{ fontSize: 16 }} />
+              )}
+            </IconButton>
+          </Tooltip>
+
+          <ShareButton
+            item={{
+              title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
+              text: "Explore live and historical charts for major US equity benchmarks, Treasury yield curves, inflation, and macroeconomic indicators from FRED.",
+              path: "/tracker",
+            }}
+            variant="outlined"
+            size="small"
+            label="Share Tracker"
+            tooltip="Share Benchmark Tracker"
+            sx={{
+              borderRadius: 2,
+              px: 1.5,
+              py: 0.4,
+            }}
+          />
         </Box>
 
         {/* Hero Banner Header */}
