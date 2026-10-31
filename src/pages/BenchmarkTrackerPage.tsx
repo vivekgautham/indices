@@ -12,7 +12,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   getInitialFredDataset,
@@ -30,10 +30,27 @@ export default function BenchmarkTrackerPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: fredData, refetch, isFetching } = useFredData();
 
-  const urlSeries = searchParams.get("series") || "SP500";
-  const [selectedSeriesId, setSelectedSeriesId] = useState<string>(urlSeries);
+  const selectedSeriesId = searchParams.get("series") || "SP500";
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(false);
+
+  const handleSelectSeries = (seriesId: string) => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (!seriesId || seriesId === "SP500") {
+          next.delete("series");
+        } else {
+          next.set("series", seriesId);
+        }
+        if (next.toString() === prev.toString()) {
+          return prev;
+        }
+        return next;
+      },
+      { replace: true }
+    );
+  };
 
   useEffect(() => {
     setHasApiKey(Boolean(getStoredFredApiKey()));
@@ -44,44 +61,6 @@ export default function BenchmarkTrackerPage() {
     document.title =
       "Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
   }, []);
-
-  // Guard against infinite feedback loops between external navigation and internal state updates
-  const lastSearchStrRef = useRef(searchParams.toString());
-  const isSyncingFromUrlRef = useRef(false);
-
-  // Synchronize external URL changes (e.g. clicking tab, Back/Forward)
-  useEffect(() => {
-    const currentParamStr = searchParams.toString();
-    if (currentParamStr === lastSearchStrRef.current) {
-      return;
-    }
-    lastSearchStrRef.current = currentParamStr;
-    const s = searchParams.get("series") || "SP500";
-    if (s !== selectedSeriesId) {
-      isSyncingFromUrlRef.current = true;
-      setSelectedSeriesId(s);
-    }
-  }, [searchParams, selectedSeriesId]);
-
-  // Synchronize state with URL search parameters
-  useEffect(() => {
-    if (isSyncingFromUrlRef.current) {
-      isSyncingFromUrlRef.current = false;
-      return;
-    }
-
-    const params = new URLSearchParams();
-    if (selectedSeriesId && selectedSeriesId !== "SP500") {
-      params.set("series", selectedSeriesId);
-    }
-
-    const currentStr = searchParams.toString();
-    const newStr = params.toString();
-    if (currentStr !== newStr) {
-      lastSearchStrRef.current = newStr;
-      setSearchParams(params, { replace: true });
-    }
-  }, [selectedSeriesId, searchParams, setSearchParams]);
 
   const dataset = fredData || getInitialFredDataset();
 
@@ -251,7 +230,7 @@ export default function BenchmarkTrackerPage() {
             {kpiSummary.sp && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("SP500")}
+                onClick={() => handleSelectSeries("SP500")}
                 sx={{
                   p: 1,
                   borderRadius: 2,
@@ -289,7 +268,7 @@ export default function BenchmarkTrackerPage() {
             {kpiSummary.ndx && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("NASDAQ100")}
+                onClick={() => handleSelectSeries("NASDAQ100")}
                 sx={{
                   p: 1,
                   borderRadius: 2,
@@ -327,7 +306,7 @@ export default function BenchmarkTrackerPage() {
             {kpiSummary.nasdaqCom && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("NASDAQCOM")}
+                onClick={() => handleSelectSeries("NASDAQCOM")}
                 sx={{
                   p: 1,
                   borderRadius: 2,
@@ -365,7 +344,7 @@ export default function BenchmarkTrackerPage() {
             {kpiSummary.djia && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("DJIA")}
+                onClick={() => handleSelectSeries("DJIA")}
                 sx={{
                   p: 1,
                   borderRadius: 2,
@@ -403,7 +382,7 @@ export default function BenchmarkTrackerPage() {
             {kpiSummary.rui && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("RUI")}
+                onClick={() => handleSelectSeries("RUI")}
                 sx={{
                   p: 1,
                   borderRadius: 2,
@@ -441,7 +420,7 @@ export default function BenchmarkTrackerPage() {
             {kpiSummary.vix && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("VIXCLS")}
+                onClick={() => handleSelectSeries("VIXCLS")}
                 sx={{
                   p: 1,
                   borderRadius: 2,

@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import SiteFooter from "../components/layout/SiteFooter";
@@ -137,56 +137,95 @@ export default function IndexListPage() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Initialize filter and search state from URL query parameters
-  const urlProvider = searchParams.get("provider");
-  const initialProvider: ProviderId | "others" | "all" =
-    urlProvider &&
-    (urlProvider in PROVIDERS_DATA ||
-      urlProvider === "all" ||
-      urlProvider === "others")
-      ? (urlProvider as ProviderId | "others")
+  // Helper to update URL search parameters cleanly and avoid feedback loops
+  const updateFilterParams = useCallback(
+    (updates: Record<string, string | null | undefined>) => {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          for (const [key, val] of Object.entries(updates)) {
+            if (
+              val === null ||
+              val === undefined ||
+              val === "" ||
+              (key === "provider" && val === "all") ||
+              (key === "style" && val === "all") ||
+              (key === "cat" && val === "themes") ||
+              (key === "view" && val === "card")
+            ) {
+              next.delete(key);
+            } else {
+              next.set(key, val);
+            }
+          }
+          if (next.toString() === prev.toString()) {
+            return prev;
+          }
+          return next;
+        },
+        { replace: true }
+      );
+    },
+    [setSearchParams]
+  );
+
+  // Directly derive all filter states from searchParams (single source of truth)
+  const selectedProvider = useMemo<ProviderId | "others" | "all">(() => {
+    const p = searchParams.get("provider");
+    return p && (p in PROVIDERS_DATA || p === "all" || p === "others")
+      ? (p as ProviderId | "others")
       : "all";
+  }, [searchParams]);
 
-  const initialSearch = searchParams.get("q") || "";
-  const urlCategory = searchParams.get("cat");
-  const initialCategory:
-    | "all"
-    | "themes"
-    | "etf-providers"
-    | "market-exposure" =
-    urlCategory === "all" ||
-    urlCategory === "themes" ||
-    urlCategory === "etf-providers" ||
-    urlCategory === "market-exposure"
-      ? urlCategory
-      : "themes";
+  const selectedStyle = useMemo<StyleFilter>(() => {
+    const s = searchParams.get("style");
+    return s === "growth" || s === "value" || s === "factor" ? s : "all";
+  }, [searchParams]);
 
-  const urlView = searchParams.get("view");
-  const initialView = urlView === "table" ? "table" : "card";
+  const selectedTerms = useMemo<string[]>(() => {
+    const tParam = searchParams.get("terms") || "";
+    return tParam
+      ? tParam.split(",").map((t) => t.trim()).filter(Boolean)
+      : [];
+  }, [searchParams]);
 
-  const urlStyle = searchParams.get("style");
-  const initialStyle: StyleFilter =
-    urlStyle === "growth" || urlStyle === "value" || urlStyle === "factor"
-      ? urlStyle
-      : "all";
-
-  const urlTerms = searchParams.get("terms");
-  const initialTerms: string[] = urlTerms
-    ? urlTerms.split(",").map((t) => t.trim()).filter(Boolean)
-    : [];
-
-  const [selectedProvider, setSelectedProvider] = useState<
-    ProviderId | "others" | "all"
-  >(initialProvider);
-  const [selectedStyle, setSelectedStyle] = useState<StyleFilter>(initialStyle);
-  const [selectedTerms, setSelectedTerms] = useState<string[]>(initialTerms);
-  const [searchTerm, setSearchTerm] = useState(initialSearch);
-  const [visibleRows, setVisibleRows] = useState(3);
-  const [activeCategory, setActiveCategory] = useState<
+  const activeCategory = useMemo<
     "all" | "themes" | "etf-providers" | "market-exposure"
-  >(initialCategory);
-  const [viewMode, setViewMode] = useState<"card" | "table">(initialView);
+  >(() => {
+    const cat = searchParams.get("cat");
+    return cat === "all" ||
+      cat === "themes" ||
+      cat === "etf-providers" ||
+      cat === "market-exposure"
+      ? cat
+      : "themes";
+  }, [searchParams]);
+
+  const viewMode = useMemo<"card" | "table">(() => {
+    return searchParams.get("view") === "table" ? "table" : "card";
+  }, [searchParams]);
+
+  // Keep local search term for smooth keystroke input, synchronized with URL query parameter
+  const urlQuery = searchParams.get("q") || "";
+  const [searchTerm, setSearchTerm] = useState(urlQuery);
+  const [visibleRows, setVisibleRows] = useState(3);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Synchronize local search input when URL changes externally (e.g. clicking Home, Market Indices logo, Back/Forward)
+  useEffect(() => {
+    setSearchTerm(urlQuery);
+  }, [urlQuery]);
+
+  // Debounce syncing local search input to URL query parameters
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const trimmed = searchTerm.trim();
+      if (trimmed !== (searchParams.get("q") || "")) {
+        updateFilterParams({ q: trimmed || null });
+      }
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [searchTerm, searchParams, updateFilterParams]);
 
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up("xl"));
@@ -197,124 +236,6 @@ export default function IndexListPage() {
   useEffect(() => {
     setVisibleRows(3);
   }, [searchTerm, selectedTerms, selectedProvider, selectedStyle]);
-
-  // Guard against infinite feedback loops between external navigation and internal filter updates
-  const lastSearchStrRef = useRef(searchParams.toString());
-  const isSyncingFromUrlRef = useRef(false);
-
-  // 1. Synchronize external URL changes (e.g. clicking Market Indices logo, Home tab, or browser Back/Forward)
-  useEffect(() => {
-    const currentParamStr = searchParams.toString();
-    if (currentParamStr === lastSearchStrRef.current) {
-      return;
-    }
-    lastSearchStrRef.current = currentParamStr;
-
-    const p = searchParams.get("provider");
-    const validP: ProviderId | "others" | "all" =
-      p && (p in PROVIDERS_DATA || p === "all" || p === "others")
-        ? (p as ProviderId | "others")
-        : "all";
-
-    const s = searchParams.get("style");
-    const validS: StyleFilter =
-      s === "growth" || s === "value" || s === "factor" ? s : "all";
-
-    const tParam = searchParams.get("terms") || "";
-    const parsedTerms = tParam
-      ? tParam.split(",").map((t) => t.trim()).filter(Boolean)
-      : [];
-
-    const q = searchParams.get("q") || "";
-
-    const cat = searchParams.get("cat");
-    const validCat =
-      cat === "all" ||
-      cat === "themes" ||
-      cat === "etf-providers" ||
-      cat === "market-exposure"
-        ? cat
-        : "themes";
-
-    const view = searchParams.get("view");
-    const validView = view === "table" ? "table" : "card";
-
-    const hasChanged =
-      validP !== selectedProvider ||
-      validS !== selectedStyle ||
-      JSON.stringify(parsedTerms) !== JSON.stringify(selectedTerms) ||
-      q !== searchTerm ||
-      validCat !== activeCategory ||
-      validView !== viewMode;
-
-    if (hasChanged) {
-      isSyncingFromUrlRef.current = true;
-      if (validP !== selectedProvider) setSelectedProvider(validP);
-      if (validS !== selectedStyle) setSelectedStyle(validS);
-      if (JSON.stringify(parsedTerms) !== JSON.stringify(selectedTerms)) setSelectedTerms(parsedTerms);
-      if (q !== searchTerm) setSearchTerm(q);
-      if (validCat !== activeCategory) setActiveCategory(validCat);
-      if (validView !== viewMode) setViewMode(validView);
-    }
-  }, [
-    searchParams,
-    selectedProvider,
-    selectedStyle,
-    selectedTerms,
-    searchTerm,
-    activeCategory,
-    viewMode,
-  ]);
-
-  // 2. Synchronize internal filter state changes to URL query parameters
-  useEffect(() => {
-    if (isSyncingFromUrlRef.current) {
-      isSyncingFromUrlRef.current = false;
-      return;
-    }
-
-    const params = new URLSearchParams();
-
-    if (selectedProvider !== "all") {
-      params.set("provider", selectedProvider);
-    }
-
-    if (selectedStyle !== "all") {
-      params.set("style", selectedStyle);
-    }
-
-    if (selectedTerms.length > 0) {
-      params.set("terms", selectedTerms.join(","));
-    }
-
-    if (searchTerm.trim()) {
-      params.set("q", searchTerm.trim());
-    }
-
-    if (activeCategory !== "themes") {
-      params.set("cat", activeCategory);
-    }
-
-    if (viewMode !== "card") {
-      params.set("view", viewMode);
-    }
-
-    const currentStr = searchParams.toString();
-    const newStr = params.toString();
-    if (currentStr !== newStr) {
-      lastSearchStrRef.current = newStr;
-      setSearchParams(params, { replace: true });
-    }
-  }, [
-    selectedProvider,
-    selectedStyle,
-    selectedTerms,
-    searchTerm,
-    activeCategory,
-    viewMode,
-    searchParams,
-    setSearchParams,
-  ]);
 
   // Calculate index counts per provider (accounting for selectedStyle)
   const indexCounts = useMemo(() => {
@@ -459,25 +380,29 @@ export default function IndexListPage() {
   // Handle clicking on suggested search terms, integrating StyleFilter for Growth, Value, Factor
   const handleTermClick = (term: string) => {
     const lower = term.toLowerCase();
+    let nextStyle: StyleFilter = selectedStyle;
+    let nextTerms = [...selectedTerms];
+    let nextProvider = selectedProvider;
+    let nextSearch = searchTerm;
+
     if (lower === "growth") {
-      setSelectedStyle((prev) => (prev === "growth" ? "all" : "growth"));
+      nextStyle = selectedStyle === "growth" ? "all" : "growth";
     } else if (lower === "value") {
-      setSelectedStyle((prev) => (prev === "value" ? "all" : "value"));
+      nextStyle = selectedStyle === "value" ? "all" : "value";
     } else if (lower === "factor") {
-      setSelectedStyle((prev) => (prev === "factor" ? "all" : "factor"));
+      nextStyle = selectedStyle === "factor" ? "all" : "factor";
     } else {
-      setSelectedTerms((prev) => {
-        const exists = prev.some((t) => t.toLowerCase() === lower);
-        if (exists) {
-          return prev.filter((t) => t.toLowerCase() !== lower);
-        } else {
-          return [...prev, term];
-        }
-      });
+      const exists = selectedTerms.some((t) => t.toLowerCase() === lower);
+      if (exists) {
+        nextTerms = selectedTerms.filter((t) => t.toLowerCase() !== lower);
+      } else {
+        nextTerms = [...selectedTerms, term];
+      }
     }
 
     // If user had typed this exact word in the search input, clean it so it doesn't duplicate
     if (searchTerm.trim().toLowerCase() === lower) {
+      nextSearch = "";
       setSearchTerm("");
     }
 
@@ -494,21 +419,34 @@ export default function IndexListPage() {
           return matchesProv && matchesPresetTerm(idx, term);
         });
         if (!matchesInCurrentProvider) {
-          setSelectedProvider("all");
+          nextProvider = "all";
         }
       }
     }
+
+    updateFilterParams({
+      style: nextStyle,
+      terms: nextTerms.length > 0 ? nextTerms.join(",") : null,
+      provider: nextProvider,
+      q: nextSearch.trim() || null,
+    });
   };
 
   const handleRemoveTerm = (termToRemove: string) => {
     const lower = termToRemove.toLowerCase();
-    setSelectedTerms((prev) => prev.filter((t) => t.toLowerCase() !== lower));
+    const nextTerms = selectedTerms.filter((t) => t.toLowerCase() !== lower);
+    updateFilterParams({
+      terms: nextTerms.length > 0 ? nextTerms.join(",") : null,
+    });
   };
 
   const handleClearAllSearchAndFilters = () => {
     setSearchTerm("");
-    setSelectedTerms([]);
-    setSelectedStyle("all");
+    updateFilterParams({
+      q: null,
+      terms: null,
+      style: null,
+    });
   };
 
   const isTermActive = (term: string) => {
@@ -561,14 +499,14 @@ export default function IndexListPage() {
           {/* Quick Preset Provider Selection Chips (Default All) */}
           <ProviderPresetBar
             selectedProvider={selectedProvider}
-            onSelectProvider={(p) => setSelectedProvider(p)}
+            onSelectProvider={(p) => updateFilterParams({ provider: p })}
             indexCounts={indexCounts}
           />
 
           {/* Quick Filter: Value and Growth Indices */}
           <StyleQuickFilter
             selectedStyle={selectedStyle}
-            onSelectStyle={(s) => setSelectedStyle(s)}
+            onSelectStyle={(s) => updateFilterParams({ style: s })}
             styleCounts={styleCounts}
           />
 
@@ -623,7 +561,7 @@ export default function IndexListPage() {
                   }
                   onDelete={(e) => {
                     e.stopPropagation();
-                    setSelectedStyle("all");
+                    updateFilterParams({ style: "all" });
                   }}
                   sx={{
                     fontWeight: 700,
@@ -724,7 +662,7 @@ export default function IndexListPage() {
                     if (selectedTerms.length > 0) {
                       handleRemoveTerm(selectedTerms[selectedTerms.length - 1]);
                     } else if (selectedStyle !== "all") {
-                      setSelectedStyle("all");
+                      updateFilterParams({ style: "all" });
                     }
                   }
                 }}
@@ -796,7 +734,7 @@ export default function IndexListPage() {
                       key={cat.id}
                       size="small"
                       variant={isCatActive ? "contained" : "outlined"}
-                      onClick={() => setActiveCategory(cat.id)}
+                      onClick={() => updateFilterParams({ cat: cat.id })}
                       sx={{
                         borderRadius: 2,
                         fontSize: "0.72rem",
@@ -819,7 +757,7 @@ export default function IndexListPage() {
                 <Button
                   size="small"
                   variant={activeCategory === "all" ? "contained" : "outlined"}
-                  onClick={() => setActiveCategory("all")}
+                  onClick={() => updateFilterParams({ cat: "all" })}
                   sx={{
                     borderRadius: 2,
                     fontSize: "0.72rem",
@@ -850,7 +788,7 @@ export default function IndexListPage() {
                       <Chip
                         label={`${cat.icon} ${cat.label}`}
                         size="small"
-                        onClick={() => setActiveCategory(cat.id)}
+                        onClick={() => updateFilterParams({ cat: cat.id })}
                         sx={{
                           fontWeight: 700,
                           fontSize: "0.68rem",
@@ -1004,7 +942,7 @@ export default function IndexListPage() {
                 size="small"
                 variant="contained"
                 startIcon={<LanguageIcon sx={{ fontSize: 15 }} />}
-                onClick={() => setSelectedProvider("all")}
+                onClick={() => updateFilterParams({ provider: "all" })}
                 sx={{
                   borderRadius: 2,
                   fontWeight: 700,
@@ -1063,10 +1001,13 @@ export default function IndexListPage() {
                 size="small"
                 startIcon={<ReplayIcon fontSize="small" />}
                 onClick={() => {
-                  setSelectedProvider("all");
-                  setSelectedStyle("all");
-                  setSelectedTerms([]);
                   setSearchTerm("");
+                  updateFilterParams({
+                    provider: "all",
+                    style: "all",
+                    terms: null,
+                    q: null,
+                  });
                 }}
                 sx={{
                   fontSize: "0.75rem",
@@ -1082,7 +1023,7 @@ export default function IndexListPage() {
               value={viewMode}
               exclusive
               onChange={(_, newMode) => {
-                if (newMode) setViewMode(newMode);
+                if (newMode) updateFilterParams({ view: newMode });
               }}
               size="small"
               sx={{
@@ -1168,7 +1109,7 @@ export default function IndexListPage() {
                     <Button
                       variant="contained"
                       startIcon={<LanguageIcon />}
-                      onClick={() => setSelectedProvider("all")}
+                      onClick={() => updateFilterParams({ provider: "all" })}
                     >
                       Search All Providers ({allProviderMatches.length} matches)
                     </Button>
@@ -1177,9 +1118,13 @@ export default function IndexListPage() {
                   variant="outlined"
                   startIcon={<ReplayIcon />}
                   onClick={() => {
-                    setSelectedProvider("all");
-                    setSelectedStyle("all");
                     setSearchTerm("");
+                    updateFilterParams({
+                      provider: "all",
+                      style: "all",
+                      terms: null,
+                      q: null,
+                    });
                   }}
                 >
                   Reset Filters
