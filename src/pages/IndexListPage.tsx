@@ -527,43 +527,17 @@ export default function IndexListPage() {
       {/* Header Section */}
       <Box
         component="header"
-        sx={{ mb: 3.5, textAlign: "center", width: "100%" }}
+        sx={{ mb: 2.5, textAlign: "center", width: "100%" }}
       >
         <Stack spacing={2} alignItems="center" sx={{ width: "100%" }}>
           <Typography
-            variant="h3"
-            component="h1"
-            sx={{
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              fontSize: { xs: "2rem", sm: "2.75rem" },
-            }}
-          >
-            <Box component="span" sx={{ fontSize: "1.1em", lineHeight: 1 }}>
-              📊
-            </Box>
-            <Box
-              component="span"
-              sx={{
-                background:
-                  "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Indices
-            </Box>
-          </Typography>
-
-          <Typography
             variant="body1"
+            component="h1"
             sx={{
               color: "text.secondary",
               maxWidth: 720,
-              fontSize: { xs: "0.9rem", sm: "1rem" },
+              fontSize: { xs: "0.88rem", sm: "0.98rem" },
+              lineHeight: 1.5,
             }}
           >
             Explore the world&apos;s premier benchmark providers and their
