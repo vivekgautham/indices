@@ -52,6 +52,12 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/tracker</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 `;
 
 for (const index of INDICES_DATA) {
@@ -67,7 +73,7 @@ for (const index of INDICES_DATA) {
 sitemapXml += `</urlset>\n`;
 
 fs.writeFileSync(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf8");
-console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 1} URLs)`);
+console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 2} URLs)`);
 if (fs.existsSync(distDir)) {
   fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemapXml, "utf8");
   console.log(`✓ Generated dist/sitemap.xml`);
@@ -126,6 +132,70 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
   // Create dist/404.html
   fs.writeFileSync(path.join(distDir, "404.html"), enhancedHomepageHtml, "utf8");
   console.log("✓ Created dist/404.html");
+
+  // Create dist/tracker/index.html
+  const trackerDir = path.join(distDir, "tracker");
+  fs.mkdirSync(trackerDir, { recursive: true });
+  let trackerHtml = baseHtml
+    .replace(
+      /<title>.*?<\/title>/i,
+      `<title>FRED Benchmark Tracker | U.S. Equity &amp; Macroeconomic Indexes</title>`
+    )
+    .replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
+      `<meta name="description" content="Live &amp; historical tracker for major U.S. equity benchmarks (S&amp;P 500, Dow Jones, Nasdaq 100, VIX) and macroeconomic indexes (Treasury yields, yield curves, CPI inflation, unemployment, crude oil) from the St. Louis Federal Reserve (FRED)." />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${BASE_URL}/tracker" />`
+    );
+
+  const trackerPrerender = `
+      <main style="max-width: 1000px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+        <header style="margin-bottom: 28px;">
+          <h1 style="font-size: 30px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Federal Reserve Economic Data (FRED®) Benchmark Tracker</h1>
+          <p style="font-size: 17px; color: #475569;">
+            Live and historical tracking for major U.S. equity benchmarks and macroeconomic indexes powered by the Federal Reserve Bank of St. Louis (FRED).
+          </p>
+        </header>
+
+        <section style="margin-bottom: 28px;">
+          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a;">1. Major U.S. Equity Benchmarks</h2>
+          <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
+            <li><strong>S&amp;P 500 Index (SP500)</strong> – The premier barometer of large-cap US equities.</li>
+            <li><strong>Dow Jones Industrial Average (DJIA)</strong> – 30 blue-chip industry leaders.</li>
+            <li><strong>NASDAQ-100 Index (NASDAQ100)</strong> – Top 100 non-financial tech and innovation leaders.</li>
+            <li><strong>NASDAQ Composite Index (NASDAQCOM)</strong> – Comprehensive benchmark of 3,000+ Nasdaq equities.</li>
+            <li><strong>CBOE Volatility Index (VIXCLS)</strong> – The market's 30-day forward implied volatility fear gauge.</li>
+          </ul>
+        </section>
+
+        <section style="margin-bottom: 28px;">
+          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a;">2. Economic, Global &amp; Macro Indexes</h2>
+          <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
+            <li><strong>10-Year Treasury Constant Maturity Yield (DGS10)</strong> – Global risk-free benchmark rate.</li>
+            <li><strong>2-Year Treasury Constant Maturity Yield (DGS2)</strong> – Near-term Fed policy rate expectation barometer.</li>
+            <li><strong>10-Year minus 2-Year Treasury Yield Spread (T10Y2Y)</strong> – Premier yield curve recession indicator.</li>
+            <li><strong>Federal Funds Effective Rate (FEDFUNDS)</strong> – Central bank overnight policy rate anchor.</li>
+            <li><strong>Consumer Price Index (CPIAUCSL)</strong> – Headline inflation and purchasing power measure.</li>
+            <li><strong>Civilian Unemployment Rate (UNRATE)</strong> – Key labor market slack metric for Fed dual mandate.</li>
+            <li><strong>Trade-Weighted U.S. Dollar Index (DTWEXBGS)</strong> – Global greenback foreign exchange valuation.</li>
+            <li><strong>WTI Crude Oil Prices (DCOILWTICO)</strong> – Benchmark energy and transport commodity cost.</li>
+            <li><strong>30-Year Fixed Mortgage Rate (MORTGAGE30US)</strong> – US housing borrowing benchmark.</li>
+            <li><strong>High Yield Credit Spread (BAMLH0A0HYM2)</strong> – Corporate credit risk appetite indicator.</li>
+            <li><strong>Real Gross Domestic Product (GDPC1)</strong> – Comprehensive American economic production measure.</li>
+          </ul>
+        </section>
+
+        <p><a href="/" style="color: #4f46e5; text-decoration: none; font-weight: 700;">&larr; Back to Market Indices Explorer</a></p>
+      </main>`;
+
+  trackerHtml = trackerHtml.replace(
+    /<div id="root"><\/div>/i,
+    `<div id="root"></div>\n    <noscript>\n${trackerPrerender.trim()}\n    </noscript>`
+  );
+  fs.writeFileSync(path.join(trackerDir, "index.html"), trackerHtml, "utf8");
+  console.log("✓ Generated dist/tracker/index.html");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;
