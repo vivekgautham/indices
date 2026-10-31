@@ -1,9 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import KeyIcon from "@mui/icons-material/Key";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
-import TableViewIcon from "@mui/icons-material/TableView";
-import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import {
   Box,
   Button,
@@ -13,20 +10,10 @@ import {
   IconButton,
   Paper,
   Stack,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tabs,
-  ToggleButton,
-  ToggleButtonGroup,
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   getInitialFredDataset,
@@ -38,26 +25,17 @@ import SiteFooter from "../components/layout/SiteFooter";
 import ThemeSelector from "../components/layout/ThemeSelector";
 import ShareButton from "../components/ShareButton";
 import { FredApiKeyDialog } from "../components/tracker/FredApiKeyDialog";
-import { FredSeriesCard } from "../components/tracker/FredSeriesCard";
 import {
   formatSeriesValue,
   FredSeriesChart,
 } from "../components/tracker/FredSeriesChart";
-import { FredSparkline } from "../components/tracker/FredSparkline";
-import { FredCategory } from "../data/fredSeriesData";
 
 export default function BenchmarkTrackerPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: fredData, refetch, isFetching } = useFredData();
 
   const urlSeries = searchParams.get("series") || "SP500";
-  const urlCategory = (searchParams.get("cat") as FredCategory | "all") || "equity";
-
-  const [selectedCategory, setSelectedCategory] = useState<FredCategory | "all">(
-    urlCategory,
-  );
   const [selectedSeriesId, setSelectedSeriesId] = useState<string>(urlSeries);
-  const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(false);
 
@@ -68,7 +46,7 @@ export default function BenchmarkTrackerPage() {
   // Set document title
   useEffect(() => {
     document.title =
-      "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes | Market Indices Explorer";
+      "Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
   }, []);
 
   // Synchronize state with URL search parameters
@@ -80,31 +58,14 @@ export default function BenchmarkTrackerPage() {
       params.delete("series");
     }
 
-    if (selectedCategory !== "equity") {
-      params.set("cat", selectedCategory);
-    } else {
-      params.delete("cat");
-    }
-
     const currentStr = searchParams.toString();
     const newStr = params.toString();
     if (currentStr !== newStr) {
       setSearchParams(params, { replace: true });
     }
-  }, [selectedSeriesId, selectedCategory, searchParams, setSearchParams]);
+  }, [selectedSeriesId, searchParams, setSearchParams]);
 
   const dataset = fredData || getInitialFredDataset();
-
-  // Filter series list based on selected category tab
-  const displayedSeries = useMemo(() => {
-    if (selectedCategory === "equity") {
-      return dataset.equitySeries;
-    }
-    if (selectedCategory === "macro") {
-      return dataset.macroSeries;
-    }
-    return dataset.seriesList;
-  }, [dataset, selectedCategory]);
 
   // Active series for the featured top chart
   const activeSeries = useMemo(() => {
@@ -122,15 +83,6 @@ export default function BenchmarkTrackerPage() {
 
     return { sp, ndx, nasdaqCom, djia, rui, vix };
   }, [dataset]);
-
-  const handleTabChange = (_: React.SyntheticEvent, newValue: FredCategory | "all") => {
-    setSelectedCategory(newValue);
-    if (newValue === "macro" && activeSeries.category === "equity") {
-      setSelectedSeriesId("DGS10");
-    } else if (newValue === "equity" && activeSeries.category === "macro") {
-      setSelectedSeriesId("SP500");
-    }
-  };
 
   return (
     <Box
@@ -304,9 +256,11 @@ export default function BenchmarkTrackerPage() {
                 lineHeight: 1.6,
               }}
             >
-              Institutional barometer monitoring <strong>Major U.S. Equity Benchmarks</strong> and{" "}
-              <strong>Economic, Global &amp; Macro Indexes</strong> powered by official St. Louis
-              Fed (FRED) series. Real-time updates, historical yields, recessions, and inflation.
+              Real-time barometer tracking <strong>S&amp;P 500</strong>,{" "}
+              <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
+              <strong>Dow Jones</strong>, <strong>Russell 1000</strong>, and{" "}
+              <strong>CBOE VIX</strong>. Click any benchmark above to inspect its detailed
+              performance graph.
             </Typography>
           </Stack>
 
@@ -555,241 +509,8 @@ export default function BenchmarkTrackerPage() {
 
         {/* Featured Interactive Benchmark Chart */}
         <Box sx={{ mb: 4 }}>
-          <FredSeriesChart series={activeSeries} />
+          <FredSeriesChart series={activeSeries} initialRange="5D" />
         </Box>
-
-        {/* Category Filter Tabs & View Mode Switcher */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 3,
-            borderBottom: "1px solid var(--indices-border, rgba(255, 255, 255, 0.1))",
-            pb: 1,
-          }}
-        >
-          <Tabs
-            value={selectedCategory}
-            onChange={handleTabChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              "& .MuiTab-root": {
-                textTransform: "none",
-                fontWeight: 700,
-                fontSize: "0.95rem",
-                minHeight: 44,
-                px: 2,
-              },
-            }}
-          >
-            <Tab
-              value="equity"
-              label={
-                <Stack direction="row" spacing={0.75} alignItems="center">
-                  <span>📈</span>
-                  <span>Major U.S. Equity Benchmarks</span>
-                  <Chip
-                    label={dataset.equitySeries.length}
-                    size="small"
-                    sx={{ height: 20, fontSize: "0.7rem", fontWeight: 800 }}
-                  />
-                </Stack>
-              }
-            />
-            <Tab
-              value="macro"
-              label={
-                <Stack direction="row" spacing={0.75} alignItems="center">
-                  <span>🌐</span>
-                  <span>Economic, Global &amp; Macro Indexes</span>
-                  <Chip
-                    label={dataset.macroSeries.length}
-                    size="small"
-                    sx={{ height: 20, fontSize: "0.7rem", fontWeight: 800 }}
-                  />
-                </Stack>
-              }
-            />
-            <Tab
-              value="all"
-              label={
-                <Stack direction="row" spacing={0.75} alignItems="center">
-                  <span>📊</span>
-                  <span>All Series</span>
-                  <Chip
-                    label={dataset.seriesList.length}
-                    size="small"
-                    sx={{ height: 20, fontSize: "0.7rem", fontWeight: 800 }}
-                  />
-                </Stack>
-              }
-            />
-          </Tabs>
-
-          <ToggleButtonGroup
-            value={viewMode}
-            exclusive
-            onChange={(_, next) => next && setViewMode(next)}
-            size="small"
-            sx={{
-              backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
-              borderRadius: 2,
-            }}
-          >
-            <ToggleButton value="cards" aria-label="cards view">
-              <ViewModuleIcon sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography variant="caption" sx={{ fontWeight: 700 }}>
-                Cards
-              </Typography>
-            </ToggleButton>
-            <ToggleButton value="table" aria-label="table view">
-              <TableViewIcon sx={{ fontSize: 18, mr: 0.5 }} />
-              <Typography variant="caption" sx={{ fontWeight: 700 }}>
-                Table
-              </Typography>
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
-
-        {/* Content: Cards Grid vs Table View */}
-        {viewMode === "cards" ? (
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
-                lg: "repeat(4, 1fr)",
-              },
-              gap: 2,
-            }}
-          >
-            {displayedSeries.map((s) => (
-              <Box key={s.id} sx={{ minWidth: 0 }}>
-                <FredSeriesCard
-                  series={s}
-                  isSelected={s.id === selectedSeriesId}
-                  onSelect={(item) => setSelectedSeriesId(item.id)}
-                />
-              </Box>
-            ))}
-          </Box>
-        ) : (
-          /* Tabular View */
-          <TableContainer
-            component={Paper}
-            variant="outlined"
-            sx={{
-              borderRadius: 3,
-              borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
-              backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.5))",
-            }}
-          >
-            <Table size="small">
-              <TableHead>
-                <TableRow sx={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}>
-                  <TableCell sx={{ fontWeight: 800 }}>Benchmark Series</TableCell>
-                  <TableCell sx={{ fontWeight: 800 }}>Category</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 800 }}>
-                    Latest Value
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 800 }}>
-                    Change
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 800 }}>
-                    1Y Sparkline
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 800 }}>
-                    52W Range
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 800 }}>
-                    Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {displayedSeries.map((s) => {
-                  const isPos = s.change >= 0;
-                  return (
-                    <TableRow
-                      key={s.id}
-                      hover
-                      selected={s.id === selectedSeriesId}
-                      onClick={() => setSelectedSeriesId(s.id)}
-                      sx={{ cursor: "pointer" }}
-                    >
-                      <TableCell>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                          <Typography sx={{ fontSize: "1.1rem" }}>{s.icon}</Typography>
-                          <Box>
-                            <Typography sx={{ fontWeight: 700, fontSize: "0.9rem" }}>
-                              {s.name}
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              sx={{ color: "text.secondary", fontSize: "0.72rem" }}
-                            >
-                              FRED: {s.id} • {s.frequency}
-                            </Typography>
-                          </Box>
-                        </Stack>
-                      </TableCell>
-                      <TableCell>
-                        <Chip
-                          label={s.subcategory}
-                          size="small"
-                          sx={{ fontSize: "0.7rem", height: 22 }}
-                        />
-                      </TableCell>
-                      <TableCell align="right" sx={{ fontWeight: 800, fontSize: "0.95rem" }}>
-                        {formatSeriesValue(s.latestValue, s.format, s.decimals)}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            fontWeight: 700,
-                            color: isPos ? "#10b981" : "#ef4444",
-                          }}
-                        >
-                          {isPos ? "+" : ""}
-                          {formatSeriesValue(s.change, s.format, s.decimals)} ({isPos ? "+" : ""}
-                          {s.changePct.toFixed(2)}%)
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <FredSparkline data={s.observations} width={80} height={28} />
-                      </TableCell>
-                      <TableCell align="right" sx={{ fontSize: "0.8rem", color: "text.secondary" }}>
-                        {formatSeriesValue(s.low52, s.format, s.decimals)} –{" "}
-                        {formatSeriesValue(s.high52, s.format, s.decimals)}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Button
-                          size="small"
-                          variant={s.id === selectedSeriesId ? "contained" : "outlined"}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedSeriesId(s.id);
-                          }}
-                          startIcon={<ShowChartIcon sx={{ fontSize: 14 }} />}
-                          sx={{ fontSize: "0.72rem", py: 0.2, textTransform: "none" }}
-                        >
-                          Chart
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
       </Container>
 
       {/* API Key Modal Dialog */}

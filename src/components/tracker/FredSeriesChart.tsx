@@ -26,7 +26,7 @@ export interface FredSeriesChartProps {
   initialRange?: TimeRange;
 }
 
-const RANGES: TimeRange[] = ["1M", "3M", "6M", "YTD", "1Y", "5Y", "MAX"];
+const RANGES: TimeRange[] = ["5D", "1M", "3M", "6M", "YTD", "1Y", "5Y", "MAX"];
 
 export function formatSeriesValue(
   value: number,
@@ -52,7 +52,7 @@ export function formatSeriesValue(
 
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
-  initialRange = "1Y",
+  initialRange = "5D",
 }) => {
   const theme = useTheme();
   const [selectedRange, setSelectedRange] = useState<TimeRange>(initialRange);

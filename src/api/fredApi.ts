@@ -201,7 +201,7 @@ export function useFredSeries(seriesId: string) {
   return data?.series[seriesId];
 }
 
-export type TimeRange = "1M" | "3M" | "6M" | "YTD" | "1Y" | "5Y" | "MAX";
+export type TimeRange = "5D" | "1M" | "3M" | "6M" | "YTD" | "1Y" | "5Y" | "MAX";
 
 export interface RangeStats {
   points: [string, number][];
@@ -245,6 +245,10 @@ export function filterObservationsByRange(
   let cutoffDate: Date;
 
   switch (range) {
+    case "5D":
+      cutoffDate = new Date(latestDate);
+      cutoffDate.setDate(cutoffDate.getDate() - 7);
+      break;
     case "1M":
       cutoffDate = new Date(latestDate);
       cutoffDate.setMonth(cutoffDate.getMonth() - 1);
@@ -275,7 +279,10 @@ export function filterObservationsByRange(
   }
 
   const cutoffStr = cutoffDate.toISOString().split("T")[0];
-  let filtered = observations.filter((p) => p[0] >= cutoffStr);
+  let filtered =
+    range === "5D"
+      ? observations.slice(-5)
+      : observations.filter((p) => p[0] >= cutoffStr);
 
   if (filtered.length === 0) {
     filtered = observations.slice(-30);
