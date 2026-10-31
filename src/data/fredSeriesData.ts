@@ -243,24 +243,6 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#f97316",
     icon: "🛒",
   },
-  UNRATE: {
-    id: "UNRATE",
-    name: "Civilian Unemployment Rate",
-    shortName: "Unemployment Rate",
-    category: "macro",
-    subcategory: "Labor Market",
-    units: "% of Labor Force",
-    frequency: "Monthly",
-    source: "U.S. Bureau of Labor Statistics",
-    description:
-      "The percentage of the total civilian labor force that is unemployed and actively seeking work within the previous four weeks.",
-    marketSignificance:
-      "Half of the Federal Reserve's dual mandate (maximum employment and price stability). Rising unemployment triggers the Sahm Rule and forces rate cuts.",
-    format: "percent",
-    decimals: 1,
-    badgeColor: "#ec4899",
-    icon: "👷",
-  },
   DTWEXBGS: {
     id: "DTWEXBGS",
     name: "Trade-Weighted U.S. Dollar Index (Broad Goods & Services)",

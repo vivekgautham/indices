@@ -116,11 +116,11 @@ export default function BenchmarkTrackerPage() {
     const sp = dataset.series.SP500;
     const dgs10 = dataset.series.DGS10;
     const t10y2y = dataset.series.T10Y2Y;
+    const fedfunds = dataset.series.FEDFUNDS;
     const cpi = dataset.series.CPIAUCSL;
-    const unrate = dataset.series.UNRATE;
     const vix = dataset.series.VIXCLS;
 
-    return { sp, dgs10, t10y2y, cpi, unrate, vix };
+    return { sp, dgs10, t10y2y, fedfunds, cpi, vix };
   }, [dataset]);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: FredCategory | "all") => {
@@ -498,33 +498,33 @@ export default function BenchmarkTrackerPage() {
               </Paper>
             )}
 
-            {kpiSummary.unrate && (
+            {kpiSummary.fedfunds && (
               <Paper
                 variant="outlined"
-                onClick={() => setSelectedSeriesId("UNRATE")}
+                onClick={() => setSelectedSeriesId("FEDFUNDS")}
                 sx={{
                   p: 1.25,
                   borderRadius: 2,
                   cursor: "pointer",
                   backgroundColor:
-                    selectedSeriesId === "UNRATE"
+                    selectedSeriesId === "FEDFUNDS"
                       ? "rgba(99, 102, 241, 0.15)"
                       : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
                   borderColor:
-                    selectedSeriesId === "UNRATE"
+                    selectedSeriesId === "FEDFUNDS"
                       ? "primary.main"
                       : "var(--indices-border, rgba(255, 255, 255, 0.08))",
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
                 <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
-                  Unemployment
+                  Fed Funds Rate
                 </Typography>
                 <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
-                  {kpiSummary.unrate.latestValue.toFixed(1)}%
+                  {kpiSummary.fedfunds.latestValue.toFixed(2)}%
                 </Typography>
                 <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 600 }}>
-                  U3 Civilian Rate
+                  Policy Target
                 </Typography>
               </Paper>
             )}

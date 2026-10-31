@@ -24,7 +24,6 @@ const SERIES = [
   { id: "T10Y2Y", name: "10-Year minus 2-Year Treasury Yield Spread", category: "macro" },
   { id: "FEDFUNDS", name: "Federal Funds Effective Rate", category: "macro" },
   { id: "CPIAUCSL", name: "Consumer Price Index (CPI)", category: "macro" },
-  { id: "UNRATE", name: "Civilian Unemployment Rate", category: "macro" },
   { id: "DTWEXBGS", name: "Trade-Weighted U.S. Dollar Index", category: "macro" },
   { id: "DCOILWTICO", name: "Crude Oil (WTI)", category: "macro" },
   { id: "MORTGAGE30US", name: "30-Year Fixed Mortgage Rate", category: "macro" },
@@ -114,7 +113,7 @@ async function main() {
     }
   }
 
-  const seriesData = { ...existingData.series };
+  const seriesData = {};
   let successCount = 0;
 
   for (const item of SERIES) {
