@@ -237,7 +237,7 @@ export default function BenchmarkTrackerPage() {
               variant="outlined"
               size="small"
               label="Share Tracker"
-              tooltip="Share Benchmark Tracker dashboard"
+              tooltip="Share Benchmark Tracker"
               sx={{
                 borderRadius: 2,
                 px: 1.5,
@@ -293,7 +293,7 @@ export default function BenchmarkTrackerPage() {
                 lineHeight: 1.2,
               }}
             >
-              Benchmark Tracker Dashboard
+              Benchmark Tracker
             </Typography>
 
             <Typography
