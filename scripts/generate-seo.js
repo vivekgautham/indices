@@ -58,12 +58,6 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>${BASE_URL}/insights</loc>
-    <lastmod>${TODAY}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
 `;
 
 for (const index of INDICES_DATA) {
@@ -201,52 +195,6 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
   );
   fs.writeFileSync(path.join(trackerDir, "index.html"), trackerHtml, "utf8");
   console.log("✓ Generated dist/tracker/index.html");
-
-  // Create dist/insights/index.html
-  const insightsDir = path.join(distDir, "insights");
-  fs.mkdirSync(insightsDir, { recursive: true });
-  let insightsHtml = baseHtml
-    .replace(
-      /<title>.*?<\/title>/i,
-      `<title>Market Insights &amp; Index Methodologies | Market Indices Explorer</title>`
-    )
-    .replace(
-      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
-      `<meta name="description" content="Institutional research, factor dynamics (Growth vs. Value, Wide Moat), index construction mechanics, and macroeconomic indicators modeled after Morningstar index intelligence." />`
-    )
-    .replace(
-      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
-      `<link rel="canonical" href="${BASE_URL}/insights" />`
-    );
-
-  const insightsPrerender = `
-      <main style="max-width: 1000px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
-        <header style="margin-bottom: 28px;">
-          <h1 style="font-size: 30px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Market Insights &amp; Index Methodologies</h1>
-          <p style="font-size: 17px; color: #475569;">
-            Institutional research, factor dynamics, index construction mechanics, and macroeconomic indicators modeled after Morningstar index intelligence.
-          </p>
-        </header>
-
-        <section style="margin-bottom: 28px;">
-          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a;">Key Research Topics</h2>
-          <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
-            <li><strong>Market-Cap Weighting vs. Equal Weight</strong> – Navigating mega-cap tech concentration risks.</li>
-            <li><strong>The Wide Moat Advantage</strong> – Sustainable competitive edges and quality factor investing.</li>
-            <li><strong>Treasury Yield Curve Dynamics</strong> – De-inversion and what the 10Y-2Y spread signals for equities.</li>
-            <li><strong>Understanding CBOE VIX</strong> – Implied volatility regimes and options sentiment.</li>
-          </ul>
-        </section>
-
-        <p><a href="/" style="color: #4f46e5; text-decoration: none; font-weight: 700;">&larr; Back to Market Indices Explorer</a></p>
-      </main>`;
-
-  insightsHtml = insightsHtml.replace(
-    /<div id="root"><\/div>/i,
-    `<div id="root"></div>\n    <noscript>\n${insightsPrerender.trim()}\n    </noscript>`
-  );
-  fs.writeFileSync(path.join(insightsDir, "index.html"), insightsHtml, "utf8");
-  console.log("✓ Generated dist/insights/index.html");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;

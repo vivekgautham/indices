@@ -1,5 +1,4 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import InsightsOutlinedIcon from "@mui/icons-material/InsightsOutlined";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   AppBar,
@@ -44,14 +43,6 @@ export const NAV_ITEMS: NavItem[] = [
     badge: { label: "Live", color: "success" },
     isActive: (pathname) =>
       pathname.startsWith("/tracker") || pathname.startsWith("/benchmark-tracker"),
-  },
-  {
-    id: "insights",
-    label: "Insights",
-    to: "/insights",
-    icon: <InsightsOutlinedIcon sx={{ fontSize: 18 }} />,
-    badge: { label: "Research", color: "primary" },
-    isActive: (pathname) => pathname.startsWith("/insights"),
   },
 ];
 

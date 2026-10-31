@@ -10,10 +10,6 @@ const BenchmarkTrackerPage = lazy(
   () => import("./pages/BenchmarkTrackerPage"),
 );
 
-const InsightsPage = lazy(
-  () => import("./pages/InsightsPage"),
-);
-
 function PageLoading() {
   return (
     <Box
@@ -42,7 +38,6 @@ export default function App() {
               path="/benchmark-tracker"
               element={<Navigate to="/tracker" replace />}
             />
-            <Route path="/insights" element={<InsightsPage />} />
             <Route path="/index/:indexId" element={<IndexDetailPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
