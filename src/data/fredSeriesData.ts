@@ -119,6 +119,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#0ea5e9",
     icon: "🌐",
   },
+  RUI: {
+    id: "RUI",
+    name: "Russell 1000 Index",
+    shortName: "Russell 1000",
+    category: "equity",
+    subcategory: "Large/Mid-Cap Equities",
+    units: "Index",
+    frequency: "Daily",
+    source: "FTSE Russell",
+    description:
+      "Represents approximately the top 1,000 largest publicly traded U.S. companies, covering approximately 93% of the investable U.S. equity universe.",
+    marketSignificance:
+      "The definitive institutional benchmark for broad U.S. large- and mid-cap equity performance, widely used by asset managers and institutional allocators.",
+    relatedIndexId: "russell-1000",
+    trackingEtfs: ["IWB", "VONE"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#2563eb",
+    icon: "🏛️",
+  },
   VIXCLS: {
     id: "VIXCLS",
     name: "Cboe Volatility Index (VIX)",

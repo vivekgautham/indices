@@ -111,16 +111,16 @@ export default function BenchmarkTrackerPage() {
     return dataset.series[selectedSeriesId] || dataset.series.SP500 || dataset.seriesList[0];
   }, [dataset, selectedSeriesId]);
 
-  // Key KPI summary metrics across macro & equities
+  // Key KPI summary metrics across major equity benchmarks
   const kpiSummary = useMemo(() => {
     const sp = dataset.series.SP500;
-    const dgs10 = dataset.series.DGS10;
-    const t10y2y = dataset.series.T10Y2Y;
-    const fedfunds = dataset.series.FEDFUNDS;
-    const dollar = dataset.series.DTWEXBGS;
+    const ndx = dataset.series.NASDAQ100;
+    const nasdaqCom = dataset.series.NASDAQCOM;
+    const djia = dataset.series.DJIA;
+    const rui = dataset.series.RUI;
     const vix = dataset.series.VIXCLS;
 
-    return { sp, dgs10, t10y2y, fedfunds, dollar, vix };
+    return { sp, ndx, nasdaqCom, djia, rui, vix };
   }, [dataset]);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: FredCategory | "all") => {
@@ -310,7 +310,7 @@ export default function BenchmarkTrackerPage() {
             </Typography>
           </Stack>
 
-          {/* Quick Macro KPI Bar */}
+          {/* Quick Benchmark Bar: Major U.S. Equity Benchmarks */}
           <Box
             sx={{
               display: "grid",
@@ -361,6 +361,158 @@ export default function BenchmarkTrackerPage() {
               </Paper>
             )}
 
+            {kpiSummary.ndx && (
+              <Paper
+                variant="outlined"
+                onClick={() => setSelectedSeriesId("NASDAQ100")}
+                sx={{
+                  p: 1.25,
+                  borderRadius: 2,
+                  cursor: "pointer",
+                  backgroundColor:
+                    selectedSeriesId === "NASDAQ100"
+                      ? "rgba(99, 102, 241, 0.15)"
+                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                  borderColor:
+                    selectedSeriesId === "NASDAQ100"
+                      ? "primary.main"
+                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                  "&:hover": { borderColor: "primary.light" },
+                }}
+              >
+                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                  NASDAQ 100
+                </Typography>
+                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                  {formatSeriesValue(kpiSummary.ndx.latestValue, "number", 2)}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: kpiSummary.ndx.change >= 0 ? "#10b981" : "#ef4444",
+                    fontWeight: 700,
+                  }}
+                >
+                  {kpiSummary.ndx.change >= 0 ? "+" : ""}
+                  {kpiSummary.ndx.changePct.toFixed(2)}%
+                </Typography>
+              </Paper>
+            )}
+
+            {kpiSummary.nasdaqCom && (
+              <Paper
+                variant="outlined"
+                onClick={() => setSelectedSeriesId("NASDAQCOM")}
+                sx={{
+                  p: 1.25,
+                  borderRadius: 2,
+                  cursor: "pointer",
+                  backgroundColor:
+                    selectedSeriesId === "NASDAQCOM"
+                      ? "rgba(99, 102, 241, 0.15)"
+                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                  borderColor:
+                    selectedSeriesId === "NASDAQCOM"
+                      ? "primary.main"
+                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                  "&:hover": { borderColor: "primary.light" },
+                }}
+              >
+                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                  Nasdaq Composite
+                </Typography>
+                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                  {formatSeriesValue(kpiSummary.nasdaqCom.latestValue, "number", 2)}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: kpiSummary.nasdaqCom.change >= 0 ? "#10b981" : "#ef4444",
+                    fontWeight: 700,
+                  }}
+                >
+                  {kpiSummary.nasdaqCom.change >= 0 ? "+" : ""}
+                  {kpiSummary.nasdaqCom.changePct.toFixed(2)}%
+                </Typography>
+              </Paper>
+            )}
+
+            {kpiSummary.djia && (
+              <Paper
+                variant="outlined"
+                onClick={() => setSelectedSeriesId("DJIA")}
+                sx={{
+                  p: 1.25,
+                  borderRadius: 2,
+                  cursor: "pointer",
+                  backgroundColor:
+                    selectedSeriesId === "DJIA"
+                      ? "rgba(99, 102, 241, 0.15)"
+                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                  borderColor:
+                    selectedSeriesId === "DJIA"
+                      ? "primary.main"
+                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                  "&:hover": { borderColor: "primary.light" },
+                }}
+              >
+                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                  Dow Jones
+                </Typography>
+                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                  {formatSeriesValue(kpiSummary.djia.latestValue, "number", 2)}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: kpiSummary.djia.change >= 0 ? "#10b981" : "#ef4444",
+                    fontWeight: 700,
+                  }}
+                >
+                  {kpiSummary.djia.change >= 0 ? "+" : ""}
+                  {kpiSummary.djia.changePct.toFixed(2)}%
+                </Typography>
+              </Paper>
+            )}
+
+            {kpiSummary.rui && (
+              <Paper
+                variant="outlined"
+                onClick={() => setSelectedSeriesId("RUI")}
+                sx={{
+                  p: 1.25,
+                  borderRadius: 2,
+                  cursor: "pointer",
+                  backgroundColor:
+                    selectedSeriesId === "RUI"
+                      ? "rgba(99, 102, 241, 0.15)"
+                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                  borderColor:
+                    selectedSeriesId === "RUI"
+                      ? "primary.main"
+                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                  "&:hover": { borderColor: "primary.light" },
+                }}
+              >
+                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
+                  Russell 1000
+                </Typography>
+                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
+                  {formatSeriesValue(kpiSummary.rui.latestValue, "number", 2)}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: kpiSummary.rui.change >= 0 ? "#10b981" : "#ef4444",
+                    fontWeight: 700,
+                  }}
+                >
+                  {kpiSummary.rui.change >= 0 ? "+" : ""}
+                  {kpiSummary.rui.changePct.toFixed(2)}%
+                </Typography>
+              </Paper>
+            )}
+
             {kpiSummary.vix && (
               <Paper
                 variant="outlined"
@@ -393,138 +545,8 @@ export default function BenchmarkTrackerPage() {
                     fontWeight: 700,
                   }}
                 >
-                  {kpiSummary.vix.latestValue > 20 ? "High Volatility" : "Calm / Steady"}
-                </Typography>
-              </Paper>
-            )}
-
-            {kpiSummary.dgs10 && (
-              <Paper
-                variant="outlined"
-                onClick={() => setSelectedSeriesId("DGS10")}
-                sx={{
-                  p: 1.25,
-                  borderRadius: 2,
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedSeriesId === "DGS10"
-                      ? "rgba(99, 102, 241, 0.15)"
-                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
-                  borderColor:
-                    selectedSeriesId === "DGS10"
-                      ? "primary.main"
-                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
-                  "&:hover": { borderColor: "primary.light" },
-                }}
-              >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
-                  10Y Treasury
-                </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
-                  {kpiSummary.dgs10.latestValue.toFixed(2)}%
-                </Typography>
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 600 }}>
-                  Risk-Free Anchor
-                </Typography>
-              </Paper>
-            )}
-
-            {kpiSummary.t10y2y && (
-              <Paper
-                variant="outlined"
-                onClick={() => setSelectedSeriesId("T10Y2Y")}
-                sx={{
-                  p: 1.25,
-                  borderRadius: 2,
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedSeriesId === "T10Y2Y"
-                      ? "rgba(99, 102, 241, 0.15)"
-                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
-                  borderColor:
-                    selectedSeriesId === "T10Y2Y"
-                      ? "primary.main"
-                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
-                  "&:hover": { borderColor: "primary.light" },
-                }}
-              >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
-                  Yield Curve (10Y-2Y)
-                </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
-                  {kpiSummary.t10y2y.latestValue >= 0 ? "+" : ""}
-                  {kpiSummary.t10y2y.latestValue.toFixed(2)}%
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: kpiSummary.t10y2y.latestValue < 0 ? "#ef4444" : "#10b981",
-                    fontWeight: 700,
-                  }}
-                >
-                  {kpiSummary.t10y2y.latestValue < 0 ? "Inverted Curve" : "Normal Curve"}
-                </Typography>
-              </Paper>
-            )}
-
-            {kpiSummary.dollar && (
-              <Paper
-                variant="outlined"
-                onClick={() => setSelectedSeriesId("DTWEXBGS")}
-                sx={{
-                  p: 1.25,
-                  borderRadius: 2,
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedSeriesId === "DTWEXBGS"
-                      ? "rgba(99, 102, 241, 0.15)"
-                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
-                  borderColor:
-                    selectedSeriesId === "DTWEXBGS"
-                      ? "primary.main"
-                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
-                  "&:hover": { borderColor: "primary.light" },
-                }}
-              >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
-                  U.S. Dollar
-                </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
-                  {kpiSummary.dollar.latestValue.toFixed(2)}
-                </Typography>
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 600 }}>
-                  Trade-Weighted
-                </Typography>
-              </Paper>
-            )}
-
-            {kpiSummary.fedfunds && (
-              <Paper
-                variant="outlined"
-                onClick={() => setSelectedSeriesId("FEDFUNDS")}
-                sx={{
-                  p: 1.25,
-                  borderRadius: 2,
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedSeriesId === "FEDFUNDS"
-                      ? "rgba(99, 102, 241, 0.15)"
-                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
-                  borderColor:
-                    selectedSeriesId === "FEDFUNDS"
-                      ? "primary.main"
-                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
-                  "&:hover": { borderColor: "primary.light" },
-                }}
-              >
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 700 }}>
-                  Fed Funds Rate
-                </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "1.05rem" }}>
-                  {kpiSummary.fedfunds.latestValue.toFixed(2)}%
-                </Typography>
-                <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 600 }}>
-                  Policy Target
+                  {kpiSummary.vix.change >= 0 ? "+" : ""}
+                  {kpiSummary.vix.change.toFixed(2)} pts
                 </Typography>
               </Paper>
             )}

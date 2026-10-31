@@ -166,6 +166,7 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
             <li><strong>Dow Jones Industrial Average (DJIA)</strong> – 30 blue-chip industry leaders.</li>
             <li><strong>NASDAQ-100 Index (NASDAQ100)</strong> – Top 100 non-financial tech and innovation leaders.</li>
             <li><strong>NASDAQ Composite Index (NASDAQCOM)</strong> – Comprehensive benchmark of 3,000+ Nasdaq equities.</li>
+            <li><strong>Russell 1000 Index (RUI)</strong> – Institutional broad large-to-mid cap benchmark.</li>
             <li><strong>CBOE Volatility Index (VIXCLS)</strong> – The market's 30-day forward implied volatility fear gauge.</li>
           </ul>
         </section>
