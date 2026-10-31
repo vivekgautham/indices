@@ -50,6 +50,27 @@ export function formatSeriesValue(
   });
 }
 
+function formatAxisValue(
+  value: number,
+  format: "currency" | "percent" | "number" | "index",
+  decimals: number = 2,
+): string {
+  if (value === undefined || value === null || isNaN(value)) return "";
+  if (format === "percent") {
+    return `${value.toFixed(2)}%`;
+  }
+  if (format === "currency") {
+    return `$${value.toLocaleString("en-US", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}`;
+  }
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+}
+
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
   initialRange = "5D",
@@ -86,7 +107,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   // SVG dimensions
   const svgWidth = 800;
   const svgHeight = 280;
-  const padding = { top: 20, right: 30, bottom: 30, left: 20 };
+  const padding = { top: 16, right: 85, bottom: 26, left: 15 };
   const chartW = svgWidth - padding.left - padding.right;
   const chartH = svgHeight - padding.top - padding.bottom;
 
@@ -158,15 +179,39 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   const hoverDiffPct =
     startValue !== 0 ? (hoverDiff / startValue) * 100 : changePct;
 
-  // Grid reference lines (3 horizontal lines)
+  // Grid reference lines on the right axis
   const gridLines = useMemo(() => {
-    const steps = [0.25, 0.5, 0.75];
+    const steps = [0.15, 0.4, 0.65, 0.9];
     return steps.map((pct) => {
       const val = min + valRange * pct;
       const y = padding.top + chartH - pct * chartH;
       return { val, y };
     });
   }, [min, valRange, padding.top, chartH]);
+
+  // Date ticks along the bottom axis
+  const dateTicks = useMemo(() => {
+    if (coords.length < 2) return [];
+    if (coords.length <= 7) {
+      return coords.map((c) => ({
+        x: c[0],
+        label: c[2].slice(5), // "MM-DD" e.g. "10-29"
+      }));
+    }
+    const count = 5;
+    const ticks = [];
+    for (let i = 0; i < count; i++) {
+      const idx = Math.min(
+        Math.floor((i / (count - 1)) * (coords.length - 1)),
+        coords.length - 1,
+      );
+      ticks.push({
+        x: coords[idx][0],
+        label: coords[idx][2].slice(2), // "YY-MM-DD"
+      });
+    }
+    return ticks;
+  }, [coords]);
 
   if (!series || !series.observations || series.observations.length === 0) {
     return (
@@ -372,7 +417,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               </filter>
             </defs>
 
-            {/* Grid Lines */}
+            {/* Horizontal Grid & Right-Axis Numbers */}
             {gridLines.map((line, idx) => (
               <g key={idx}>
                 <line
@@ -383,17 +428,53 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   stroke={theme.palette.divider}
                   strokeDasharray="4 4"
                   strokeWidth="1"
+                  opacity={0.65}
+                />
+                <line
+                  x1={svgWidth - padding.right}
+                  y1={line.y}
+                  x2={svgWidth - padding.right + 4}
+                  y2={line.y}
+                  stroke={theme.palette.divider}
+                  strokeWidth="1"
                 />
                 <text
-                  x={svgWidth - padding.right + 6}
-                  y={line.y + 4}
+                  x={svgWidth - padding.right + 8}
+                  y={line.y + 3.5}
                   fill={theme.palette.text.secondary}
                   fontSize="11"
-                  fontFamily="monospace"
+                  fontWeight="600"
+                  fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
                 >
-                  {formatSeriesValue(line.val, series.format, series.decimals === 0 ? 0 : 1)}
+                  {formatAxisValue(line.val, series.format, series.decimals)}
                 </text>
               </g>
+            ))}
+
+            {/* Vertical Right-Axis Border */}
+            <line
+              x1={svgWidth - padding.right}
+              y1={padding.top}
+              x2={svgWidth - padding.right}
+              y2={padding.top + chartH}
+              stroke={theme.palette.divider}
+              strokeWidth="1"
+            />
+
+            {/* Bottom Date Axis Ticks */}
+            {dateTicks.map((tick, idx) => (
+              <text
+                key={idx}
+                x={tick.x}
+                y={svgHeight - 8}
+                textAnchor="middle"
+                fill={theme.palette.text.secondary}
+                fontSize="10"
+                fontWeight="500"
+                fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+              >
+                {tick.label}
+              </text>
             ))}
 
             {/* Filled Gradient Area */}
@@ -410,9 +491,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               filter={`url(#glow-${chartGradId})`}
             />
 
-            {/* Hover Crosshair & Interactive Marker */}
+            {/* Hover Crosshairs & Real-time Right-Axis Value Badge */}
             {activePoint && isHovering && (
               <g>
+                {/* Vertical Crosshair */}
                 <line
                   x1={activePoint[0]}
                   y1={padding.top}
@@ -423,6 +505,20 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   strokeWidth="1.2"
                   opacity={0.65}
                 />
+
+                {/* Horizontal Crosshair to Right Axis */}
+                <line
+                  x1={padding.left}
+                  y1={activePoint[1]}
+                  x2={svgWidth - padding.right}
+                  y2={activePoint[1]}
+                  stroke={theme.palette.text.primary}
+                  strokeDasharray="3 3"
+                  strokeWidth="1"
+                  opacity={0.5}
+                />
+
+                {/* Marker Circles on Data Point */}
                 <circle
                   cx={activePoint[0]}
                   cy={activePoint[1]}
@@ -437,6 +533,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   stroke={strokeColor}
                   strokeWidth="2.5"
                 />
+
+                {/* Right-Axis Dynamic Value Pill Badge */}
+                <rect
+                  x={svgWidth - padding.right + 2}
+                  y={Math.max(padding.top, Math.min(padding.top + chartH - 18, activePoint[1] - 9))}
+                  width={padding.right - 4}
+                  height="18"
+                  rx="3.5"
+                  fill={strokeColor}
+                />
+                <text
+                  x={svgWidth - padding.right + 7}
+                  y={Math.max(padding.top + 13, Math.min(padding.top + chartH - 5, activePoint[1] + 3.5))}
+                  fill="#ffffff"
+                  fontSize="10.5"
+                  fontWeight="700"
+                  fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+                >
+                  {formatAxisValue(activePoint[3], series.format, series.decimals)}
+                </text>
               </g>
             )}
           </svg>
