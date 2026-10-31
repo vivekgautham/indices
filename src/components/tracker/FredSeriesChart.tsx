@@ -53,22 +53,15 @@ export function formatSeriesValue(
 function formatAxisValue(
   value: number,
   format: "currency" | "percent" | "number" | "index",
-  decimals: number = 2,
 ): string {
   if (value === undefined || value === null || isNaN(value)) return "";
   if (format === "percent") {
-    return `${value.toFixed(2)}%`;
+    return `${value.toFixed(1)}%`;
   }
-  if (format === "currency") {
-    return `$${value.toLocaleString("en-US", {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    })}`;
+  if (value >= 1000) {
+    return Math.round(value).toLocaleString("en-US");
   }
-  return value.toLocaleString("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
+  return value.toFixed(1);
 }
 
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
@@ -107,7 +100,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   // SVG dimensions
   const svgWidth = 800;
   const svgHeight = 280;
-  const padding = { top: 16, right: 85, bottom: 26, left: 15 };
+  const padding = { top: 14, right: 52, bottom: 22, left: 12 };
   const chartW = svgWidth - padding.left - padding.right;
   const chartH = svgHeight - padding.top - padding.bottom;
 
@@ -335,7 +328,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           <Typography
             sx={{
               fontWeight: 800,
-              fontSize: { xs: "1.6rem", sm: "2rem" },
+              fontSize: { xs: "1.35rem", sm: "1.65rem" },
               letterSpacing: "-0.03em",
               lineHeight: 1,
               fontVariantNumeric: "tabular-nums",
@@ -389,7 +382,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           sx={{
             position: "relative",
             width: "100%",
-            height: { xs: 220, sm: 280 },
+            height: { xs: 190, sm: 240 },
             cursor: "crosshair",
             userSelect: "none",
           }}
@@ -426,27 +419,27 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   x2={svgWidth - padding.right}
                   y2={line.y}
                   stroke={theme.palette.divider}
-                  strokeDasharray="4 4"
-                  strokeWidth="1"
-                  opacity={0.65}
+                  strokeDasharray="3 3"
+                  strokeWidth="0.8"
+                  opacity={0.5}
                 />
                 <line
                   x1={svgWidth - padding.right}
                   y1={line.y}
-                  x2={svgWidth - padding.right + 4}
+                  x2={svgWidth - padding.right + 3}
                   y2={line.y}
                   stroke={theme.palette.divider}
-                  strokeWidth="1"
+                  strokeWidth="0.8"
                 />
                 <text
-                  x={svgWidth - padding.right + 8}
-                  y={line.y + 3.5}
+                  x={svgWidth - padding.right + 6}
+                  y={line.y + 3}
                   fill={theme.palette.text.secondary}
-                  fontSize="11"
-                  fontWeight="600"
+                  fontSize="8.5"
+                  fontWeight="500"
                   fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
                 >
-                  {formatAxisValue(line.val, series.format, series.decimals)}
+                  {formatAxisValue(line.val, series.format)}
                 </text>
               </g>
             ))}
@@ -458,7 +451,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               x2={svgWidth - padding.right}
               y2={padding.top + chartH}
               stroke={theme.palette.divider}
-              strokeWidth="1"
+              strokeWidth="0.8"
             />
 
             {/* Bottom Date Axis Ticks */}
@@ -466,11 +459,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               <text
                 key={idx}
                 x={tick.x}
-                y={svgHeight - 8}
+                y={svgHeight - 7}
                 textAnchor="middle"
                 fill={theme.palette.text.secondary}
-                fontSize="10"
-                fontWeight="500"
+                fontSize="8.5"
+                fontWeight="400"
                 fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
               >
                 {tick.label}
@@ -485,7 +478,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               d={pathD}
               fill="none"
               stroke={strokeColor}
-              strokeWidth="2.4"
+              strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
               filter={`url(#glow-${chartGradId})`}
@@ -522,36 +515,36 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 <circle
                   cx={activePoint[0]}
                   cy={activePoint[1]}
-                  r="7"
+                  r="6.5"
                   fill={glowColor}
                 />
                 <circle
                   cx={activePoint[0]}
                   cy={activePoint[1]}
-                  r="4.5"
+                  r="4"
                   fill="#ffffff"
                   stroke={strokeColor}
-                  strokeWidth="2.5"
+                  strokeWidth="2"
                 />
 
                 {/* Right-Axis Dynamic Value Pill Badge */}
                 <rect
                   x={svgWidth - padding.right + 2}
-                  y={Math.max(padding.top, Math.min(padding.top + chartH - 18, activePoint[1] - 9))}
+                  y={Math.max(padding.top, Math.min(padding.top + chartH - 14, activePoint[1] - 7))}
                   width={padding.right - 4}
-                  height="18"
-                  rx="3.5"
+                  height="14"
+                  rx="2.5"
                   fill={strokeColor}
                 />
                 <text
-                  x={svgWidth - padding.right + 7}
-                  y={Math.max(padding.top + 13, Math.min(padding.top + chartH - 5, activePoint[1] + 3.5))}
+                  x={svgWidth - padding.right + 5}
+                  y={Math.max(padding.top + 10, Math.min(padding.top + chartH - 4, activePoint[1] + 3))}
                   fill="#ffffff"
-                  fontSize="10.5"
+                  fontSize="8.5"
                   fontWeight="700"
                   fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
                 >
-                  {formatAxisValue(activePoint[3], series.format, series.decimals)}
+                  {formatAxisValue(activePoint[3], series.format)}
                 </text>
               </g>
             )}
