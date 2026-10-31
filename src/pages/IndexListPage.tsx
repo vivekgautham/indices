@@ -32,7 +32,6 @@ import { IndexTableView } from "../components/IndexTableView";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import { StyleQuickFilter } from "../components/StyleQuickFilter";
-import ShareButton from "../components/ShareButton";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { ProviderId } from "../types";
 import {
@@ -525,52 +524,6 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Page Actions: Share View */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          mb: { xs: 1, sm: 1.5 },
-        }}
-      >
-        <ShareButton
-          item={{
-            title: activeProviderObj
-              ? `${activeProviderObj.name} Benchmark Indices | Market Indices Explorer`
-              : selectedProvider === "others"
-                ? "Other Benchmark Providers (Bloomberg, Nasdaq, MarketVector) | Market Indices Explorer"
-                : searchTerm.trim()
-                  ? `Indices matching "${searchTerm.trim()}" | Market Indices Explorer`
-                  : "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers",
-            text: activeProviderObj
-              ? `Explore ${activeProviderObj.name} market benchmark indices, tracking ETFs, and methodologies.`
-              : selectedProvider === "others"
-                ? "Explore Bloomberg, Nasdaq, and MarketVector market benchmark indices, tracking ETFs, and methodologies."
-                : searchTerm.trim()
-                  ? `Search results for "${searchTerm.trim()}" across global market benchmarks.`
-                  : "Explore and compare global market benchmark indices, tracking ETFs, and constituent methodologies.",
-          }}
-          variant="outlined"
-          size="small"
-          label={
-            selectedProvider !== "all" ||
-            selectedStyle !== "all" ||
-            selectedTerms.length > 0 ||
-            searchTerm.trim()
-              ? "Share View"
-              : "Share Page"
-          }
-          tooltip="Share current page or filtered view"
-          color={activeProviderObj?.accentColor || (selectedProvider === "others" ? "#8b5cf6" : undefined)}
-          sx={{
-            borderRadius: 2,
-            px: 1.5,
-            py: 0.4,
-          }}
-        />
-      </Box>
-
       {/* Header Section */}
       <Box
         component="header"

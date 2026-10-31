@@ -11,8 +11,9 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import ShareButton from "../ShareButton";
 import ThemeSelector from "./ThemeSelector";
 
 export interface NavItem {
@@ -49,6 +50,32 @@ export const NAV_ITEMS: NavItem[] = [
 export const AppNavbar: React.FC = () => {
   const theme = useTheme();
   const location = useLocation();
+
+  const shareItem = useMemo(() => {
+    const fullPath = `${location.pathname}${location.search}`;
+    if (
+      location.pathname.startsWith("/tracker") ||
+      location.pathname.startsWith("/benchmark-tracker")
+    ) {
+      return {
+        title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
+        text: "Explore live and historical charts for major US equity benchmarks from FRED.",
+        path: fullPath,
+      };
+    }
+    if (location.pathname.startsWith("/index/")) {
+      return {
+        title: document.title || "Market Benchmark Index Profile | Market Indices",
+        text: "Explore market benchmark index details, tracking ETFs, and methodologies.",
+        path: fullPath,
+      };
+    }
+    return {
+      title: "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers",
+      text: "Explore and compare global market benchmark indices, tracking ETFs, and constituent methodologies.",
+      path: fullPath,
+    };
+  }, [location.pathname, location.search]);
 
   return (
     <AppBar
@@ -230,12 +257,34 @@ export const AppNavbar: React.FC = () => {
             })}
           </Stack>
 
-          {/* Right: Theme Selector */}
+          {/* Right: Share View Button & Theme Selector */}
           <Stack
             direction="row"
             alignItems="center"
-            spacing={{ xs: 0.5, sm: 1 }}
+            spacing={{ xs: 0.75, sm: 1.25 }}
           >
+            <ShareButton
+              item={shareItem}
+              label="Share View"
+              variant="outlined"
+              size="small"
+              tooltip="Share current page or filtered view"
+              sx={{
+                borderRadius: 2,
+                px: { xs: 1.2, sm: 1.5 },
+                py: 0.45,
+                fontWeight: 700,
+                fontSize: "0.78rem",
+                textTransform: "none",
+                borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                backgroundColor: "var(--indices-subtle-bg, rgba(30, 41, 59, 0.4))",
+                color: "text.primary",
+                "&:hover": {
+                  backgroundColor: "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
+                  borderColor: "primary.light",
+                },
+              }}
+            />
             <ThemeSelector />
           </Stack>
         </Toolbar>

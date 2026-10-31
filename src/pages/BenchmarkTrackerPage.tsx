@@ -20,7 +20,6 @@ import {
   useFredData,
 } from "../api/fredApi";
 import SiteFooter from "../components/layout/SiteFooter";
-import ShareButton from "../components/ShareButton";
 import { FredApiKeyDialog } from "../components/tracker/FredApiKeyDialog";
 import {
   formatSeriesValue,
@@ -150,23 +149,6 @@ export default function BenchmarkTrackerPage() {
               )}
             </IconButton>
           </Tooltip>
-
-          <ShareButton
-            item={{
-              title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
-              text: "Explore live and historical charts for major US equity benchmarks, Treasury yield curves, inflation, and macroeconomic indicators from FRED.",
-              path: "/tracker",
-            }}
-            variant="outlined"
-            size="small"
-            label="Share Tracker"
-            tooltip="Share Benchmark Tracker"
-            sx={{
-              borderRadius: 2,
-              px: 1.5,
-              py: 0.4,
-            }}
-          />
         </Box>
 
         {/* Hero Banner Header */}
