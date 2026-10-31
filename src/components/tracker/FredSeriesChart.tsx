@@ -97,22 +97,20 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     ? "rgba(16, 185, 129, 0.28)"
     : "rgba(239, 68, 68, 0.28)";
 
-  // SVG dimensions
-  const svgWidth = 800;
-  const svgHeight = 280;
-  const padding = { top: 14, right: 52, bottom: 22, left: 12 };
-  const chartW = svgWidth - padding.left - padding.right;
-  const chartH = svgHeight - padding.top - padding.bottom;
+  // Plot dimensions for SVG coordinates
+  const plotW = 800;
+  const plotH = 240;
+  const padding = { top: 12, right: 8, bottom: 10, left: 8 };
+  const chartW = plotW - padding.left - padding.right;
+  const chartH = plotH - padding.top - padding.bottom;
 
   // Coordinate mapping
   const valRange = max - min || 1;
   const coords = useMemo(() => {
     if (points.length < 2) return [];
     return points.map((p, idx) => {
-      const x =
-        padding.left + (idx / (points.length - 1)) * chartW;
-      const y =
-        padding.top + chartH - ((p[1] - min) / valRange) * chartH;
+      const x = padding.left + (idx / (points.length - 1)) * chartW;
+      const y = padding.top + chartH - ((p[1] - min) / valRange) * chartH;
       return [x, y, p[0], p[1]] as [number, number, string, number];
     });
   }, [points, chartW, chartH, padding.left, padding.top, min, valRange]);
@@ -128,16 +126,16 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
 
   const areaD = useMemo(() => {
     if (coords.length < 2) return "";
-    const bottomY = padding.top + chartH;
+    const bottomY = plotH;
     return `${pathD} L ${coords[coords.length - 1][0].toFixed(1)} ${bottomY} L ${coords[0][0].toFixed(1)} ${bottomY} Z`;
-  }, [pathD, coords, padding.top, chartH]);
+  }, [pathD, coords, plotH]);
 
   // Hover detection
-  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement | SVGSVGElement>) => {
     if (!svgRef.current || coords.length === 0) return;
     const rect = svgRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
-    const relativeX = (mouseX / rect.width) * svgWidth;
+    const relativeX = (mouseX / rect.width) * plotW;
 
     // Find nearest point
     let nearestIdx = 0;
@@ -377,178 +375,227 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </Stack>
         </Box>
 
-        {/* SVG Interactive Chart Canvas */}
+        {/* Interactive Chart Canvas with Clean HTML Axis Overlays */}
         <Box
           sx={{
             position: "relative",
             width: "100%",
-            height: { xs: 190, sm: 240 },
-            cursor: "crosshair",
+            height: { xs: 200, sm: 250 },
             userSelect: "none",
           }}
         >
-          <svg
-            ref={svgRef}
-            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            preserveAspectRatio="none"
-            style={{ width: "100%", height: "100%", display: "block" }}
+          {/* Plot Area Container */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 60,
+              bottom: 24,
+              cursor: "crosshair",
+              borderRight: "1px solid",
+              borderBottom: "1px solid",
+              borderColor: "divider",
+              overflow: "hidden",
+            }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
-            <defs>
-              <linearGradient id={chartGradId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={strokeColor} stopOpacity={0.4} />
-                <stop offset="70%" stopColor={strokeColor} stopOpacity={0.08} />
-                <stop offset="100%" stopColor={strokeColor} stopOpacity={0.0} />
-              </linearGradient>
-              <filter id={`glow-${chartGradId}`} x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+            <svg
+              ref={svgRef}
+              viewBox={`0 0 ${plotW} ${plotH}`}
+              preserveAspectRatio="none"
+              style={{ width: "100%", height: "100%", display: "block" }}
+            >
+              <defs>
+                <linearGradient id={chartGradId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={strokeColor} stopOpacity={0.4} />
+                  <stop offset="70%" stopColor={strokeColor} stopOpacity={0.08} />
+                  <stop offset="100%" stopColor={strokeColor} stopOpacity={0.0} />
+                </linearGradient>
+                <filter id={`glow-${chartGradId}`} x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-            {/* Horizontal Grid & Right-Axis Numbers */}
+              {/* Horizontal Grid Lines */}
+              {gridLines.map((line, idx) => (
+                <line
+                  key={idx}
+                  x1={0}
+                  y1={line.y}
+                  x2={plotW}
+                  y2={line.y}
+                  stroke={theme.palette.divider}
+                  strokeDasharray="3 3"
+                  strokeWidth="0.8"
+                  opacity={0.5}
+                />
+              ))}
+
+              {/* Filled Gradient Area */}
+              <path d={areaD} fill={`url(#${chartGradId})`} />
+
+              {/* Glowing Main Line */}
+              <path
+                d={pathD}
+                fill="none"
+                stroke={strokeColor}
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter={`url(#glow-${chartGradId})`}
+              />
+
+              {/* Hover Crosshairs */}
+              {activePoint && isHovering && (
+                <g>
+                  {/* Vertical Crosshair */}
+                  <line
+                    x1={activePoint[0]}
+                    y1={0}
+                    x2={activePoint[0]}
+                    y2={plotH}
+                    stroke={theme.palette.text.primary}
+                    strokeDasharray="3 3"
+                    strokeWidth="1.2"
+                    opacity={0.65}
+                  />
+
+                  {/* Horizontal Crosshair to Right Axis */}
+                  <line
+                    x1={0}
+                    y1={activePoint[1]}
+                    x2={plotW}
+                    y2={activePoint[1]}
+                    stroke={theme.palette.text.primary}
+                    strokeDasharray="3 3"
+                    strokeWidth="1"
+                    opacity={0.5}
+                  />
+
+                  {/* Marker Circles on Data Point */}
+                  <circle
+                    cx={activePoint[0]}
+                    cy={activePoint[1]}
+                    r="6.5"
+                    fill={glowColor}
+                  />
+                  <circle
+                    cx={activePoint[0]}
+                    cy={activePoint[1]}
+                    r="4"
+                    fill="#ffffff"
+                    stroke={strokeColor}
+                    strokeWidth="2"
+                  />
+                </g>
+              )}
+            </svg>
+          </Box>
+
+          {/* Right Y-Axis HTML Overlay (Proper, Crisp Font) */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 24,
+              width: 60,
+              pointerEvents: "none",
+            }}
+          >
             {gridLines.map((line, idx) => (
-              <g key={idx}>
-                <line
-                  x1={padding.left}
-                  y1={line.y}
-                  x2={svgWidth - padding.right}
-                  y2={line.y}
-                  stroke={theme.palette.divider}
-                  strokeDasharray="3 3"
-                  strokeWidth="0.8"
-                  opacity={0.5}
-                />
-                <line
-                  x1={svgWidth - padding.right}
-                  y1={line.y}
-                  x2={svgWidth - padding.right + 3}
-                  y2={line.y}
-                  stroke={theme.palette.divider}
-                  strokeWidth="0.8"
-                />
-                <text
-                  x={svgWidth - padding.right + 6}
-                  y={line.y + 3}
-                  fill={theme.palette.text.secondary}
-                  fontSize="8.5"
-                  fontWeight="500"
-                  fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-                >
-                  {formatAxisValue(line.val, series.format)}
-                </text>
-              </g>
-            ))}
-
-            {/* Vertical Right-Axis Border */}
-            <line
-              x1={svgWidth - padding.right}
-              y1={padding.top}
-              x2={svgWidth - padding.right}
-              y2={padding.top + chartH}
-              stroke={theme.palette.divider}
-              strokeWidth="0.8"
-            />
-
-            {/* Bottom Date Axis Ticks */}
-            {dateTicks.map((tick, idx) => (
-              <text
+              <Typography
                 key={idx}
-                x={tick.x}
-                y={svgHeight - 7}
-                textAnchor="middle"
-                fill={theme.palette.text.secondary}
-                fontSize="8.5"
-                fontWeight="400"
-                fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+                sx={{
+                  position: "absolute",
+                  top: `${(line.y / plotH) * 100}%`,
+                  transform: "translateY(-50%)",
+                  left: 6,
+                  color: "text.secondary",
+                  fontSize: "0.68rem",
+                  fontWeight: 500,
+                  fontVariantNumeric: "tabular-nums",
+                  lineHeight: 1,
+                  fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                }}
               >
-                {tick.label}
-              </text>
+                {formatAxisValue(line.val, series.format)}
+              </Typography>
             ))}
 
-            {/* Filled Gradient Area */}
-            <path d={areaD} fill={`url(#${chartGradId})`} />
-
-            {/* Glowing Main Line */}
-            <path
-              d={pathD}
-              fill="none"
-              stroke={strokeColor}
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              filter={`url(#glow-${chartGradId})`}
-            />
-
-            {/* Hover Crosshairs & Real-time Right-Axis Value Badge */}
+            {/* Hover Dynamic Price Badge */}
             {activePoint && isHovering && (
-              <g>
-                {/* Vertical Crosshair */}
-                <line
-                  x1={activePoint[0]}
-                  y1={padding.top}
-                  x2={activePoint[0]}
-                  y2={padding.top + chartH}
-                  stroke={theme.palette.text.primary}
-                  strokeDasharray="3 3"
-                  strokeWidth="1.2"
-                  opacity={0.65}
-                />
-
-                {/* Horizontal Crosshair to Right Axis */}
-                <line
-                  x1={padding.left}
-                  y1={activePoint[1]}
-                  x2={svgWidth - padding.right}
-                  y2={activePoint[1]}
-                  stroke={theme.palette.text.primary}
-                  strokeDasharray="3 3"
-                  strokeWidth="1"
-                  opacity={0.5}
-                />
-
-                {/* Marker Circles on Data Point */}
-                <circle
-                  cx={activePoint[0]}
-                  cy={activePoint[1]}
-                  r="6.5"
-                  fill={glowColor}
-                />
-                <circle
-                  cx={activePoint[0]}
-                  cy={activePoint[1]}
-                  r="4"
-                  fill="#ffffff"
-                  stroke={strokeColor}
-                  strokeWidth="2"
-                />
-
-                {/* Right-Axis Dynamic Value Pill Badge */}
-                <rect
-                  x={svgWidth - padding.right + 2}
-                  y={Math.max(padding.top, Math.min(padding.top + chartH - 14, activePoint[1] - 7))}
-                  width={padding.right - 4}
-                  height="14"
-                  rx="2.5"
-                  fill={strokeColor}
-                />
-                <text
-                  x={svgWidth - padding.right + 5}
-                  y={Math.max(padding.top + 10, Math.min(padding.top + chartH - 4, activePoint[1] + 3))}
-                  fill="#ffffff"
-                  fontSize="8.5"
-                  fontWeight="700"
-                  fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-                >
-                  {formatAxisValue(activePoint[3], series.format)}
-                </text>
-              </g>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: `${(activePoint[1] / plotH) * 100}%`,
+                  transform: "translateY(-50%)",
+                  left: 3,
+                  right: 3,
+                  backgroundColor: strokeColor,
+                  color: "#ffffff",
+                  borderRadius: "3px",
+                  py: "2px",
+                  px: "3px",
+                  textAlign: "center",
+                  fontWeight: 700,
+                  fontSize: "0.65rem",
+                  fontVariantNumeric: "tabular-nums",
+                  lineHeight: 1.2,
+                  boxShadow: "0 2px 6px rgba(0, 0, 0, 0.35)",
+                  zIndex: 2,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {formatAxisValue(activePoint[3], series.format)}
+              </Box>
             )}
-          </svg>
+          </Box>
+
+          {/* Bottom X-Axis HTML Overlay (Proper, Crisp Font) */}
+          <Box
+            sx={{
+              position: "absolute",
+              left: 0,
+              right: 60,
+              bottom: 0,
+              height: 24,
+              pointerEvents: "none",
+            }}
+          >
+            {dateTicks.map((tick, idx) => {
+              let transform = "translateX(-50%)";
+              if (idx === 0) transform = "translateX(0%)";
+              else if (idx === dateTicks.length - 1) transform = "translateX(-100%)";
+
+              return (
+                <Typography
+                  key={idx}
+                  sx={{
+                    position: "absolute",
+                    left: `${(tick.x / plotW) * 100}%`,
+                    transform,
+                    top: 5,
+                    color: "text.secondary",
+                    fontSize: "0.68rem",
+                    fontWeight: 500,
+                    fontVariantNumeric: "tabular-nums",
+                    lineHeight: 1,
+                    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {tick.label}
+                </Typography>
+              );
+            })}
+          </Box>
         </Box>
 
         {/* Statistical Range Footer */}
