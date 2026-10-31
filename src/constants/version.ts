@@ -6,7 +6,7 @@ export const BUILD_DATE =
     ? __BUILD_DATE__
     : new Date().toISOString();
 
-export const APP_NAME = "Indices";
+export const APP_NAME = "Market Indices";
 
 export const APP_AUTHOR = "MarketIndices.xyz";
 

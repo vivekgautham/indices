@@ -158,7 +158,7 @@ export const AppNavbar: React.FC = () => {
                     gap: 0.75,
                   }}
                 >
-                  Indices
+                  Market Indices
                 </Typography>
                 <Typography
                   variant="caption"
