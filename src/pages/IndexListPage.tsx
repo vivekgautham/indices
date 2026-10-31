@@ -527,24 +527,26 @@ export default function IndexListPage() {
       {/* Header Section */}
       <Box
         component="header"
-        sx={{ mb: 2.5, textAlign: "center", width: "100%" }}
+        sx={{ mb: 1, textAlign: "center", width: "100%" }}
       >
-        <Stack spacing={2} alignItems="center" sx={{ width: "100%" }}>
-          <Typography
-            variant="body1"
-            component="h1"
-            sx={{
-              color: "text.secondary",
-              maxWidth: 720,
-              fontSize: { xs: "0.88rem", sm: "0.98rem" },
-              lineHeight: 1.5,
-            }}
-          >
-            Explore the world&apos;s premier benchmark providers and their
-            iconic market indices, tracking ETFs, constituent criteria, and
-            weighting methodologies.
-          </Typography>
+        <Typography
+          component="h1"
+          sx={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            padding: 0,
+            margin: "-1px",
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+          }}
+        >
+          Market Indices Explorer - Global Benchmark Catalog
+        </Typography>
 
+        <Stack spacing={1.5} alignItems="center" sx={{ width: "100%" }}>
           {/* Quick Preset Provider Selection Chips (Default All) */}
           <ProviderPresetBar
             selectedProvider={selectedProvider}
