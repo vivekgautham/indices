@@ -44,7 +44,43 @@ function downsamplePoints(points) {
   return [...older, ...recent];
 }
 
+const YAHOO_BENCHMARK_MAP = {
+  SP500: "%5EGSPC",
+  NASDAQ100: "%5ENDX",
+  NASDAQCOM: "%5EIXIC",
+  DJIA: "%5EDJI",
+  RUI: "%5ERUI",
+  VIXCLS: "%5EVIX",
+};
+
+async function fetchRecentYahooPoints(ticker) {
+  try {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`;
+    const res = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" },
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const timestamps = data.chart?.result?.[0]?.timestamp || [];
+    const quotes = data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
+    const points = [];
+    for (let i = 0; i < timestamps.length; i++) {
+      const val = quotes[i];
+      if (val != null && !isNaN(val)) {
+        const date = new Date(timestamps[i] * 1000).toISOString().split("T")[0];
+        points.push([date, Number(val.toFixed(2))]);
+      }
+    }
+    return points;
+  } catch (err) {
+    console.warn(`⚠️ Error fetching recent market points for ${ticker}:`, err.message);
+    return [];
+  }
+}
+
 async function fetchSeries(id) {
+  let points = null;
+
   // Russell 1000 (^RUI)
   if (id === "RUI") {
     try {
@@ -56,16 +92,16 @@ async function fetchSeries(id) {
         const data = await res.json();
         const timestamps = data.chart?.result?.[0]?.timestamp || [];
         const quotes = data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
-        const points = [];
+        const pts = [];
         for (let i = 0; i < timestamps.length; i++) {
           const val = quotes[i];
           if (val != null && !isNaN(val)) {
             const date = new Date(timestamps[i] * 1000).toISOString().split("T")[0];
-            points.push([date, Number(val.toFixed(2))]);
+            pts.push([date, Number(val.toFixed(2))]);
           }
         }
-        if (points.length > 0) {
-          return downsamplePoints(points);
+        if (pts.length > 0) {
+          points = pts;
         }
       }
     } catch (err) {
@@ -74,7 +110,7 @@ async function fetchSeries(id) {
   }
 
   // Try official FRED JSON API first
-  if (FRED_API_KEY) {
+  if (!points && FRED_API_KEY) {
     try {
       const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${id}&api_key=${FRED_API_KEY}&file_type=json`;
       const res = await fetch(url, {
@@ -82,14 +118,14 @@ async function fetchSeries(id) {
       });
       if (res.ok) {
         const json = await res.json();
-        const points = [];
+        const pts = [];
         for (const item of json.observations || []) {
           if (item.value && item.value !== "." && !isNaN(Number(item.value))) {
-            points.push([item.date, Number(Number(item.value).toFixed(2))]);
+            pts.push([item.date, Number(Number(item.value).toFixed(2))]);
           }
         }
-        if (points.length > 0) {
-          return downsamplePoints(points);
+        if (pts.length > 0) {
+          points = pts;
         }
       }
     } catch {
@@ -98,29 +134,47 @@ async function fetchSeries(id) {
   }
 
   // Fallback: FRED CSV endpoint
-  const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${id}`;
-  try {
-    const res = await fetch(url, {
-      headers: { "User-Agent": "MarketIndices-BenchmarkTracker/1.0" },
-    });
-    if (!res.ok) {
-      console.warn(`⚠️ Warning: Failed to fetch FRED series ${id} (HTTP ${res.status})`);
-      return null;
-    }
-    const text = await res.text();
-    const lines = text.trim().split("\n");
-    const points = [];
-    for (let i = 1; i < lines.length; i++) {
-      const [date, val] = lines[i].split(",");
-      if (val && val !== "." && !isNaN(Number(val))) {
-        points.push([date, Number(Number(val).toFixed(2))]);
+  if (!points) {
+    const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${id}`;
+    try {
+      const res = await fetch(url, {
+        headers: { "User-Agent": "MarketIndices-BenchmarkTracker/1.0" },
+      });
+      if (res.ok) {
+        const text = await res.text();
+        const lines = text.trim().split("\n");
+        const pts = [];
+        for (let i = 1; i < lines.length; i++) {
+          const [date, val] = lines[i].split(",");
+          if (val && val !== "." && !isNaN(Number(val))) {
+            pts.push([date, Number(Number(val).toFixed(2))]);
+          }
+        }
+        if (pts.length > 0) {
+          points = pts;
+        }
       }
+    } catch (err) {
+      console.warn(`⚠️ Error fetching FRED series ${id}:`, err.message);
     }
-    return downsamplePoints(points);
-  } catch (err) {
-    console.warn(`⚠️ Error fetching FRED series ${id}:`, err.message);
+  }
+
+  if (!points || points.length === 0) {
     return null;
   }
+
+  // Supplement recent market close observations if FRED has a licensing publication lag
+  if (YAHOO_BENCHMARK_MAP[id]) {
+    const lastDate = points[points.length - 1][0];
+    const recentYahoo = await fetchRecentYahooPoints(YAHOO_BENCHMARK_MAP[id]);
+    for (const p of recentYahoo) {
+      if (p[0] > lastDate) {
+        points.push(p);
+      }
+    }
+  }
+
+  return downsamplePoints(points);
 }
 
 async function main() {
