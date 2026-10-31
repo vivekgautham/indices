@@ -1,6 +1,7 @@
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
+import AppVersionBadge from "./AppVersionBadge";
 import CopyrightBadge from "./CopyrightBadge";
 
 interface SiteFooterProps {
@@ -29,13 +30,15 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
         ...sx,
       }}
     >
-      {/* Bottom Left: Copyright Badge & Descriptive Text */}
+      {/* Bottom Left: Copyright Badge, App Version Badge & Descriptive Text */}
       <Stack
         direction={{ xs: "column", sm: "row" }}
         alignItems={{ xs: "flex-start", sm: "center" }}
-        spacing={{ xs: 1, sm: 2 }}
+        spacing={{ xs: 1, sm: 1.5 }}
+        flexWrap="wrap"
       >
         <CopyrightBadge />
+        <AppVersionBadge />
         <Typography
           variant="caption"
           sx={{

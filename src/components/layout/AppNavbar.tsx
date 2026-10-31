@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import AppVersionBadge from "./AppVersionBadge";
 import ThemeSelector from "./ThemeSelector";
 
 export interface NavItem {
@@ -240,14 +239,13 @@ export const AppNavbar: React.FC = () => {
             })}
           </Stack>
 
-          {/* Right: Theme Selector & App Version Badge */}
+          {/* Right: Theme Selector */}
           <Stack
             direction="row"
             alignItems="center"
             spacing={{ xs: 0.5, sm: 1 }}
           >
             <ThemeSelector />
-            <AppVersionBadge />
           </Stack>
         </Toolbar>
       </Container>
