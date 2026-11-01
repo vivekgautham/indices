@@ -171,7 +171,7 @@ export default function BenchmarkTrackerPage() {
           <Stack spacing={1.5} sx={{ maxWidth: 900 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, flexWrap: "wrap" }}>
               <Chip
-                label="FRED® Live Data"
+                label="FRED® Market Data (T-1)"
                 size="small"
                 sx={{
                   fontWeight: 800,
@@ -208,7 +208,7 @@ export default function BenchmarkTrackerPage() {
                 lineHeight: 1.55,
               }}
             >
-              Real-time barometer tracking <strong>S&amp;P 500</strong>,{" "}
+              Daily barometer tracking <strong>S&amp;P 500</strong>,{" "}
               <strong>S&amp;P 500 Equal Weight</strong>, <strong>NASDAQ 100</strong>,{" "}
               <strong>Nasdaq Composite</strong>, <strong>Dow Jones</strong>,{" "}
               <strong>Russell 1000</strong>, and <strong>CBOE VIX</strong>. Click any benchmark to inspect its detailed performance graph.

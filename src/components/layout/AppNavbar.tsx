@@ -42,7 +42,6 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Benchmark Tracker",
     to: "/tracker",
     icon: <ShowChartIcon sx={{ fontSize: 18 }} />,
-    badge: { label: "Live", color: "success" },
     isActive: (pathname) =>
       pathname.startsWith("/tracker") || pathname.startsWith("/benchmark-tracker"),
   },
@@ -60,7 +59,7 @@ export const AppNavbar: React.FC = () => {
     ) {
       return {
         title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
-        text: "Explore live and historical charts for major US equity benchmarks from FRED.",
+        text: "Explore daily and historical charts for major US equity benchmarks from FRED.",
         path: fullPath,
       };
     }
