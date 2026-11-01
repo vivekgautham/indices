@@ -35,7 +35,8 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Home",
     to: "/",
     icon: <HomeOutlinedIcon sx={{ fontSize: 18 }} />,
-    isActive: (pathname) => pathname === "/" || pathname === "",
+    isActive: (pathname) =>
+      pathname === "/" || pathname === "" || pathname.startsWith("/index/"),
   },
   {
     id: "tracker",
