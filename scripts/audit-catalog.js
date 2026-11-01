@@ -79,7 +79,7 @@ console.log(`   ✓ Total unique ETF tickers tracked: ${seenTickers.size}`);
 console.log("\n3. User Requested Tickers Verification");
 const userRequestedTickers = [
   "SPYM", "VOO", "IVV",
-  "VTI",
+  "VTI", "VXF",
   "SCHB", "SCHX", "ITOT",
   "SPTM",
   "VONE",
@@ -259,6 +259,7 @@ const suggestions = [
   "Mega Cap",
   "Mid Cap",
   "Small Cap",
+  "Extended Market",
   "Growth",
   "Value",
   "International",

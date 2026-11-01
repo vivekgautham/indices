@@ -304,6 +304,63 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.spglobal.com/spdji/en/indices/equity/sp-total-market-index/",
   },
   {
+    id: "sp-completion",
+    symbol: "SPCCO",
+    altSymbols: [
+      "^SPCCO",
+      "SPCOMP",
+      "DWCPF",
+      "S&P Completion",
+      "VXF Benchmark",
+      "Extended Market",
+    ],
+    name: "S&P Completion Index",
+    providerId: "sp",
+    category: "Mid/Small-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 3350,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2005,
+    trackingEtfs: [
+      {
+        ticker: "VXF",
+        name: "Vanguard Extended Market ETF",
+        aum: "$105B+",
+      },
+    ],
+    summary:
+      "The definitive extended market benchmark tracking all investable US common equities in the S&P Total Market Index excluding the S&P 500.",
+    description:
+      "The S&P Completion Index measures the performance of all constituents of the S&P Total Market Index that are not included in the iconic S&P 500 Index. Comprising approximately 3,350+ mid-, small-, and micro-cap companies, it represents the entire 'extended market' of US corporate equity outside the mega-cap domain. In asset allocation, pairing the S&P 500 (VOO/SPY) with the S&P Completion Index (VXF) mathematically reconstructs the entire US Total Stock Market (VTI) with complete coverage and zero constituent overlap.",
+    eligibilityCriteria: [
+      "Must be a constituent of the S&P Total Market Index",
+      "Excluded from the S&P 500 Index (zero constituent overlap)",
+      "US company listed on NYSE, NASDAQ, or Cboe with public float of at least 10%",
+      "Subject to regular S&P Dow Jones quarterly liquidity, free float, and market capitalization screens",
+    ],
+    keyCharacteristics: [
+      "Tracks ~3,350+ US mid, small, and micro-cap companies outside the S&P 500",
+      "Official underlying benchmark for the $105B+ Vanguard Extended Market ETF & Index Fund (VXF / VEXAX)",
+      "Completes the total US stock market: VOO (S&P 500) + VXF (S&P Completion) = VTI (Total Stock Market)",
+      "Substantial exposure to mid-cap growth, innovative biotechnology, regional banking, industrials, and emerging market leaders",
+    ],
+    tags: [
+      "Extended Market",
+      "Mid Cap",
+      "Small Cap",
+      "Micro Cap",
+      "VXF",
+      "Vanguard",
+      "Completion",
+      "Non-S&P 500",
+      "Total Market Completion",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-completion-index/",
+  },
+  {
     id: "dow-jones-us-broad-market",
     symbol: "DJUSBM",
     altSymbols: [

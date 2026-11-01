@@ -116,6 +116,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Mega Cap",
       "Mid Cap",
       "Small Cap",
+      "Extended Market",
       "Growth",
       "Value",
       "Factor",
@@ -653,8 +654,8 @@ export default function IndexListPage() {
                 fullWidth={false}
                 placeholder={
                   selectedStyle !== "all" || selectedTerms.length > 0
-                    ? "Type additional keywords, tickers (e.g. SPMO, VOO)..."
-                    : "Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, SCHD, SCHX), methodology, criteria..."
+                    ? "Type additional keywords, tickers (e.g. SPMO, VOO, VXF)..."
+                    : "Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, VXF, SCHD, SCHX), methodology, criteria..."
                 }
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
