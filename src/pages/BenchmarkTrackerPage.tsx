@@ -496,9 +496,14 @@ export default function BenchmarkTrackerPage() {
           </Box>
         </Box>
 
+        {/* Featured Interactive Benchmark Chart */}
+        <Box sx={{ mb: 3.5 }}>
+          <FredSeriesChart series={activeSeries} initialRange="5D" />
+        </Box>
+
         {/* S&P 500 Market Breadth & Concentration Insight Card */}
         {dataset.series.SP500 && dataset.series.SP500EW && (
-          <Box sx={{ mb: 3.5 }}>
+          <Box sx={{ mb: 4 }}>
             <Sp500BreadthInsightCard
               sp500={dataset.series.SP500}
               sp500ew={dataset.series.SP500EW}
@@ -506,11 +511,6 @@ export default function BenchmarkTrackerPage() {
             />
           </Box>
         )}
-
-        {/* Featured Interactive Benchmark Chart */}
-        <Box sx={{ mb: 4 }}>
-          <FredSeriesChart series={activeSeries} initialRange="5D" />
-        </Box>
       </Container>
 
       {/* API Key Modal Dialog */}
