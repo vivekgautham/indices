@@ -59,6 +59,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#8b5cf6",
     icon: "📈",
   },
+  SP500EW: {
+    id: "SP500EW",
+    name: "S&P 500 Equal Weight Index",
+    shortName: "S&P 500 Equal Weight",
+    category: "equity",
+    subcategory: "Large-Cap Equal Weight",
+    units: "Index",
+    frequency: "Daily",
+    source: "S&P Dow Jones Indices LLC",
+    description:
+      "Equal-weighted alternative to the market-cap S&P 500 allocating an identical 0.2% weight to each of the 500 constituent companies upon quarterly rebalancing.",
+    marketSignificance:
+      "The premier market breadth barometer. Measuring equal-weight against cap-weight S&P 500 indicates whether rallies are broadening across the average stock or narrowing into mega-cap concentration.",
+    relatedIndexId: "sp-500-equal-weight",
+    trackingEtfs: ["RSP", "EWSP", "ISPE"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#10b981",
+    icon: "⚖️",
+  },
   DJIA: {
     id: "DJIA",
     name: "Dow Jones Industrial Average",

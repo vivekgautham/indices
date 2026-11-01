@@ -510,35 +510,36 @@ export default function IndexListPage() {
             styleCounts={styleCounts}
           />
 
-          {/* Search Bar */}
+          {/* Search Bar & Reset Filters */}
           <Box sx={{ width: "100%", mt: 0.5 }}>
-            <Box
-              onClick={() => searchInputRef.current?.focus()}
-              sx={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: 0.75,
-                minHeight: 52,
-                py: 0.75,
-                px: 1.5,
-                borderRadius: 3.5,
-                backgroundColor:
-                  "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
-                backdropFilter: "blur(12px)",
-                border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
-                cursor: "text",
-                transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-                "&:hover": {
-                  borderColor: "primary.light",
-                },
-                "&:focus-within": {
-                  borderColor: "primary.main",
-                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
-                },
-              }}
-            >
+            <Stack direction="row" spacing={1.25} alignItems="center" sx={{ width: "100%" }}>
+              <Box
+                onClick={() => searchInputRef.current?.focus()}
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: 0.75,
+                  minHeight: 52,
+                  py: 0.75,
+                  px: 1.5,
+                  borderRadius: 3.5,
+                  backgroundColor:
+                    "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
+                  cursor: "text",
+                  transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                  "&:hover": {
+                    borderColor: "primary.light",
+                  },
+                  "&:focus-within": {
+                    borderColor: "primary.main",
+                    boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+                  },
+                }}
+              >
               <SearchIcon
                 sx={{
                   color: "text.secondary",
@@ -702,6 +703,49 @@ export default function IndexListPage() {
                 </Tooltip>
               )}
             </Box>
+
+            {/* Reset Filters button directly adjacent to search bar */}
+            {(searchTerm ||
+              selectedTerms.length > 0 ||
+              selectedProvider !== "all" ||
+              selectedStyle !== "all") && (
+              <Button
+                variant="outlined"
+                size="medium"
+                startIcon={<ReplayIcon sx={{ fontSize: 16 }} />}
+                onClick={() => {
+                  setSearchTerm("");
+                  updateFilterParams({
+                    provider: "all",
+                    style: "all",
+                    terms: null,
+                    q: null,
+                  });
+                }}
+                sx={{
+                  height: 52,
+                  px: { xs: 1.5, sm: 2.25 },
+                  borderRadius: 3.5,
+                  fontSize: "0.82rem",
+                  fontWeight: 700,
+                  textTransform: "none",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                  borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                  color: "text.secondary",
+                  backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.5))",
+                  backdropFilter: "blur(12px)",
+                  "&:hover": {
+                    borderColor: "primary.main",
+                    color: "#ffffff",
+                    backgroundColor: "rgba(99, 102, 241, 0.12)",
+                  },
+                }}
+              >
+                Reset Filters
+              </Button>
+            )}
+          </Stack>
 
             {/* Categorized Suggested Searches */}
             <Box sx={{ mt: 1.75, width: "100%" }}>

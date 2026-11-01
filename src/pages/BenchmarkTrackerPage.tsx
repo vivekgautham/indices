@@ -25,6 +25,7 @@ import {
   formatSeriesValue,
   FredSeriesChart,
 } from "../components/tracker/FredSeriesChart";
+import { Sp500BreadthInsightCard } from "../components/tracker/Sp500BreadthInsightCard";
 
 export default function BenchmarkTrackerPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,13 +73,14 @@ export default function BenchmarkTrackerPage() {
   // Key KPI summary metrics across major equity benchmarks
   const kpiSummary = useMemo(() => {
     const sp = dataset.series.SP500;
+    const spew = dataset.series.SP500EW;
     const ndx = dataset.series.NASDAQ100;
     const nasdaqCom = dataset.series.NASDAQCOM;
     const djia = dataset.series.DJIA;
     const rui = dataset.series.RUI;
     const vix = dataset.series.VIXCLS;
 
-    return { sp, ndx, nasdaqCom, djia, rui, vix };
+    return { sp, spew, ndx, nasdaqCom, djia, rui, vix };
   }, [dataset]);
 
   return (
@@ -207,10 +209,9 @@ export default function BenchmarkTrackerPage() {
               }}
             >
               Real-time barometer tracking <strong>S&amp;P 500</strong>,{" "}
-              <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
-              <strong>Dow Jones</strong>, <strong>Russell 1000</strong>, and{" "}
-              <strong>CBOE VIX</strong>. Click any benchmark above to inspect its detailed
-              performance graph.
+              <strong>S&amp;P 500 Equal Weight</strong>, <strong>NASDAQ 100</strong>,{" "}
+              <strong>Nasdaq Composite</strong>, <strong>Dow Jones</strong>,{" "}
+              <strong>Russell 1000</strong>, and <strong>CBOE VIX</strong>. Click any benchmark to inspect its detailed performance graph.
             </Typography>
           </Stack>
 
@@ -220,8 +221,8 @@ export default function BenchmarkTrackerPage() {
               display: "grid",
               gridTemplateColumns: {
                 xs: "repeat(2, 1fr)",
-                sm: "repeat(3, 1fr)",
-                md: "repeat(6, 1fr)",
+                sm: "repeat(4, 1fr)",
+                md: "repeat(7, 1fr)",
               },
               gap: 1,
               mt: 2.5,
@@ -261,6 +262,44 @@ export default function BenchmarkTrackerPage() {
                 >
                   {kpiSummary.sp.change >= 0 ? "+" : ""}
                   {kpiSummary.sp.changePct.toFixed(2)}%
+                </Typography>
+              </Paper>
+            )}
+
+            {kpiSummary.spew && (
+              <Paper
+                variant="outlined"
+                onClick={() => handleSelectSeries("SP500EW")}
+                sx={{
+                  p: 1,
+                  borderRadius: 2,
+                  cursor: "pointer",
+                  backgroundColor:
+                    selectedSeriesId === "SP500EW"
+                      ? "rgba(16, 185, 129, 0.15)"
+                      : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                  borderColor:
+                    selectedSeriesId === "SP500EW"
+                      ? "#10b981"
+                      : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                  "&:hover": { borderColor: "#10b981" },
+                }}
+              >
+                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                  S&amp;P 500 Equal Wt
+                </Typography>
+                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                  {formatSeriesValue(kpiSummary.spew.latestValue, "number", 2)}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: kpiSummary.spew.change >= 0 ? "#10b981" : "#ef4444",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
+                  {kpiSummary.spew.change >= 0 ? "+" : ""}
+                  {kpiSummary.spew.changePct.toFixed(2)}%
                 </Typography>
               </Paper>
             )}
@@ -456,6 +495,17 @@ export default function BenchmarkTrackerPage() {
             )}
           </Box>
         </Box>
+
+        {/* S&P 500 Market Breadth & Concentration Insight Card */}
+        {dataset.series.SP500 && dataset.series.SP500EW && (
+          <Box sx={{ mb: 3.5 }}>
+            <Sp500BreadthInsightCard
+              sp500={dataset.series.SP500}
+              sp500ew={dataset.series.SP500EW}
+              onSelectSeries={handleSelectSeries}
+            />
+          </Box>
+        )}
 
         {/* Featured Interactive Benchmark Chart */}
         <Box sx={{ mb: 4 }}>

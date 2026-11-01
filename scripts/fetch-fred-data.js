@@ -13,6 +13,7 @@ const FRED_API_KEY = process.env.FRED_API_KEY || "2d9fe8dbad89dabfd5afba8ca6e5f4
 const SERIES = [
   // Major U.S. Equity Benchmarks
   { id: "SP500", name: "S&P 500", category: "equity" },
+  { id: "SP500EW", name: "S&P 500 Equal Weight", category: "equity" },
   { id: "NASDAQ100", name: "NASDAQ 100", category: "equity" },
   { id: "NASDAQCOM", name: "NASDAQ Composite", category: "equity" },
   { id: "DJIA", name: "Dow Jones Industrial Average", category: "equity" },
@@ -46,6 +47,7 @@ function downsamplePoints(points) {
 
 const YAHOO_BENCHMARK_MAP = {
   SP500: "%5EGSPC",
+  SP500EW: "%5ESPXEW",
   NASDAQ100: "%5ENDX",
   NASDAQCOM: "%5EIXIC",
   DJIA: "%5EDJI",
@@ -80,6 +82,34 @@ async function fetchRecentYahooPoints(ticker) {
 
 async function fetchSeries(id) {
   let points = null;
+
+  // S&P 500 Equal Weight (^SPXEW)
+  if (id === "SP500EW") {
+    try {
+      const url = "https://query1.finance.yahoo.com/v8/finance/chart/%5ESPXEW?interval=1d&range=5y";
+      const res = await fetch(url, {
+        headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const timestamps = data.chart?.result?.[0]?.timestamp || [];
+        const quotes = data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
+        const pts = [];
+        for (let i = 0; i < timestamps.length; i++) {
+          const val = quotes[i];
+          if (val != null && !isNaN(val)) {
+            const date = new Date(timestamps[i] * 1000).toISOString().split("T")[0];
+            pts.push([date, Number(val.toFixed(2))]);
+          }
+        }
+        if (pts.length > 0) {
+          points = pts;
+        }
+      }
+    } catch (err) {
+      console.warn("⚠️ Error fetching S&P 500 Equal Weight (^SPXEW):", err.message);
+    }
+  }
 
   // Russell 1000 (^RUI)
   if (id === "RUI") {
