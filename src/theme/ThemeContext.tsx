@@ -30,10 +30,19 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 function getInitialThemeId(): ThemeId {
   if (typeof window === "undefined") return DEFAULT_THEME_ID;
   try {
-    const saved = localStorage.getItem(STORAGE_KEY) as ThemeId | null;
-    if (saved && THEME_PRESETS[saved]) {
-      return saved;
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && saved in THEME_PRESETS) {
+      return saved as ThemeId;
     }
+    // Backward compatibility migration for users with older saved theme names
+    if (saved === "light" || saved === "nordic" || saved === "lavender") {
+      return "clean-light";
+    }
+    if (saved === "sage" || saved === "sandstone" || saved === "coral") {
+      return "kalshi-light";
+    }
+    // Any other previous dark theme (slate, ocean, emerald, etc.) falls back to kalshi
+    return DEFAULT_THEME_ID;
   } catch {
     // Ignore localStorage access errors
   }

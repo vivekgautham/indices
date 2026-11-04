@@ -138,9 +138,9 @@ export const AppNavbar: React.FC = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: "1.2rem",
-                  background: "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%)",
-                  border: "1px solid rgba(99, 102, 241, 0.35)",
-                  boxShadow: "0 2px 8px rgba(99, 102, 241, 0.2)",
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main}33 0%, ${theme.palette.secondary.main}33 100%)`,
+                  border: `1px solid ${theme.palette.primary.main}55`,
+                  boxShadow: `0 2px 8px ${theme.palette.primary.main}33`,
                 }}
               >
                 📊
@@ -153,7 +153,7 @@ export const AppNavbar: React.FC = () => {
                     fontSize: { xs: "1.05rem", sm: "1.2rem" },
                     letterSpacing: "-0.025em",
                     lineHeight: 1.1,
-                    background: "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     display: "flex",
@@ -216,19 +216,20 @@ export const AppNavbar: React.FC = () => {
                     borderRadius: 2,
                     color: active ? "text.primary" : "text.secondary",
                     backgroundColor: active
-                      ? "var(--indices-subtle-bg, rgba(99, 102, 241, 0.12))"
+                      ? "var(--indices-subtle-bg, rgba(0, 221, 148, 0.12))"
                       : "transparent",
                     border: "1px solid",
                     borderColor: active
-                      ? "rgba(99, 102, 241, 0.35)"
+                      ? `${theme.palette.primary.main}55`
                       : "transparent",
                     transition: "all 0.18s ease-in-out",
                     whiteSpace: "nowrap",
                     "&:hover": {
                       color: "text.primary",
-                      backgroundColor: "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.06))",
+                      backgroundColor:
+                        "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.06))",
                       borderColor: active
-                        ? "rgba(99, 102, 241, 0.5)"
+                        ? theme.palette.primary.main
                         : "var(--indices-border, rgba(255, 255, 255, 0.1))",
                     },
                     "&::after": active
