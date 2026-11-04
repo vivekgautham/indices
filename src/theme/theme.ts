@@ -1,6 +1,6 @@
 import { createTheme, Theme } from "@mui/material/styles";
 
-export type ThemeId = "kalshi" | "kalshi-light" | "wsj" | "clean-light";
+export type ThemeId = "kalshi" | "clean-light";
 
 export interface ThemePreset {
   id: ThemeId;
@@ -8,7 +8,6 @@ export interface ThemePreset {
   shortName: string;
   tagline: string;
   type: "dark" | "light";
-  fontFamily?: string;
   primary: {
     main: string;
     light: string;
@@ -42,7 +41,7 @@ export interface ThemePreset {
 export const THEME_PRESETS: Record<ThemeId, ThemePreset> = {
   kalshi: {
     id: "kalshi",
-    name: "Kalshi",
+    name: "Kalshi Dark",
     shortName: "Kalshi",
     tagline: "Kalshi dark exchange canvas with vibrant trading green",
     type: "dark",
@@ -74,78 +73,6 @@ export const THEME_PRESETS: Record<ThemeId, ThemePreset> = {
     accentPreview: "#00DD94",
     bgPreview: "#050D0A",
     badgeLabel: "Kalshi",
-  },
-  "kalshi-light": {
-    id: "kalshi-light",
-    name: "Kalshi Light",
-    shortName: "Kalshi Light",
-    tagline: "Clean light canvas with Kalshi emerald accents",
-    type: "light",
-    primary: {
-      main: "#00B67A",
-      light: "#26c990",
-      dark: "#014737",
-      contrastText: "#ffffff",
-    },
-    secondary: {
-      main: "#014737",
-      light: "#00b67a",
-      dark: "#00281e",
-      contrastText: "#ffffff",
-    },
-    background: {
-      default: "#F5F7F4",
-      paper: "#ffffff",
-    },
-    cardBg: "rgba(255, 255, 255, 0.95)",
-    cardHoverBg: "#ffffff",
-    subtleBg: "rgba(0, 182, 122, 0.08)",
-    border: "rgba(1, 71, 55, 0.12)",
-    navbarBg: "rgba(245, 247, 244, 0.92)",
-    text: {
-      primary: "#050D0A",
-      secondary: "#4b5563",
-    },
-    accentPreview: "#00B67A",
-    bgPreview: "#F5F7F4",
-    badgeLabel: "Light",
-  },
-  wsj: {
-    id: "wsj",
-    name: "WSJ Editorial",
-    shortName: "WSJ",
-    tagline: "The Wall Street Journal black & white newsprint with serif type",
-    type: "light",
-    fontFamily:
-      '"Exchange", "Escrow", "Newsreader", "Retina", Georgia, "Times New Roman", serif',
-    primary: {
-      main: "#111111",
-      light: "#333333",
-      dark: "#000000",
-      contrastText: "#ffffff",
-    },
-    secondary: {
-      main: "#333333",
-      light: "#555555",
-      dark: "#000000",
-      contrastText: "#ffffff",
-    },
-    background: {
-      default: "#ffffff",
-      paper: "#ffffff",
-    },
-    cardBg: "#ffffff",
-    cardHoverBg: "#fbfbfb",
-    subtleBg: "rgba(0, 0, 0, 0.04)",
-    border: "#e5e5e5",
-    navbarBg: "rgba(255, 255, 255, 0.96)",
-    text: {
-      primary: "#111111",
-      secondary: "#555555",
-    },
-    accentPreview: "#111111",
-    bgPreview: "#ffffff",
-    badgeLabel: "WSJ",
   },
   "clean-light": {
     id: "clean-light",
@@ -194,9 +121,8 @@ const DEFAULT_FONT =
 export function applyThemeCssVariables(preset: ThemePreset): void {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
-  const fontFamily = preset.fontFamily || DEFAULT_FONT;
-  root.style.setProperty("--indices-font-family", fontFamily);
-  document.body.style.fontFamily = fontFamily;
+  root.style.setProperty("--indices-font-family", DEFAULT_FONT);
+  document.body.style.fontFamily = DEFAULT_FONT;
 
   root.style.setProperty("--indices-bg-default", preset.background.default);
   root.style.setProperty("--indices-bg-paper", preset.background.paper);
@@ -221,9 +147,6 @@ export function applyThemeCssVariables(preset: ThemePreset): void {
 }
 
 export function buildTheme(preset: ThemePreset): Theme {
-  const fontFamily = preset.fontFamily || DEFAULT_FONT;
-  const isWsj = preset.id === "wsj";
-
   return createTheme({
     palette: {
       mode: preset.type,
@@ -234,48 +157,45 @@ export function buildTheme(preset: ThemePreset): Theme {
       divider: preset.border,
     },
     typography: {
-      fontFamily,
+      fontFamily: DEFAULT_FONT,
       h1: {
-        fontWeight: isWsj ? 700 : 800,
-        fontFamily,
-        letterSpacing: isWsj ? "-0.025em" : undefined,
+        fontWeight: 800,
+        fontFamily: DEFAULT_FONT,
       },
       h2: {
-        fontWeight: isWsj ? 700 : 800,
-        fontFamily,
-        letterSpacing: isWsj ? "-0.02em" : undefined,
+        fontWeight: 800,
+        fontFamily: DEFAULT_FONT,
       },
       h3: {
-        fontWeight: isWsj ? 700 : 800,
-        fontFamily,
-        letterSpacing: isWsj ? "-0.015em" : undefined,
+        fontWeight: 800,
+        fontFamily: DEFAULT_FONT,
       },
       h4: {
         fontWeight: 700,
-        fontFamily,
+        fontFamily: DEFAULT_FONT,
       },
       h5: {
         fontWeight: 700,
-        fontFamily,
+        fontFamily: DEFAULT_FONT,
       },
       h6: {
         fontWeight: 600,
-        fontFamily,
+        fontFamily: DEFAULT_FONT,
       },
       button: {
         textTransform: "none",
         fontWeight: 600,
-        fontFamily,
+        fontFamily: DEFAULT_FONT,
       },
       body1: {
-        fontFamily,
+        fontFamily: DEFAULT_FONT,
       },
       body2: {
-        fontFamily,
+        fontFamily: DEFAULT_FONT,
       },
     },
     shape: {
-      borderRadius: isWsj ? 6 : 12,
+      borderRadius: 12,
     },
     components: {
       MuiCssBaseline: {
@@ -283,7 +203,7 @@ export function buildTheme(preset: ThemePreset): Theme {
           body: {
             backgroundColor: preset.background.default,
             color: preset.text.primary,
-            fontFamily,
+            fontFamily: DEFAULT_FONT,
             minHeight: "100vh",
             margin: 0,
             transition: "background-color 0.25s ease, color 0.25s ease",
@@ -293,17 +213,16 @@ export function buildTheme(preset: ThemePreset): Theme {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: isWsj ? 4 : 10,
-            fontFamily,
+            borderRadius: 10,
+            fontFamily: DEFAULT_FONT,
           },
         },
       },
       MuiChip: {
         styleOverrides: {
           root: {
-            fontFamily,
+            fontFamily: DEFAULT_FONT,
             fontWeight: 600,
-            borderRadius: isWsj ? 4 : undefined,
           },
         },
       },
@@ -312,9 +231,8 @@ export function buildTheme(preset: ThemePreset): Theme {
           root: {
             backgroundImage: "none",
             backgroundColor: preset.cardBg,
-            backdropFilter: isWsj ? "none" : "blur(12px)",
+            backdropFilter: "blur(12px)",
             border: `1px solid ${preset.border}`,
-            boxShadow: isWsj ? "0 1px 3px rgba(0, 0, 0, 0.05)" : undefined,
           },
         },
       },

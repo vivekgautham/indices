@@ -34,14 +34,21 @@ function getInitialThemeId(): ThemeId {
     if (saved && saved in THEME_PRESETS) {
       return saved as ThemeId;
     }
-    // Backward compatibility migration for users with older saved theme names
-    if (saved === "light" || saved === "nordic" || saved === "lavender") {
+    // Backward compatibility migration: any saved light theme defaults to clean-light
+    if (
+      saved === "clean-light" ||
+      saved === "kalshi-light" ||
+      saved === "wsj" ||
+      saved === "light" ||
+      saved === "nordic" ||
+      saved === "lavender" ||
+      saved === "sage" ||
+      saved === "sandstone" ||
+      saved === "coral"
+    ) {
       return "clean-light";
     }
-    if (saved === "sage" || saved === "sandstone" || saved === "coral") {
-      return "kalshi-light";
-    }
-    // Any other previous dark theme (slate, ocean, emerald, etc.) falls back to kalshi
+    // Any other dark theme defaults to kalshi
     return DEFAULT_THEME_ID;
   } catch {
     // Ignore localStorage access errors

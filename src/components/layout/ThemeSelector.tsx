@@ -44,7 +44,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   return (
     <>
       <Tooltip
-        title="Change theme (Kalshi & lighter options)"
+        title="Change theme (Kalshi Dark / Clean Light)"
         arrow
         placement="bottom-end"
         disableHoverListener={open}
