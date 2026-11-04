@@ -88,7 +88,7 @@ const userRequestedTickers = [
   "XLK", "FTEC", "VGT",
   "SPYG", "SCHG", "VOOG",
   "IAU", "GLD", "PHYS",
-  "VTV", "SPYV", "VYM", "SCHD", "SCHV",
+  "VTV", "SPYV", "VYM", "SCHD", "SCHV", "DGRO",
   "FSTA", "XLP",
   "XAR", "ITA", "DFEN", "PPA",
   "IBB", "IBBQ", "XBI", "LABU", "BIB",

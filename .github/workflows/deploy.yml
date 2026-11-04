@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  workflow_run:
+    workflows: ["Update Benchmark Tracker Data"]
+    types:
+      - completed
+  workflow_dispatch:
 
 permissions:
   contents: read

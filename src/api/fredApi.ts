@@ -195,7 +195,9 @@ export function useFredData() {
     queryKey: ["fred_dataset"],
     queryFn: async () => {
       try {
-        const res = await fetch(`/data/fred-data.json?t=${Date.now()}`);
+        const res = await fetch(`/data/fred-data.json?t=${Date.now()}`, {
+          cache: "no-store",
+        });
         if (res.ok) {
           const json = await res.json();
           if (json && json.series) {

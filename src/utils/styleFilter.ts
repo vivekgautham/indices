@@ -10,12 +10,13 @@ export function isGrowthIndex(idx: MarketIndex): boolean {
   const cat = idx.category.toLowerCase();
   const tags = idx.tags.map((t) => t.toLowerCase());
 
-  // Exclude broad EM/single countries with "High Growth" economic tags and broad mid-cap
+  // Exclude broad EM/single countries with "High Growth" economic tags, dividend growth factor strategies, and broad mid-cap
   if (
     id === "msci-emerging-markets" ||
     id === "msci-india" ||
     id === "sp-midcap-400" ||
-    id === "lbma-gold-price"
+    id === "lbma-gold-price" ||
+    id === "morningstar-us-dividend-growth"
   ) {
     return false;
   }

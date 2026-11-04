@@ -11,6 +11,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,html}'",
     "preview": "vite preview",
+    "update:tracker": "node scripts/fetch-fred-data.js",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

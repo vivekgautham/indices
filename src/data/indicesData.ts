@@ -4423,6 +4423,62 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl:
       "https://indexes.morningstar.com/our-indexes/details/morningstar-wide-moat-focus-FS0000A38Q",
   },
+  {
+    id: "morningstar-us-dividend-growth",
+    symbol: "MSUSDGN",
+    altSymbols: [
+      "MSUSDGR",
+      "MUSDG",
+      "DGRO Benchmark",
+      "Morningstar Dividend Growth",
+    ],
+    name: "Morningstar US Dividend Growth Index",
+    providerId: "crsp",
+    category: "Dividend Growth",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 420,
+    weightingMethodology: "Dividend-Dollar Weighted (3% Cap)",
+    rebalanceFrequency: "Annually in December (Reconstituted Quarterly in March, June, September, December)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "DGRO",
+        name: "iShares Core Dividend Growth ETF",
+        aum: "$31B+",
+      },
+    ],
+    summary:
+      "Premier dividend growth benchmark tracking US companies with at least 5 consecutive years of dividend increases, sustainable payout ratios, and top-yield screens.",
+    description:
+      "The Morningstar US Dividend Growth Index is designed to provide exposure to US companies that have a history of sustained dividend growth and the financial capacity to continue increasing payouts. It selects companies from the Morningstar US Market Index that have increased regular dividends for at least 5 consecutive years, possess an earnings payout ratio strictly below 75% (to eliminate dividend traps and unsustainable leverage), and have a positive consensus earnings forecast. To prevent high-yield distress risk, the index explicitly excludes the top 10% highest dividend yielders. Constituents are weighted in proportion to their total dividend dollars paid, with individual constituent weights capped at 3%.",
+    eligibilityCriteria: [
+      "Must be a constituent of the Morningstar US Market Index",
+      "Minimum 5 consecutive years of increasing regular annual dividend payments",
+      "Payout ratio strictly below 75% of trailing earnings (ensuring dividend safety)",
+      "Positive consensus earnings forecast",
+      "Top 10% highest dividend yielding eligible companies are excluded to eliminate distressed yield traps",
+    ],
+    keyCharacteristics: [
+      "Official underlying benchmark for the $31B+ iShares Core Dividend Growth ETF (DGRO)",
+      "Dividend-dollar weighted: weights companies by actual cash returned to shareholders via dividends rather than market cap alone",
+      "3% single-stock weight cap prevents mega-cap concentration",
+      "Core dividend aristocrat alternative with strong quality, balance sheet, and dividend longevity screens",
+    ],
+    tags: [
+      "Dividend Growth",
+      "Quality",
+      "Dividend",
+      "DGRO",
+      "iShares",
+      "BlackRock",
+      "Morningstar",
+      "Smart Beta",
+      "Cash Flow",
+    ],
+    officialUrl:
+      "https://indexes.morningstar.com/our-indexes/details/morningstar-us-dividend-growth-FS0000AEMF",
+  },
 
   // ==========================================
   // INTERCONTINENTAL EXCHANGE (ICE Data Indices)
