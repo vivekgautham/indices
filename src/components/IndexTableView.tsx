@@ -149,9 +149,11 @@ export const IndexTableView: React.FC<IndexTableViewProps> = ({ indices }) => {
                     fontSize: "0.7rem",
                     fontWeight: 600,
                     borderRadius: 1,
-                    backgroundColor: "rgba(99, 102, 241, 0.1)",
-                    color: "primary.light",
-                    borderColor: "rgba(99, 102, 241, 0.2)",
+                    backgroundColor:
+                      "var(--indices-subtle-bg, rgba(255, 255, 255, 0.06))",
+                    color: "text.secondary",
+                    borderColor:
+                      "var(--indices-border, rgba(255, 255, 255, 0.12))",
                     borderWidth: "1px",
                     borderStyle: "solid",
                   }}

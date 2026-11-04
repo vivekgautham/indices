@@ -9,6 +9,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,8 +27,9 @@ interface IndexCardProps {
 
 export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const provider = PROVIDERS_DATA[index.providerId];
-  const accentColor = provider?.accentColor || "#6366f1";
+  const accentColor = theme.palette.primary.main;
 
   const handleClick = () => {
     if (onSelect) {
@@ -94,8 +96,8 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                   sx={{
                     fontWeight: 800,
                     fontSize: "0.82rem",
-                    backgroundColor: accentColor,
-                    color: "#ffffff",
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText,
                     borderRadius: 1.5,
                     px: 0.25,
                   }}
@@ -108,12 +110,13 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                   size="small"
                   variant="outlined"
                   sx={{
-                    borderColor: `${accentColor}55`,
-                    color: accentColor,
+                    borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
+                    color: "text.primary",
                     fontWeight: 700,
                     fontSize: "0.7rem",
                     borderRadius: 1.5,
-                    backgroundColor: `${accentColor}10`,
+                    backgroundColor:
+                      "var(--indices-subtle-bg, rgba(255, 255, 255, 0.05))",
                     "& .MuiChip-icon": {
                       ml: "4px",
                       mr: "-2px",
@@ -349,11 +352,11 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                             fontWeight: 700,
                             backgroundColor: isActive
                               ? "rgba(245, 158, 11, 0.12)"
-                              : "rgba(99, 102, 241, 0.15)",
-                            color: isActive ? "#f59e0b" : "primary.light",
+                              : "var(--indices-subtle-bg, rgba(255, 255, 255, 0.06))",
+                            color: isActive ? "#f59e0b" : "text.primary",
                             border: isActive
                               ? "1px solid rgba(245, 158, 11, 0.35)"
-                              : "1px solid rgba(99, 102, 241, 0.25)",
+                              : "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
                             borderRadius: 1,
                             textDecoration: "none",
                             cursor: "pointer",
@@ -361,11 +364,11 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                             "&:hover": {
                               backgroundColor: isActive
                                 ? "rgba(245, 158, 11, 0.25)"
-                                : "rgba(99, 102, 241, 0.35)",
+                                : `${theme.palette.primary.main}22`,
                               borderColor: isActive
                                 ? "#f59e0b"
-                                : "primary.light",
-                              color: "#ffffff",
+                                : theme.palette.primary.main,
+                              color: "text.primary",
                             },
                           }}
                         />

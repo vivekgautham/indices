@@ -537,7 +537,7 @@ export default function IndexListPage() {
                   },
                   "&:focus-within": {
                     borderColor: "primary.main",
-                    boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+                    boxShadow: `0 0 0 2px ${theme.palette.primary.main}33`,
                   },
                 }}
               >
@@ -738,8 +738,8 @@ export default function IndexListPage() {
                   backdropFilter: "blur(12px)",
                   "&:hover": {
                     borderColor: "primary.main",
-                    color: "#ffffff",
-                    backgroundColor: "rgba(99, 102, 241, 0.12)",
+                    color: "text.primary",
+                    backgroundColor: `${theme.palette.primary.main}20`,
                   },
                 }}
               >
@@ -841,8 +841,8 @@ export default function IndexListPage() {
                           cursor: "pointer",
                           color: "primary.light",
                           backgroundColor:
-                            "var(--indices-card-hover-bg, rgba(99, 102, 241, 0.12))",
-                          borderColor: "rgba(99, 102, 241, 0.3)",
+                            "var(--indices-subtle-bg, rgba(255, 255, 255, 0.08))",
+                          borderColor: `${theme.palette.primary.main}55`,
                           borderWidth: "1px",
                           borderStyle: "solid",
                           "&:hover": {
@@ -960,8 +960,8 @@ export default function IndexListPage() {
                 mb: 2.5,
                 p: 1.5,
                 borderRadius: 2.5,
-                backgroundColor: "rgba(99, 102, 241, 0.08)",
-                borderColor: "rgba(99, 102, 241, 0.3)",
+                backgroundColor: `${theme.palette.primary.main}14`,
+                borderColor: `${theme.palette.primary.main}4d`,
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
                 alignItems: "center",
@@ -1080,7 +1080,7 @@ export default function IndexListPage() {
                   borderColor: "var(--indices-border, rgba(255, 255, 255, 0.1))",
                   "&.Mui-selected": {
                     color: "primary.light",
-                    backgroundColor: "rgba(99, 102, 241, 0.15)",
+                    backgroundColor: `${theme.palette.primary.main}25`,
                   },
                 },
               }}
@@ -1248,7 +1248,7 @@ export default function IndexListPage() {
                       fontWeight: 700,
                       fontSize: "0.92rem",
                       textTransform: "none",
-                      boxShadow: "0 4px 14px 0 rgba(99, 102, 241, 0.35)",
+                      boxShadow: `0 4px 14px 0 ${theme.palette.primary.main}55`,
                     }}
                   >
                     Show More ({remainingCount} remaining)...

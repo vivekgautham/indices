@@ -15,6 +15,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
@@ -31,6 +32,7 @@ import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 export default function IndexDetailPage() {
   const { indexId = "" } = useParams<{ indexId: string }>();
   const navigate = useNavigate();
+  const theme = useTheme();
   const { data: indices = [], isLoading: loadingIndices } = useIndicesData();
   const { data: providers = [], isLoading: loadingProviders } =
     useProvidersData();
@@ -169,7 +171,7 @@ export default function IndexDetailPage() {
     );
   }
 
-  const accentColor = provider?.accentColor || "#6366f1";
+  const accentColor = theme.palette.primary.main;
 
   return (
     <Container
@@ -305,8 +307,8 @@ export default function IndexDetailPage() {
                 fontSize: "0.92rem",
                 py: 2,
                 px: 0.5,
-                backgroundColor: accentColor,
-                color: "#ffffff",
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
                 borderRadius: 2,
               }}
             />
