@@ -355,42 +355,11 @@ export default function IndexListPage() {
 
   const isLoading = loadingProviders || loadingIndices;
 
-  // Update document title dynamically based on active filter or search
+  // Set document title
   useEffect(() => {
-    const stylePrefix =
-      selectedStyle === "growth"
-        ? "Growth "
-        : selectedStyle === "value"
-          ? "Value "
-          : selectedStyle === "factor"
-            ? "Factor "
-            : "";
-    const filterDesc = [
-      ...selectedTerms,
-      searchTerm.trim() ? `"${searchTerm.trim()}"` : "",
-    ]
-      .filter(Boolean)
-      .join(" + ");
-
-    if (activeProviderObj) {
-      document.title = `${stylePrefix}${activeProviderObj.name} Indices | Market Indices Explorer`;
-    } else if (selectedProvider === "others") {
-      document.title = `${stylePrefix}Other Benchmark Providers (Bloomberg, Nasdaq, MarketVector) | Market Indices Explorer`;
-    } else if (filterDesc) {
-      document.title = `${stylePrefix}Filter: ${filterDesc} | Market Indices Explorer`;
-    } else if (selectedStyle !== "all") {
-      document.title = `${stylePrefix}Market Indices | Global Benchmark Catalog`;
-    } else {
-      document.title =
-        "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
-    }
-  }, [
-    activeProviderObj,
-    selectedProvider,
-    searchTerm,
-    selectedTerms,
-    selectedStyle,
-  ]);
+    document.title =
+      "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
+  }, []);
 
   // Handle clicking on suggested search terms, integrating StyleFilter for Growth, Value, Factor
   const handleTermClick = (term: string) => {
