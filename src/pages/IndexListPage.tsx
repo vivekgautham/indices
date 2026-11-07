@@ -120,10 +120,13 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Value",
       "Factor",
       "International",
+      "Europe",
+      "United Kingdom",
       "Emerging Markets",
       "Japan",
       "India",
       "China",
+      "Australia",
     ],
   },
 ];

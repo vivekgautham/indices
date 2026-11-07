@@ -107,7 +107,14 @@ export const INDICES_DATA: MarketIndex[] = [
       "Contains 30 iconic American industrial and economic leaders",
       "Most quoted financial index in mainstream news media worldwide",
     ],
-    tags: ["Blue Chip", "Mega Cap", "Price-Weighted", "Iconic", "Historic", "UCITS"],
+    tags: [
+      "Blue Chip",
+      "Mega Cap",
+      "Price-Weighted",
+      "Iconic",
+      "Historic",
+      "UCITS",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-industrial-average/",
   },
@@ -555,7 +562,13 @@ export const INDICES_DATA: MarketIndex[] = [
       "Eliminates mega-cap single-stock concentration risk",
       "Inherent contrarian rebalance: trims winners and buys underperformers every quarter",
     ],
-    tags: ["Equal Weight", "Smart Beta", "Size Factor", "Anti-Concentration", "UCITS"],
+    tags: [
+      "Equal Weight",
+      "Smart Beta",
+      "Size Factor",
+      "Anti-Concentration",
+      "UCITS",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-equal-weight-index/",
   },
@@ -598,7 +611,15 @@ export const INDICES_DATA: MarketIndex[] = [
       "Strict 25-year dividend growth barrier to entry",
       "Historically exhibits superior downside protection during market downturns",
     ],
-    tags: ["Dividends", "Quality", "Aristocrats", "Income", "Defensive", "Value", "UCITS"],
+    tags: [
+      "Dividends",
+      "Quality",
+      "Aristocrats",
+      "Income",
+      "Defensive",
+      "Value",
+      "UCITS",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-500-dividend-aristocrats/",
   },
@@ -828,7 +849,15 @@ export const INDICES_DATA: MarketIndex[] = [
       "Low expense ratio complement to Schwab's flagship large-cap growth benchmark underlying SCHG",
       "Rules-based multi-factor valuation discipline helps protect against value traps",
     ],
-    tags: ["Large Cap", "Value", "Schwab", "SCHV", "Style", "Dividends", "Financials"],
+    tags: [
+      "Large Cap",
+      "Value",
+      "Schwab",
+      "SCHV",
+      "Style",
+      "Dividends",
+      "Financials",
+    ],
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-large-cap-value-total-stock-market-index/",
   },
@@ -951,7 +980,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Provides broader market growth exposure by including both large-cap and mid-cap stocks",
     ],
     tags: ["Growth", "S&P 900", "Large Cap", "Mid Cap", "US Equity"],
-    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-900-growth",
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-900-growth",
   },
   {
     id: "sp-500-momentum",
@@ -1376,7 +1406,14 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-technology-select-sector",
     symbol: "IXT",
-    altSymbols: ["XLK", "^IXT", "Technology Select Sector", "XLK Benchmark", "IUIT", "XLKT"],
+    altSymbols: [
+      "XLK",
+      "^IXT",
+      "Technology Select Sector",
+      "XLK Benchmark",
+      "IUIT",
+      "XLKT",
+    ],
     name: "Technology Select Sector Index",
     providerId: "sp",
     category: "Technology Sector Equity",
@@ -1433,7 +1470,13 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-consumer-staples-select-sector",
     symbol: "IXR",
-    altSymbols: ["XLP", "^IXR", "Consumer Staples Select", "XLP Benchmark", "IUCS"],
+    altSymbols: [
+      "XLP",
+      "^IXR",
+      "Consumer Staples Select",
+      "XLP Benchmark",
+      "IUCS",
+    ],
     name: "Consumer Staples Select Sector Index",
     providerId: "sp",
     category: "Consumer Staples Sector Equity",
@@ -1484,7 +1527,13 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-energy-select-sector",
     symbol: "IXE",
-    altSymbols: ["XLE", "^IXE", "Energy Select Sector", "XLE Benchmark", "IUEN"],
+    altSymbols: [
+      "XLE",
+      "^IXE",
+      "Energy Select Sector",
+      "XLE Benchmark",
+      "IUEN",
+    ],
     name: "Energy Select Sector Index",
     providerId: "sp",
     category: "Energy Sector Equity",
@@ -1536,7 +1585,13 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "sp-industrial-select-sector",
     symbol: "IXI",
-    altSymbols: ["XLI", "^IXI", "Industrial Select Sector", "XLI Benchmark", "IUID"],
+    altSymbols: [
+      "XLI",
+      "^IXI",
+      "Industrial Select Sector",
+      "XLI Benchmark",
+      "IUID",
+    ],
     name: "Industrial Select Sector Index",
     providerId: "sp",
     category: "Industrial Sector Equity",
@@ -2696,7 +2751,14 @@ export const INDICES_DATA: MarketIndex[] = [
       "Covers 98% of global investable equity market capitalization",
       "Ultimate one-stop global portfolio benchmark underlying Vanguard VT and flagship Irish UCITS funds (VWRA/VWRD)",
     ],
-    tags: ["Global", "All World", "Total Market", "Complete Universe", "UCITS", "Irish Domiciled"],
+    tags: [
+      "Global",
+      "All World",
+      "Total Market",
+      "Complete Universe",
+      "UCITS",
+      "Irish Domiciled",
+    ],
     officialUrl: "https://www.ftserussell.com/products/indices/geis",
   },
   {
@@ -2902,7 +2964,13 @@ export const INDICES_DATA: MarketIndex[] = [
       "The standard institutional benchmark for global equity funds worldwide",
       "Classifies South Korea and Taiwan within Emerging Markets",
     ],
-    tags: ["Global", "ACWI", "Institutional Standard", "Developed & Emerging", "UCITS"],
+    tags: [
+      "Global",
+      "ACWI",
+      "Institutional Standard",
+      "Developed & Emerging",
+      "UCITS",
+    ],
     officialUrl: "https://www.msci.com/our-solutions/indexes/acwi",
   },
   {
@@ -3505,7 +3573,16 @@ export const INDICES_DATA: MarketIndex[] = [
   {
     id: "nasdaq-100",
     symbol: "NDX",
-    altSymbols: ["^NDX", "QQQ Benchmark", "IQQ", "QNDX", "CNDX", "EQQQ", "EQAC", "CSNDX"],
+    altSymbols: [
+      "^NDX",
+      "QQQ Benchmark",
+      "IQQ",
+      "QNDX",
+      "CNDX",
+      "EQQQ",
+      "EQAC",
+      "CSNDX",
+    ],
     name: "Nasdaq-100 Index",
     providerId: "nasdaq",
     category: "Large-Cap Tech & Innovation",
@@ -3569,7 +3646,15 @@ export const INDICES_DATA: MarketIndex[] = [
       "Home to the world's largest mega-cap tech innovators (Apple, Microsoft, NVIDIA, Amazon, Alphabet, Meta)",
       "Underlying index for the $480B+ Invesco QQQ and Europe's largest Irish-domiciled tech UCITS ETFs (CNDX, EQQQ, EQAC)",
     ],
-    tags: ["Tech", "Mega Cap", "Innovation", "QQQ", "Growth", "UCITS", "Irish Domiciled"],
+    tags: [
+      "Tech",
+      "Mega Cap",
+      "Innovation",
+      "QQQ",
+      "Growth",
+      "UCITS",
+      "Irish Domiciled",
+    ],
     officialUrl: "https://www.nasdaq.com/solutions/nasdaq-100",
   },
   {
@@ -4439,7 +4524,8 @@ export const INDICES_DATA: MarketIndex[] = [
     region: "United States",
     constituentsCount: 420,
     weightingMethodology: "Dividend-Dollar Weighted (3% Cap)",
-    rebalanceFrequency: "Annually in December (Reconstituted Quarterly in March, June, September, December)",
+    rebalanceFrequency:
+      "Annually in December (Reconstituted Quarterly in March, June, September, December)",
     launchYear: 2014,
     trackingEtfs: [
       {
@@ -5013,7 +5099,8 @@ export const INDICES_DATA: MarketIndex[] = [
     assetClass: "Equity",
     region: "Global",
     constituentsCount: 95,
-    weightingMethodology: "Modified Free-Float Market Cap (8% Single-Stock Cap)",
+    weightingMethodology:
+      "Modified Free-Float Market Cap (8% Single-Stock Cap)",
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 2009,
     trackingEtfs: [
@@ -5068,7 +5155,8 @@ export const INDICES_DATA: MarketIndex[] = [
     assetClass: "Equity",
     region: "Global",
     constituentsCount: 25,
-    weightingMethodology: "Modified Free-Float Market Cap (8% Single-Stock Cap)",
+    weightingMethodology:
+      "Modified Free-Float Market Cap (8% Single-Stock Cap)",
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 2010,
     trackingEtfs: [
@@ -5201,8 +5289,7 @@ export const INDICES_DATA: MarketIndex[] = [
     constituentsCount: 1,
     weightingMethodology:
       "COMEX Copper Futures Contract (Production & Liquidity Weighted within BCOM)",
-    rebalanceFrequency:
-      "Monthly Futures Roll Schedule with Annual Reweighting",
+    rebalanceFrequency: "Monthly Futures Roll Schedule with Annual Reweighting",
     launchYear: 1998,
     trackingEtfs: [
       {
@@ -7552,7 +7639,12 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1998,
     trackingEtfs: [
       { ticker: "FEZ", name: "SPDR EURO STOXX 50 ETF", aum: "$2.8B+" },
-      { ticker: "SX5E", name: "iShares Core EURO STOXX 50 UCITS ETF", aum: "$6.2B+", hasStockAnalysis: false },
+      {
+        ticker: "SX5E",
+        name: "iShares Core EURO STOXX 50 UCITS ETF",
+        aum: "$6.2B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The premier blue-chip index for the Eurozone, tracking 50 sector leaders across 8 Eurozone nations. Underlying index for the SPDR FEZ ETF.",
@@ -7596,8 +7688,18 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 1998,
     trackingEtfs: [
-      { ticker: "EXSA", name: "iShares STOXX Europe 600 UCITS ETF", aum: "$8.5B+", hasStockAnalysis: false },
-      { ticker: "LYP6", name: "Amundi Stoxx Europe 600 UCITS ETF", aum: "$3.1B+", hasStockAnalysis: false },
+      {
+        ticker: "EXSA",
+        name: "iShares STOXX Europe 600 UCITS ETF",
+        aum: "$8.5B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "LYP6",
+        name: "Amundi Stoxx Europe 600 UCITS ETF",
+        aum: "$3.1B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The broad European equivalent to the S&P 500, representing 600 large, mid, and small-cap companies across 17 European nations.",
@@ -7640,8 +7742,17 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March, June, September, December)",
     launchYear: 1988,
     trackingEtfs: [
-      { ticker: "EWG", name: "iShares MSCI Germany ETF / DAX Proxy", aum: "$1.4B+" },
-      { ticker: "DAXEX", name: "iShares Core DAX UCITS ETF", aum: "$7.2B+", hasStockAnalysis: false },
+      {
+        ticker: "EWG",
+        name: "iShares MSCI Germany ETF / DAX Proxy",
+        aum: "$1.4B+",
+      },
+      {
+        ticker: "DAXEX",
+        name: "iShares Core DAX UCITS ETF",
+        aum: "$7.2B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "Germany's premier benchmark tracking the 40 largest blue-chip equities trading on the Frankfurt Stock Exchange. Key proxy for the iShares EWG ETF.",
@@ -7747,8 +7858,17 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1987,
     trackingEtfs: [
-      { ticker: "EWQ", name: "iShares MSCI France ETF / CAC 40 Proxy", aum: "$750M+" },
-      { ticker: "CAC", name: "Amundi CAC 40 UCITS ETF", aum: "$4.5B+", hasStockAnalysis: false },
+      {
+        ticker: "EWQ",
+        name: "iShares MSCI France ETF / CAC 40 Proxy",
+        aum: "$750M+",
+      },
+      {
+        ticker: "CAC",
+        name: "Amundi CAC 40 UCITS ETF",
+        aum: "$4.5B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The benchmark index of the Paris Bourse, tracking the 40 most significant equities on Euronext Paris. Underpins France's market proxy EWQ.",
@@ -7791,7 +7911,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (March annual main rebalance)",
     launchYear: 1983,
     trackingEtfs: [
-      { ticker: "EWN", name: "iShares MSCI Netherlands ETF / AEX Proxy", aum: "$280M+" },
+      {
+        ticker: "EWN",
+        name: "iShares MSCI Netherlands ETF / AEX Proxy",
+        aum: "$280M+",
+      },
       { ticker: "IAEX", name: "iShares AEX UCITS ETF", aum: "$3.2B+" },
     ],
     summary:
@@ -7838,8 +7962,17 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1988,
     trackingEtfs: [
-      { ticker: "EWL", name: "iShares MSCI Switzerland ETF / SMI Proxy", aum: "$1.8B+" },
-      { ticker: "CSSMI", name: "iShares Core SMI UCITS ETF", aum: "$2.9B+", hasStockAnalysis: false },
+      {
+        ticker: "EWL",
+        name: "iShares MSCI Switzerland ETF / SMI Proxy",
+        aum: "$1.8B+",
+      },
+      {
+        ticker: "CSSMI",
+        name: "iShares Core SMI UCITS ETF",
+        aum: "$2.9B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "Switzerland's blue-chip equity benchmark of 20 healthcare, consumer, and banking champions including Nestlé, Roche, and Novartis. Proxy for EWL.",
@@ -7866,7 +7999,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Healthcare",
       "Defensive",
     ],
-    officialUrl: "https://www.six-group.com/en/products-services/financial-information/indices.html",
+    officialUrl:
+      "https://www.six-group.com/en/products-services/financial-information/indices.html",
   },
   // ==========================================
   // NIKKEI INC. / JAPAN EXCHANGE GROUP (JPX)
@@ -7885,8 +8019,17 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Semi-Annual (April & October)",
     launchYear: 1950,
     trackingEtfs: [
-      { ticker: "EWJ", name: "iShares MSCI Japan ETF / Japan Flagship", aum: "$14.5B+" },
-      { ticker: "1321.T", name: "NEXT FUNDS Nikkei 225 Exchange Traded Fund", aum: "$72B+", hasStockAnalysis: false },
+      {
+        ticker: "EWJ",
+        name: "iShares MSCI Japan ETF / Japan Flagship",
+        aum: "$14.5B+",
+      },
+      {
+        ticker: "1321.T",
+        name: "NEXT FUNDS Nikkei 225 Exchange Traded Fund",
+        aum: "$72B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The most famous barometer of the Japanese stock market, tracking 225 top Japanese companies on the Tokyo Stock Exchange. Underpins EWJ.",
@@ -7913,7 +8056,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Tokyo",
       "Technology",
     ],
-    officialUrl: "https://indexes.nikkei.co.jp/en/nkave/index/profile?idx=nk225",
+    officialUrl:
+      "https://indexes.nikkei.co.jp/en/nkave/index/profile?idx=nk225",
   },
   {
     id: "topix",
@@ -7929,8 +8073,18 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1969,
     trackingEtfs: [
-      { ticker: "1306.T", name: "NEXT FUNDS TOPIX Exchange Traded Fund", aum: "$110B+", hasStockAnalysis: false },
-      { ticker: "1348.T", name: "MAXIS TOPIX ETF", aum: "$28B+", hasStockAnalysis: false },
+      {
+        ticker: "1306.T",
+        name: "NEXT FUNDS TOPIX Exchange Traded Fund",
+        aum: "$110B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "1348.T",
+        name: "MAXIS TOPIX ETF",
+        aum: "$28B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The comprehensive market-cap weighted benchmark of corporate Japan, capturing all domestic companies on the Tokyo Stock Exchange Prime Market.",
@@ -7976,7 +8130,12 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1969,
     trackingEtfs: [
-      { ticker: "2800.HK", name: "Tracker Fund of Hong Kong", aum: "$18.5B+", hasStockAnalysis: false },
+      {
+        ticker: "2800.HK",
+        name: "Tracker Fund of Hong Kong",
+        aum: "$18.5B+",
+        hasStockAnalysis: false,
+      },
       { ticker: "EWH", name: "iShares MSCI Hong Kong ETF", aum: "$720M+" },
     ],
     summary:
@@ -8020,8 +8179,18 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 2020,
     trackingEtfs: [
-      { ticker: "3033.HK", name: "CSOP Hang Seng TECH Index ETF", aum: "$3.8B+", hasStockAnalysis: false },
-      { ticker: "3067.HK", name: "iShares Hang Seng TECH ETF", aum: "$2.1B+", hasStockAnalysis: false },
+      {
+        ticker: "3033.HK",
+        name: "CSOP Hang Seng TECH Index ETF",
+        aum: "$3.8B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "3067.HK",
+        name: "iShares Hang Seng TECH ETF",
+        aum: "$2.1B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The 'Nasdaq of the East', tracking the 30 largest technology and internet companies listed in Hong Kong including Tencent, Alibaba, and Xiaomi.",
@@ -8069,7 +8238,12 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1996,
     trackingEtfs: [
       { ticker: "INDY", name: "iShares India 50 ETF", aum: "$920M+" },
-      { ticker: "NIFTYBEES", name: "Nippon India ETF Nifty BeES", aum: "$3.4B+", hasStockAnalysis: false },
+      {
+        ticker: "NIFTYBEES",
+        name: "Nippon India ETF Nifty BeES",
+        aum: "$3.4B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "India's preeminent stock benchmark, tracking 50 blue chips across 13 economic sectors on the National Stock Exchange of India. Basis for the INDY ETF.",
@@ -8097,7 +8271,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Nifty",
       "Blue Chip",
     ],
-    officialUrl: "https://www.niftyindices.com/indices/equity/broad-based-indices/NIFTY-50",
+    officialUrl:
+      "https://www.niftyindices.com/indices/equity/broad-based-indices/NIFTY-50",
   },
   {
     id: "nifty-next-50",
@@ -8113,8 +8288,18 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Semi-Annual (March & September)",
     launchYear: 1996,
     trackingEtfs: [
-      { ticker: "JUNIORBEES", name: "Nippon India ETF Nifty Next 50 Junior BeES", aum: "$580M+", hasStockAnalysis: false },
-      { ticker: "SBINIFTYJ", name: "SBI Nifty Next 50 ETF", aum: "$340M+", hasStockAnalysis: false },
+      {
+        ticker: "JUNIORBEES",
+        name: "Nippon India ETF Nifty Next 50 Junior BeES",
+        aum: "$580M+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "SBINIFTYJ",
+        name: "SBI Nifty Next 50 ETF",
+        aum: "$340M+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "India's incubator for future mega-caps, tracking 50 companies ranking 51 to 100 on the National Stock Exchange of India.",
@@ -8141,7 +8326,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Nifty",
       "Emerging Markets",
     ],
-    officialUrl: "https://www.niftyindices.com/indices/equity/broad-based-indices/NIFTY-Next-50",
+    officialUrl:
+      "https://www.niftyindices.com/indices/equity/broad-based-indices/NIFTY-Next-50",
   },
   {
     id: "nifty-bank",
@@ -8153,12 +8339,23 @@ export const INDICES_DATA: MarketIndex[] = [
     assetClass: "Equity",
     region: "Asia-Pacific",
     constituentsCount: 12,
-    weightingMethodology: "Free-Float Market Cap (33% single stock cap, 72% top 3 cap)",
+    weightingMethodology:
+      "Free-Float Market Cap (33% single stock cap, 72% top 3 cap)",
     rebalanceFrequency: "Semi-Annual (March & September)",
     launchYear: 2003,
     trackingEtfs: [
-      { ticker: "BANKBEES", name: "Nippon India ETF Nifty Bank BeES", aum: "$1.8B+", hasStockAnalysis: false },
-      { ticker: "KOTAKBKETF", name: "Kotak Nifty Bank ETF", aum: "$420M+", hasStockAnalysis: false },
+      {
+        ticker: "BANKBEES",
+        name: "Nippon India ETF Nifty Bank BeES",
+        aum: "$1.8B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "KOTAKBKETF",
+        name: "Kotak Nifty Bank ETF",
+        aum: "$420M+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The world's most actively traded financial sector benchmark, tracking the 12 most liquid public and private banks in India.",
@@ -8185,7 +8382,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Asia",
       "BankBeES",
     ],
-    officialUrl: "https://www.niftyindices.com/indices/equity/sectoral-indices/NIFTY-Bank",
+    officialUrl:
+      "https://www.niftyindices.com/indices/equity/sectoral-indices/NIFTY-Bank",
   },
   // ==========================================
   // CHINA SECURITIES INDEX (CSI)
@@ -8204,8 +8402,17 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Semi-Annual (June & December)",
     launchYear: 2005,
     trackingEtfs: [
-      { ticker: "ASHR", name: "Xtrackers Harvest CSI 300 China A-Shares ETF", aum: "$1.9B+" },
-      { ticker: "510300.SH", name: "Huatai-PineBridge CSI 300 ETF", aum: "$38B+", hasStockAnalysis: false },
+      {
+        ticker: "ASHR",
+        name: "Xtrackers Harvest CSI 300 China A-Shares ETF",
+        aum: "$1.9B+",
+      },
+      {
+        ticker: "510300.SH",
+        name: "Huatai-PineBridge CSI 300 ETF",
+        aum: "$38B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The 'S&P 500 of China', tracking the 300 largest and most liquid mainland A-shares across Shanghai and Shenzhen. Basis for the ASHR ETF.",
@@ -8249,8 +8456,17 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Semi-Annual (June & December)",
     launchYear: 2007,
     trackingEtfs: [
-      { ticker: "ASHS", name: "Xtrackers Harvest CSI 500 China A-Shares Small Cap ETF", aum: "$110M+" },
-      { ticker: "510500.SH", name: "China Southern CSI 500 ETF", aum: "$16B+", hasStockAnalysis: false },
+      {
+        ticker: "ASHS",
+        name: "Xtrackers Harvest CSI 500 China A-Shares Small Cap ETF",
+        aum: "$110M+",
+      },
+      {
+        ticker: "510500.SH",
+        name: "China Southern CSI 500 ETF",
+        aum: "$16B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "China's premier small-to-mid cap innovation index, tracking 500 dynamic high-growth enterprises ranking 301 to 800 in mainland China.",
@@ -8298,7 +8514,12 @@ export const INDICES_DATA: MarketIndex[] = [
     launchYear: 1994,
     trackingEtfs: [
       { ticker: "EWY", name: "iShares MSCI South Korea ETF", aum: "$3.5B+" },
-      { ticker: "069500.KS", name: "Samsung KODEX 200 ETF", aum: "$8.4B+", hasStockAnalysis: false },
+      {
+        ticker: "069500.KS",
+        name: "Samsung KODEX 200 ETF",
+        aum: "$8.4B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "South Korea's premier blue-chip benchmark of 200 market leaders including Samsung Electronics, SK Hynix, and Hyundai. Key basis for EWY.",
@@ -8345,7 +8566,12 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1998,
     trackingEtfs: [
-      { ticker: "XIU", name: "iShares S&P/TSX 60 Index ETF", aum: "$14.8B+", hasStockAnalysis: false },
+      {
+        ticker: "XIU",
+        name: "iShares S&P/TSX 60 Index ETF",
+        aum: "$14.8B+",
+        hasStockAnalysis: false,
+      },
       { ticker: "EWC", name: "iShares MSCI Canada ETF", aum: "$4.1B+" },
     ],
     summary:
@@ -8374,7 +8600,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "Banking",
       "Energy",
     ],
-    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-tsx-60-index/",
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-tsx-60-index/",
   },
   {
     id: "sp-tsx-composite",
@@ -8390,8 +8617,18 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly",
     launchYear: 1977,
     trackingEtfs: [
-      { ticker: "XIC", name: "iShares Core S&P/TSX Capped Composite Index ETF", aum: "$11.2B+", hasStockAnalysis: false },
-      { ticker: "VCN", name: "Vanguard FTSE Canada All Cap Index ETF", aum: "$5.8B+", hasStockAnalysis: false },
+      {
+        ticker: "XIC",
+        name: "iShares Core S&P/TSX Capped Composite Index ETF",
+        aum: "$11.2B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "VCN",
+        name: "Vanguard FTSE Canada All Cap Index ETF",
+        aum: "$5.8B+",
+        hasStockAnalysis: false,
+      },
     ],
     summary:
       "The headline index of the Canadian equity market, covering approximately 220 companies and 70% of TSX total capitalization.",
@@ -8417,6 +8654,631 @@ export const INDICES_DATA: MarketIndex[] = [
       "XIC",
       "Natural Resources",
     ],
-    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-tsx-composite-index/",
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-tsx-composite-index/",
+  },
+  {
+    id: "sp-asx-200",
+    symbol: "AS51",
+    altSymbols: ["XJO", "AXJO", "ASX 200", "S&P/ASX 200"],
+    name: "S&P/ASX 200 Index",
+    providerId: "sp",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Asia-Pacific",
+    constituentsCount: 200,
+    weightingMethodology: "Float-adjusted market capitalization",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2000,
+    trackingEtfs: [
+      {
+        ticker: "VAS",
+        name: "Vanguard Australian Shares Index ETF (ASX: VAS)",
+        aum: "A$16.5B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "IOZ",
+        name: "iShares Core S&P/ASX 200 ETF (ASX: IOZ)",
+        aum: "A$5.8B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "EWA",
+        name: "iShares MSCI Australia ETF (US Listed / Proxy)",
+        aum: "$1.8B+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "A200",
+        name: "Betashares Australia 200 ETF (ASX: A200)",
+        aum: "A$5.2B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The definitive investable benchmark for the Australian equity market, capturing 200 premier companies listed on the Australian Securities Exchange (ASX).",
+    description:
+      "Recognized as the primary investable institutional benchmark for the Australian stock market, the S&P/ASX 200 accounts for roughly 80% of Australian equity market capitalization. Managed in partnership between S&P Dow Jones Indices and the Australian Securities Exchange, the index provides rigorous liquidity screening and market representation across key resource, banking, healthcare, and infrastructure titans including BHP Group, Commonwealth Bank of Australia, CSL, and Macquarie Group.",
+    eligibilityCriteria: [
+      "Listed on the Australian Securities Exchange (ASX) with ordinary or preferred equity shares",
+      "Minimum relative liquidity median threshold of at least 50% over the prior six-month period",
+      "Float-adjusted institutional investability and daily trading volume criteria maintained",
+      "Quarterly rebalance and constituent review conducted in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Represents ~80% of total Australian equity market capitalization across 200 liquid constituents",
+      "Heavy global leadership in critical mineral resources, iron ore, and financial services",
+      "Underpins leading domestic and global funds including Vanguard VAS, iShares IOZ, and EWA",
+    ],
+    tags: [
+      "International",
+      "Australia",
+      "ASX",
+      "Asia-Pacific",
+      "Broad Market",
+      "Large Cap",
+      "Resources",
+      "Financials",
+    ],
+    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-asx-200/",
+  },
+  {
+    id: "ftse-250",
+    symbol: "MCX",
+    altSymbols: ["FTSE 250", "MIDD", "VMID", "UK Mid Cap"],
+    name: "FTSE 250 Index",
+    providerId: "ftse",
+    category: "Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "Europe",
+    constituentsCount: 250,
+    weightingMethodology: "Free-float market capitalization",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1992,
+    trackingEtfs: [
+      {
+        ticker: "VMID",
+        name: "Vanguard FTSE 250 UCITS ETF (LSE: VMID)",
+        aum: "£3.1B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "MIDD",
+        name: "iShares FTSE 250 UCITS ETF (LSE: MIDD)",
+        aum: "£2.2B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The leading barometer of the domestic UK economy, comprising the 101st to 350th largest companies listed on the London Stock Exchange.",
+    description:
+      "While the FTSE 100 is heavily export-oriented and multinational, the FTSE 250 is widely regarded as the quintessential equity barometer of the domestic British economy. Comprising mid-capitalization enterprises ranked from 101st to 350th on the London Stock Exchange, the index earns roughly 50% of its revenues domestically within the UK, offering investors diversified exposure to British consumer, industrial, financial, and digital service enterprises.",
+    eligibilityCriteria: [
+      "Constituents must be listed on the London Stock Exchange Main Market with sterling quote",
+      "Must meet nationality, free float (typically >25%), and liquidity tests",
+      "Comprises companies ranked 101 through 350 by eligible market capitalization",
+      "Quarterly review in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "The definitive domestic UK economic bellwether index",
+      "Historically outpaced FTSE 100 in long-term earnings growth due to mid-cap dynamism",
+      "UCITS compliant tracking via Vanguard VMID and iShares MIDD on the London Stock Exchange",
+    ],
+    tags: [
+      "International",
+      "United Kingdom",
+      "UK",
+      "Mid Cap",
+      "Europe",
+      "FTSE",
+      "London Stock Exchange",
+      "UCITS",
+    ],
+    officialUrl: "https://www.lseg.com/en/ftse-russell/indices/ftse-250",
+  },
+  {
+    id: "ftse-mib",
+    symbol: "FTSEMIB",
+    altSymbols: ["MIB", "FTSE MIB 40", "Italy 40"],
+    name: "FTSE MIB Index",
+    providerId: "ftse",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Europe",
+    constituentsCount: 40,
+    weightingMethodology: "Free-float market capitalization (capped at 15%)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 1992,
+    trackingEtfs: [
+      {
+        ticker: "EWI",
+        name: "iShares MSCI Italy ETF (US Listed / Proxy)",
+        aum: "$720M+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "XMIB",
+        name: "Xtrackers FTSE MIB UCITS ETF (Milan: XMIB)",
+        aum: "€380M+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The benchmark index for the Italian equity market, capturing approximately 80% of domestic market capitalization across 40 leading Italian blue chips.",
+    description:
+      "The FTSE MIB (Milano Indice di Borsa) is the primary benchmark index for the Italian national stock exchange, Borsa Italiana (part of Euronext group, calculated in partnership with FTSE Russell). Composed of the 40 most liquid and capitalized Italian corporate champions, the index provides concentrated exposure to Italy's powerhouse banking, automotive, luxury, utility, and energy sectors, including Ferrari, Intesa Sanpaolo, Eni, Enel, and UniCredit.",
+    eligibilityCriteria: [
+      "Eligible shares must trade on Borsa Italiana with Italian or European corporate economic interest",
+      "Ranked by market capitalization and validated by strict turnover liquidity screens",
+      "Top 40 constituents selected with constituent weights capped at 15% to maintain diversification",
+      "Quarterly review with rebalancing implemented in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Captures ~80% of Italian market capitalization across 40 marquee blue-chip names",
+      "High concentration of global luxury leaders (Ferrari, Moncler) and core eurozone banking champions",
+      "Tracked globally through iShares EWI and Xtrackers XMIB UCITS ETF",
+    ],
+    tags: [
+      "International",
+      "Italy",
+      "Europe",
+      "Large Cap",
+      "FTSE",
+      "Borsa Italiana",
+      "Luxury",
+      "Banks",
+    ],
+    officialUrl: "https://www.lseg.com/en/ftse-russell/indices/ftse-mib",
+  },
+  {
+    id: "bse-sensex",
+    symbol: "SENSEX",
+    altSymbols: ["BSE 30", "S&P BSE SENSEX", "BSESN"],
+    name: "S&P BSE SENSEX",
+    providerId: "sp",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Asia-Pacific",
+    constituentsCount: 30,
+    weightingMethodology: "Free-float market capitalization",
+    rebalanceFrequency: "Semi-annually (June and December)",
+    launchYear: 1986,
+    trackingEtfs: [
+      {
+        ticker: "INDA",
+        name: "iShares MSCI India ETF (US Listed / Proxy)",
+        aum: "$10.5B+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "532708",
+        name: "Nippon India ETF SENSEX (BSE: 532708)",
+        aum: "$4.2B+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "535276",
+        name: "SBI ETF SENSEX (BSE: 535276)",
+        aum: "$14.1B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "India's most tracked bellwether equity gauge, comprising 30 financially sound and influential companies listed on the Bombay Stock Exchange (BSE).",
+    description:
+      "First compiled in 1986 with a base year of 1978-79, the S&P BSE SENSEX is India's oldest and most prestigious stock market index. Co-branded with S&P Dow Jones Indices via Asia Index Pvt Ltd, the SENSEX represents 30 of the largest, most liquid, and financially robust companies listed on the BSE across key economic sectors of India. It serves as the primary gauge of investor confidence and economic dynamism for the world's most populous democracy and fastest-growing major economy.",
+    eligibilityCriteria: [
+      "Listed on the Bombay Stock Exchange (BSE) with a minimum listing history of at least one year",
+      "Must rank within the top 75 companies by float-adjusted market capitalization on the BSE",
+      "Must have traded on every single trading day over the prior one year period",
+      "Industry representation balanced across India's principal economic sectors",
+    ],
+    keyCharacteristics: [
+      "The heritage benchmark of Dalal Street and the Indian capital markets since 1986",
+      "Features market heavyweights like Reliance Industries, HDFC Bank, Infosys, and Tata Consultancy",
+      "Underpins tens of billions in domestic Indian pension assets (EPFO) and global allocation funds",
+    ],
+    tags: [
+      "International",
+      "India",
+      "Emerging Markets",
+      "Asia-Pacific",
+      "Large Cap",
+      "BSE",
+      "Sensex",
+      "Mega Cap",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-bse-sensex/",
+  },
+  {
+    id: "straits-times-index",
+    symbol: "STI",
+    altSymbols: ["FSSTI", "ST Index", "Singapore STI"],
+    name: "FTSE Straits Times Index (STI)",
+    providerId: "ftse",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Asia-Pacific",
+    constituentsCount: 30,
+    weightingMethodology: "Free-float market capitalization",
+    rebalanceFrequency: "Semi-annually (March and September)",
+    launchYear: 1966,
+    trackingEtfs: [
+      {
+        ticker: "EWS",
+        name: "iShares MSCI Singapore ETF (US Listed / Proxy)",
+        aum: "$610M+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "ES3",
+        name: "SPDR Straits Times Index ETF (SGX: ES3)",
+        aum: "S$1.8B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The undisputed headline stock market index for Singapore, tracking the top 30 eligible companies listed on the Singapore Exchange (SGX).",
+    description:
+      "Jointly calculated by FTSE Russell, Singapore Press Holdings, and the Singapore Exchange (SGX), the Straits Times Index (STI) is the premier benchmark for the Singapore financial market. Comprising 30 leading multinational enterprises based in Singapore, the index is famous for its generous dividend yield and defensive resilience, anchored by Southeast Asia's three banking pillars (DBS, OCBC, UOB) along with global logistics, real estate investment trusts (REITs), and telecommunications groups.",
+    eligibilityCriteria: [
+      "Listed on the Singapore Exchange (SGX) Mainboard",
+      "Strict minimum free-float requirement (>15%) and liquidity screen (>0.05% of float turnover monthly)",
+      "Ranked by full market capitalization to select the top 30 eligible companies",
+      "Semi-annual constituent review in March and September",
+    ],
+    keyCharacteristics: [
+      "Renowned for high dividend yield and dividend stability across Southeast Asia",
+      "Top constituents include DBS Group, OCBC Bank, Singtel, and CapitaLand Investment",
+      "Tracked by the multi-billion dollar SPDR Straits Times Index ETF (ES3) on SGX",
+    ],
+    tags: [
+      "International",
+      "Singapore",
+      "Asia-Pacific",
+      "High Dividend",
+      "Financials",
+      "FTSE",
+      "SGX",
+      "Large Cap",
+    ],
+    officialUrl:
+      "https://www.lseg.com/en/ftse-russell/indices/ftse-straits-times-index",
+  },
+  {
+    id: "omx-stockholm-30",
+    symbol: "OMXS30",
+    altSymbols: ["OMX 30", "OMXS30 Index", "Stockholm 30"],
+    name: "OMX Stockholm 30 Index",
+    providerId: "nasdaq",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Europe",
+    constituentsCount: 30,
+    weightingMethodology: "Free-float market capitalization",
+    rebalanceFrequency: "Semi-annually (January and July)",
+    launchYear: 1986,
+    trackingEtfs: [
+      {
+        ticker: "EWD",
+        name: "iShares MSCI Sweden ETF (US Listed / Proxy)",
+        aum: "$460M+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "XACT-OMXS30",
+        name: "XACT OMXS30 UCITS ETF (Stockholm: XACT OMXS30)",
+        aum: "SEK 16B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The leading benchmark index for the Nasdaq Stockholm exchange, tracking the 30 most actively traded Swedish corporate champions.",
+    description:
+      "Managed by Nasdaq Global Indexes, the OMX Stockholm 30 (OMXS30) is the leading index of the Swedish capital markets and the Nordic region's most actively traded derivatives vehicle. Representing Sweden's industrial, engineering, healthcare, and fintech innovation leaders, its constituents include global icons like Volvo, Atlas Copco, AstraZeneca, Ericsson, Assa Abloy, and Investor AB (the Wallenberg holding company).",
+    eligibilityCriteria: [
+      "Listed on the Nasdaq Stockholm Main Market",
+      "Selected from the most actively traded securities based on turnover on the exchange",
+      "Constituent weights reflect free-float market capitalization",
+      "Reconstituted semi-annually each January and July",
+    ],
+    keyCharacteristics: [
+      "The premier liquid blue-chip gauge of Swedish export and engineering prowess",
+      "High exposure to industrial automation, medtech, telecom infrastructure, and Nordic banking",
+      "Heavy liquidity supporting the flagship XACT OMXS30 UCITS ETF and active futures/options trading",
+    ],
+    tags: [
+      "International",
+      "Sweden",
+      "Nordics",
+      "Europe",
+      "Nasdaq",
+      "Large Cap",
+      "Industrials",
+    ],
+    officialUrl: "https://indexes.nasdaqomx.com/Index/Overview/OMXS30",
+  },
+  {
+    id: "ftse-jse-top-40",
+    symbol: "J200",
+    altSymbols: ["TOP40", "JSE Top 40", "FTSE JSE Top 40"],
+    name: "FTSE/JSE Top 40 Index",
+    providerId: "ftse",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 40,
+    weightingMethodology: "Free-float market capitalization",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2002,
+    trackingEtfs: [
+      {
+        ticker: "EZA",
+        name: "iShares MSCI South Africa ETF (US Listed / Proxy)",
+        aum: "$380M+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "STX40",
+        name: "Satrix 40 ETF (JSE: STX40)",
+        aum: "R28B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The headline index for the Johannesburg Stock Exchange, representing the 40 largest and most liquid corporations in South Africa.",
+    description:
+      "Operated as a joint venture between FTSE Russell and the Johannesburg Stock Exchange (JSE), the FTSE/JSE Top 40 Index represents the largest 40 investable companies listed on the JSE. Reflecting roughly 80% of South Africa's equity market capitalization, the index holds major global influence through global internet investor Naspers/Prosus, precious metals and mining giants (Anglo American, Gold Fields), and pan-African financial institutions.",
+    eligibilityCriteria: [
+      "Listed on the Main Board of the Johannesburg Stock Exchange (JSE)",
+      "Eligible for inclusion in the FTSE/JSE All-Share Index with acceptable liquidity",
+      "Ranked by investable market capitalization to select the 40 largest eligible companies",
+      "Quarterly review with rebalancing in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "The preeminent liquid equity benchmark for South Africa and the African continent",
+      "Unique exposure to global tech via Naspers/Prosus and global platinum/gold miners",
+      "Underpins South Africa's flagship index funds including Satrix 40 and 1nvest Top 40",
+    ],
+    tags: [
+      "International",
+      "South Africa",
+      "Emerging Markets",
+      "Africa",
+      "FTSE",
+      "JSE",
+      "Mining",
+      "Gold Miners",
+    ],
+    officialUrl:
+      "https://www.lseg.com/en/ftse-russell/indices/ftse-jse-index-series",
+  },
+  {
+    id: "sp-bmv-ipc",
+    symbol: "MEXBOL",
+    altSymbols: ["IPC", "S&P/BMV IPC", "Indice de Precios y Cotizaciones"],
+    name: "S&P/BMV IPC Index",
+    providerId: "sp",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "Americas",
+    constituentsCount: 35,
+    weightingMethodology:
+      "Float-adjusted market capitalization (capped at 25%)",
+    rebalanceFrequency: "Semi-annually (March and September)",
+    launchYear: 1978,
+    trackingEtfs: [
+      {
+        ticker: "EWW",
+        name: "iShares MSCI Mexico ETF (US Listed / Proxy)",
+        aum: "$1.4B+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "NAFTRAC",
+        name: "iShares NAFTRAC IPC ETF (BMV: NAFTRAC)",
+        aum: "$3.8B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "The leading benchmark of the Mexican Stock Exchange (BMV), capturing the 35 largest and most liquid Mexican blue chips.",
+    description:
+      "The S&P/BMV IPC (Índice de Precios y Cotizaciones) is the flagship benchmark index of the Mexican capital markets, co-managed by S&P Dow Jones Indices and the Bolsa Mexicana de Valores (BMV). Comprising 35 of the most liquid and capitalized Mexican enterprises, the IPC serves as a key conduit for global institutional capital participating in North American nearshoring, Mexican consumer growth, and infrastructure development, featuring America Movil, FEMSA, Grupo Mexico, and Walmex.",
+    eligibilityCriteria: [
+      "Listed on the Bolsa Mexicana de Valores (BMV)",
+      "Minimum daily traded volume, trading turnover frequency, and float capital threshold",
+      "Constituent weight capped at 25% for the single largest holding and 15% for subsequent names",
+      "Semi-annual rebalance conducted in March and September",
+    ],
+    keyCharacteristics: [
+      "The primary equity barometer of Latin America's second-largest economy",
+      "Strong thematic exposure to North American nearshoring, logistics, and Mexican consumer titans",
+      "Anchor index for the massive iShares NAFTRAC ETF and US-listed iShares EWW",
+    ],
+    tags: [
+      "International",
+      "Mexico",
+      "Emerging Markets",
+      "Americas",
+      "Large Cap",
+      "BMV",
+      "Nearshoring",
+    ],
+    officialUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-bmv-ipc/",
+  },
+  {
+    id: "jpx-nikkei-400",
+    symbol: "JPXNK400",
+    altSymbols: ["JPX 400", "Nikkei 400", "JPX-Nikkei Index 400"],
+    name: "JPX-Nikkei Index 400",
+    providerId: "nikkei",
+    category: "Smart Beta / Factor",
+    assetClass: "Equity",
+    region: "Asia-Pacific",
+    constituentsCount: 400,
+    weightingMethodology: "Free-float market capitalization (capped at 1.5%)",
+    rebalanceFrequency: "Annually (August)",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "JPXN",
+        name: "iShares JPX-Nikkei 400 ETF",
+        aum: "$340M+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "1591",
+        name: "NEXT FUNDS JPX-Nikkei Index 400 ETF (Tokyo: 1591)",
+        aum: "¥1.1T+",
+        hasStockAnalysis: false,
+      },
+      {
+        ticker: "1364",
+        name: "iFreeETF JPX-Nikkei 400 (Tokyo: 1364)",
+        aum: "¥180B+",
+        hasStockAnalysis: false,
+      },
+    ],
+    summary:
+      "Japan's premier capital-efficiency benchmark, selecting 400 top Japanese companies based on Return on Equity (ROE), operating profits, and corporate governance standards.",
+    description:
+      "Created jointly by Japan Exchange Group, Tokyo Stock Exchange, and Nikkei Inc., the JPX-Nikkei 400 was launched as an explicit component of Japan's corporate governance revolution. Unlike traditional market-cap indices, it screens eligible Tokyo-listed companies for high 3-year average Return on Equity (ROE), cumulative operating profit, independent director representation, and adoption of IFRS accounting, incentivizing Japanese corporate management to prioritize shareholder value and capital efficiency.",
+    eligibilityCriteria: [
+      "Listed on the Tokyo Stock Exchange Prime, Standard, or Growth sections",
+      "3-year trading value and market capitalization liquidity screen applied",
+      "Ranked by quantitative score (3-year ROE 40%, 3-year operating profit 40%, market cap 20%)",
+      "Qualitative governance factors applied: independent board directors, IFRS reporting, English disclosure",
+    ],
+    keyCharacteristics: [
+      "The pioneer index linking Japanese stock benchmarking to corporate governance and ROE",
+      "Widely adopted by the Government Pension Investment Fund (GPIF) of Japan for active allocations",
+      "Constituent cap of 1.5% prevents mega-cap domination and ensures broad quality mid/large exposure",
+    ],
+    tags: [
+      "International",
+      "Japan",
+      "Asia-Pacific",
+      "Quality",
+      "Smart Beta",
+      "Corporate Governance",
+      "ROE",
+      "Nikkei",
+      "Large Cap",
+    ],
+    officialUrl:
+      "https://indexes.nikkei.co.jp/en/nkave/index/profile?idx=jpxnk400",
+  },
+  {
+    id: "msci-europe",
+    symbol: "M1EU",
+    altSymbols: ["MSCI Europe Index", "MXEU", "IEUR", "VGK"],
+    name: "MSCI Europe Index",
+    providerId: "msci",
+    category: "Developed International Equity",
+    assetClass: "Equity",
+    region: "Europe",
+    constituentsCount: 410,
+    weightingMethodology: "Free-float adjusted market capitalization",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 1969,
+    trackingEtfs: [
+      {
+        ticker: "VGK",
+        name: "Vanguard FTSE Europe ETF (closely matched proxy)",
+        aum: "$17.8B+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "IEUR",
+        name: "iShares Core MSCI Europe ETF",
+        aum: "$4.9B+",
+        hasStockAnalysis: true,
+      },
+      {
+        ticker: "BBEU",
+        name: "JPMorgan BetaBuilders Europe ETF",
+        aum: "$7.6B+",
+        hasStockAnalysis: true,
+      },
+    ],
+    summary:
+      "The definitive institutional benchmark for Developed European equities, capturing approximately 85% of the free float-adjusted market capitalization across 15 developed countries.",
+    description:
+      "The MSCI Europe Index is the standard institutional benchmark for European equities, covering large and mid-cap securities across 15 Developed Market European countries (including the UK, France, Switzerland, Germany, Netherlands, Sweden, Denmark, and Italy). Representing roughly 85% of Europe's total equity universe, it is the primary benchmark for global fund managers seeking exposure to Europe's 'GRANOLAS' multinationals (GSK, Roche, ASML, Nestle, Novartis, Novo Nordisk, L'Oreal, LVMH, AstraZeneca, SAP, Sanofi).",
+    eligibilityCriteria: [
+      "Incorporated and listed in one of 15 Developed European nations",
+      "Minimum full market cap and float-adjusted institutional liquidity requirements under MSCI GIMI standards",
+      "Targeted to cover 85% of the investable equity universe in each constituent country",
+      "Quarterly Index Reviews in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "The premier global asset allocation benchmark for Developed European equities",
+      "Diversified across 15 European economies, curbing country-specific political or economic risk",
+      "Anchors tens of billions across global mega-ETFs including IEUR, VGK, and BBEU",
+    ],
+    tags: [
+      "International",
+      "Europe",
+      "Developed Markets",
+      "Broad Market",
+      "Large Cap",
+      "MSCI",
+      "GRANOLAS",
+      "Healthcare",
+      "Industrials",
+    ],
+    officialUrl: "https://www.msci.com/our-solutions/indexes/europe",
+  },
+  {
+    id: "msci-saudi-arabia",
+    symbol: "M1SA",
+    altSymbols: ["MSCI Saudi Arabia Index", "KSA Index", "Saudi Tadawul"],
+    name: "MSCI Saudi Arabia Index",
+    providerId: "msci",
+    category: "Emerging Markets Equity",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 40,
+    weightingMethodology: "Free-float adjusted market capitalization",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2015,
+    trackingEtfs: [
+      {
+        ticker: "KSA",
+        name: "iShares MSCI Saudi Arabia ETF",
+        aum: "$1.1B+",
+        hasStockAnalysis: true,
+      },
+    ],
+    summary:
+      "The leading international benchmark for the Kingdom of Saudi Arabia, capturing 85% of the investable universe on the Saudi Tadawul exchange.",
+    description:
+      "Designed to measure the performance of the large and mid-cap segments of the Saudi Arabian equity market, the MSCI Saudi Arabia Index covers roughly 85% of the free float-adjusted market capitalization of the Saudi Stock Exchange (Tadawul). Following Saudi Arabia's formal inclusion into the MSCI Emerging Markets Index in 2019, this index has served as the core vehicle for global asset allocators participating in the Kingdom's Vision 2030 economic transformation, banking modernization, and infrastructure expansion.",
+    eligibilityCriteria: [
+      "Securities listed on the Saudi Exchange (Tadawul) accessible via Qualified Foreign Financial Investor (QFI) framework",
+      "Complies with Foreign Ownership Limits (FOL) and MSCI Global Investable Market Indexes methodology",
+      "Subject to minimum liquidity, length of trading, and free-float capital standards",
+      "Reviewed quarterly in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "The preeminent benchmark for the Gulf Cooperation Council (GCC) and Middle East equity markets",
+      "Features financial institutions like Al Rajhi Bank and Saudi National Bank alongside Saudi Aramco and SABIC",
+      "Underpins the $1.1B+ iShares MSCI Saudi Arabia ETF (KSA)",
+    ],
+    tags: [
+      "International",
+      "Saudi Arabia",
+      "Emerging Markets",
+      "Middle East",
+      "MSCI",
+      "KSA",
+      "Financials",
+      "Energy",
+      "Tadawul",
+    ],
+    officialUrl: "https://www.msci.com/our-solutions/indexes/saudi-arabia",
   },
 ];

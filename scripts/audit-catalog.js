@@ -1,6 +1,10 @@
 import { INDICES_DATA } from "../src/data/indicesData.ts";
 import { PROVIDERS_DATA } from "../src/data/providersData.ts";
-import { isGrowthIndex, isValueIndex, isFactorIndex } from "../src/utils/styleFilter.ts";
+import {
+  isGrowthIndex,
+  isValueIndex,
+  isFactorIndex,
+} from "../src/utils/styleFilter.ts";
 
 console.log("=================================================");
 console.log("🔍 FULL CATALOG AUDIT & VERIFICATION REPORT");
@@ -13,16 +17,26 @@ let warnings = 0;
 const providerIds = Object.keys(PROVIDERS_DATA);
 console.log(`\n1. Providers Profile Check (${providerIds.length} providers)`);
 for (const [pid, prov] of Object.entries(PROVIDERS_DATA)) {
-  if (!prov.id || !prov.name || !prov.shortName || !prov.accentColor || !prov.badgeBg) {
+  if (
+    !prov.id ||
+    !prov.name ||
+    !prov.shortName ||
+    !prov.accentColor ||
+    !prov.badgeBg
+  ) {
     console.error(`❌ Provider ${pid} missing required fields!`);
     errors++;
   } else {
-    console.log(`   ✓ [${prov.id}] ${prov.name} (${prov.shortName}) - Accent: ${prov.accentColor}`);
+    console.log(
+      `   ✓ [${prov.id}] ${prov.name} (${prov.shortName}) - Accent: ${prov.accentColor}`,
+    );
   }
 }
 
 // 2. Check Indices
-console.log(`\n2. Indices Structural & Schema Check (${INDICES_DATA.length} indices)`);
+console.log(
+  `\n2. Indices Structural & Schema Check (${INDICES_DATA.length} indices)`,
+);
 const seenIds = new Set();
 const seenTickers = new Map();
 
@@ -36,16 +50,30 @@ for (const idx of INDICES_DATA) {
 
   // Provider validity
   if (!PROVIDERS_DATA[idx.providerId]) {
-    console.error(`❌ Index ${idx.id} references invalid providerId: ${idx.providerId}`);
+    console.error(
+      `❌ Index ${idx.id} references invalid providerId: ${idx.providerId}`,
+    );
     errors++;
   }
 
   // Required fields check
   const requiredFields = [
-    "id", "symbol", "name", "providerId", "category", "assetClass",
-    "region", "constituentsCount", "weightingMethodology",
-    "rebalanceFrequency", "launchYear", "summary", "description",
-    "officialUrl", "trackingEtfs", "tags"
+    "id",
+    "symbol",
+    "name",
+    "providerId",
+    "category",
+    "assetClass",
+    "region",
+    "constituentsCount",
+    "weightingMethodology",
+    "rebalanceFrequency",
+    "launchYear",
+    "summary",
+    "description",
+    "officialUrl",
+    "trackingEtfs",
+    "tags",
   ];
   for (const field of requiredFields) {
     if (idx[field] === undefined || idx[field] === null || idx[field] === "") {
@@ -55,8 +83,13 @@ for (const idx of INDICES_DATA) {
   }
 
   // URL format
-  if (!idx.officialUrl.startsWith("http://") && !idx.officialUrl.startsWith("https://")) {
-    console.error(`❌ Index ${idx.id} has invalid officialUrl: ${idx.officialUrl}`);
+  if (
+    !idx.officialUrl.startsWith("http://") &&
+    !idx.officialUrl.startsWith("https://")
+  ) {
+    console.error(
+      `❌ Index ${idx.id} has invalid officialUrl: ${idx.officialUrl}`,
+    );
     errors++;
   }
 
@@ -72,48 +105,139 @@ for (const idx of INDICES_DATA) {
     seenTickers.get(etf.ticker).push(idx.id);
   }
 }
-console.log(`   ✓ All ${INDICES_DATA.length} indices passed schema and provider checks`);
+console.log(
+  `   ✓ All ${INDICES_DATA.length} indices passed schema and provider checks`,
+);
 console.log(`   ✓ Total unique ETF tickers tracked: ${seenTickers.size}`);
 
 // 3. Check All 46 User-Requested Tickers
 console.log("\n3. User Requested Tickers Verification");
 const userRequestedTickers = [
-  "SPYM", "VOO", "IVV",
-  "VTI", "VXF",
-  "SCHB", "SCHX", "ITOT",
+  "SPYM",
+  "VOO",
+  "IVV",
+  "VTI",
+  "VXF",
+  "SCHB",
+  "SCHX",
+  "ITOT",
   "SPTM",
   "VONE",
-  "SOXQ", "SOXX", "SMH", "PSI", "DRAM",
-  "QQQM", "QQQ",
-  "XLK", "FTEC", "VGT",
-  "SPYG", "SCHG", "VOOG",
-  "IAU", "GLD", "PHYS",
-  "VTV", "SPYV", "VYM", "SCHD", "SCHV", "DGRO",
-  "FSTA", "XLP",
-  "XAR", "ITA", "DFEN", "PPA",
-  "IBB", "IBBQ", "XBI", "LABU", "BIB",
-  "XPH", "IHE",
-  "VXUS", "VYMI",
+  "SOXQ",
+  "SOXX",
+  "SMH",
+  "PSI",
+  "DRAM",
+  "QQQM",
+  "QQQ",
+  "XLK",
+  "FTEC",
+  "VGT",
+  "SPYG",
+  "SCHG",
+  "VOOG",
+  "IAU",
+  "GLD",
+  "PHYS",
+  "VTV",
+  "SPYV",
+  "VYM",
+  "SCHD",
+  "SCHV",
+  "DGRO",
+  "FSTA",
+  "XLP",
+  "XAR",
+  "ITA",
+  "DFEN",
+  "PPA",
+  "IBB",
+  "IBBQ",
+  "XBI",
+  "LABU",
+  "BIB",
+  "XPH",
+  "IHE",
+  "VXUS",
+  "VYMI",
   "SLV",
   "SPMO",
-  "IDMO", "XMMO", "XSMO",
-  "MTUM", "IMTM", "PDP", "FDMO", "DWAS",
-  "GARP", "SPGP", "GRPM",
+  "IDMO",
+  "XMMO",
+  "XSMO",
+  "MTUM",
+  "IMTM",
+  "PDP",
+  "FDMO",
+  "DWAS",
+  "GARP",
+  "SPGP",
+  "GRPM",
   "VT",
   "XLE",
   "RSP",
-  "XLI", "VIS",
+  "XLI",
+  "VIS",
   "SGOV",
-  "IGM", "IXN",
-  "VFMO", "ONEO", "IWD", "VONV",
-  "AGG", "BND", "TLT", "IEF", "SHY", "BIL", "LQD", "HYG",
-  "VCIT", "VCSH", "TIP", "VTIP", "JNK", "MUB", "VTEB", "BNDX",
-  "AVUV", "AVLV", "AVUS", "AVDV", "AVIV", "AVES", "AVEM", "AVSC", "AVLC",
+  "IGM",
+  "IXN",
+  "VFMO",
+  "ONEO",
+  "IWD",
+  "VONV",
+  "AGG",
+  "BND",
+  "TLT",
+  "IEF",
+  "SHY",
+  "BIL",
+  "LQD",
+  "HYG",
+  "VCIT",
+  "VCSH",
+  "TIP",
+  "VTIP",
+  "JNK",
+  "MUB",
+  "VTEB",
+  "BNDX",
+  "AVUV",
+  "AVLV",
+  "AVUS",
+  "AVDV",
+  "AVIV",
+  "AVES",
+  "AVEM",
+  "AVSC",
+  "AVLC",
   "IYW",
-  "MGK", "VOT", "VOE", "VBK", "VBR", "MOAT",
-  "IXUS", "ACWX", "VEU", "IDEV", "EWJ", "INDA", "MCHI", "FXI", "EWT", "EWU", "EFG", "VIGI", "FNDF", "VWOB",
+  "MGK",
+  "VOT",
+  "VOE",
+  "VBK",
+  "VBR",
+  "MOAT",
+  "IXUS",
+  "ACWX",
+  "VEU",
+  "IDEV",
+  "EWJ",
+  "INDA",
+  "MCHI",
+  "FXI",
+  "EWT",
+  "EWU",
+  "EFG",
+  "VIGI",
+  "FNDF",
+  "VWOB",
   "SPHQ",
-  "QUAL", "USMV", "VLUE", "EUSA", "EWZ", "ESGU",
+  "QUAL",
+  "USMV",
+  "VLUE",
+  "EUSA",
+  "EWZ",
+  "ESGU",
   "SCHM",
   "IEMG",
   "EMXC",
@@ -171,7 +295,7 @@ const userRequestedTickers = [
   "IB01",
   "IBTM",
   "CTYM",
-  "SSAC"
+  "SSAC",
 ];
 
 for (const ticker of userRequestedTickers) {
@@ -180,7 +304,9 @@ for (const ticker of userRequestedTickers) {
     errors++;
   } else {
     const indicesList = seenTickers.get(ticker);
-    console.log(`   ✓ [${ticker.padEnd(5)}] -> mapped to: ${indicesList.join(", ")}`);
+    console.log(
+      `   ✓ [${ticker.padEnd(5)}] -> mapped to: ${indicesList.join(", ")}`,
+    );
   }
 }
 
@@ -263,10 +389,13 @@ const suggestions = [
   "Growth",
   "Value",
   "International",
+  "Europe",
+  "United Kingdom",
   "Emerging Markets",
   "Japan",
   "India",
   "China",
+  "Australia",
 ];
 
 for (const term of suggestions) {
@@ -275,7 +404,12 @@ for (const term of suggestions) {
     console.error(`❌ Search suggestion "${term}" returned 0 matches!`);
     errors++;
   } else {
-    console.log(`   ✓ "${term}" -> ${results.length} results (${results.map(r => r.symbol).slice(0, 4).join(", ")}${results.length > 4 ? "..." : ""})`);
+    console.log(
+      `   ✓ "${term}" -> ${results.length} results (${results
+        .map((r) => r.symbol)
+        .slice(0, 4)
+        .join(", ")}${results.length > 4 ? "..." : ""})`,
+    );
   }
 }
 
@@ -285,8 +419,12 @@ function matchesPresetTerm(idx, term) {
   if (norm === "treasury / cash") {
     if (idx.assetClass !== "Fixed Income") return false;
     return (
-      /treasury|t-bill|cash alternative|inflation-protected|tips|government/i.test(idx.category) ||
-      (idx.tags || []).some(t => /treasury|t-bill|cash alternative|tips|risk-free/i.test(t)) ||
+      /treasury|t-bill|cash alternative|inflation-protected|tips|government/i.test(
+        idx.category,
+      ) ||
+      (idx.tags || []).some((t) =>
+        /treasury|t-bill|cash alternative|tips|risk-free/i.test(t),
+      ) ||
       /treasury|treasury bill/i.test(idx.name)
     );
   }
@@ -294,51 +432,67 @@ function matchesPresetTerm(idx, term) {
     return (
       idx.assetClass === "Fixed Income" ||
       /bond|fixed income/i.test(idx.category) ||
-      (idx.tags || []).some(t => /bond|fixed income/i.test(t))
+      (idx.tags || []).some((t) => /bond|fixed income/i.test(t))
     );
   }
   if (norm === "volatility / vix") {
     return (
       idx.symbol === "VIX" ||
       (idx.altSymbols || []).includes("VIX") ||
-      (idx.tags || []).some(t => /volatility|vix/i.test(t)) ||
+      (idx.tags || []).some((t) => /volatility|vix/i.test(t)) ||
       /volatility/i.test(idx.name)
     );
   }
   if (norm.includes("/")) {
-    const alternatives = norm.split("/").map(p => p.trim()).filter(Boolean);
-    return alternatives.some(alt => runSearch(alt).some(i => i.id === idx.id));
+    const alternatives = norm
+      .split("/")
+      .map((p) => p.trim())
+      .filter(Boolean);
+    return alternatives.some((alt) =>
+      runSearch(alt).some((i) => i.id === idx.id),
+    );
   }
-  return runSearch(norm).some(i => i.id === idx.id);
+  return runSearch(norm).some((i) => i.id === idx.id);
 }
 
 const chipTermsToTest = suggestions;
 for (const chip of chipTermsToTest) {
-  const chipResults = INDICES_DATA.filter(idx => matchesPresetTerm(idx, chip));
+  const chipResults = INDICES_DATA.filter((idx) =>
+    matchesPresetTerm(idx, chip),
+  );
   if (chipResults.length === 0) {
     console.error(`❌ Preset Chip "${chip}" returned 0 matches!`);
     errors++;
   }
 }
-console.log(`   ✓ All ${chipTermsToTest.length} preset filter chips validated with active benchmark matches`);
+console.log(
+  `   ✓ All ${chipTermsToTest.length} preset filter chips validated with active benchmark matches`,
+);
 
 // Specifically test "Profitability Screen"
 const profitMatches = runSearch("Profitability Screen");
-const expectedProfitIds = ["sp-500", "sp-midcap-400", "sp-smallcap-600", "sp-composite-1500"];
+const expectedProfitIds = [
+  "sp-500",
+  "sp-midcap-400",
+  "sp-smallcap-600",
+  "sp-composite-1500",
+];
 for (const expId of expectedProfitIds) {
-  if (!profitMatches.some(m => m.id === expId)) {
+  if (!profitMatches.some((m) => m.id === expId)) {
     console.error(`❌ Profitability Screen search failed to match ${expId}!`);
     errors++;
   }
 }
-console.log(`   ✓ "Profitability Screen" matches all 4 core S&P indices: ${profitMatches.map(m => m.symbol).join(", ")}`);
+console.log(
+  `   ✓ "Profitability Screen" matches all 4 core S&P indices: ${profitMatches.map((m) => m.symbol).join(", ")}`,
+);
 
 // 5. Test Related Indices for all 61 indices
 console.log("\n5. Related Indices Coverage Test");
 let indicesWithZeroRelated = 0;
 for (const index of INDICES_DATA) {
   const sameProvider = INDICES_DATA.filter(
-    (idx) => idx.providerId === index.providerId && idx.id !== index.id
+    (idx) => idx.providerId === index.providerId && idx.id !== index.id,
   );
   let related;
   if (sameProvider.length >= 3) {
@@ -350,18 +504,22 @@ for (const index of INDICES_DATA) {
         idx.providerId !== index.providerId &&
         (idx.category === index.category ||
           (idx.assetClass === index.assetClass &&
-            idx.tags.some((t) => index.tags.includes(t))))
+            idx.tags.some((t) => index.tags.includes(t)))),
     );
     related = [...sameProvider, ...peers].slice(0, 6);
   }
   if (related.length === 0) {
-    console.error(`❌ Index ${index.id} (${index.symbol}) has 0 related indices!`);
+    console.error(
+      `❌ Index ${index.id} (${index.symbol}) has 0 related indices!`,
+    );
     indicesWithZeroRelated++;
     errors++;
   }
 }
 if (indicesWithZeroRelated === 0) {
-  console.log(`   ✓ All ${INDICES_DATA.length} indices have at least 1-6 related benchmarks (100% coverage)`);
+  console.log(
+    `   ✓ All ${INDICES_DATA.length} indices have at least 1-6 related benchmarks (100% coverage)`,
+  );
 }
 
 // 6. Test Growth, Value, and Factor Style Filters
@@ -373,30 +531,53 @@ if (growthIndices.length === 0) {
   console.error("❌ No growth indices found by style filter!");
   errors++;
 } else {
-  console.log(`   ✓ Found ${growthIndices.length} Growth indices (${growthIndices.map((i) => i.symbol).slice(0, 5).join(", ")}...)`);
+  console.log(
+    `   ✓ Found ${growthIndices.length} Growth indices (${growthIndices
+      .map((i) => i.symbol)
+      .slice(0, 5)
+      .join(", ")}...)`,
+  );
 }
 if (valueIndices.length === 0) {
   console.error("❌ No value indices found by style filter!");
   errors++;
 } else {
-  console.log(`   ✓ Found ${valueIndices.length} Value indices (${valueIndices.map((i) => i.symbol).slice(0, 5).join(", ")}...)`);
+  console.log(
+    `   ✓ Found ${valueIndices.length} Value indices (${valueIndices
+      .map((i) => i.symbol)
+      .slice(0, 5)
+      .join(", ")}...)`,
+  );
 }
 if (factorIndices.length === 0) {
   console.error("❌ No factor indices found by style filter!");
   errors++;
 } else {
-  console.log(`   ✓ Found ${factorIndices.length} Factor / Smart Beta indices (${factorIndices.map((i) => i.symbol).slice(0, 5).join(", ")}...)`);
+  console.log(
+    `   ✓ Found ${factorIndices.length} Factor / Smart Beta indices (${factorIndices
+      .map((i) => i.symbol)
+      .slice(0, 5)
+      .join(", ")}...)`,
+  );
 }
-const overlap = growthIndices.filter((g) => valueIndices.some((v) => v.id === g.id));
+const overlap = growthIndices.filter((g) =>
+  valueIndices.some((v) => v.id === g.id),
+);
 if (overlap.length > 0) {
-  console.error(`❌ Overlap detected between Growth and Value: ${overlap.map((i) => i.id).join(", ")}`);
+  console.error(
+    `❌ Overlap detected between Growth and Value: ${overlap.map((i) => i.id).join(", ")}`,
+  );
   errors++;
 } else {
   console.log("   ✓ Zero overlap between Growth and Value classifications");
 }
-const growthFactorOverlap = growthIndices.filter((g) => factorIndices.some((f) => f.id === g.id));
+const growthFactorOverlap = growthIndices.filter((g) =>
+  factorIndices.some((f) => f.id === g.id),
+);
 if (growthFactorOverlap.length > 0) {
-  console.error(`❌ Overlap detected between Growth and Factor: ${growthFactorOverlap.map((i) => i.id).join(", ")}`);
+  console.error(
+    `❌ Overlap detected between Growth and Factor: ${growthFactorOverlap.map((i) => i.id).join(", ")}`,
+  );
   errors++;
 } else {
   console.log("   ✓ Zero overlap between Growth and Factor classifications");
