@@ -1,7 +1,15 @@
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Box, Chip, Collapse, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Collapse,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ProviderId } from "../types";
 import {
@@ -22,6 +30,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
   onSelectProvider,
   indexCounts,
 }) => {
+  const theme = useTheme();
   const isInsideOthers =
     selectedProvider === "others" || isOtherProvider(selectedProvider);
   const [isOthersExpanded, setIsOthersExpanded] =
@@ -170,7 +179,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                         fontWeight: 700,
                         fontSize: "0.85rem",
                         fontFamily: "inherit",
-                        color: isSelected ? "#ffffff" : "text.primary",
+                        color: isSelected
+                          ? theme.palette.primary.contrastText
+                          : "text.primary",
                         whiteSpace: "nowrap",
                       }}
                     >
@@ -186,7 +197,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                         backgroundColor: isSelected
                           ? "rgba(255, 255, 255, 0.25)"
                           : "rgba(255, 255, 255, 0.08)",
-                        color: isSelected ? "#ffffff" : "text.secondary",
+                        color: isSelected
+                          ? theme.palette.primary.contrastText
+                          : "text.secondary",
                         fontWeight: 800,
                       }}
                     >
@@ -206,21 +219,21 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                   borderRadius: 3,
                   border: "1.5px solid",
                   borderColor: isSelected
-                    ? provider.accentColor
+                    ? theme.palette.primary.main
                     : "var(--indices-border, rgba(255, 255, 255, 0.12))",
                   backgroundColor: isSelected
-                    ? provider.accentColor
+                    ? theme.palette.primary.main
                     : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
                   boxShadow: isSelected
-                    ? `0 0 20px ${provider.accentColor}55`
+                    ? `0 0 20px ${theme.palette.primary.main}55`
                     : "none",
                   backdropFilter: "blur(8px)",
                   transition: "all 0.2s ease",
                   "&:hover": {
                     backgroundColor: isSelected
-                      ? provider.accentColor
+                      ? theme.palette.primary.dark
                       : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.9))",
-                    borderColor: provider.accentColor,
+                    borderColor: theme.palette.primary.main,
                     transform: "translateY(-2px)",
                   },
                 }}
@@ -258,7 +271,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                       fontWeight: 700,
                       fontSize: "0.85rem",
                       fontFamily: "inherit",
-                      color: isOthersActive ? "#ffffff" : "text.primary",
+                      color: isOthersActive
+                        ? theme.palette.primary.contrastText
+                        : "text.primary",
                       whiteSpace: "nowrap",
                     }}
                   >
@@ -274,7 +289,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                       backgroundColor: isOthersActive
                         ? "rgba(255, 255, 255, 0.25)"
                         : "rgba(255, 255, 255, 0.08)",
-                      color: isOthersActive ? "#ffffff" : "text.secondary",
+                      color: isOthersActive
+                        ? theme.palette.primary.contrastText
+                        : "text.secondary",
                       fontWeight: 800,
                     }}
                   >
@@ -308,21 +325,21 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 borderRadius: 3,
                 border: "1.5px solid",
                 borderColor: isOthersActive
-                  ? "#8b5cf6"
+                  ? theme.palette.primary.main
                   : "var(--indices-border, rgba(255, 255, 255, 0.12))",
                 backgroundColor: isOthersActive
-                  ? "#8b5cf6"
+                  ? theme.palette.primary.main
                   : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
                 boxShadow: isOthersActive
-                  ? "0 0 20px rgba(139, 92, 246, 0.45)"
+                  ? `0 0 20px ${theme.palette.primary.main}55`
                   : "none",
                 backdropFilter: "blur(8px)",
                 transition: "all 0.2s ease",
                 "&:hover": {
                   backgroundColor: isOthersActive
-                    ? "#7c3aed"
+                    ? theme.palette.primary.dark
                     : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.9))",
-                  borderColor: "#8b5cf6",
+                  borderColor: theme.palette.primary.main,
                   transform: "translateY(-2px)",
                 },
               }}
@@ -434,23 +451,25 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 border: "1.5px solid",
                 borderColor:
                   selectedProvider === "others"
-                    ? "#8b5cf6"
+                    ? theme.palette.primary.main
                     : "var(--indices-border, rgba(255, 255, 255, 0.12))",
                 backgroundColor:
                   selectedProvider === "others"
-                    ? "#8b5cf6"
+                    ? theme.palette.primary.main
                     : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
                 color:
-                  selectedProvider === "others" ? "#ffffff" : "text.primary",
+                  selectedProvider === "others"
+                    ? theme.palette.primary.contrastText
+                    : "text.primary",
                 boxShadow:
                   selectedProvider === "others"
-                    ? "0 0 16px rgba(139, 92, 246, 0.45)"
+                    ? `0 0 16px ${theme.palette.primary.main}45`
                     : "none",
                 transition: "all 0.2s ease",
                 "&:hover": {
                   backgroundColor:
                     selectedProvider === "others"
-                      ? "#7c3aed"
+                      ? theme.palette.primary.dark
                       : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.9))",
                   transform: "translateY(-1px)",
                 },
@@ -476,7 +495,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                           fontWeight: 700,
                           fontSize: "0.82rem",
                           fontFamily: "inherit",
-                          color: isSelected ? "#ffffff" : "text.primary",
+                          color: isSelected
+                            ? theme.palette.primary.contrastText
+                            : "text.primary",
                           whiteSpace: "nowrap",
                         }}
                       >
@@ -492,7 +513,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                           backgroundColor: isSelected
                             ? "rgba(255, 255, 255, 0.25)"
                             : "rgba(255, 255, 255, 0.08)",
-                          color: isSelected ? "#ffffff" : "text.secondary",
+                          color: isSelected
+                            ? theme.palette.primary.contrastText
+                            : "text.secondary",
                           fontWeight: 800,
                         }}
                       >
@@ -509,21 +532,21 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                     borderRadius: 2.5,
                     border: "1.5px solid",
                     borderColor: isSelected
-                      ? provider.accentColor
+                      ? theme.palette.primary.main
                       : "var(--indices-border, rgba(255, 255, 255, 0.12))",
                     backgroundColor: isSelected
-                      ? provider.accentColor
+                      ? theme.palette.primary.main
                       : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
                     boxShadow: isSelected
-                      ? `0 0 16px ${provider.accentColor}55`
+                      ? `0 0 16px ${theme.palette.primary.main}55`
                       : "none",
                     backdropFilter: "blur(8px)",
                     transition: "all 0.2s ease",
                     "&:hover": {
                       backgroundColor: isSelected
-                        ? provider.accentColor
+                        ? theme.palette.primary.dark
                         : "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.9))",
-                      borderColor: provider.accentColor,
+                      borderColor: theme.palette.primary.main,
                       transform: "translateY(-1px)",
                     },
                   }}

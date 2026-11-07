@@ -10,6 +10,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
 import { IndexProvider } from "../types";
@@ -23,6 +24,7 @@ interface ProviderHeroBannerProps {
 export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
   provider,
 }) => {
+  const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!provider) {
@@ -36,10 +38,10 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
         mb: 3.5,
         p: { xs: 2, sm: 2.75 },
         borderRadius: 3.5,
-        background: `linear-gradient(135deg, ${provider.badgeBg} 0%, rgba(15, 23, 42, 0.9) 100%)`,
+        background: `linear-gradient(135deg, ${theme.palette.primary.main}18 0%, var(--indices-card-bg, rgba(15, 23, 42, 0.9)) 100%)`,
         backdropFilter: "blur(16px)",
-        border: `1.5px solid ${provider.accentColor}33`,
-        boxShadow: `0 8px 32px ${provider.accentColor}15`,
+        border: `1.5px solid ${theme.palette.primary.main}33`,
+        boxShadow: `0 8px 32px ${theme.palette.primary.main}15`,
         position: "relative",
         overflow: "hidden",
         transition: "all 0.3s ease",
@@ -54,7 +56,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
           width: 200,
           height: 200,
           borderRadius: "50%",
-          background: provider.accentColor,
+          background: theme.palette.primary.main,
           opacity: 0.08,
           filter: "blur(40px)",
           pointerEvents: "none",
@@ -81,8 +83,8 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 label={provider.shortName}
                 size="small"
                 sx={{
-                  backgroundColor: provider.accentColor,
-                  color: "#ffffff",
+                  backgroundColor: theme.palette.primary.main,
+                  color: theme.palette.primary.contrastText,
                   fontWeight: 800,
                   fontSize: "0.75rem",
                   borderRadius: 1.5,
@@ -122,7 +124,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
               variant="outlined"
               size="small"
               label="Share"
-              color={provider.accentColor}
+              color={theme.palette.primary.main}
               tooltip={`Share ${provider.shortName} overview`}
               sx={{
                 fontSize: "0.75rem",
@@ -140,17 +142,17 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
               rel="noopener noreferrer"
               endIcon={<LaunchIcon sx={{ fontSize: 13 }} />}
               sx={{
-                borderColor: `${provider.accentColor}66`,
-                color: "#f8fafc",
-                backgroundColor: `${provider.accentColor}11`,
+                borderColor: `${theme.palette.primary.main}66`,
+                color: "text.primary",
+                backgroundColor: `${theme.palette.primary.main}11`,
                 fontWeight: 700,
                 fontSize: "0.75rem",
                 borderRadius: 2,
                 px: 1.75,
                 py: 0.5,
                 "&:hover": {
-                  borderColor: provider.accentColor,
-                  backgroundColor: `${provider.accentColor}22`,
+                  borderColor: theme.palette.primary.main,
+                  backgroundColor: `${theme.palette.primary.main}22`,
                 },
               }}
             >
@@ -177,8 +179,10 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                   )
                 }
                 sx={{
-                  borderColor: "rgba(255, 255, 255, 0.15)",
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  borderColor:
+                    "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                  backgroundColor:
+                    "var(--indices-subtle-bg, rgba(255, 255, 255, 0.05))",
                   color: "text.secondary",
                   fontWeight: 600,
                   fontSize: "0.75rem",
@@ -186,9 +190,9 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                   px: 1.5,
                   py: 0.5,
                   "&:hover": {
-                    borderColor: provider.accentColor,
-                    color: "#ffffff",
-                    backgroundColor: `${provider.accentColor}15`,
+                    borderColor: theme.palette.primary.main,
+                    color: "text.primary",
+                    backgroundColor: `${theme.palette.primary.main}15`,
                   },
                 }}
               >
@@ -259,8 +263,10 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                   gap: { xs: 0.25, sm: 1.5 },
                   p: 1.25,
                   borderRadius: 2,
-                  backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.5))",
-                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
+                  backgroundColor:
+                    "var(--indices-subtle-bg, rgba(15, 23, 42, 0.5))",
+                  border:
+                    "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
                 }}
               >
                 <Typography
@@ -290,8 +296,10 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                   gap: { xs: 0.25, sm: 1.5 },
                   p: 1.25,
                   borderRadius: 2,
-                  backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.5))",
-                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
+                  backgroundColor:
+                    "var(--indices-subtle-bg, rgba(15, 23, 42, 0.5))",
+                  border:
+                    "1px solid var(--indices-border, rgba(255, 255, 255, 0.05))",
                 }}
               >
                 <Typography
@@ -338,7 +346,7 @@ export const ProviderHeroBanner: React.FC<ProviderHeroBannerProps> = ({
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 700, color: provider.accentColor }}
+                  sx={{ fontWeight: 700, color: theme.palette.primary.main }}
                 >
                   {provider.marketShareSummary}
                 </Typography>

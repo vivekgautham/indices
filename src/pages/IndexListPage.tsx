@@ -30,6 +30,7 @@ import SiteFooter from "../components/layout/SiteFooter";
 import { IndexCard } from "../components/IndexCard";
 import { IndexTableView } from "../components/IndexTableView";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
+import { ProviderLogo } from "../components/ProviderLogo";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import { StyleQuickFilter } from "../components/StyleQuickFilter";
 import { PROVIDERS_DATA } from "../data/providersData";
@@ -239,7 +240,7 @@ export default function IndexListPage() {
     setVisibleRows(3);
   }, [searchTerm, selectedTerms, selectedProvider, selectedStyle]);
 
-  // Calculate index counts per provider (accounting for selectedStyle)
+  // Calculate index counts per provider (accounting for selectedStyle and selectedTerms / themes selected)
   const indexCounts = useMemo(() => {
     let list = indices;
     if (selectedStyle === "growth") {
@@ -248,6 +249,11 @@ export default function IndexListPage() {
       list = list.filter(isValueIndex);
     } else if (selectedStyle === "factor") {
       list = list.filter(isFactorIndex);
+    }
+    if (selectedTerms.length > 0) {
+      list = list.filter((idx) => {
+        return selectedTerms.every((term) => matchesPresetTerm(idx, term));
+      });
     }
     const counts: Record<string, number> = {
       all: list.length,
@@ -260,7 +266,7 @@ export default function IndexListPage() {
       }
     });
     return counts;
-  }, [indices, selectedStyle]);
+  }, [indices, selectedStyle, selectedTerms]);
 
   // Calculate style counts (Growth / Value / Factor) for the currently selected provider
   const styleCounts = useMemo(() => {
@@ -566,6 +572,64 @@ export default function IndexListPage() {
                   }}
                 />
 
+                {/* Active Provider Chip (S&P, FTSE, etc.) */}
+                {selectedProvider !== "all" && (
+                  <Chip
+                    size="small"
+                    icon={
+                      <ProviderLogo
+                        providerId={
+                          selectedProvider === "others"
+                            ? "all"
+                            : selectedProvider
+                        }
+                        size={14}
+                      />
+                    }
+                    label={
+                      selectedProvider === "others"
+                        ? "Others (<10)"
+                        : activeProviderObj?.shortName ||
+                          selectedProvider.toUpperCase()
+                    }
+                    onDelete={(e) => {
+                      e.stopPropagation();
+                      updateFilterParams({ provider: "all" });
+                    }}
+                    color="primary"
+                    variant="filled"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: "0.76rem",
+                      height: 28,
+                      borderRadius: 2,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      flexShrink: 0,
+                      backgroundColor: theme.palette.primary.main,
+                      color: theme.palette.primary.contrastText,
+                      "& .MuiChip-icon": {
+                        ml: 0.75,
+                        mr: -0.25,
+                      },
+                      "& .MuiChip-label": {
+                        px: 1,
+                        lineHeight: 1,
+                      },
+                      "& .MuiChip-deleteIcon": {
+                        color: "inherit",
+                        fontSize: 16,
+                        mr: 0.5,
+                        ml: -0.25,
+                        opacity: 0.8,
+                        "&:hover": {
+                          opacity: 1,
+                        },
+                      },
+                    }}
+                  />
+                )}
+
                 {/* Active Style Chip */}
                 {selectedStyle !== "all" && (
                   <Chip
@@ -669,7 +733,9 @@ export default function IndexListPage() {
                   inputRef={searchInputRef}
                   fullWidth={false}
                   placeholder={
-                    selectedStyle !== "all" || selectedTerms.length > 0
+                    selectedProvider !== "all" ||
+                    selectedStyle !== "all" ||
+                    selectedTerms.length > 0
                       ? "Type additional keywords, tickers (e.g. SPMO, VOO, VXF)..."
                       : "Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, VXF, SCHD, SCHX), methodology, criteria..."
                   }
@@ -683,6 +749,8 @@ export default function IndexListPage() {
                         );
                       } else if (selectedStyle !== "all") {
                         updateFilterParams({ style: "all" });
+                      } else if (selectedProvider !== "all") {
+                        updateFilterParams({ provider: "all" });
                       }
                     }
                   }}
@@ -702,7 +770,8 @@ export default function IndexListPage() {
                 {/* Clear Action Button */}
                 {(searchTerm ||
                   selectedTerms.length > 0 ||
-                  selectedStyle !== "all") && (
+                  selectedStyle !== "all" ||
+                  selectedProvider !== "all") && (
                   <Tooltip title="Clear search and filters">
                     <IconButton
                       aria-label="Clear search and filters"
