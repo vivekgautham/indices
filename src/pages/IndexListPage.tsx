@@ -34,9 +34,7 @@ import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import { StyleQuickFilter } from "../components/StyleQuickFilter";
 import { PROVIDERS_DATA } from "../data/providersData";
 import { ProviderId } from "../types";
-import {
-  OTHER_PROVIDER_IDS,
-} from "../utils/providerClassification";
+import { OTHER_PROVIDER_IDS } from "../utils/providerClassification";
 import {
   isFactorIndex,
   isGrowthIndex,
@@ -164,10 +162,10 @@ export default function IndexListPage() {
           }
           return next;
         },
-        { replace: true }
+        { replace: true },
       );
     },
-    [setSearchParams]
+    [setSearchParams],
   );
 
   // Directly derive all filter states from searchParams (single source of truth)
@@ -186,7 +184,10 @@ export default function IndexListPage() {
   const selectedTerms = useMemo<string[]>(() => {
     const tParam = searchParams.get("terms") || "";
     return tParam
-      ? tParam.split(",").map((t) => t.trim()).filter(Boolean)
+      ? tParam
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
       : [];
   }, [searchParams]);
 
@@ -279,7 +280,8 @@ export default function IndexListPage() {
 
   // Current active provider object if a single provider is selected
   const activeProviderObj = useMemo(() => {
-    if (selectedProvider === "all" || selectedProvider === "others") return undefined;
+    if (selectedProvider === "all" || selectedProvider === "others")
+      return undefined;
     return providers.find((p) => p.id === selectedProvider);
   }, [providers, selectedProvider]);
 
@@ -376,7 +378,13 @@ export default function IndexListPage() {
       document.title =
         "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
     }
-  }, [activeProviderObj, selectedProvider, searchTerm, selectedTerms, selectedStyle]);
+  }, [
+    activeProviderObj,
+    selectedProvider,
+    searchTerm,
+    selectedTerms,
+    selectedStyle,
+  ]);
 
   // Handle clicking on suggested search terms, integrating StyleFilter for Growth, Value, Factor
   const handleTermClick = (term: string) => {
@@ -410,7 +418,9 @@ export default function IndexListPage() {
     // If a specific provider tab is active and has 0 matches for this newly selected term,
     // switch selectedProvider to "all" so the user immediately sees matching results!
     if (selectedProvider !== "all") {
-      const isActivating = !selectedTerms.some((t) => t.toLowerCase() === lower);
+      const isActivating = !selectedTerms.some(
+        (t) => t.toLowerCase() === lower,
+      );
       if (isActivating) {
         const matchesInCurrentProvider = indices.some((idx) => {
           const matchesProv =
@@ -513,7 +523,12 @@ export default function IndexListPage() {
 
           {/* Search Bar & Reset Filters */}
           <Box sx={{ width: "100%", mt: 0.5 }}>
-            <Stack direction="row" spacing={1.25} alignItems="center" sx={{ width: "100%" }}>
+            <Stack
+              direction="row"
+              spacing={1.25}
+              alignItems="center"
+              sx={{ width: "100%" }}
+            >
               <Box
                 onClick={() => searchInputRef.current?.focus()}
                 sx={{
@@ -529,7 +544,8 @@ export default function IndexListPage() {
                   backgroundColor:
                     "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
                   backdropFilter: "blur(12px)",
-                  border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
+                  border:
+                    "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
                   cursor: "text",
                   transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                   "&:hover": {
@@ -541,212 +557,216 @@ export default function IndexListPage() {
                   },
                 }}
               >
-              <SearchIcon
-                sx={{
-                  color: "text.secondary",
-                  fontSize: 20,
-                  flexShrink: 0,
-                  mr: 0.25,
-                }}
-              />
-
-              {/* Active Style Chip */}
-              {selectedStyle !== "all" && (
-                <Chip
-                  size="small"
-                  label={
-                    selectedStyle === "growth"
-                      ? "📈 Growth"
-                      : selectedStyle === "value"
-                        ? "💎 Value"
-                        : "⚡ Factor"
-                  }
-                  onDelete={(e) => {
-                    e.stopPropagation();
-                    updateFilterParams({ style: "all" });
-                  }}
+                <SearchIcon
                   sx={{
-                    fontWeight: 700,
-                    fontSize: "0.76rem",
-                    height: 28,
-                    borderRadius: 2,
-                    display: "inline-flex",
-                    alignItems: "center",
+                    color: "text.secondary",
+                    fontSize: 20,
                     flexShrink: 0,
-                    backgroundColor:
-                      selectedStyle === "growth"
-                        ? "rgba(16, 185, 129, 0.15)"
-                        : selectedStyle === "value"
-                          ? "rgba(139, 92, 246, 0.15)"
-                          : "rgba(245, 158, 11, 0.15)",
-                    color:
-                      selectedStyle === "growth"
-                        ? "#10b981"
-                        : selectedStyle === "value"
-                          ? "#a855f7"
-                          : "#f59e0b",
-                    border: `1px solid ${
-                      selectedStyle === "growth"
-                        ? "#10b981"
-                        : selectedStyle === "value"
-                          ? "#8b5cf6"
-                          : "#f59e0b"
-                    }`,
-                    "& .MuiChip-label": {
-                      px: 1,
-                      lineHeight: 1,
-                    },
-                    "& .MuiChip-deleteIcon": {
-                      color: "inherit",
-                      fontSize: 16,
-                      mr: 0.5,
-                      ml: -0.25,
-                      opacity: 0.75,
-                      "&:hover": {
-                        opacity: 1,
-                        color: "text.primary",
-                      },
-                    },
+                    mr: 0.25,
                   }}
                 />
-              )}
 
-              {/* Active Selected Term Chips */}
-              {selectedTerms.map((term) => (
-                <Chip
-                  key={term}
-                  size="small"
-                  label={term}
-                  onDelete={(e) => {
-                    e.stopPropagation();
-                    handleRemoveTerm(term);
-                  }}
-                  color="primary"
-                  variant="filled"
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "0.76rem",
-                    height: 28,
-                    borderRadius: 2,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    flexShrink: 0,
-                    "& .MuiChip-label": {
-                      px: 1,
-                      lineHeight: 1,
-                    },
-                    "& .MuiChip-deleteIcon": {
-                      fontSize: 16,
-                      mr: 0.5,
-                      ml: -0.25,
-                      opacity: 0.75,
-                      "&:hover": {
-                        opacity: 1,
-                      },
-                    },
-                  }}
-                />
-              ))}
-
-              {/* Inline Search Input */}
-              <InputBase
-                inputRef={searchInputRef}
-                fullWidth={false}
-                placeholder={
-                  selectedStyle !== "all" || selectedTerms.length > 0
-                    ? "Type additional keywords, tickers (e.g. SPMO, VOO, VXF)..."
-                    : "Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, VXF, SCHD, SCHX), methodology, criteria..."
-                }
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Backspace" && searchTerm === "") {
-                    if (selectedTerms.length > 0) {
-                      handleRemoveTerm(selectedTerms[selectedTerms.length - 1]);
-                    } else if (selectedStyle !== "all") {
-                      updateFilterParams({ style: "all" });
+                {/* Active Style Chip */}
+                {selectedStyle !== "all" && (
+                  <Chip
+                    size="small"
+                    label={
+                      selectedStyle === "growth"
+                        ? "📈 Growth"
+                        : selectedStyle === "value"
+                          ? "💎 Value"
+                          : "⚡ Factor"
                     }
-                  }
-                }}
-                sx={{
-                  flex: 1,
-                  minWidth: { xs: 140, sm: 220 },
-                  fontSize: "0.95rem",
-                  color: "text.primary",
-                  "& input": {
-                    py: 0.5,
-                    px: 0.5,
-                    lineHeight: 1.5,
-                  },
-                }}
-              />
+                    onDelete={(e) => {
+                      e.stopPropagation();
+                      updateFilterParams({ style: "all" });
+                    }}
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: "0.76rem",
+                      height: 28,
+                      borderRadius: 2,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      flexShrink: 0,
+                      backgroundColor:
+                        selectedStyle === "growth"
+                          ? "rgba(16, 185, 129, 0.15)"
+                          : selectedStyle === "value"
+                            ? "rgba(139, 92, 246, 0.15)"
+                            : "rgba(245, 158, 11, 0.15)",
+                      color:
+                        selectedStyle === "growth"
+                          ? "#10b981"
+                          : selectedStyle === "value"
+                            ? "#a855f7"
+                            : "#f59e0b",
+                      border: `1px solid ${
+                        selectedStyle === "growth"
+                          ? "#10b981"
+                          : selectedStyle === "value"
+                            ? "#8b5cf6"
+                            : "#f59e0b"
+                      }`,
+                      "& .MuiChip-label": {
+                        px: 1,
+                        lineHeight: 1,
+                      },
+                      "& .MuiChip-deleteIcon": {
+                        color: "inherit",
+                        fontSize: 16,
+                        mr: 0.5,
+                        ml: -0.25,
+                        opacity: 0.75,
+                        "&:hover": {
+                          opacity: 1,
+                          color: "text.primary",
+                        },
+                      },
+                    }}
+                  />
+                )}
 
-              {/* Clear Action Button */}
+                {/* Active Selected Term Chips */}
+                {selectedTerms.map((term) => (
+                  <Chip
+                    key={term}
+                    size="small"
+                    label={term}
+                    onDelete={(e) => {
+                      e.stopPropagation();
+                      handleRemoveTerm(term);
+                    }}
+                    color="primary"
+                    variant="filled"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: "0.76rem",
+                      height: 28,
+                      borderRadius: 2,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      flexShrink: 0,
+                      "& .MuiChip-label": {
+                        px: 1,
+                        lineHeight: 1,
+                      },
+                      "& .MuiChip-deleteIcon": {
+                        fontSize: 16,
+                        mr: 0.5,
+                        ml: -0.25,
+                        opacity: 0.75,
+                        "&:hover": {
+                          opacity: 1,
+                        },
+                      },
+                    }}
+                  />
+                ))}
+
+                {/* Inline Search Input */}
+                <InputBase
+                  inputRef={searchInputRef}
+                  fullWidth={false}
+                  placeholder={
+                    selectedStyle !== "all" || selectedTerms.length > 0
+                      ? "Type additional keywords, tickers (e.g. SPMO, VOO, VXF)..."
+                      : "Search by index name, symbol (SPX, NDX, RUT), ETF (VOO, VXF, SCHD, SCHX), methodology, criteria..."
+                  }
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Backspace" && searchTerm === "") {
+                      if (selectedTerms.length > 0) {
+                        handleRemoveTerm(
+                          selectedTerms[selectedTerms.length - 1],
+                        );
+                      } else if (selectedStyle !== "all") {
+                        updateFilterParams({ style: "all" });
+                      }
+                    }
+                  }}
+                  sx={{
+                    flex: 1,
+                    minWidth: { xs: 100, sm: 220 },
+                    fontSize: "0.95rem",
+                    color: "text.primary",
+                    "& input": {
+                      py: 0.5,
+                      px: 0.5,
+                      lineHeight: 1.5,
+                    },
+                  }}
+                />
+
+                {/* Clear Action Button */}
+                {(searchTerm ||
+                  selectedTerms.length > 0 ||
+                  selectedStyle !== "all") && (
+                  <Tooltip title="Clear search and filters">
+                    <IconButton
+                      aria-label="Clear search and filters"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClearAllSearchAndFilters();
+                      }}
+                      size="small"
+                      sx={{
+                        color: "text.secondary",
+                        ml: "auto",
+                        "&:hover": { color: "text.primary" },
+                      }}
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </Box>
+
+              {/* Reset Filters button directly adjacent to search bar */}
               {(searchTerm ||
                 selectedTerms.length > 0 ||
+                selectedProvider !== "all" ||
                 selectedStyle !== "all") && (
-                <Tooltip title="Clear search and filters">
-                  <IconButton
-                    aria-label="Clear search and filters"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleClearAllSearchAndFilters();
-                    }}
-                    size="small"
-                    sx={{
-                      color: "text.secondary",
-                      ml: "auto",
-                      "&:hover": { color: "text.primary" },
-                    }}
-                  >
-                    <ClearIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
+                <Button
+                  variant="outlined"
+                  size="medium"
+                  startIcon={<ReplayIcon sx={{ fontSize: 16 }} />}
+                  onClick={() => {
+                    setSearchTerm("");
+                    updateFilterParams({
+                      provider: "all",
+                      style: "all",
+                      terms: null,
+                      q: null,
+                    });
+                  }}
+                  sx={{
+                    height: 52,
+                    px: { xs: 1.25, sm: 2.25 },
+                    borderRadius: 3.5,
+                    fontSize: { xs: "0.76rem", sm: "0.82rem" },
+                    fontWeight: 700,
+                    textTransform: "none",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                    borderColor:
+                      "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                    color: "text.secondary",
+                    backgroundColor:
+                      "var(--indices-card-bg, rgba(30, 41, 59, 0.5))",
+                    backdropFilter: "blur(12px)",
+                    "&:hover": {
+                      borderColor: "primary.main",
+                      color: "text.primary",
+                      backgroundColor: `${theme.palette.primary.main}20`,
+                    },
+                  }}
+                >
+                  Reset Filters
+                </Button>
               )}
-            </Box>
-
-            {/* Reset Filters button directly adjacent to search bar */}
-            {(searchTerm ||
-              selectedTerms.length > 0 ||
-              selectedProvider !== "all" ||
-              selectedStyle !== "all") && (
-              <Button
-                variant="outlined"
-                size="medium"
-                startIcon={<ReplayIcon sx={{ fontSize: 16 }} />}
-                onClick={() => {
-                  setSearchTerm("");
-                  updateFilterParams({
-                    provider: "all",
-                    style: "all",
-                    terms: null,
-                    q: null,
-                  });
-                }}
-                sx={{
-                  height: 52,
-                  px: { xs: 1.5, sm: 2.25 },
-                  borderRadius: 3.5,
-                  fontSize: "0.82rem",
-                  fontWeight: 700,
-                  textTransform: "none",
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
-                  borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
-                  color: "text.secondary",
-                  backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.5))",
-                  backdropFilter: "blur(12px)",
-                  "&:hover": {
-                    borderColor: "primary.main",
-                    color: "text.primary",
-                    backgroundColor: `${theme.palette.primary.main}20`,
-                  },
-                }}
-              >
-                Reset Filters
-              </Button>
-            )}
-          </Stack>
+            </Stack>
 
             {/* Categorized Suggested Searches */}
             <Box sx={{ mt: 1.75, width: "100%" }}>
@@ -1004,9 +1024,10 @@ export default function IndexListPage() {
 
         {/* Results Count & Reset Action */}
         <Stack
-          direction="row"
+          direction={{ xs: "column", sm: "row" }}
           justifyContent="space-between"
-          alignItems="center"
+          alignItems={{ xs: "flex-start", sm: "center" }}
+          gap={{ xs: 1, sm: 1.5 }}
           sx={{ mb: 2, px: 0.5 }}
         >
           <Typography
@@ -1077,7 +1098,8 @@ export default function IndexListPage() {
                   px: 1,
                   py: 0,
                   color: "text.secondary",
-                  borderColor: "var(--indices-border, rgba(255, 255, 255, 0.1))",
+                  borderColor:
+                    "var(--indices-border, rgba(255, 255, 255, 0.1))",
                   "&.Mui-selected": {
                     color: "primary.light",
                     backgroundColor: `${theme.palette.primary.main}25`,

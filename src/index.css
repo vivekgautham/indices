@@ -1,17 +1,16 @@
 :root {
-  font-family:
-    var(
-      --indices-font-family,
-      "JetBrains Mono",
-      ui-monospace,
-      SFMono-Regular,
-      Menlo,
-      Monaco,
-      Consolas,
-      "Liberation Mono",
-      "Courier New",
-      monospace
-    );
+  font-family: var(
+    --indices-font-family,
+    "JetBrains Mono",
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace
+  );
   line-height: 1.5;
   font-weight: 400;
 
@@ -61,10 +60,16 @@ a:hover {
   color: var(--indices-primary-light, #818cf8);
 }
 
+html,
 body {
   margin: 0;
   padding: 0;
-  min-width: 100vw;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
   min-height: 100vh;
   background-color: var(--indices-bg-default, #0f172a);
   color: var(--indices-text-primary, #f8fafc);

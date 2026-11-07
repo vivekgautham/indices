@@ -148,12 +148,29 @@ export const StyleQuickFilter: React.FC<StyleQuickFilterProps> = ({
                     component="span"
                     sx={{
                       fontWeight: 700,
-                      fontSize: "0.8rem",
+                      fontSize: { xs: "0.76rem", sm: "0.8rem" },
                       fontFamily: "inherit",
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {opt.label}
+                    {opt.id === "factor" ? (
+                      <>
+                        <Box
+                          component="span"
+                          sx={{ display: { xs: "inline", sm: "none" } }}
+                        >
+                          Factor
+                        </Box>
+                        <Box
+                          component="span"
+                          sx={{ display: { xs: "none", sm: "inline" } }}
+                        >
+                          Factor / Smart Beta
+                        </Box>
+                      </>
+                    ) : (
+                      opt.label
+                    )}
                   </Typography>
                   <Box
                     component="span"
@@ -173,8 +190,8 @@ export const StyleQuickFilter: React.FC<StyleQuickFilterProps> = ({
               }
               variant={isSelected ? "filled" : "outlined"}
               sx={{
-                py: { xs: 1.5, sm: 1.8 },
-                px: 0.5,
+                py: { xs: 1.1, sm: 1.8 },
+                px: { xs: 0.4, sm: 0.5 },
                 borderRadius: 2.5,
                 borderColor: isSelected
                   ? opt.activeColor

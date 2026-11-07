@@ -49,7 +49,7 @@ export default function BenchmarkTrackerPage() {
         }
         return next;
       },
-      { replace: true }
+      { replace: true },
     );
   };
 
@@ -67,7 +67,11 @@ export default function BenchmarkTrackerPage() {
 
   // Active series for the featured top chart
   const activeSeries = useMemo(() => {
-    return dataset.series[selectedSeriesId] || dataset.series.SP500 || dataset.seriesList[0];
+    return (
+      dataset.series[selectedSeriesId] ||
+      dataset.series.SP500 ||
+      dataset.seriesList[0]
+    );
   }, [dataset, selectedSeriesId]);
 
   // Key KPI summary metrics across major equity benchmarks
@@ -124,9 +128,13 @@ export default function BenchmarkTrackerPage() {
                 py: 0.4,
                 fontSize: "0.76rem",
                 fontWeight: 700,
-                borderColor: hasApiKey ? "#10b981" : "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                borderColor: hasApiKey
+                  ? "#10b981"
+                  : "var(--indices-border, rgba(255, 255, 255, 0.15))",
                 color: hasApiKey ? "#10b981" : "text.secondary",
-                backgroundColor: hasApiKey ? "rgba(16, 185, 129, 0.08)" : undefined,
+                backgroundColor: hasApiKey
+                  ? "rgba(16, 185, 129, 0.08)"
+                  : undefined,
               }}
             >
               {hasApiKey ? "FRED Key Active" : "API Key"}
@@ -140,8 +148,10 @@ export default function BenchmarkTrackerPage() {
               disabled={isFetching}
               sx={{
                 borderRadius: 2,
-                border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.15))",
-                backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
+                border:
+                  "1px solid var(--indices-border, rgba(255, 255, 255, 0.15))",
+                backgroundColor:
+                  "var(--indices-card-bg, rgba(30, 41, 59, 0.4))",
                 p: 0.75,
               }}
             >
@@ -169,7 +179,14 @@ export default function BenchmarkTrackerPage() {
           }}
         >
           <Stack spacing={1.5} sx={{ maxWidth: 900 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, flexWrap: "wrap" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.25,
+                flexWrap: "wrap",
+              }}
+            >
               <Chip
                 label="FRED® Market Data (T-1)"
                 size="small"
@@ -182,8 +199,12 @@ export default function BenchmarkTrackerPage() {
                   border: "1px solid rgba(16, 185, 129, 0.35)",
                 }}
               />
-              <Typography variant="caption" sx={{ color: "text.secondary", fontSize: "0.78rem" }}>
-                Federal Reserve Bank of St. Louis • Updated: {new Date(dataset.updatedAt).toLocaleDateString()}
+              <Typography
+                variant="caption"
+                sx={{ color: "text.secondary", fontSize: "0.78rem" }}
+              >
+                Federal Reserve Bank of St. Louis • Updated:{" "}
+                {new Date(dataset.updatedAt).toLocaleDateString()}
               </Typography>
             </Box>
 
@@ -209,9 +230,11 @@ export default function BenchmarkTrackerPage() {
               }}
             >
               Daily barometer tracking <strong>S&amp;P 500</strong>,{" "}
-              <strong>S&amp;P 500 Equal Weight</strong>, <strong>NASDAQ 100</strong>,{" "}
-              <strong>Nasdaq Composite</strong>, <strong>Dow Jones</strong>,{" "}
-              <strong>Russell 1000</strong>, and <strong>CBOE VIX</strong>. Click any benchmark to inspect its detailed performance graph.
+              <strong>S&amp;P 500 Equal Weight</strong>,{" "}
+              <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
+              <strong>Dow Jones</strong>, <strong>Russell 1000</strong>, and{" "}
+              <strong>CBOE VIX</strong>. Click any benchmark to inspect its
+              detailed performance graph.
             </Typography>
           </Stack>
 
@@ -247,10 +270,18 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   S&amp;P 500
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
                   {formatSeriesValue(kpiSummary.sp.latestValue, "number", 2)}
                 </Typography>
                 <Typography
@@ -285,10 +316,18 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "#10b981" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   S&amp;P 500 Equal Wt
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
                   {formatSeriesValue(kpiSummary.spew.latestValue, "number", 2)}
                 </Typography>
                 <Typography
@@ -323,10 +362,18 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   NASDAQ 100
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
                   {formatSeriesValue(kpiSummary.ndx.latestValue, "number", 2)}
                 </Typography>
                 <Typography
@@ -361,15 +408,28 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   Nasdaq Composite
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
-                  {formatSeriesValue(kpiSummary.nasdaqCom.latestValue, "number", 2)}
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
+                  {formatSeriesValue(
+                    kpiSummary.nasdaqCom.latestValue,
+                    "number",
+                    2,
+                  )}
                 </Typography>
                 <Typography
                   sx={{
-                    color: kpiSummary.nasdaqCom.change >= 0 ? "#10b981" : "#ef4444",
+                    color:
+                      kpiSummary.nasdaqCom.change >= 0 ? "#10b981" : "#ef4444",
                     fontWeight: 700,
                     fontSize: "0.72rem",
                   }}
@@ -399,10 +459,18 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   Dow Jones
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
                   {formatSeriesValue(kpiSummary.djia.latestValue, "number", 2)}
                 </Typography>
                 <Typography
@@ -437,10 +505,18 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   Russell 1000
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
                   {formatSeriesValue(kpiSummary.rui.latestValue, "number", 2)}
                 </Typography>
                 <Typography
@@ -461,6 +537,7 @@ export default function BenchmarkTrackerPage() {
                 variant="outlined"
                 onClick={() => handleSelectSeries("VIXCLS")}
                 sx={{
+                  gridColumn: { xs: "span 2", sm: "auto" },
                   p: 1,
                   borderRadius: 2,
                   cursor: "pointer",
@@ -475,15 +552,24 @@ export default function BenchmarkTrackerPage() {
                   "&:hover": { borderColor: "primary.light" },
                 }}
               >
-                <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.72rem" }}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                  }}
+                >
                   VIX Volatility
                 </Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}>
+                <Typography
+                  sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                >
                   {kpiSummary.vix.latestValue.toFixed(2)}
                 </Typography>
                 <Typography
                   sx={{
-                    color: kpiSummary.vix.latestValue > 20 ? "#ef4444" : "#10b981",
+                    color:
+                      kpiSummary.vix.latestValue > 20 ? "#ef4444" : "#10b981",
                     fontWeight: 700,
                     fontSize: "0.72rem",
                   }}

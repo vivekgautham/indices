@@ -15,10 +15,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useId, useMemo, useRef, useState } from "react";
-import {
-  filterObservationsByRange,
-  TimeRange,
-} from "../../api/fredApi";
+import { filterObservationsByRange, TimeRange } from "../../api/fredApi";
 import { FredSeriesData } from "../../data/fredSeriesData";
 
 export interface FredSeriesChartProps {
@@ -131,7 +128,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   }, [pathD, coords, plotH]);
 
   // Hover detection
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement | SVGSVGElement>) => {
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLDivElement | SVGSVGElement>,
+  ) => {
     if (!svgRef.current || coords.length === 0) return;
     const rect = svgRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
@@ -233,8 +232,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           sx={{ mb: 2.5 }}
         >
           <Box>
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-              <Typography sx={{ fontSize: "1.25rem" }}>{series.icon}</Typography>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={1}
+              sx={{ mb: 0.5 }}
+            >
+              <Typography sx={{ fontSize: "1.25rem" }}>
+                {series.icon}
+              </Typography>
               <Typography
                 variant="h5"
                 component="h2"
@@ -263,7 +269,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               variant="caption"
               sx={{ color: "text.secondary", fontSize: "0.75rem" }}
             >
-              {series.subcategory} • Source: {series.source} • Frequency: {series.frequency}
+              {series.subcategory} • Source: {series.source} • Frequency:{" "}
+              {series.frequency}
             </Typography>
           </Box>
 
@@ -273,22 +280,30 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             variant="outlined"
             aria-label="time range selector"
             sx={{
-              backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.4))",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(15, 23, 42, 0.4))",
               borderRadius: 2,
               p: 0.3,
               alignSelf: { xs: "stretch", sm: "auto" },
               display: "flex",
               justifyContent: "space-between",
+              overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": { display: "none" },
               "& .MuiButton-root": {
                 border: "none",
                 borderRadius: 1.5,
                 fontWeight: 700,
                 fontSize: "0.72rem",
-                px: { xs: 0.8, sm: 1.25 },
+                px: { xs: 0.7, sm: 1.25 },
                 py: 0.35,
+                minWidth: { xs: "auto", sm: 36 },
+                flexShrink: 0,
                 color: "text.secondary",
                 "&:hover": {
-                  backgroundColor: "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.08))",
+                  backgroundColor:
+                    "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.08))",
                   color: "text.primary",
                 },
                 "&.active": {
@@ -320,7 +335,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             gap: 2,
             mb: 2,
             pb: 1.5,
-            borderBottom: "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+            borderBottom:
+              "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
           }}
         >
           <Typography
@@ -354,7 +370,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 fontWeight: 800,
                 fontSize: "0.75rem",
                 height: 24,
-                backgroundColor: hoverDiff >= 0 ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)",
+                backgroundColor:
+                  hoverDiff >= 0
+                    ? "rgba(16, 185, 129, 0.15)"
+                    : "rgba(239, 68, 68, 0.15)",
                 color: hoverDiff >= 0 ? "#10b981" : "#ef4444",
                 border: `1px solid ${hoverDiff >= 0 ? "rgba(16, 185, 129, 0.3)" : "rgba(239, 68, 68, 0.3)"}`,
               }}
@@ -410,10 +429,24 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               <defs>
                 <linearGradient id={chartGradId} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor={strokeColor} stopOpacity={0.4} />
-                  <stop offset="70%" stopColor={strokeColor} stopOpacity={0.08} />
-                  <stop offset="100%" stopColor={strokeColor} stopOpacity={0.0} />
+                  <stop
+                    offset="70%"
+                    stopColor={strokeColor}
+                    stopOpacity={0.08}
+                  />
+                  <stop
+                    offset="100%"
+                    stopColor={strokeColor}
+                    stopOpacity={0.0}
+                  />
                 </linearGradient>
-                <filter id={`glow-${chartGradId}`} x="-20%" y="-20%" width="140%" height="140%">
+                <filter
+                  id={`glow-${chartGradId}`}
+                  x="-20%"
+                  y="-20%"
+                  width="140%"
+                  height="140%"
+                >
                   <feGaussianBlur stdDeviation="3" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
@@ -522,7 +555,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   fontWeight: 500,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1,
-                  fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                  fontFamily:
+                    "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                 }}
               >
                 {formatAxisValue(line.val, series.format)}
@@ -572,7 +606,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             {dateTicks.map((tick, idx) => {
               let transform = "translateX(-50%)";
               if (idx === 0) transform = "translateX(0%)";
-              else if (idx === dateTicks.length - 1) transform = "translateX(-100%)";
+              else if (idx === dateTicks.length - 1)
+                transform = "translateX(-100%)";
 
               return (
                 <Typography
@@ -587,7 +622,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     fontWeight: 500,
                     fontVariantNumeric: "tabular-nums",
                     lineHeight: 1,
-                    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                    fontFamily:
+                      "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -606,7 +642,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             gap: 1.5,
             mt: 2.5,
             pt: 2,
-            borderTop: "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+            borderTop:
+              "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
           }}
         >
           <Paper
@@ -614,13 +651,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             sx={{
               p: 1,
               borderRadius: 2,
-              backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+              }}
+            >
               Period Low
             </Typography>
-            <Typography sx={{ fontWeight: 800, fontSize: "0.88rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography
+              sx={{
+                fontWeight: 800,
+                fontSize: "0.88rem",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
               {formatSeriesValue(min, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -630,13 +680,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             sx={{
               p: 1,
               borderRadius: 2,
-              backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+              }}
+            >
               Period High
             </Typography>
-            <Typography sx={{ fontWeight: 800, fontSize: "0.88rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography
+              sx={{
+                fontWeight: 800,
+                fontSize: "0.88rem",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
               {formatSeriesValue(max, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -646,13 +709,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             sx={{
               p: 1,
               borderRadius: 2,
-              backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+              }}
+            >
               Period Start ({startDate})
             </Typography>
-            <Typography sx={{ fontWeight: 800, fontSize: "0.88rem", fontVariantNumeric: "tabular-nums" }}>
+            <Typography
+              sx={{
+                fontWeight: 800,
+                fontSize: "0.88rem",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
               {formatSeriesValue(startValue, series.format, series.decimals)}
             </Typography>
           </Paper>
@@ -662,14 +738,29 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             sx={{
               p: 1,
               borderRadius: 2,
-              backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
+              backgroundColor:
+                "var(--indices-subtle-bg, rgba(15, 23, 42, 0.3))",
             }}
           >
-            <Typography sx={{ color: "text.secondary", fontWeight: 700, fontSize: "0.7rem" }}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+              }}
+            >
               52-Week Range
             </Typography>
-            <Typography sx={{ fontWeight: 700, fontSize: "0.8rem", fontVariantNumeric: "tabular-nums" }}>
-              {formatSeriesValue(series.low52, series.format, series.decimals)} – {formatSeriesValue(series.high52, series.format, series.decimals)}
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: "0.8rem",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {formatSeriesValue(series.low52, series.format, series.decimals)}{" "}
+              –{" "}
+              {formatSeriesValue(series.high52, series.format, series.decimals)}
             </Typography>
           </Paper>
         </Box>
@@ -680,7 +771,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             mt: 2,
             p: 1.5,
             borderRadius: 2,
-            backgroundColor: "var(--indices-subtle-bg, rgba(99, 102, 241, 0.06))",
+            backgroundColor:
+              "var(--indices-subtle-bg, rgba(99, 102, 241, 0.06))",
             border: "1px solid rgba(99, 102, 241, 0.2)",
           }}
         >
@@ -697,7 +789,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           >
             Market Significance &amp; Investor Context
           </Typography>
-          <Typography sx={{ color: "text.secondary", fontSize: "0.78rem", lineHeight: 1.55 }}>
+          <Typography
+            sx={{
+              color: "text.secondary",
+              fontSize: "0.78rem",
+              lineHeight: 1.55,
+            }}
+          >
             {series.marketSignificance} {series.description}
           </Typography>
         </Box>

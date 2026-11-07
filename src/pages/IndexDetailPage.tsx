@@ -187,6 +187,8 @@ export default function IndexDetailPage() {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
+        flexWrap="wrap"
+        gap={1.5}
         sx={{ mb: 3.5 }}
       >
         <Button
@@ -765,7 +767,7 @@ export default function IndexDetailPage() {
                           {(() => {
                             const url = getStockAnalysisEtfUrl(
                               etf.ticker,
-                              etf.hasStockAnalysis
+                              etf.hasStockAnalysis,
                             );
                             const isActive = isActivelyManagedEtf(etf);
                             const strategyDesc = getEtfStrategyDescription(etf);

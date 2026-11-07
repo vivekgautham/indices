@@ -1,14 +1,7 @@
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import {
-  Box,
-  Chip,
-  Collapse,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Chip, Collapse, Stack, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ProviderId } from "../types";
 import {
@@ -31,7 +24,8 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
 }) => {
   const isInsideOthers =
     selectedProvider === "others" || isOtherProvider(selectedProvider);
-  const [isOthersExpanded, setIsOthersExpanded] = useState<boolean>(isInsideOthers);
+  const [isOthersExpanded, setIsOthersExpanded] =
+    useState<boolean>(isInsideOthers);
 
   // Automatically expand smaller providers drawer if user navigated to one directly (e.g. from URL or bookmark)
   useEffect(() => {
@@ -88,9 +82,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
           alignItems="center"
           gap={{ xs: 0.8, sm: 1.2 }}
           sx={{
-            m: "auto",
+            m: { xs: 0, md: "auto" },
             minWidth: "max-content",
-            px: { xs: 0.5, sm: 1 },
+            px: { xs: 0.75, sm: 1 },
           }}
         >
           {/* All Chip */}
@@ -136,7 +130,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
             variant={selectedProvider === "all" ? "filled" : "outlined"}
             sx={{
               flexShrink: 0,
-              py: { xs: 1.8, sm: 2.1 },
+              py: { xs: 1.2, sm: 1.8 },
               px: 0.8,
               borderRadius: 3,
               borderColor:
@@ -207,7 +201,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 }}
                 sx={{
                   flexShrink: 0,
-                  py: { xs: 1.8, sm: 2.1 },
+                  py: { xs: 1.2, sm: 1.8 },
                   px: 0.9,
                   borderRadius: 3,
                   border: "1.5px solid",
@@ -309,7 +303,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
               onClick={handleOthersClick}
               sx={{
                 flexShrink: 0,
-                py: { xs: 1.8, sm: 2.1 },
+                py: { xs: 1.2, sm: 1.8 },
                 px: 0.9,
                 borderRadius: 3,
                 border: "1.5px solid",
@@ -347,7 +341,8 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
             p: { xs: 1.25, sm: 1.5 },
             borderRadius: 3,
             backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.55))",
-            border: "1.5px dashed var(--indices-border, rgba(139, 92, 246, 0.35))",
+            border:
+              "1.5px dashed var(--indices-border, rgba(139, 92, 246, 0.35))",
             backdropFilter: "blur(12px)",
             boxShadow: "0 6px 24px rgba(0, 0, 0, 0.25)",
             animation: "fadeIn 0.2s ease-in-out",
@@ -445,7 +440,8 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                   selectedProvider === "others"
                     ? "#8b5cf6"
                     : "var(--indices-card-bg, rgba(30, 41, 59, 0.6))",
-                color: selectedProvider === "others" ? "#ffffff" : "text.primary",
+                color:
+                  selectedProvider === "others" ? "#ffffff" : "text.primary",
                 boxShadow:
                   selectedProvider === "others"
                     ? "0 0 16px rgba(139, 92, 246, 0.45)"
@@ -470,7 +466,9 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 <Chip
                   key={provider.id}
                   label={
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 0.8 }}
+                    >
                       <ProviderLogo providerId={provider.id} size={16} />
                       <Typography
                         component="span"
