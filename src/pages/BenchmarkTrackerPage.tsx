@@ -26,6 +26,7 @@ import {
   FredSeriesChart,
 } from "../components/tracker/FredSeriesChart";
 import { Sp500BreadthInsightCard } from "../components/tracker/Sp500BreadthInsightCard";
+import { Sp500SectorTrackerCard } from "../components/tracker/Sp500SectorTrackerCard";
 
 export default function BenchmarkTrackerPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -594,6 +595,16 @@ export default function BenchmarkTrackerPage() {
               sp500={dataset.series.SP500}
               sp500ew={dataset.series.SP500EW}
               onSelectSeries={handleSelectSeries}
+            />
+          </Box>
+        )}
+
+        {/* S&P 500 Sector Composition & Rotation Tracker (Active when S&P 500 is selected) */}
+        {selectedSeriesId === "SP500" && (
+          <Box sx={{ mb: 4 }}>
+            <Sp500SectorTrackerCard
+              sectors={dataset.sectors}
+              updatedAt={dataset.updatedAt}
             />
           </Box>
         )}

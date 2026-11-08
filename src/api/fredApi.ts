@@ -5,6 +5,7 @@ import {
   FredSeriesData,
   FredSeriesMeta,
 } from "../data/fredSeriesData";
+import type { Sp500SectorMarketData } from "../data/sp500SectorsData";
 
 const FRED_API_KEY_STORAGE = "indices_fred_api_key";
 export const DEFAULT_FRED_API_KEY = "2d9fe8dbad89dabfd5afba8ca6e5f4f6";
@@ -62,9 +63,10 @@ function buildFullSeriesData(
     (observations.length > 0 ? observations[observations.length - 1][1] : 0);
   const prevValue =
     rawItem?.prevValue ??
-    (observations.length > 1 ? observations[observations.length - 2][1] : latestValue);
-  const change =
-    rawItem?.change ?? (prevValue ? latestValue - prevValue : 0);
+    (observations.length > 1
+      ? observations[observations.length - 2][1]
+      : latestValue);
+  const change = rawItem?.change ?? (prevValue ? latestValue - prevValue : 0);
   const changePct =
     rawItem?.changePct ??
     (prevValue && prevValue !== 0 ? (change / prevValue) * 100 : 0);
@@ -96,11 +98,13 @@ export interface FredDataset {
   seriesList: FredSeriesData[];
   equitySeries: FredSeriesData[];
   macroSeries: FredSeriesData[];
+  sectors?: Record<string, Sp500SectorMarketData>;
 }
 
 export function parseRawDataset(rawJson: {
   updatedAt?: string;
   series?: Record<string, unknown>;
+  sectors?: Record<string, Sp500SectorMarketData>;
 }): FredDataset {
   const rawSeries = rawJson?.series || {};
   const seriesMap: Record<string, FredSeriesData> = {};
@@ -117,6 +121,7 @@ export function parseRawDataset(rawJson: {
     seriesList,
     equitySeries: seriesList.filter((s) => s.category === "equity"),
     macroSeries: seriesList.filter((s) => s.category === "macro"),
+    sectors: rawJson?.sectors,
   };
 }
 
@@ -125,7 +130,10 @@ export function parseRawDataset(rawJson: {
  */
 export function getInitialFredDataset(): FredDataset {
   return parseRawDataset(
-    localFredData as unknown as { updatedAt?: string; series?: Record<string, unknown> },
+    localFredData as unknown as {
+      updatedAt?: string;
+      series?: Record<string, unknown>;
+    },
   );
 }
 

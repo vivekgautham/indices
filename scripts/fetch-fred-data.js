@@ -8,7 +8,8 @@ const rootDir = path.resolve(__dirname, "..");
 const srcDataDir = path.join(rootDir, "src", "data");
 const publicDataDir = path.join(rootDir, "public", "data");
 
-const FRED_API_KEY = process.env.FRED_API_KEY || "2d9fe8dbad89dabfd5afba8ca6e5f4f6";
+const FRED_API_KEY =
+  process.env.FRED_API_KEY || "2d9fe8dbad89dabfd5afba8ca6e5f4f6";
 
 const SERIES = [
   // Major U.S. Equity Benchmarks
@@ -21,15 +22,43 @@ const SERIES = [
   { id: "VIXCLS", name: "CBOE Volatility Index (VIX)", category: "equity" },
 
   // Economic, Global & Macro Indexes
-  { id: "DGS10", name: "10-Year Treasury Constant Maturity Rate", category: "macro" },
-  { id: "DGS2", name: "2-Year Treasury Constant Maturity Rate", category: "macro" },
-  { id: "T10Y2Y", name: "10-Year minus 2-Year Treasury Yield Spread", category: "macro" },
+  {
+    id: "DGS10",
+    name: "10-Year Treasury Constant Maturity Rate",
+    category: "macro",
+  },
+  {
+    id: "DGS2",
+    name: "2-Year Treasury Constant Maturity Rate",
+    category: "macro",
+  },
+  {
+    id: "T10Y2Y",
+    name: "10-Year minus 2-Year Treasury Yield Spread",
+    category: "macro",
+  },
   { id: "FEDFUNDS", name: "Federal Funds Effective Rate", category: "macro" },
-  { id: "DTWEXBGS", name: "Trade-Weighted U.S. Dollar Index", category: "macro" },
+  {
+    id: "DTWEXBGS",
+    name: "Trade-Weighted U.S. Dollar Index",
+    category: "macro",
+  },
   { id: "DCOILWTICO", name: "Crude Oil (WTI)", category: "macro" },
-  { id: "MORTGAGE30US", name: "30-Year Fixed Mortgage Rate", category: "macro" },
-  { id: "BAMLH0A0HYM2", name: "US High Yield Option-Adjusted Spread", category: "macro" },
-  { id: "GDPC1", name: "Real Gross Domestic Product (Real GDP)", category: "macro" },
+  {
+    id: "MORTGAGE30US",
+    name: "30-Year Fixed Mortgage Rate",
+    category: "macro",
+  },
+  {
+    id: "BAMLH0A0HYM2",
+    name: "US High Yield Option-Adjusted Spread",
+    category: "macro",
+  },
+  {
+    id: "GDPC1",
+    name: "Real Gross Domestic Product (Real GDP)",
+    category: "macro",
+  },
 ];
 
 function downsamplePoints(points) {
@@ -59,7 +88,9 @@ async function fetchRecentYahooPoints(ticker) {
   try {
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`;
     const res = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" },
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+      },
     });
     if (!res.ok) return [];
     const data = await res.json();
@@ -75,7 +106,10 @@ async function fetchRecentYahooPoints(ticker) {
     }
     return points;
   } catch (err) {
-    console.warn(`⚠️ Error fetching recent market points for ${ticker}:`, err.message);
+    console.warn(
+      `⚠️ Error fetching recent market points for ${ticker}:`,
+      err.message,
+    );
     return [];
   }
 }
@@ -86,19 +120,25 @@ async function fetchSeries(id) {
   // S&P 500 Equal Weight (^SPXEW)
   if (id === "SP500EW") {
     try {
-      const url = "https://query1.finance.yahoo.com/v8/finance/chart/%5ESPXEW?interval=1d&range=5y";
+      const url =
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5ESPXEW?interval=1d&range=5y";
       const res = await fetch(url, {
-        headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" },
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+        },
       });
       if (res.ok) {
         const data = await res.json();
         const timestamps = data.chart?.result?.[0]?.timestamp || [];
-        const quotes = data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
+        const quotes =
+          data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
         const pts = [];
         for (let i = 0; i < timestamps.length; i++) {
           const val = quotes[i];
           if (val != null && !isNaN(val)) {
-            const date = new Date(timestamps[i] * 1000).toISOString().split("T")[0];
+            const date = new Date(timestamps[i] * 1000)
+              .toISOString()
+              .split("T")[0];
             pts.push([date, Number(val.toFixed(2))]);
           }
         }
@@ -107,26 +147,35 @@ async function fetchSeries(id) {
         }
       }
     } catch (err) {
-      console.warn("⚠️ Error fetching S&P 500 Equal Weight (^SPXEW):", err.message);
+      console.warn(
+        "⚠️ Error fetching S&P 500 Equal Weight (^SPXEW):",
+        err.message,
+      );
     }
   }
 
   // Russell 1000 (^RUI)
   if (id === "RUI") {
     try {
-      const url = "https://query1.finance.yahoo.com/v8/finance/chart/%5ERUI?interval=1d&range=5y";
+      const url =
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5ERUI?interval=1d&range=5y";
       const res = await fetch(url, {
-        headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" },
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+        },
       });
       if (res.ok) {
         const data = await res.json();
         const timestamps = data.chart?.result?.[0]?.timestamp || [];
-        const quotes = data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
+        const quotes =
+          data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
         const pts = [];
         for (let i = 0; i < timestamps.length; i++) {
           const val = quotes[i];
           if (val != null && !isNaN(val)) {
-            const date = new Date(timestamps[i] * 1000).toISOString().split("T")[0];
+            const date = new Date(timestamps[i] * 1000)
+              .toISOString()
+              .split("T")[0];
             pts.push([date, Number(val.toFixed(2))]);
           }
         }
@@ -207,13 +256,92 @@ async function fetchSeries(id) {
   return downsamplePoints(points);
 }
 
+const SECTOR_ETFS = [
+  { id: "tech", ticker: "XLK", name: "Technology" },
+  { id: "financials", ticker: "XLF", name: "Financials" },
+  { id: "healthcare", ticker: "XLV", name: "Health Care" },
+  { id: "discretionary", ticker: "XLY", name: "Consumer Discretionary" },
+  { id: "comm_services", ticker: "XLC", name: "Communication Services" },
+  { id: "industrials", ticker: "XLI", name: "Industrials" },
+  { id: "staples", ticker: "XLP", name: "Consumer Staples" },
+  { id: "energy", ticker: "XLE", name: "Energy" },
+  { id: "utilities", ticker: "XLU", name: "Utilities" },
+  { id: "real_estate", ticker: "XLRE", name: "Real Estate" },
+  { id: "materials", ticker: "XLB", name: "Materials" },
+];
+
+async function fetchSectorData(existingSectors = {}) {
+  console.log("\n🏢 Fetching S&P 500 Sector Tracker Data...");
+  const results = {};
+  for (const s of SECTOR_ETFS) {
+    try {
+      const url = `https://query2.finance.yahoo.com/v8/finance/chart/${s.ticker}?interval=1d&range=1mo`;
+      const res = await fetch(url, {
+        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const meta = json.chart?.result?.[0]?.meta;
+        const ts = json.chart?.result?.[0]?.timestamp || [];
+        const quotes =
+          json.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
+        const points = [];
+        for (let i = 0; i < ts.length; i++) {
+          if (quotes[i] != null && !isNaN(quotes[i])) {
+            const date = new Date(ts[i] * 1000).toISOString().split("T")[0];
+            points.push([date, Number(quotes[i].toFixed(2))]);
+          }
+        }
+        const lastPrice =
+          points.length > 0
+            ? points[points.length - 1][1]
+            : (meta?.regularMarketPrice ?? 0);
+        const prevClose =
+          points.length > 1
+            ? points[points.length - 2][1]
+            : (meta?.chartPreviousClose ?? lastPrice);
+        const change = lastPrice - prevClose;
+        const changePct = prevClose ? (change / prevClose) * 100 : 0;
+        const latestDate = meta?.regularMarketTime
+          ? new Date(meta.regularMarketTime * 1000).toISOString().split("T")[0]
+          : points.length
+            ? points[points.length - 1][0]
+            : new Date().toISOString().split("T")[0];
+
+        results[s.id] = {
+          ticker: s.ticker,
+          price: Number(lastPrice.toFixed(2)),
+          prevClose: Number(prevClose.toFixed(2)),
+          change: Number(change.toFixed(2)),
+          changePct: Number(changePct.toFixed(2)),
+          sparkline: points.slice(-15).map((p) => p[1]),
+          latestDate,
+        };
+        console.log(
+          `✓ [Sector] ${s.ticker.padEnd(5)} (${s.name}): $${lastPrice.toFixed(2)} (${change >= 0 ? "+" : ""}${changePct.toFixed(2)}%)`,
+        );
+      } else if (existingSectors[s.id]) {
+        results[s.id] = existingSectors[s.id];
+        console.log(`ℹ️ [Sector] Preserved existing data for ${s.ticker}`);
+      }
+    } catch (err) {
+      console.warn(`⚠️ Error fetching sector ${s.ticker}:`, err.message);
+      if (existingSectors[s.id]) {
+        results[s.id] = existingSectors[s.id];
+      }
+    }
+  }
+  return results;
+}
+
 async function main() {
   console.log("=========================================");
   console.log("📊 Fetching FRED Benchmark Tracker Data");
   console.log("=========================================");
 
   if (!fs.existsSync(srcDataDir)) fs.mkdirSync(srcDataDir, { recursive: true });
-  if (!fs.existsSync(publicDataDir)) fs.mkdirSync(publicDataDir, { recursive: true });
+  if (!fs.existsSync(publicDataDir))
+    fs.mkdirSync(publicDataDir, { recursive: true });
 
   const existingFile = path.join(srcDataDir, "fredData.json");
   let existingData = {};
@@ -255,16 +383,21 @@ async function main() {
         low52: Number(low52.toFixed(2)),
       };
       successCount++;
-      console.log(`✓ ${item.id.padEnd(12)}: ${observations.length} pts, latest: ${latest[0]} = ${latest[1]} (${change >= 0 ? "+" : ""}${change.toFixed(2)})`);
+      console.log(
+        `✓ ${item.id.padEnd(12)}: ${observations.length} pts, latest: ${latest[0]} = ${latest[1]} (${change >= 0 ? "+" : ""}${change.toFixed(2)})`,
+      );
     } else if (existingData.series && existingData.series[item.id]) {
       console.log(`ℹ️ Preserved existing data for ${item.id}`);
     }
   }
 
+  const sectorData = await fetchSectorData(existingData.sectors || {});
+
   const payload = {
     updatedAt: new Date().toISOString(),
     seriesCount: Object.keys(seriesData).length,
     series: seriesData,
+    sectors: sectorData,
   };
 
   const jsonStr = JSON.stringify(payload) + "\n";
@@ -273,7 +406,9 @@ async function main() {
 
   const kb = (Buffer.byteLength(jsonStr, "utf8") / 1024).toFixed(1);
   console.log(`=========================================`);
-  console.log(`🎉 FRED Data Generation Complete (${successCount}/${SERIES.length} series, ${kb} KB)`);
+  console.log(
+    `🎉 FRED Data Generation Complete (${successCount}/${SERIES.length} series, ${kb} KB)`,
+  );
   console.log(`=========================================`);
 }
 
