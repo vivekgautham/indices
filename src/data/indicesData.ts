@@ -4565,6 +4565,67 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl:
       "https://indexes.morningstar.com/our-indexes/details/morningstar-us-dividend-growth-FS0000AEMF",
   },
+  {
+    id: "morningstar-us-dividend-yield-focus",
+    symbol: "MDYFT",
+    altSymbols: [
+      "MDYF",
+      "HDV Benchmark",
+      "Morningstar US Dividend Yield Focus",
+      "Morningstar Dividend Yield Focus",
+    ],
+    name: "Morningstar US Dividend Yield Focus Index",
+    providerId: "crsp",
+    category: "Dividend & Quality",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 75,
+    weightingMethodology:
+      "Dividend-Dollar Weighted (10% individual cap, 5/50 concentration cap)",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2010,
+    trackingEtfs: [
+      {
+        ticker: "HDV",
+        name: "iShares Core High Dividend ETF",
+        aum: "$16.4B+",
+      },
+    ],
+    summary:
+      "Tracks 75 high-yielding, high-quality US dividend stocks screened for financial health and economic moats. The official benchmark for the iShares Core High Dividend ETF (HDV).",
+    description:
+      "The Morningstar US Dividend Yield Focus Index is designed to track high-yielding, dividend-paying US companies that possess superior corporate financial quality and sustainable balance sheets. Starting from the broad Morningstar US Market Index, the strategy applies proprietary quality screens—requiring companies to maintain a Morningstar Economic Moat Rating (narrow or wide) and strong Distance-to-Default scores (ranking in the top 50% of their sector) to filter out financially fragile value traps and companies vulnerable to dividend cuts. Real estate investment trusts (REITs) are excluded. Eligible qualifying securities are ranked by dividend yield to select the top 75 holdings, which are then weighted according to the total dollar value of regular cash dividends paid (with a 10% maximum stock cap and a 50% cumulative cap on holdings above 5%).",
+    eligibilityCriteria: [
+      "Must be a constituent of the Morningstar US Market Index (REITs excluded)",
+      "Assigned an Economic Moat rating (Narrow or Wide) by Morningstar Equity Research or passing quantitative financial health metrics",
+      "Distance to Default score in the top 50% within each sector (assessing structural default probability)",
+      "Morningstar Uncertainty Rating must not be Very High or Extreme",
+      "Top 75 qualifying US companies ranked by indicated 12-month dividend yield",
+    ],
+    keyCharacteristics: [
+      "Official underlying benchmark for the $16.4B+ iShares Core High Dividend ETF (HDV)",
+      "Dividend-dollar weighted: weights holdings by total cash returned via dividends rather than price or market capitalization alone",
+      "Defensive high-yield exposure filtered by Morningstar Economic Moat ratings and Distance-to-Default distress metrics",
+      "5-10-50 capping rule ensures single-stock diversification (10% individual cap; aggregate weight over 5% capped at 50%)",
+      "Quarterly reconstitution and rebalancing in March, June, September, and December",
+    ],
+    tags: [
+      "High Dividend",
+      "Dividend",
+      "Quality",
+      "Economic Moat",
+      "HDV",
+      "iShares",
+      "BlackRock",
+      "Morningstar",
+      "Smart Beta",
+      "Defensive",
+      "Cash Flow",
+      "Value",
+    ],
+    officialUrl:
+      "https://indexes.morningstar.com/our-indexes/details/morningstar-dividend-yield-focus-FS00009VMC",
+  },
 
   // ==========================================
   // INTERCONTINENTAL EXCHANGE (ICE Data Indices)

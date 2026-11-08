@@ -18,6 +18,7 @@ const aumMap = {
   NOBL: "$12B+",
   SCHD: "$112B+",
   DGRO: "$31B+",
+  HDV: "$16.4B+",
   VXX: "$475M+",
   UVXY: "$293M+",
   IWM: "$81B+",

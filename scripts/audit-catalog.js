@@ -145,6 +145,7 @@ const userRequestedTickers = [
   "SCHD",
   "SCHV",
   "DGRO",
+  "HDV",
   "FSTA",
   "XLP",
   "XAR",

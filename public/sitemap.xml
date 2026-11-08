@@ -565,6 +565,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/morningstar-us-dividend-yield-focus</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/ice-0-3-month-us-treasury</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>weekly</changefreq>

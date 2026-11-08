@@ -56,6 +56,7 @@ export function isValueIndex(idx: MarketIndex): boolean {
     id === "ftse-high-dividend-yield" ||
     id === "ftse-all-world-ex-us-high-dividend-yield" ||
     id === "morningstar-wide-moat-focus" ||
+    id === "morningstar-us-dividend-yield-focus" ||
     id === "russell-rafi-developed-ex-us-large" ||
     id === "dow-jones-us-dividend-100" ||
     id === "sp-500-dividend-aristocrats" ||
@@ -126,6 +127,7 @@ export function isFactorIndex(idx: MarketIndex): boolean {
     id.includes("-equal-weight") ||
     id.includes("intellidex") ||
     id === "morningstar-wide-moat-focus" ||
+    id === "morningstar-us-dividend-yield-focus" ||
     id === "russell-rafi-developed-ex-us-large" ||
     id === "dow-jones-us-dividend-100" ||
     id === "sp-500-dividend-aristocrats" ||
