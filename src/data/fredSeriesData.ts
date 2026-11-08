@@ -1,4 +1,4 @@
-export type FredCategory = "equity" | "macro";
+export type FredCategory = "equity" | "macro" | "international";
 
 export interface FredSeriesMeta {
   id: string;
@@ -6,6 +6,9 @@ export interface FredSeriesMeta {
   shortName: string;
   category: FredCategory;
   subcategory: string;
+  region?: string;
+  country?: string;
+  currency?: string;
   units: string;
   frequency: string;
   source: string;
@@ -359,6 +362,259 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     decimals: 1,
     badgeColor: "#2563eb",
     icon: "🏭",
+  },
+
+  // ==========================================
+  // 3. International Equity Benchmarks
+  // ==========================================
+  FTSE_100: {
+    id: "FTSE_100",
+    name: "FTSE 100 Index",
+    shortName: "FTSE 100",
+    category: "international",
+    subcategory: "United Kingdom Blue-Chip",
+    region: "Europe",
+    country: "United Kingdom",
+    currency: "GBP",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "FTSE Russell / London Stock Exchange",
+    description:
+      "Tracks the 100 largest capitalized UK-domiciled blue chip companies on the London Stock Exchange, heavily weighted toward global multinationals, energy, financials, and healthcare.",
+    marketSignificance:
+      "The definitive equity benchmark of the United Kingdom and London financial hub, offering global dividend exposure and multinational revenue drivers.",
+    relatedIndexId: "ftse-100",
+    trackingEtfs: ["EWU", "ISF"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#3b82f6",
+    icon: "🇬🇧",
+  },
+  NIKKEI_225: {
+    id: "NIKKEI_225",
+    name: "Nikkei 225 Stock Average",
+    shortName: "Nikkei 225",
+    category: "international",
+    subcategory: "Japan Large-Cap",
+    region: "Asia-Pacific",
+    country: "Japan",
+    currency: "JPY",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "Nikkei Inc. / Tokyo Stock Exchange",
+    description:
+      "The premier price-weighted equity benchmark of Japan, tracking 225 prominent blue-chip companies listed on the Tokyo Stock Exchange Prime Market.",
+    marketSignificance:
+      "The primary gauge of Japanese corporate vitality, yen sensitivity, industrial robotics, export dynamics, and Tokyo equity sentiment.",
+    relatedIndexId: "nikkei-225",
+    trackingEtfs: ["EWJ", "DXJ"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#e11d48",
+    icon: "🇯🇵",
+  },
+  DAX_40: {
+    id: "DAX_40",
+    name: "DAX 40 Performance Index",
+    shortName: "DAX 40",
+    category: "international",
+    subcategory: "Germany Blue-Chip",
+    region: "Europe",
+    country: "Germany",
+    currency: "EUR",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "Deutsche Börse Group / STOXX",
+    description:
+      "The blue-chip index of the 40 largest, most actively traded German companies listed on the Frankfurt Stock Exchange, calculated as a total return performance index.",
+    marketSignificance:
+      "The cornerstone benchmark of the powerhouse German economy and Eurozone industrial, automotive, chemicals, and enterprise software engineering.",
+    relatedIndexId: "dax-40",
+    trackingEtfs: ["EWG", "DAX"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#0284c7",
+    icon: "🇩🇪",
+  },
+  EURO_STOXX_50: {
+    id: "EURO_STOXX_50",
+    name: "EURO STOXX 50 Index",
+    shortName: "Euro Stoxx 50",
+    category: "international",
+    subcategory: "Eurozone Supersector Leaders",
+    region: "Europe",
+    country: "Eurozone",
+    currency: "EUR",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "STOXX Ltd. (Deutsche Börse)",
+    description:
+      "Europe's leading blue-chip index for the eurozone, providing a representation of supersector leaders across 11 eurozone countries including France, Germany, Netherlands, and Spain.",
+    marketSignificance:
+      "The standard institutional gauge for eurozone large-cap equities, driving Europe's most heavily traded index futures and options.",
+    relatedIndexId: "euro-stoxx-50",
+    trackingEtfs: ["FEZ"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#6366f1",
+    icon: "🇪🇺",
+  },
+  CAC_40: {
+    id: "CAC_40",
+    name: "CAC 40 Index",
+    shortName: "CAC 40",
+    category: "international",
+    subcategory: "France Large-Cap",
+    region: "Europe",
+    country: "France",
+    currency: "EUR",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "Euronext Paris",
+    description:
+      "The benchmark stock market index representing 40 most significant equities on Euronext Paris, distinguished by world-leading luxury, aerospace, energy, and cosmetics giants.",
+    marketSignificance:
+      "The benchmark for French economic output and global premium consumer goods, luxury conglomerate valuations, and European industrial strength.",
+    trackingEtfs: ["EWQ"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#0ea5e9",
+    icon: "🇫🇷",
+  },
+  HANG_SENG: {
+    id: "HANG_SENG",
+    name: "Hang Seng Index",
+    shortName: "Hang Seng",
+    category: "international",
+    subcategory: "Hong Kong / China Tech & Finance",
+    region: "Asia-Pacific",
+    country: "Hong Kong / China",
+    currency: "HKD",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "Hang Seng Indexes Company",
+    description:
+      "Freefloat-adjusted market-capitalization-weighted index tracking the largest and most liquid companies listed on the Stock Exchange of Hong Kong.",
+    marketSignificance:
+      "The definitive barometer for international capital flows into Greater China, Asian finance titans, and Chinese technology conglomerates.",
+    relatedIndexId: "hang-seng-index",
+    trackingEtfs: ["FXI", "EWH"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#059669",
+    icon: "🇭🇰",
+  },
+  TSX_COMPOSITE: {
+    id: "TSX_COMPOSITE",
+    name: "S&P/TSX Composite Index",
+    shortName: "TSX Composite",
+    category: "international",
+    subcategory: "Canada Broad Equity",
+    region: "Americas",
+    country: "Canada",
+    currency: "CAD",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "S&P Dow Jones Indices / TMX Group",
+    description:
+      "The headline index for the Canadian equity market, covering approximately 95% of coverage in the Canadian equities universe with significant financial and commodity weighting.",
+    marketSignificance:
+      "The premier institutional barometer of Canadian equity performance, banking liquidity, energy infrastructure, and mining commodities.",
+    trackingEtfs: ["EWC", "XIU"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#b91c1c",
+    icon: "🇨🇦",
+  },
+  ASX_200: {
+    id: "ASX_200",
+    name: "S&P/ASX 200 Index",
+    shortName: "ASX 200",
+    category: "international",
+    subcategory: "Australia Blue-Chip",
+    region: "Asia-Pacific",
+    country: "Australia",
+    currency: "AUD",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "S&P Dow Jones Indices / ASX",
+    description:
+      "Recognized as the primary investable benchmark for the Australian equity market, tracking the 200 largest index-eligible stocks listed on the Australian Securities Exchange.",
+    marketSignificance:
+      "Key institutional gauge of Australian banking, iron ore and copper mining, lithium extraction, energy resources, and Asia-Pacific trade links.",
+    trackingEtfs: ["EWA"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#d97706",
+    icon: "🇦🇺",
+  },
+  NIFTY_50: {
+    id: "NIFTY_50",
+    name: "Nifty 50 Index",
+    shortName: "Nifty 50",
+    category: "international",
+    subcategory: "India Large-Cap",
+    region: "Asia-Pacific",
+    country: "India",
+    currency: "INR",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "NSE Indices Limited",
+    description:
+      "Flagship index of the National Stock Exchange of India (NSE), tracking 50 premier blue-chip companies across 13 sectors of the Indian economy.",
+    marketSignificance:
+      "The premier benchmark of the world's fastest-growing major economy, driven by robust domestic demographics, digital transformation, and manufacturing expansion.",
+    trackingEtfs: ["INDA", "INDY"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#f59e0b",
+    icon: "🇮🇳",
+  },
+  MSCI_EAFE: {
+    id: "MSCI_EAFE",
+    name: "MSCI EAFE Index (Proxy: EFA)",
+    shortName: "MSCI EAFE",
+    category: "international",
+    subcategory: "Developed Markets ex-US",
+    region: "Global Developed",
+    country: "Developed ex-US",
+    currency: "USD",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "MSCI Inc.",
+    description:
+      "The premier international equity benchmark designed to represent the performance of large and mid-cap securities across 21 developed markets countries outside the US and Canada.",
+    marketSignificance:
+      "The definitive asset allocation benchmark for international developed equity exposure among US institutional investors, pensions, and endowments.",
+    relatedIndexId: "msci-eafe",
+    trackingEtfs: ["EFA", "VEA"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#10b981",
+    icon: "🌐",
+  },
+  MSCI_EM: {
+    id: "MSCI_EM",
+    name: "MSCI Emerging Markets Index (Proxy: EEM)",
+    shortName: "MSCI Emerging Markets",
+    category: "international",
+    subcategory: "Global Emerging Markets",
+    region: "Emerging Markets",
+    country: "Emerging Markets",
+    currency: "USD",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "MSCI Inc.",
+    description:
+      "Captures large and mid-cap representation across 24 Emerging Markets countries, spanning China, India, Taiwan, South Korea, and Brazil.",
+    marketSignificance:
+      "The world's standard benchmark for emerging markets investment, reflecting high-growth demographic expansion, tech hardware supply chains, and sovereign development.",
+    relatedIndexId: "msci-emerging-markets",
+    trackingEtfs: ["EEM", "VWO"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#8b5cf6",
+    icon: "🌏",
   },
 };
 

@@ -14,11 +14,16 @@ const FRED_API_KEY =
 const SERIES = [
   // Major U.S. Equity Benchmarks
   { id: "SP500", name: "S&P 500", category: "equity" },
-  { id: "SP500EW", name: "S&P 500 Equal Weight", category: "equity" },
+  {
+    id: "SP500EW",
+    name: "S&P 500 Equal Weight",
+    category: "equity",
+    yahooTicker: "^SPXEW",
+  },
   { id: "NASDAQ100", name: "NASDAQ 100", category: "equity" },
   { id: "NASDAQCOM", name: "NASDAQ Composite", category: "equity" },
   { id: "DJIA", name: "Dow Jones Industrial Average", category: "equity" },
-  { id: "RUI", name: "Russell 1000", category: "equity" },
+  { id: "RUI", name: "Russell 1000", category: "equity", yahooTicker: "^RUI" },
   { id: "VIXCLS", name: "CBOE Volatility Index (VIX)", category: "equity" },
 
   // Economic, Global & Macro Indexes
@@ -58,6 +63,74 @@ const SERIES = [
     id: "GDPC1",
     name: "Real Gross Domestic Product (Real GDP)",
     category: "macro",
+  },
+
+  // Major International Equity Benchmarks
+  {
+    id: "FTSE_100",
+    name: "FTSE 100 Index",
+    category: "international",
+    yahooTicker: "^FTSE",
+  },
+  {
+    id: "NIKKEI_225",
+    name: "Nikkei 225 Stock Average",
+    category: "international",
+    yahooTicker: "^N225",
+  },
+  {
+    id: "DAX_40",
+    name: "DAX 40 Performance Index",
+    category: "international",
+    yahooTicker: "^GDAXI",
+  },
+  {
+    id: "EURO_STOXX_50",
+    name: "EURO STOXX 50 Index",
+    category: "international",
+    yahooTicker: "^STOXX50E",
+  },
+  {
+    id: "CAC_40",
+    name: "CAC 40 Index",
+    category: "international",
+    yahooTicker: "^FCHI",
+  },
+  {
+    id: "HANG_SENG",
+    name: "Hang Seng Index",
+    category: "international",
+    yahooTicker: "^HSI",
+  },
+  {
+    id: "TSX_COMPOSITE",
+    name: "S&P/TSX Composite Index",
+    category: "international",
+    yahooTicker: "^GSPTSE",
+  },
+  {
+    id: "ASX_200",
+    name: "S&P/ASX 200 Index",
+    category: "international",
+    yahooTicker: "^AXJO",
+  },
+  {
+    id: "NIFTY_50",
+    name: "Nifty 50 Index",
+    category: "international",
+    yahooTicker: "^NSEI",
+  },
+  {
+    id: "MSCI_EAFE",
+    name: "MSCI EAFE Index (Proxy)",
+    category: "international",
+    yahooTicker: "EFA",
+  },
+  {
+    id: "MSCI_EM",
+    name: "MSCI Emerging Markets Index (Proxy)",
+    category: "international",
+    yahooTicker: "EEM",
   },
 ];
 
@@ -114,17 +187,16 @@ async function fetchRecentYahooPoints(ticker) {
   }
 }
 
-async function fetchSeries(id) {
+async function fetchSeries(id, yahooTicker) {
   let points = null;
 
-  // S&P 500 Equal Weight (^SPXEW)
-  if (id === "SP500EW") {
+  // Yahoo Finance 5-Year Chart if ticker is explicitly mapped
+  if (yahooTicker) {
     try {
-      const url =
-        "https://query1.finance.yahoo.com/v8/finance/chart/%5ESPXEW?interval=1d&range=5y";
+      const url = `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooTicker)}?interval=1d&range=5y`;
       const res = await fetch(url, {
         headers: {
-          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         },
       });
       if (res.ok) {
@@ -147,44 +219,7 @@ async function fetchSeries(id) {
         }
       }
     } catch (err) {
-      console.warn(
-        "⚠️ Error fetching S&P 500 Equal Weight (^SPXEW):",
-        err.message,
-      );
-    }
-  }
-
-  // Russell 1000 (^RUI)
-  if (id === "RUI") {
-    try {
-      const url =
-        "https://query1.finance.yahoo.com/v8/finance/chart/%5ERUI?interval=1d&range=5y";
-      const res = await fetch(url, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const timestamps = data.chart?.result?.[0]?.timestamp || [];
-        const quotes =
-          data.chart?.result?.[0]?.indicators?.quote?.[0]?.close || [];
-        const pts = [];
-        for (let i = 0; i < timestamps.length; i++) {
-          const val = quotes[i];
-          if (val != null && !isNaN(val)) {
-            const date = new Date(timestamps[i] * 1000)
-              .toISOString()
-              .split("T")[0];
-            pts.push([date, Number(val.toFixed(2))]);
-          }
-        }
-        if (pts.length > 0) {
-          points = pts;
-        }
-      }
-    } catch (err) {
-      console.warn("⚠️ Error fetching Russell 1000 (^RUI):", err.message);
+      console.warn(`⚠️ Error fetching ${id} (${yahooTicker}):`, err.message);
     }
   }
 
@@ -357,7 +392,7 @@ async function main() {
   let successCount = 0;
 
   for (const item of SERIES) {
-    const observations = await fetchSeries(item.id);
+    const observations = await fetchSeries(item.id, item.yahooTicker);
     if (observations && observations.length > 0) {
       const latest = observations[observations.length - 1];
       const prev = observations[observations.length - 2];

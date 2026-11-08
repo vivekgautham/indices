@@ -242,14 +242,24 @@ export const Sp500SectorTrackerCard: React.FC<Sp500SectorTrackerCardProps> = ({
               Weights, daily performance as of{" "}
               <strong style={{ color: "inherit" }}>
                 {formattedMarketDate || "latest market close"}
-              </strong>
+              </strong>{" "}
+              from FRED.
+            </Typography>
+
+            <Typography
+              variant="body2"
+              sx={{
+                color: "text.secondary",
+                fontSize: "0.78rem",
+                mt: 0.35,
+              }}
+            >
               {updatedAt && (
                 <span>
-                  {" "}
-                  • Synced: {new Date(updatedAt).toLocaleDateString()}
+                  Synced: {new Date(updatedAt).toLocaleDateString()}, and{" "}
                 </span>
               )}
-              , and tracking SPDR ETFs for the 11 S&amp;P 500 industry sectors.
+              tracking SPDR ETFs for the 11 S&amp;P 500 industry sectors.
             </Typography>
           </Box>
 
