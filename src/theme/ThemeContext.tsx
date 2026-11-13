@@ -4,7 +4,6 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState,
 } from "react";
 import {
   applyThemeCssVariables,
@@ -27,59 +26,21 @@ const STORAGE_KEY = "indices-theme-id";
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-function getInitialThemeId(): ThemeId {
-  if (typeof window === "undefined") return DEFAULT_THEME_ID;
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && saved in THEME_PRESETS) {
-      return saved as ThemeId;
-    }
-    // Backward compatibility migration: any saved light theme defaults to clean-light
-    if (
-      saved === "clean-light" ||
-      saved === "kalshi-light" ||
-      saved === "wsj" ||
-      saved === "light" ||
-      saved === "nordic" ||
-      saved === "lavender" ||
-      saved === "sage" ||
-      saved === "sandstone" ||
-      saved === "coral"
-    ) {
-      return "clean-light";
-    }
-    // Any other dark theme defaults to kalshi
-    return DEFAULT_THEME_ID;
-  } catch {
-    // Ignore localStorage access errors
-  }
-  return DEFAULT_THEME_ID;
-}
-
 export const ColorThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [themeId, setThemeIdState] = useState<ThemeId>(getInitialThemeId);
-
-  const activeTheme = useMemo(
-    () => THEME_PRESETS[themeId] || THEME_PRESETS[DEFAULT_THEME_ID],
-    [themeId],
-  );
-
+  // Always default to Kalshi Dark theme
+  const themeId: ThemeId = DEFAULT_THEME_ID;
+  const activeTheme = THEME_PRESETS[DEFAULT_THEME_ID];
   const muiTheme = useMemo(() => buildTheme(activeTheme), [activeTheme]);
 
-  const setThemeId = (id: ThemeId) => {
-    if (THEME_PRESETS[id]) {
-      setThemeIdState(id);
-      try {
-        localStorage.setItem(STORAGE_KEY, id);
-      } catch {
-        // Ignore localStorage quota errors
-      }
-    }
-  };
-
   useEffect(() => {
+    // Clear any stale cached theme preference from older versions
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Ignore localStorage access errors
+    }
     applyThemeCssVariables(activeTheme);
   }, [activeTheme]);
 
@@ -87,7 +48,7 @@ export const ColorThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     () => ({
       themeId,
       activeTheme,
-      setThemeId,
+      setThemeId: () => {},
       availableThemes: THEMES_LIST,
     }),
     [themeId, activeTheme],

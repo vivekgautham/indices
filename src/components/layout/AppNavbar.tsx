@@ -16,7 +16,6 @@ import {
 import React, { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ShareButton from "../ShareButton";
-import ThemeSelector from "./ThemeSelector";
 
 export interface NavItem {
   id: string;
@@ -279,13 +278,8 @@ export const AppNavbar: React.FC = () => {
             })}
           </Stack>
 
-          {/* Right: Share View Button & Theme Selector */}
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={{ xs: 0.75, sm: 1.25 }}
-            sx={{ flexShrink: 0 }}
-          >
+          {/* Right: Share View Button */}
+          <Box sx={{ flexShrink: 0 }}>
             <ShareButton
               item={shareItem}
               label={isSmUp ? "Share View" : "Share"}
@@ -299,19 +293,18 @@ export const AppNavbar: React.FC = () => {
                 fontWeight: 700,
                 fontSize: { xs: "0.74rem", sm: "0.78rem" },
                 textTransform: "none",
-                borderColor: "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                borderColor: "var(--indices-border, rgba(0, 221, 148, 0.2))",
                 backgroundColor:
-                  "var(--indices-subtle-bg, rgba(30, 41, 59, 0.4))",
+                  "var(--indices-subtle-bg, rgba(0, 221, 148, 0.08))",
                 color: "text.primary",
                 "&:hover": {
                   backgroundColor:
-                    "var(--indices-card-hover-bg, rgba(30, 41, 59, 0.8))",
+                    "var(--indices-card-hover-bg, rgba(16, 36, 28, 0.92))",
                   borderColor: "primary.light",
                 },
               }}
             />
-            <ThemeSelector />
-          </Stack>
+          </Box>
         </Toolbar>
 
         {/* Mobile / Tablet (< md): Sleek Dedicated Segmented Navigation Bar */}

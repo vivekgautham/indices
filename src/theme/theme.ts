@@ -1,6 +1,6 @@
 import { createTheme, Theme } from "@mui/material/styles";
 
-export type ThemeId = "kalshi" | "clean-light";
+export type ThemeId = "kalshi";
 
 export interface ThemePreset {
   id: ThemeId;
@@ -73,41 +73,6 @@ export const THEME_PRESETS: Record<ThemeId, ThemePreset> = {
     accentPreview: "#00DD94",
     bgPreview: "#050D0A",
     badgeLabel: "Kalshi",
-  },
-  "clean-light": {
-    id: "clean-light",
-    name: "Clean Light",
-    shortName: "Clean Light",
-    tagline: "Crisp modern daylight with classic slate & indigo",
-    type: "light",
-    primary: {
-      main: "#4338ca",
-      light: "#6366f1",
-      dark: "#312e81",
-      contrastText: "#ffffff",
-    },
-    secondary: {
-      main: "#0284c7",
-      light: "#38bdf8",
-      dark: "#0369a1",
-      contrastText: "#ffffff",
-    },
-    background: {
-      default: "#f8fafc",
-      paper: "#ffffff",
-    },
-    cardBg: "rgba(255, 255, 255, 0.95)",
-    cardHoverBg: "#ffffff",
-    subtleBg: "rgba(241, 245, 249, 0.85)",
-    border: "rgba(15, 23, 42, 0.12)",
-    navbarBg: "rgba(248, 250, 252, 0.92)",
-    text: {
-      primary: "#0f172a",
-      secondary: "#475569",
-    },
-    accentPreview: "#4338ca",
-    bgPreview: "#f8fafc",
-    badgeLabel: "Light",
   },
 };
 
