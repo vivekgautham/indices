@@ -238,13 +238,6 @@ export default function IndexListPage() {
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
 
-  // Detect platform for keyboard shortcut display (Cmd+K vs Ctrl+K)
-  const isMac = useMemo(
-    () =>
-      typeof navigator !== "undefined" &&
-      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform || navigator.userAgent),
-    [],
-  );
 
   // Global shortcut: Pressing Cmd+K, Ctrl+K, or "/" focuses the search bar from anywhere
   useEffect(() => {
@@ -836,31 +829,6 @@ export default function IndexListPage() {
                     }}
                   />
 
-                  {/* Keyboard Shortcut Hint (Cmd+K / Ctrl+K) */}
-                  <Box
-                    component="kbd"
-                    sx={{
-                      display: { xs: "none", md: "inline-flex" },
-                      alignItems: "center",
-                      gap: 0.35,
-                      px: 0.85,
-                      py: 0.25,
-                      borderRadius: 1.5,
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      color: "text.secondary",
-                      backgroundColor: "rgba(255, 255, 255, 0.04)",
-                      border: "1px solid rgba(255, 255, 255, 0.1)",
-                      userSelect: "none",
-                      "& span": {
-                        fontSize: "0.75rem",
-                        lineHeight: 1,
-                      },
-                    }}
-                  >
-                    <span>{isMac ? "⌘" : "Ctrl"}</span>
-                    <span>K</span>
-                  </Box>
                 </Stack>
 
                 {/* Clear Action Button */}
