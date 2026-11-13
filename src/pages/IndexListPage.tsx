@@ -238,6 +238,42 @@ export default function IndexListPage() {
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
 
+  // Detect platform for keyboard shortcut display (Cmd+K vs Ctrl+K)
+  const isMac = useMemo(
+    () =>
+      typeof navigator !== "undefined" &&
+      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform || navigator.userAgent),
+    [],
+  );
+
+  // Global shortcut: Pressing Cmd+K, Ctrl+K, or "/" focuses the search bar from anywhere
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const isInput =
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable);
+
+      if (
+        (e.key === "k" && (e.metaKey || e.ctrlKey)) ||
+        (e.key === "/" && !isInput)
+      ) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+        searchInputRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   // Reset pagination to 3 rows whenever filter or search query changes
   useEffect(() => {
     setVisibleRows(3);
@@ -515,32 +551,43 @@ export default function IndexListPage() {
                   alignItems: "center",
                   flexWrap: "wrap",
                   gap: 0.75,
-                  minHeight: 52,
+                  minHeight: 54,
                   py: 0.75,
-                  px: 1.5,
+                  px: 1.75,
                   borderRadius: 3.5,
-                  backgroundColor:
-                    "var(--indices-card-bg, rgba(30, 41, 59, 0.7))",
-                  backdropFilter: "blur(12px)",
-                  border:
-                    "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
+                  backgroundColor: "rgba(11, 26, 20, 0.85)",
+                  backdropFilter: "blur(16px)",
+                  border: "1.5px solid rgba(0, 221, 148, 0.22)",
                   cursor: "text",
-                  transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                  boxShadow:
+                    "0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04)",
                   "&:hover": {
-                    borderColor: "primary.light",
+                    borderColor: "rgba(0, 221, 148, 0.48)",
+                    boxShadow:
+                      "0 6px 24px -2px rgba(0, 221, 148, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
                   },
                   "&:focus-within": {
-                    borderColor: "primary.main",
-                    boxShadow: `0 0 0 2px ${theme.palette.primary.main}33`,
+                    borderColor: "#00DD94",
+                    backgroundColor: "rgba(11, 26, 20, 0.98)",
+                    boxShadow:
+                      "0 0 0 1px #00DD94, 0 0 30px rgba(0, 221, 148, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                    "& .search-bar-icon": {
+                      color: "#00DD94",
+                      filter: "drop-shadow(0 0 6px rgba(0, 221, 148, 0.6))",
+                      transform: "scale(1.08)",
+                    },
                   },
                 }}
               >
                 <SearchIcon
+                  className="search-bar-icon"
                   sx={{
                     color: "text.secondary",
-                    fontSize: 20,
+                    fontSize: 21,
                     flexShrink: 0,
                     mr: 0.25,
+                    transition: "all 0.2s ease",
                   }}
                 />
 
@@ -738,6 +785,83 @@ export default function IndexListPage() {
                     },
                   }}
                 />
+
+                {/* Right Badges: Live Match Count & Keyboard Shortcut */}
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={0.75}
+                  sx={{ ml: "auto", flexShrink: 0 }}
+                >
+                  {/* Live Match Counter Badge */}
+                  <Chip
+                    size="small"
+                    label={
+                      searchTerm ||
+                      selectedTerms.length > 0 ||
+                      selectedStyle !== "all" ||
+                      selectedProvider !== "all"
+                        ? `${allProviderMatches.length} match${allProviderMatches.length === 1 ? "" : "es"}`
+                        : `${indices.length} indices`
+                    }
+                    sx={{
+                      height: 22,
+                      fontSize: "0.68rem",
+                      fontWeight: 800,
+                      letterSpacing: "0.02em",
+                      borderRadius: 1.5,
+                      border: "1px solid",
+                      borderColor:
+                        searchTerm ||
+                        selectedTerms.length > 0 ||
+                        selectedStyle !== "all" ||
+                        selectedProvider !== "all"
+                          ? "rgba(0, 221, 148, 0.45)"
+                          : "rgba(255, 255, 255, 0.12)",
+                      backgroundColor:
+                        searchTerm ||
+                        selectedTerms.length > 0 ||
+                        selectedStyle !== "all" ||
+                        selectedProvider !== "all"
+                          ? "rgba(0, 221, 148, 0.16)"
+                          : "rgba(255, 255, 255, 0.05)",
+                      color:
+                        searchTerm ||
+                        selectedTerms.length > 0 ||
+                        selectedStyle !== "all" ||
+                        selectedProvider !== "all"
+                          ? "#00DD94"
+                          : "text.secondary",
+                      userSelect: "none",
+                    }}
+                  />
+
+                  {/* Keyboard Shortcut Hint (Cmd+K / Ctrl+K) */}
+                  <Box
+                    component="kbd"
+                    sx={{
+                      display: { xs: "none", md: "inline-flex" },
+                      alignItems: "center",
+                      gap: 0.35,
+                      px: 0.85,
+                      py: 0.25,
+                      borderRadius: 1.5,
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      color: "text.secondary",
+                      backgroundColor: "rgba(255, 255, 255, 0.04)",
+                      border: "1px solid rgba(255, 255, 255, 0.1)",
+                      userSelect: "none",
+                      "& span": {
+                        fontSize: "0.75rem",
+                        lineHeight: 1,
+                      },
+                    }}
+                  >
+                    <span>{isMac ? "⌘" : "Ctrl"}</span>
+                    <span>K</span>
+                  </Box>
+                </Stack>
 
                 {/* Clear Action Button */}
                 {(searchTerm ||

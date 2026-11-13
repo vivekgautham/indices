@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050D0A" />
+      <stop offset="50%" stop-color="#081813" />
+      <stop offset="100%" stop-color="#0B1A14" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00DD94" />
+      <stop offset="100%" stop-color="#34e5aa" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00DD94" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#00DD94" stop-opacity="0" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+
+  <!-- Grid lines -->
+  <g stroke="rgba(0, 221, 148, 0.08)" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="630" />
+    <line x1="250" y1="0" x2="250" y2="630" />
+    <line x1="400" y1="0" x2="400" y2="630" />
+    <line x1="550" y1="0" x2="550" y2="630" />
+    <line x1="700" y1="0" x2="700" y2="630" />
+    <line x1="850" y1="0" x2="850" y2="630" />
+    <line x1="1000" y1="0" x2="1000" y2="630" />
+    <line x1="0" y1="120" x2="1200" y2="120" />
+    <line x1="0" y1="240" x2="1200" y2="240" />
+    <line x1="0" y1="360" x2="1200" y2="360" />
+    <line x1="0" y1="480" x2="1200" y2="480" />
+  </g>
+
+  <!-- Glowing background chart waveform -->
+  <path d="M 500 500 Q 620 420 720 440 T 880 340 T 1020 220 T 1200 160 L 1200 630 L 500 630 Z" fill="url(#glowGrad)" />
+  <path d="M 500 500 Q 620 420 720 440 T 880 340 T 1020 220 T 1200 160" fill="none" stroke="#00DD94" stroke-width="4" filter="url(#glow)" />
+
+  <!-- Brand Pill Header -->
+  <g transform="translate(80, 80)">
+    <rect width="210" height="38" rx="19" fill="rgba(0, 221, 148, 0.12)" stroke="rgba(0, 221, 148, 0.35)" stroke-width="1.5" />
+    <circle cx="22" cy="19" r="6" fill="#00DD94" filter="url(#glow)" />
+    <text x="38" y="24" fill="#00DD94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="800" letter-spacing="1.5">MARKETINDICES.XYZ</text>
+  </g>
+
+  <!-- Main Headline -->
+  <text x="80" y="210" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif" font-size="54" font-weight="900" letter-spacing="-1.5">
+    179+ Global Market Indices
+  </text>
+  <text x="80" y="275" fill="url(#greenGrad)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif" font-size="50" font-weight="900" letter-spacing="-1.5">
+    &amp; Tracking ETF Guide
+  </text>
+
+  <!-- Subheadline -->
+  <text x="80" y="340" fill="#8fa399" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif" font-size="22" font-weight="500">
+    Methodology, Rebalance Schedules, AUM &amp; Real-Time Sovereign Yields
+  </text>
+
+  <!-- Benchmark Badges Strip -->
+  <g transform="translate(80, 420)">
+    <!-- Badge 1: S&P 500 -->
+    <g transform="translate(0, 0)">
+      <rect width="180" height="52" rx="12" fill="rgba(11, 26, 20, 0.9)" stroke="rgba(0, 221, 148, 0.25)" stroke-width="1.5" />
+      <text x="18" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="800">S&amp;P 500</text>
+      <text x="18" y="42" fill="#00DD94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="11" font-weight="700">SPY • VOO • IVV</text>
+    </g>
+
+    <!-- Badge 2: Nasdaq 100 -->
+    <g transform="translate(195, 0)">
+      <rect width="180" height="52" rx="12" fill="rgba(11, 26, 20, 0.9)" stroke="rgba(0, 221, 148, 0.25)" stroke-width="1.5" />
+      <text x="18" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="800">NASDAQ-100</text>
+      <text x="18" y="42" fill="#00DD94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="11" font-weight="700">QQQ • QQQM</text>
+    </g>
+
+    <!-- Badge 3: Russell 2000 -->
+    <g transform="translate(390, 0)">
+      <rect width="180" height="52" rx="12" fill="rgba(11, 26, 20, 0.9)" stroke="rgba(0, 221, 148, 0.25)" stroke-width="1.5" />
+      <text x="18" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="800">RUSSELL 2000</text>
+      <text x="18" y="42" fill="#00DD94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="11" font-weight="700">IWM • VTWO</text>
+    </g>
+
+    <!-- Badge 4: KOSPI -->
+    <g transform="translate(585, 0)">
+      <rect width="160" height="52" rx="12" fill="rgba(11, 26, 20, 0.9)" stroke="rgba(0, 221, 148, 0.25)" stroke-width="1.5" />
+      <text x="18" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="800">KOSPI 🇰🇷</text>
+      <text x="18" y="42" fill="#00DD94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="11" font-weight="700">EWY • KRX</text>
+    </g>
+
+    <!-- Badge 5: Yield Curve -->
+    <g transform="translate(760, 0)">
+      <rect width="190" height="52" rx="12" fill="rgba(11, 26, 20, 0.9)" stroke="rgba(0, 221, 148, 0.25)" stroke-width="1.5" />
+      <text x="18" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="800">U.S. TREASURY</text>
+      <text x="18" y="42" fill="#00DD94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="11" font-weight="700">3M → 30Y Curve</text>
+    </g>
+  </g>
+
+  <!-- Bottom Brand Footer Strip -->
+  <text x="80" y="555" fill="#52665c" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="14" font-weight="600">
+    S&amp;P • FTSE RUSSELL • MSCI • NASDAQ • STOXX • EURONEXT • NIKKEI • KRX
+  </text>
+</svg>

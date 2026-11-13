@@ -136,35 +136,106 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
   // Create dist/tracker/index.html
   const trackerDir = path.join(distDir, "tracker");
   fs.mkdirSync(trackerDir, { recursive: true });
+
+  const trackerTitle = `Live Benchmark Tracker: U.S. & Global Indexes, Treasury Yields & Bonds 📈 | MarketIndices`;
+  const trackerDesc = `Live and historical tracking across 38 global market benchmarks: S&P 500, Nasdaq 100, FTSE 100, Nikkei 225, KOSPI, sovereign Treasury yield curves (3M to 30Y), recession spreads, and bond ETFs.`;
+
   let trackerHtml = baseHtml
     .replace(
       /<title>.*?<\/title>/i,
-      `<title>FRED Benchmark Tracker | U.S. Equity &amp; Macroeconomic Indexes</title>`
+      `<title>${escapeHtml(trackerTitle)}</title>`
     )
     .replace(
       /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
-      `<meta name="description" content="Live &amp; historical tracker for major U.S. equity benchmarks (S&amp;P 500, Dow Jones, Nasdaq 100, VIX) and macroeconomic indexes (Treasury yields, yield curves, Fed funds, U.S. dollar, crude oil) from the St. Louis Federal Reserve (FRED)." />`
+      `<meta name="description" content="${trackerDesc}" />`
     )
     .replace(
       /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
       `<link rel="canonical" href="${BASE_URL}/tracker" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:title" content="${escapeHtml(trackerTitle)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:description" content="${trackerDesc}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:url" content="${BASE_URL}/tracker" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:title" content="${escapeHtml(trackerTitle)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:description" content="${trackerDesc}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:url" content="${BASE_URL}/tracker" />`
     );
 
+  // Google Dataset Schema for Google Dataset Search
+  const datasetSchema = {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: "Global Market Benchmark Indices & U.S. Treasury Yield Curve Daily Historical Dataset",
+    description: "Daily historical observations, 52-week ranges, percentage changes, sovereign yield spreads, and tracking ETF proxies for 38 major market benchmarks and economic indicators from the St. Louis Federal Reserve (FRED), Yahoo Finance, and international stock exchanges.",
+    url: `${BASE_URL}/tracker`,
+    keywords: [
+      "market benchmarks",
+      "treasury yield curve",
+      "S&P 500",
+      "Nasdaq 100",
+      "FTSE 100",
+      "Nikkei 225",
+      "KOSPI",
+      "10-2 treasury spread",
+      "bond benchmarks",
+      "FRED data"
+    ],
+    creator: {
+      "@type": "Organization",
+      name: "MarketIndices.xyz",
+      url: BASE_URL,
+    },
+    temporalCoverage: "2021/2026",
+    spatialCoverage: "Global",
+    distribution: [
+      {
+        "@type": "DataDownload",
+        encodingFormat: "application/json",
+        contentUrl: `${BASE_URL}/data/fred-data.json`,
+      },
+    ],
+  };
+
+  const trackerLdJson = `
+    <script type="application/ld+json">
+${JSON.stringify(datasetSchema, null, 2)}
+    </script>
+  </head>`;
+  trackerHtml = trackerHtml.replace("</head>", trackerLdJson);
+
   const trackerPrerender = `
-      <main style="max-width: 1000px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+      <main style="max-width: 1050px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
         <header style="margin-bottom: 28px;">
-          <h1 style="font-size: 30px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Federal Reserve Economic Data (FRED®) Benchmark Tracker</h1>
+          <h1 style="font-size: 32px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Global Benchmark Tracker &amp; U.S. Treasury Yield Curve</h1>
           <p style="font-size: 17px; color: #475569;">
-            Live and historical tracking for major U.S. equity benchmarks and macroeconomic indexes powered by the Federal Reserve Bank of St. Louis (FRED).
+            Real-time and 5-year historical market data for 38 premier equity benchmarks, sovereign Treasury yield term structures, and macroeconomic barometers.
           </p>
         </header>
 
         <section style="margin-bottom: 28px;">
-          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a;">1. Major U.S. Equity Benchmarks</h2>
+          <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">1. Major U.S. Equity Benchmarks &amp; Market Breadth</h2>
           <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
-            <li><strong>S&amp;P 500 Index (SP500)</strong> – The premier barometer of large-cap US equities.</li>
-            <li><strong>Dow Jones Industrial Average (DJIA)</strong> – 30 blue-chip industry leaders.</li>
-            <li><strong>NASDAQ-100 Index (NASDAQ100)</strong> – Top 100 non-financial tech and innovation leaders.</li>
+            <li><strong>S&amp;P 500 Index (SP500)</strong> – The premier barometer of U.S. large-cap equities (Proxy: SPY, VOO, IVV).</li>
+            <li><strong>S&amp;P 500 Equal Weight Index (SP500EW)</strong> – Market breadth indicator assigning equal 0.2% weight to all 500 constituents (Proxy: RSP).</li>
+            <li><strong>Dow Jones Industrial Average (DJIA)</strong> – 30 blue-chip American industry leaders (Proxy: DIA).</li>
+            <li><strong>NASDAQ-100 Index (NASDAQ100)</strong> – Top 100 non-financial tech and innovation champions (Proxy: QQQ, QQQM).</li>
             <li><strong>NASDAQ Composite Index (NASDAQCOM)</strong> – Comprehensive benchmark of 3,000+ Nasdaq equities.</li>
             <li><strong>Russell 1000 Index (RUI)</strong> – Institutional broad large-to-mid cap benchmark.</li>
             <li><strong>CBOE Volatility Index (VIXCLS)</strong> – The market's 30-day forward implied volatility fear gauge.</li>
@@ -172,21 +243,45 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
         </section>
 
         <section style="margin-bottom: 28px;">
-          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a;">2. Economic, Global &amp; Macro Indexes</h2>
+          <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">2. International Equity Benchmarks (Europe, Asia-Pacific, Americas)</h2>
           <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
-            <li><strong>10-Year Treasury Constant Maturity Yield (DGS10)</strong> – Global risk-free benchmark rate.</li>
-            <li><strong>2-Year Treasury Constant Maturity Yield (DGS2)</strong> – Near-term Fed policy rate expectation barometer.</li>
-            <li><strong>10-Year minus 2-Year Treasury Yield Spread (T10Y2Y)</strong> – Premier yield curve recession indicator.</li>
-            <li><strong>Federal Funds Effective Rate (FEDFUNDS)</strong> – Central bank overnight policy rate anchor.</li>
-            <li><strong>Trade-Weighted U.S. Dollar Index (DTWEXBGS)</strong> – Global greenback foreign exchange valuation.</li>
-            <li><strong>WTI Crude Oil Prices (DCOILWTICO)</strong> – Benchmark energy and transport commodity cost.</li>
-            <li><strong>30-Year Fixed Mortgage Rate (MORTGAGE30US)</strong> – US housing borrowing benchmark.</li>
-            <li><strong>High Yield Credit Spread (BAMLH0A0HYM2)</strong> – Corporate credit risk appetite indicator.</li>
-            <li><strong>Real Gross Domestic Product (GDPC1)</strong> – Comprehensive American economic production measure.</li>
+            <li><strong>FTSE 100 Index 🇬🇧 (FTSE_100)</strong> – United Kingdom blue-chip market benchmark.</li>
+            <li><strong>Nikkei 225 Stock Average 🇯🇵 (NIKKEI_225)</strong> – Japan's iconic price-weighted blue-chip barometer.</li>
+            <li><strong>DAX 40 Performance Index 🇩🇪 (DAX_40)</strong> – Germany's premier export and industrial powerhouse benchmark.</li>
+            <li><strong>EURO STOXX 50 Index 🇪🇺 (EURO_STOXX_50)</strong> – Eurozone supersector corporate champions.</li>
+            <li><strong>CAC 40 Index 🇫🇷 (CAC_40)</strong> – France's large-cap benchmark dominated by global luxury and industrial champions.</li>
+            <li><strong>Hang Seng Index 🇭🇰 (HANG_SENG)</strong> – Premier barometer of Hong Kong and Mainland Chinese technology &amp; finance.</li>
+            <li><strong>S&amp;P/TSX Composite Index 🇨🇦 (TSX_COMPOSITE)</strong> – Canada's broad market benchmark across banking, energy, and materials.</li>
+            <li><strong>S&amp;P/ASX 200 Index 🇦🇺 (ASX_200)</strong> – Australia's institutional equity benchmark across resources and financial leaders.</li>
+            <li><strong>Nifty 50 Index 🇮🇳 (NIFTY_50)</strong> – Flagship index of the National Stock Exchange of India.</li>
+            <li><strong>KOSPI Composite Index 🇰🇷 (KOSPI)</strong> – South Korea's flagship benchmark (KRX) dominated by semiconductor titans (Samsung, SK Hynix).</li>
+            <li><strong>MSCI EAFE Index (MSCI_EAFE)</strong> – Developed markets benchmark across Europe, Australasia, and the Far East (Proxy: EFA).</li>
+            <li><strong>MSCI Emerging Markets Index (MSCI_EM)</strong> – Standard benchmark for global emerging markets investment (Proxy: EEM).</li>
           </ul>
         </section>
 
-        <p><a href="/" style="color: #4f46e5; text-decoration: none; font-weight: 700;">&larr; Back to Market Indices Explorer</a></p>
+        <section style="margin-bottom: 28px;">
+          <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">3. U.S. Sovereign Treasury Yield Curve, Spreads &amp; Bond Benchmarks</h2>
+          <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
+            <li><strong>3-Month Treasury Constant Maturity (DGS3MO)</strong> – Short-term cash equivalent risk-free yield.</li>
+            <li><strong>2-Year Treasury Constant Maturity (DGS2)</strong> – Near-term Federal Reserve monetary policy expectation gauge.</li>
+            <li><strong>5-Year Treasury Constant Maturity (DGS5)</strong> – Medium-term economic growth and inflation expectation anchor.</li>
+            <li><strong>10-Year Treasury Constant Maturity (DGS10)</strong> – The global financial system's benchmark risk-free reference rate.</li>
+            <li><strong>30-Year Treasury Constant Maturity (DGS30)</strong> – Long-term sovereign borrowing rate and mortgage anchor.</li>
+            <li><strong>10-Year minus 2-Year Yield Spread (T10Y2Y)</strong> – Premier yield curve slope and economic recession indicator.</li>
+            <li><strong>10-Year minus 3-Month Yield Spread (T10Y3M)</strong> – Academic benchmark recession probability indicator.</li>
+            <li><strong>10-Year TIPS Real Yield (DFII10)</strong> – Inflation-adjusted risk-free return on U.S. capital.</li>
+            <li><strong>Federal Funds Effective Rate (FEDFUNDS)</strong> – Central bank overnight policy target rate.</li>
+            <li><strong>High Yield Credit Spread (BAMLH0A0HYM2)</strong> – Corporate credit risk premium and default probability barometer.</li>
+            <li><strong>Bloomberg U.S. Aggregate Bond (AGG_BOND)</strong> – Institutional broad fixed income benchmark (Proxy: AGG).</li>
+            <li><strong>ICE U.S. Treasury 20+ Year Bond (TLT_BOND)</strong> – Long-duration sovereign benchmark (Proxy: TLT).</li>
+            <li><strong>iBoxx USD Liquid Investment Grade (LQD_BOND)</strong> – Blue-chip corporate bond benchmark (Proxy: LQD).</li>
+            <li><strong>iBoxx USD Liquid High Yield (HYG_BOND)</strong> – High-yield corporate junk bond proxy (Proxy: HYG).</li>
+            <li><strong>Bloomberg U.S. TIPS (TIP_BOND)</strong> – Sovereign inflation-protected securities proxy (Proxy: TIP).</li>
+          </ul>
+        </section>
+
+        <p><a href="/" style="color: #00DD94; text-decoration: none; font-weight: 700;">&larr; Back to Market Indices Explorer</a></p>
       </main>`;
 
   trackerHtml = trackerHtml.replace(
@@ -208,32 +303,36 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
 
     // Top tracking ETF tickers for search-intent matching
     const topTickers = (index.trackingEtfs || []).map((e) => e.ticker);
-    const topTickersSlice = topTickers.slice(0, 4);
-    const tickerSuffix = topTickersSlice.length > 0 ? ` (${topTickersSlice.join(", ")})` : "";
+    const topTickersSlice = topTickers.slice(0, 3);
 
-    // High-CTR, high-intent title tag
-    const title = `${index.name} (${index.symbol}): Tracking ETFs${tickerSuffix} & Methodology | MarketIndices`;
+    // High-CTR, high-intent title tag (with exact ETF search intent & pop emoji)
+    let title;
+    if (topTickersSlice.length > 0) {
+      title = `${index.name} (${index.symbol}) | ${topTickersSlice.join(", ")} Tracking ETFs & Methodology 📊`;
+    } else {
+      title = `${index.name} (${index.symbol}) | Benchmark Guide & Methodology 📊`;
+    }
 
     // High-intent meta description
-    const etfDescSnippet = topTickers.length > 0 ? `tracked by ${topTickers.slice(0, 5).join(", ")}. ` : "";
-    const description = `Complete benchmark guide to ${index.name} (${index.symbol}) ${etfDescSnippet}Explore methodology, reconstitution schedule, AUM, and UCITS funds: ${(index.summary || index.description || "").replace(/"/g, "&quot;")}`.slice(0, 160);
+    const etfDescSnippet = topTickers.length > 0 ? `tracking ETFs (${topTickers.slice(0, 4).join(", ")})` : "benchmark profile";
+    const description = `${index.name} (${index.symbol}) ${etfDescSnippet}: methodology, constituents (${index.constituentsCount}), rebalancing schedule, and UCITS funds. ${(index.summary || index.description || "").replace(/"/g, "&quot;")}`.slice(0, 158);
 
     // Identify UCITS ETFs for Irish-domiciled FAQ
     const ucitsEtfs = (index.trackingEtfs || []).filter(e =>
       e.name.toLowerCase().includes("ucits") || e.name.toLowerCase().includes("ireland")
     );
 
-    // Generate Structured FAQs for the FAQPage Schema
+    // Generate Structured FAQs for the FAQPage Schema (Position 0 direct definitions)
     const faqs = [
       {
         question: `What ETFs track the ${index.name} (${index.symbol})?`,
         answer: (index.trackingEtfs && index.trackingEtfs.length > 0)
-          ? `The ${index.name} is tracked by ${index.trackingEtfs.map(e => `${e.name} (${e.ticker}${e.aum ? `, AUM: ${e.aum}` : ""})`).join("; ")}.`
-          : `There are currently no major passive ETFs listed for ${index.name}. It primarily serves as a benchmark for institutional mandates and economic analysis.`,
+          ? `The ${index.name} (${index.symbol}) is tracked by ${index.trackingEtfs.length} exchange-traded fund${index.trackingEtfs.length > 1 ? "s" : ""}, led by ${index.trackingEtfs.map(e => `${e.name} (${e.ticker}${e.aum ? `, AUM: ${e.aum}` : ""})`).join("; ")}.`
+          : `There are currently no passive retail ETFs directly tracking ${index.name} (${index.symbol}). It primarily serves as an institutional investment benchmark and economic performance gauge.`,
       },
       {
-        question: `How is the ${index.name} weighted and rebalanced?`,
-        answer: `The index uses ${index.weightingMethodology} weighting with a ${index.rebalanceFrequency} rebalancing frequency, covering ${index.constituentsCount} constituent securities.`,
+        question: `How is the ${index.name} (${index.symbol}) calculated and weighted?`,
+        answer: `The ${index.name} uses ${index.weightingMethodology} weighting with a ${index.rebalanceFrequency} rebalancing frequency, covering a portfolio basket of ${index.constituentsCount} constituent securities.`,
       },
     ];
 
