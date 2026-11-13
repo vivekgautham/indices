@@ -99,6 +99,7 @@ export interface FredDataset {
   equitySeries: FredSeriesData[];
   macroSeries: FredSeriesData[];
   internationalSeries: FredSeriesData[];
+  bondSeries: FredSeriesData[];
   sectors?: Record<string, Sp500SectorMarketData>;
 }
 
@@ -125,6 +126,7 @@ export function parseRawDataset(rawJson: {
     internationalSeries: seriesList.filter(
       (s) => s.category === "international",
     ),
+    bondSeries: seriesList.filter((s) => s.category === "bond"),
     sectors: rawJson?.sectors,
   };
 }

@@ -28,22 +28,6 @@ const SERIES = [
 
   // Economic, Global & Macro Indexes
   {
-    id: "DGS10",
-    name: "10-Year Treasury Constant Maturity Rate",
-    category: "macro",
-  },
-  {
-    id: "DGS2",
-    name: "2-Year Treasury Constant Maturity Rate",
-    category: "macro",
-  },
-  {
-    id: "T10Y2Y",
-    name: "10-Year minus 2-Year Treasury Yield Spread",
-    category: "macro",
-  },
-  { id: "FEDFUNDS", name: "Federal Funds Effective Rate", category: "macro" },
-  {
     id: "DTWEXBGS",
     name: "Trade-Weighted U.S. Dollar Index",
     category: "macro",
@@ -52,11 +36,6 @@ const SERIES = [
   {
     id: "MORTGAGE30US",
     name: "30-Year Fixed Mortgage Rate",
-    category: "macro",
-  },
-  {
-    id: "BAMLH0A0HYM2",
-    name: "US High Yield Option-Adjusted Spread",
     category: "macro",
   },
   {
@@ -131,6 +110,88 @@ const SERIES = [
     name: "MSCI Emerging Markets Index (Proxy)",
     category: "international",
     yahooTicker: "EEM",
+  },
+
+  // U.S. Treasury Yields & Bond Benchmarks
+  {
+    id: "DGS3MO",
+    name: "3-Month Treasury Constant Maturity Rate",
+    category: "bond",
+  },
+  {
+    id: "DGS2",
+    name: "2-Year Treasury Constant Maturity Rate",
+    category: "bond",
+  },
+  {
+    id: "DGS5",
+    name: "5-Year Treasury Constant Maturity Rate",
+    category: "bond",
+  },
+  {
+    id: "DGS10",
+    name: "10-Year Treasury Constant Maturity Rate",
+    category: "bond",
+  },
+  {
+    id: "DGS30",
+    name: "30-Year Treasury Constant Maturity Rate",
+    category: "bond",
+  },
+  {
+    id: "T10Y2Y",
+    name: "10-Year minus 2-Year Treasury Yield Spread",
+    category: "bond",
+  },
+  {
+    id: "T10Y3M",
+    name: "10-Year minus 3-Month Treasury Yield Spread",
+    category: "bond",
+  },
+  {
+    id: "DFII10",
+    name: "10-Year Real Yield (TIPS)",
+    category: "bond",
+  },
+  {
+    id: "FEDFUNDS",
+    name: "Federal Funds Effective Rate",
+    category: "bond",
+  },
+  {
+    id: "BAMLH0A0HYM2",
+    name: "US High Yield Option-Adjusted Spread",
+    category: "bond",
+  },
+  {
+    id: "AGG_BOND",
+    name: "Bloomberg U.S. Aggregate Bond (Proxy)",
+    category: "bond",
+    yahooTicker: "AGG",
+  },
+  {
+    id: "TLT_BOND",
+    name: "ICE U.S. Treasury 20+ Year Bond (Proxy)",
+    category: "bond",
+    yahooTicker: "TLT",
+  },
+  {
+    id: "LQD_BOND",
+    name: "iBoxx USD Liquid Investment Grade (Proxy)",
+    category: "bond",
+    yahooTicker: "LQD",
+  },
+  {
+    id: "HYG_BOND",
+    name: "iBoxx USD Liquid High Yield (Proxy)",
+    category: "bond",
+    yahooTicker: "HYG",
+  },
+  {
+    id: "TIP_BOND",
+    name: "Bloomberg U.S. TIPS Index (Proxy)",
+    category: "bond",
+    yahooTicker: "TIP",
   },
 ];
 

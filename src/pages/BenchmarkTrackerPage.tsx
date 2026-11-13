@@ -1,3 +1,4 @@
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import KeyIcon from "@mui/icons-material/Key";
 import PublicIcon from "@mui/icons-material/Public";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -32,6 +33,7 @@ import {
 import { InternationalBenchmarksCard } from "../components/tracker/InternationalBenchmarksCard";
 import { Sp500BreadthInsightCard } from "../components/tracker/Sp500BreadthInsightCard";
 import { Sp500SectorTrackerCard } from "../components/tracker/Sp500SectorTrackerCard";
+import { TreasuryYieldCurveCard } from "../components/tracker/TreasuryYieldCurveCard";
 
 export default function BenchmarkTrackerPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,7 +47,7 @@ export default function BenchmarkTrackerPage() {
   const seriesParam = searchParams.get("series");
   const tabParam = searchParams.get("tab");
 
-  // Automatically determine if the selected series is international
+  // Automatically determine if the selected series is international or bond
   const isSelectedInternational = useMemo(() => {
     return (
       seriesParam != null &&
@@ -53,18 +55,33 @@ export default function BenchmarkTrackerPage() {
     );
   }, [seriesParam, dataset.internationalSeries]);
 
-  const activeTab: "us" | "international" = tabParam
-    ? tabParam === "international"
+  const isSelectedBond = useMemo(() => {
+    return (
+      seriesParam != null &&
+      dataset.bondSeries.some((s) => s.id === seriesParam)
+    );
+  }, [seriesParam, dataset.bondSeries]);
+
+  const activeTab: "us" | "international" | "bonds" =
+    tabParam === "international"
       ? "international"
-      : "us"
-    : isSelectedInternational
-      ? "international"
-      : "us";
+      : tabParam === "bonds"
+        ? "bonds"
+        : isSelectedInternational
+          ? "international"
+          : isSelectedBond
+            ? "bonds"
+            : "us";
 
   const selectedSeriesId =
-    seriesParam || (activeTab === "international" ? "FTSE_100" : "SP500");
+    seriesParam ||
+    (activeTab === "international"
+      ? "FTSE_100"
+      : activeTab === "bonds"
+        ? "DGS10"
+        : "SP500");
 
-  const handleTabChange = (newTab: "us" | "international") => {
+  const handleTabChange = (newTab: "us" | "international" | "bonds") => {
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
@@ -76,12 +93,20 @@ export default function BenchmarkTrackerPage() {
           if (!isIntl) {
             next.set("series", "FTSE_100");
           }
-        } else {
-          next.delete("tab");
-          const isIntl = dataset.internationalSeries.some(
+        } else if (newTab === "bonds") {
+          next.set("tab", "bonds");
+          const isBond = dataset.bondSeries.some(
             (s) => s.id === selectedSeriesId,
           );
-          if (isIntl) {
+          if (!isBond) {
+            next.set("series", "DGS10");
+          }
+        } else {
+          next.delete("tab");
+          const isUS = dataset.equitySeries.some(
+            (s) => s.id === selectedSeriesId,
+          );
+          if (!isUS) {
             next.delete("series");
           }
         }
@@ -95,14 +120,17 @@ export default function BenchmarkTrackerPage() {
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        const isIntl = dataset.internationalSeries.some(
-          (s) => s.id === seriesId,
-        );
+        const isIntl = dataset.internationalSeries.some((s) => s.id === seriesId);
+        const isBond = dataset.bondSeries.some((s) => s.id === seriesId);
+
         if (isIntl) {
           next.set("tab", "international");
           next.set("series", seriesId);
+        } else if (isBond) {
+          next.set("tab", "bonds");
+          next.set("series", seriesId);
         } else {
-          if (activeTab === "international") {
+          if (activeTab !== "us") {
             next.delete("tab");
           }
           if (!seriesId || seriesId === "SP500") {
@@ -129,7 +157,9 @@ export default function BenchmarkTrackerPage() {
     document.title =
       activeTab === "international"
         ? "International Benchmarks | FTSE 100, Nikkei 225, DAX, Euro Stoxx 50 | Market Indices Explorer"
-        : "Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
+        : activeTab === "bonds"
+          ? "U.S. Treasury Yields & Bond Benchmarks | 10-Year, 2-Year, Yield Curve, TIPS, AGG | Market Indices Explorer"
+          : "Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
   }, [activeTab]);
 
   // Active series for the featured top chart
@@ -138,7 +168,9 @@ export default function BenchmarkTrackerPage() {
       dataset.series[selectedSeriesId] ||
       (activeTab === "international"
         ? dataset.series.FTSE_100 || dataset.internationalSeries[0]
-        : dataset.series.SP500 || dataset.seriesList[0])
+        : activeTab === "bonds"
+          ? dataset.series.DGS10 || dataset.bondSeries[0]
+          : dataset.series.SP500 || dataset.seriesList[0])
     );
   }, [dataset, selectedSeriesId, activeTab]);
 
@@ -168,6 +200,23 @@ export default function BenchmarkTrackerPage() {
       "NIFTY_50",
       "MSCI_EAFE",
       "MSCI_EM",
+    ];
+    return ids.map((id) => dataset.series[id]).filter(Boolean);
+  }, [dataset]);
+
+  // Treasury Yield & Bond Quick KPI benchmarks
+  const bondKpiSummary = useMemo(() => {
+    const ids = [
+      "DGS3MO",
+      "DGS2",
+      "DGS5",
+      "DGS10",
+      "DGS30",
+      "T10Y2Y",
+      "T10Y3M",
+      "DFII10",
+      "FEDFUNDS",
+      "BAMLH0A0HYM2",
     ];
     return ids.map((id) => dataset.series[id]).filter(Boolean);
   }, [dataset]);
@@ -218,8 +267,8 @@ export default function BenchmarkTrackerPage() {
               "& .MuiTab-root": {
                 minHeight: 32,
                 py: 0.6,
-                px: { xs: 1.5, sm: 2.25 },
-                fontSize: { xs: "0.78rem", sm: "0.84rem" },
+                px: { xs: 1.25, sm: 2 },
+                fontSize: { xs: "0.76rem", sm: "0.82rem" },
                 fontWeight: 700,
                 textTransform: "none",
                 borderRadius: 2.5,
@@ -244,6 +293,12 @@ export default function BenchmarkTrackerPage() {
               iconPosition="start"
               label={`International Benchmarks (${dataset.internationalSeries.length})`}
               value="international"
+            />
+            <Tab
+              icon={<AccountBalanceIcon sx={{ fontSize: 16 }} />}
+              iconPosition="start"
+              label={`U.S. Treasury Yields & Bonds (${dataset.bondSeries.length})`}
+              value="bonds"
             />
           </Tabs>
 
@@ -306,18 +361,22 @@ export default function BenchmarkTrackerPage() {
             p: { xs: 2.5, sm: 3.5 },
             borderRadius: 3.5,
             background:
-              activeTab === "international"
-                ? "linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(16, 185, 129, 0.04) 100%)"
-                : "linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.06) 50%, rgba(236, 72, 153, 0.04) 100%)",
+              activeTab === "bonds"
+                ? "linear-gradient(135deg, rgba(99, 102, 241, 0.14) 0%, rgba(16, 185, 129, 0.08) 50%, rgba(245, 158, 11, 0.04) 100%)"
+                : activeTab === "international"
+                  ? "linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(16, 185, 129, 0.04) 100%)"
+                  : "linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.06) 50%, rgba(236, 72, 153, 0.04) 100%)",
             border:
-              activeTab === "international"
-                ? "1px solid rgba(14, 165, 233, 0.25)"
-                : "1px solid rgba(99, 102, 241, 0.22)",
+              activeTab === "bonds"
+                ? "1px solid rgba(99, 102, 241, 0.28)"
+                : activeTab === "international"
+                  ? "1px solid rgba(14, 165, 233, 0.25)"
+                  : "1px solid rgba(99, 102, 241, 0.22)",
             position: "relative",
             overflow: "hidden",
           }}
         >
-          <Stack spacing={1.5} sx={{ maxWidth: 900 }}>
+          <Stack spacing={1.5} sx={{ maxWidth: 920 }}>
             <Box
               sx={{
                 display: "flex",
@@ -328,9 +387,11 @@ export default function BenchmarkTrackerPage() {
             >
               <Chip
                 label={
-                  activeTab === "international"
-                    ? "Global Equity Closes"
-                    : "FRED® Market Data (T-1)"
+                  activeTab === "bonds"
+                    ? "Federal Reserve (FRED®) & U.S. Treasury"
+                    : activeTab === "international"
+                      ? "Global Equity Closes"
+                      : "FRED® Market Data (T-1)"
                 }
                 size="small"
                 sx={{
@@ -338,14 +399,23 @@ export default function BenchmarkTrackerPage() {
                   fontSize: "0.72rem",
                   height: 22,
                   backgroundColor:
-                    activeTab === "international"
-                      ? "rgba(14, 165, 233, 0.15)"
-                      : "rgba(16, 185, 129, 0.15)",
-                  color: activeTab === "international" ? "#0ea5e9" : "#10b981",
+                    activeTab === "bonds"
+                      ? "rgba(99, 102, 241, 0.15)"
+                      : activeTab === "international"
+                        ? "rgba(14, 165, 233, 0.15)"
+                        : "rgba(16, 185, 129, 0.15)",
+                  color:
+                    activeTab === "bonds"
+                      ? "#818cf8"
+                      : activeTab === "international"
+                        ? "#0ea5e9"
+                        : "#10b981",
                   border:
-                    activeTab === "international"
-                      ? "1px solid rgba(14, 165, 233, 0.35)"
-                      : "1px solid rgba(16, 185, 129, 0.35)",
+                    activeTab === "bonds"
+                      ? "1px solid rgba(99, 102, 241, 0.35)"
+                      : activeTab === "international"
+                        ? "1px solid rgba(14, 165, 233, 0.35)"
+                        : "1px solid rgba(16, 185, 129, 0.35)",
                 }}
               />
               <Typography
@@ -370,9 +440,11 @@ export default function BenchmarkTrackerPage() {
                 lineHeight: 1.2,
               }}
             >
-              {activeTab === "international"
-                ? "International Benchmark Tracker"
-                : "Benchmark Tracker"}
+              {activeTab === "bonds"
+                ? "U.S. Treasury Yields & Bond Benchmarks"
+                : activeTab === "international"
+                  ? "International Benchmark Tracker"
+                  : "Benchmark Tracker"}
             </Typography>
 
             <Typography
@@ -383,24 +455,33 @@ export default function BenchmarkTrackerPage() {
                 lineHeight: 1.55,
               }}
             >
-              {activeTab === "international" ? (
+              {activeTab === "bonds" ? (
+                <>
+                  Daily sovereign yield curve (<strong>3M</strong>, <strong>2Y</strong>,{" "}
+                  <strong>5Y</strong>, <strong>10Y</strong>, <strong>30Y</strong>),
+                  recession-warning yield spreads (<strong>10Y - 2Y</strong>,{" "}
+                  <strong>10Y - 3M</strong>), 10-year real yields (<strong>TIPS</strong>),
+                  and institutional fixed-income proxies (<strong>AGG</strong>,{" "}
+                  <strong>TLT</strong>, <strong>LQD</strong>, <strong>HYG</strong>,{" "}
+                  <strong>TIP</strong>). Click any rate to inspect its 5-year interactive graph.
+                </>
+              ) : activeTab === "international" ? (
                 <>
                   Daily performance and 5-year interactive charts across premier
                   global equity benchmarks: <strong>FTSE 100 🇬🇧</strong>,{" "}
                   <strong>Nikkei 225 🇯🇵</strong>, <strong>DAX 40 🇩🇪</strong>,{" "}
                   <strong>Euro Stoxx 50 🇪🇺</strong>, <strong>CAC 40 🇫🇷</strong>,{" "}
-                  <strong>Hang Seng 🇭🇰</strong>,{" "}
-                  <strong>TSX Composite 🇨🇦</strong>,{" "}
+                  <strong>Hang Seng 🇭🇰</strong>, <strong>TSX Composite 🇨🇦</strong>,{" "}
                   <strong>Nifty 50 🇮🇳</strong>, and global factor benchmarks.
                 </>
               ) : (
                 <>
                   Daily barometer tracking <strong>S&amp;P 500</strong>,{" "}
                   <strong>S&amp;P 500 Equal Weight</strong>,{" "}
-                  <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>
-                  , <strong>Dow Jones</strong>, <strong>Russell 1000</strong>,
-                  and <strong>CBOE VIX</strong>. Click any benchmark to inspect
-                  its detailed performance graph.
+                  <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
+                  <strong>Dow Jones</strong>, <strong>Russell 1000</strong>, and{" "}
+                  <strong>CBOE VIX</strong>. Click any benchmark to inspect its
+                  detailed performance graph.
                 </>
               )}
             </Typography>
@@ -452,11 +533,7 @@ export default function BenchmarkTrackerPage() {
                   <Typography
                     sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
                   >
-                    {formatSeriesValue(
-                      usKpiSummary.sp.latestValue,
-                      "number",
-                      2,
-                    )}
+                    {formatSeriesValue(usKpiSummary.sp.latestValue, "number", 2)}
                   </Typography>
                   <Typography
                     sx={{
@@ -779,7 +856,7 @@ export default function BenchmarkTrackerPage() {
                 </Paper>
               )}
             </Box>
-          ) : (
+          ) : activeTab === "international" ? (
             /* International Quick Benchmark Bar */
             <Box
               sx={{
@@ -857,6 +934,85 @@ export default function BenchmarkTrackerPage() {
                 );
               })}
             </Box>
+          ) : (
+            /* U.S. Treasury Yields & Bonds Quick Benchmark Bar */
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "repeat(2, 1fr)",
+                  sm: "repeat(3, 1fr)",
+                  md: "repeat(5, 1fr)",
+                },
+                gap: 1,
+                mt: 2.5,
+              }}
+            >
+              {bondKpiSummary.map((item) => {
+                const isSelected = selectedSeriesId === item.id;
+                const isPositive = item.change >= 0;
+
+                return (
+                  <Paper
+                    key={item.id}
+                    variant="outlined"
+                    onClick={() => handleSelectSeries(item.id)}
+                    sx={{
+                      p: 1,
+                      borderRadius: 2,
+                      cursor: "pointer",
+                      backgroundColor: isSelected
+                        ? "rgba(99, 102, 241, 0.18)"
+                        : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                      borderColor: isSelected
+                        ? "#818cf8"
+                        : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                      transition: "all 0.15s ease",
+                      "&:hover": { borderColor: "#818cf8" },
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        mb: 0.2,
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "0.95rem", lineHeight: 1 }}>
+                        {item.icon}
+                      </Typography>
+                      <Typography
+                        noWrap
+                        sx={{
+                          color: "text.secondary",
+                          fontWeight: 700,
+                          fontSize: "0.72rem",
+                        }}
+                      >
+                        {item.shortName}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                    >
+                      {formatSeriesValue(item.latestValue, item.format, 2)}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: isPositive ? "#10b981" : "#ef4444",
+                        fontWeight: 700,
+                        fontSize: "0.72rem",
+                      }}
+                    >
+                      {item.format === "percent"
+                        ? `${isPositive ? "+" : ""}${(item.change * 100).toFixed(0)} bps (${isPositive ? "+" : ""}${item.change.toFixed(2)}%)`
+                        : `${isPositive ? "+" : ""}${item.changePct.toFixed(2)}%`}
+                    </Typography>
+                  </Paper>
+                );
+              })}
+            </Box>
           )}
         </Box>
 
@@ -889,11 +1045,21 @@ export default function BenchmarkTrackerPage() {
               </Box>
             )}
           </>
-        ) : (
+        ) : activeTab === "international" ? (
           /* International Benchmarks & Regional Overview Section */
           <Box sx={{ mb: 4 }}>
             <InternationalBenchmarksCard
               seriesList={dataset.internationalSeries}
+              selectedSeriesId={selectedSeriesId}
+              onSelectSeries={handleSelectSeries}
+              updatedAt={dataset.updatedAt}
+            />
+          </Box>
+        ) : (
+          /* U.S. Treasury Yields & Bond Benchmarks Section */
+          <Box sx={{ mb: 4 }}>
+            <TreasuryYieldCurveCard
+              seriesList={dataset.bondSeries}
               selectedSeriesId={selectedSeriesId}
               onSelectSeries={handleSelectSeries}
               updatedAt={dataset.updatedAt}
