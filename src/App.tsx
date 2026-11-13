@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import AppNavbar from "./components/layout/AppNavbar";
+import { usePageTracking } from "./hooks/usePageTracking";
 import IndexDetailPage from "./pages/IndexDetailPage";
 import IndexListPage from "./pages/IndexListPage";
 
@@ -26,6 +27,8 @@ function PageLoading() {
 }
 
 export default function App() {
+  usePageTracking();
+
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <AppNavbar />
