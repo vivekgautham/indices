@@ -19,6 +19,10 @@ const aumMap = {
   SCHD: "$112B+",
   DGRO: "$31B+",
   HDV: "$16.4B+",
+  XYLD: "$3.38B+",
+  QYLD: "$8.1B+",
+  JEPI: "$37B+",
+  JEPQ: "$19B+",
   VXX: "$475M+",
   UVXY: "$293M+",
   IWM: "$81B+",
@@ -207,8 +211,6 @@ const aumMap = {
   FTLB: "$480M+",
 };
 
-
-
 let content = fs.readFileSync("src/data/indicesData.ts", "utf8");
 
 // Parse trackingEtfs objects and update aum
@@ -217,7 +219,7 @@ content = content.replace(
   (match, ticker, name, _oldAum) => {
     const newAum = aumMap[ticker] || _oldAum;
     return `{ ticker: "${ticker}", name: "${name}", aum: "${newAum}" }`;
-  }
+  },
 );
 
 fs.writeFileSync("src/data/indicesData.ts", content);

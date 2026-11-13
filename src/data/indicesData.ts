@@ -708,6 +708,70 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl: "https://www.cboe.com/tradable_products/vix/",
   },
   {
+    id: "cboe-sp-500-buywrite",
+    symbol: "BXM",
+    altSymbols: ["^BXM", "BXM Index", "XYLD Benchmark", "S&P 500 BuyWrite"],
+    name: "Cboe S&P 500 BuyWrite Index",
+    providerId: "sp",
+    category: "Volatility & Derivatives",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: "500 + 1 Written Call Option",
+    weightingMethodology:
+      "BuyWrite Strategy (Long S&P 500 Portfolio + Short Monthly ATM SPX Call Option)",
+    rebalanceFrequency: "Monthly (Standard Third Friday Expiration)",
+    launchYear: 2002,
+    trackingEtfs: [
+      {
+        ticker: "XYLD",
+        name: "Global X S&P 500 Covered Call ETF",
+        aum: "$3.38B+",
+        trackingType: "passive",
+        strategyNote:
+          "Directly tracks the Cboe S&P 500 BuyWrite Index (BXM) by systematically writing at-the-money SPX index call options.",
+      },
+      {
+        ticker: "JEPI",
+        name: "JPMorgan Equity Premium Income ETF (Active Peer)",
+        aum: "$37B+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed covered-call peer that generates income via Equity-Linked Notes referencing S&P 500 options.",
+      },
+    ],
+    summary:
+      "The pioneering benchmark for covered call options strategies, tracking a portfolio of S&P 500 stocks while selling monthly at-the-money SPX call options to collect option premium income.",
+    description:
+      "Co-developed by Cboe and S&P Dow Jones Indices in 2002 (with backtested performance dating to 1986), the Cboe S&P 500 BuyWrite Index (BXM) is the financial industry's benchmark standard for covered call strategies. The strategy holds a long equity position matching the S&P 500 Index and writes (sells) a single monthly at-the-money (ATM) S&P 500 index call option (SPX) on the third Friday of each month. In exchange for capping upside appreciation above the option strike price, the strategy collects premium income that cushions modest market downturns and generates substantial cash yield in flat or range-bound markets. It serves as the direct replication benchmark for the Global X S&P 500 Covered Call ETF (XYLD) and the primary passive comparison gauge for actively managed covered-call behemoths like JPMorgan Equity Premium Income ETF (JEPI).",
+    eligibilityCriteria: [
+      "Equity leg holds a complete capitalization-weighted portfolio replicating the S&P 500 Index",
+      "Options leg sells near-term, at-the-money (ATM) SPX call options listed on Cboe",
+      "Option strike price chosen is the SPX call with strike closest to the last sale price of the S&P 500 at 11:00 AM ET on the roll date",
+      "Option written has approximately one month to maturity, rolled on the third Friday of each month",
+      "Cash dividends from S&P 500 components and option premium proceeds are reinvested into the strategy",
+    ],
+    keyCharacteristics: [
+      "Pioneer of systematic derivatives benchmark indices, dating back to 2002 with empirical data to 1986",
+      "Provides substantial cash-flow premium yield, typically outperforming the S&P 500 in sideways or down markets",
+      "Sacrifices capital appreciation during aggressive bull markets in exchange for lower portfolio volatility and high income yield",
+      "Primary tracking benchmark for Global X XYLD ETF and the foundational benchmark comparison for JPMorgan's JEPI",
+    ],
+    tags: [
+      "Covered Call",
+      "BuyWrite",
+      "Options",
+      "Derivatives",
+      "Income",
+      "High Yield",
+      "XYLD",
+      "JEPI",
+      "S&P 500",
+      "Cboe",
+      "Volatility Premium",
+    ],
+    officialUrl: "https://www.cboe.com/us/indices/dashboard/bxm/",
+  },
+  {
     id: "sp-500-growth",
     symbol: "SP500G",
     altSymbols: [
@@ -3656,6 +3720,77 @@ export const INDICES_DATA: MarketIndex[] = [
       "Irish Domiciled",
     ],
     officialUrl: "https://www.nasdaq.com/solutions/nasdaq-100",
+  },
+  {
+    id: "cboe-nasdaq-100-buywrite",
+    symbol: "BXNT",
+    altSymbols: [
+      "^BXNT",
+      "BXN",
+      "QYLD Benchmark",
+      "Nasdaq-100 BuyWrite",
+      "Nasdaq BuyWrite",
+    ],
+    name: "Cboe NASDAQ-100 BuyWrite Index",
+    providerId: "nasdaq",
+    category: "Volatility & Derivatives",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: "100 + 1 Written Call Option",
+    weightingMethodology:
+      "BuyWrite Strategy (Long Nasdaq-100 Portfolio + Short Monthly ATM NDX Call Option)",
+    rebalanceFrequency: "Monthly (Standard Third Friday Expiration)",
+    launchYear: 1994,
+    trackingEtfs: [
+      {
+        ticker: "QYLD",
+        name: "Global X Nasdaq 100 Covered Call ETF",
+        aum: "$8.1B+",
+        trackingType: "passive",
+        strategyNote:
+          "Directly tracks the Cboe NASDAQ-100 BuyWrite Index (BXNT) by systematically writing at-the-money NDX index call options.",
+      },
+      {
+        ticker: "JEPQ",
+        name: "JPMorgan Nasdaq Equity Premium Income ETF (Active Peer)",
+        aum: "$19B+",
+        trackingType: "active",
+        strategyNote:
+          "Actively managed peer writing call options against a portfolio of Nasdaq-100 companies for double-digit monthly cash yield.",
+      },
+    ],
+    summary:
+      "The premier covered call benchmark for mega-cap technology and growth equities, tracking a portfolio of Nasdaq-100 stocks while selling monthly at-the-money NDX call options to convert tech volatility into high income.",
+    description:
+      "Created in partnership between Cboe and Nasdaq, the Cboe NASDAQ-100 BuyWrite Index (BXNT) is designed to measure the performance of a covered call strategy applied to the Nasdaq-100 Index. The index maintains a full long position in the tech-heavy Nasdaq-100 Index and simultaneously sells one-month at-the-money (ATM) NDX call options on the third Friday of every month. Because tech stocks typically exhibit higher implied volatility than the broader market, the NDX options command richer option premiums, enabling the strategy to generate substantial double-digit annualized cash yields. It serves as the underlying target for the multi-billion dollar Global X Nasdaq 100 Covered Call ETF (QYLD) and acts as the benchmark comparison for active tech-income funds such as JPMorgan Nasdaq Equity Premium Income ETF (JEPQ).",
+    eligibilityCriteria: [
+      "Long position matches the exact constituent weights of the Nasdaq-100 Index",
+      "Options leg writes near-term, at-the-money (ATM) standard NDX call options traded on Cboe",
+      "Option strike price is selected as the NDX call with strike price closest to the last sale price of the Nasdaq-100 Index at 11:00 AM ET on the expiration roll date",
+      "Option written has approximately 30 calendar days to maturity, expiring and re-rolled on the third Friday of each month",
+      "Cash premiums generated from the option sales and component dividends are credited to the index return calculation",
+    ],
+    keyCharacteristics: [
+      "Transforms high tech-sector volatility into consistent monthly option premium cash flows",
+      "Outperforms the underlying Nasdaq-100 during bear markets and prolonged range-bound consolidation phases",
+      "Caps upside participation during rapid growth rallies due to the short strike ceiling",
+      "Underlying benchmark for the $8B+ Global X QYLD ETF and direct comparison for active peer JEPQ",
+    ],
+    tags: [
+      "Covered Call",
+      "BuyWrite",
+      "Options",
+      "Derivatives",
+      "Income",
+      "High Yield",
+      "QYLD",
+      "JEPQ",
+      "Nasdaq-100",
+      "Tech Income",
+      "Cboe",
+      "Volatility Premium",
+    ],
+    officialUrl: "https://www.cboe.com/us/indices/dashboard/bxnt/",
   },
   {
     id: "nasdaq-composite",

@@ -125,6 +125,7 @@ export function isFactorIndex(idx: MarketIndex): boolean {
     id.includes("-garp") ||
     id.includes("dorsey-wright") ||
     id.includes("-equal-weight") ||
+    id.includes("-buywrite") ||
     id.includes("intellidex") ||
     id === "morningstar-wide-moat-focus" ||
     id === "morningstar-us-dividend-yield-focus" ||
@@ -141,6 +142,8 @@ export function isFactorIndex(idx: MarketIndex): boolean {
     tags.includes("garp") ||
     tags.includes("equal weight") ||
     tags.includes("wide moat") ||
+    tags.includes("buywrite") ||
+    tags.includes("covered call") ||
     method.includes("equal-weighted") ||
     method.includes("fundamental")
   );
