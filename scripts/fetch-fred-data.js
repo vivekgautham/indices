@@ -100,6 +100,12 @@ const SERIES = [
     yahooTicker: "^NSEI",
   },
   {
+    id: "KOSPI",
+    name: "KOSPI Composite Index",
+    category: "international",
+    yahooTicker: "^KS11",
+  },
+  {
     id: "MSCI_EAFE",
     name: "MSCI EAFE Index (Proxy)",
     category: "international",

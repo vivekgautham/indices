@@ -63,7 +63,7 @@ function formatAxisValue(
 
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
-  initialRange = "5D",
+  initialRange = "1Y",
 }) => {
   const theme = useTheme();
   const [selectedRange, setSelectedRange] = useState<TimeRange>(initialRange);

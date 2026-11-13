@@ -197,7 +197,9 @@ export default function BenchmarkTrackerPage() {
       "CAC_40",
       "HANG_SENG",
       "TSX_COMPOSITE",
+      "ASX_200",
       "NIFTY_50",
+      "KOSPI",
       "MSCI_EAFE",
       "MSCI_EM",
     ];
@@ -472,7 +474,8 @@ export default function BenchmarkTrackerPage() {
                   <strong>Nikkei 225 🇯🇵</strong>, <strong>DAX 40 🇩🇪</strong>,{" "}
                   <strong>Euro Stoxx 50 🇪🇺</strong>, <strong>CAC 40 🇫🇷</strong>,{" "}
                   <strong>Hang Seng 🇭🇰</strong>, <strong>TSX Composite 🇨🇦</strong>,{" "}
-                  <strong>Nifty 50 🇮🇳</strong>, and global factor benchmarks.
+                  <strong>ASX 200 🇦🇺</strong>, <strong>Nifty 50 🇮🇳</strong>,{" "}
+                  <strong>KOSPI 🇰🇷</strong>, and global factor benchmarks.
                 </>
               ) : (
                 <>
@@ -1018,7 +1021,7 @@ export default function BenchmarkTrackerPage() {
 
         {/* Featured Interactive Benchmark Chart */}
         <Box sx={{ mb: 3.5 }}>
-          <FredSeriesChart series={activeSeries} initialRange="5D" />
+          <FredSeriesChart series={activeSeries} initialRange="1Y" />
         </Box>
 
         {/* Tab-Specific Content */}

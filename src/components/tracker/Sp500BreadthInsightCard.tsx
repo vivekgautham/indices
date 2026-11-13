@@ -37,7 +37,7 @@ export const Sp500BreadthInsightCard: React.FC<Sp500BreadthInsightCardProps> = (
   sp500ew,
   onSelectSeries,
 }) => {
-  const [selectedRange, setSelectedRange] = useState<BreadthTimeRange>("1M");
+  const [selectedRange, setSelectedRange] = useState<BreadthTimeRange>("1Y");
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const chartId = useId();
