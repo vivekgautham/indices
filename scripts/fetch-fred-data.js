@@ -107,6 +107,48 @@ const SERIES = [
     yahooTicker: "^KS11",
   },
   {
+    id: "IBOVESPA",
+    name: "B3 Ibovespa Index (Brazil)",
+    category: "international",
+    yahooTicker: "^BVSP",
+  },
+  {
+    id: "CSI_300",
+    name: "CSI 300 Index (China A-Shares)",
+    category: "international",
+    yahooTicker: "ASHR",
+  },
+  {
+    id: "TAIEX",
+    name: "Taiwan TAIEX Index",
+    category: "international",
+    yahooTicker: "^TWII",
+  },
+  {
+    id: "SMI",
+    name: "Swiss Market Index (SMI)",
+    category: "international",
+    yahooTicker: "^SSMI",
+  },
+  {
+    id: "MEXICO_IPC",
+    name: "S&P/BMV IPC Index (Mexico)",
+    category: "international",
+    yahooTicker: "^MXX",
+  },
+  {
+    id: "STI",
+    name: "FTSE Straits Times Index (Singapore)",
+    category: "international",
+    yahooTicker: "^STI",
+  },
+  {
+    id: "FTSE_MIB",
+    name: "FTSE MIB Index (Italy)",
+    category: "international",
+    yahooTicker: "FTSEMIB.MI",
+  },
+  {
     id: "MSCI_EAFE",
     name: "MSCI EAFE Index (Proxy)",
     category: "international",
