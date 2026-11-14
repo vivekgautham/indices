@@ -61,7 +61,7 @@ export default function BenchmarkTrackerPage() {
     return match ? match.id : seriesParam;
   }, [seriesParam, dataset.series]);
 
-  // Automatically determine if the selected series is international or bond
+  // Automatically determine if the selected series is international, bond, or US equity
   const isSelectedInternational = useMemo(() => {
     return (
       normalizedSeriesId != null &&
@@ -76,16 +76,25 @@ export default function BenchmarkTrackerPage() {
     );
   }, [normalizedSeriesId, dataset.bondSeries]);
 
+  const isSelectedUS = useMemo(() => {
+    return (
+      normalizedSeriesId != null &&
+      dataset.equitySeries.some((s) => s.id === normalizedSeriesId)
+    );
+  }, [normalizedSeriesId, dataset.equitySeries]);
+
   const activeTab: "us" | "international" | "bonds" =
-    tabParam === "international"
+    isSelectedInternational
       ? "international"
-      : tabParam === "bonds"
+      : isSelectedBond
         ? "bonds"
-        : isSelectedInternational
-          ? "international"
-          : isSelectedBond
-            ? "bonds"
-            : "us";
+        : isSelectedUS
+          ? "us"
+          : tabParam === "international"
+            ? "international"
+            : tabParam === "bonds"
+              ? "bonds"
+              : "us";
 
   const selectedSeriesId =
     normalizedSeriesId ||
@@ -94,6 +103,12 @@ export default function BenchmarkTrackerPage() {
       : activeTab === "bonds"
         ? "DGS10"
         : "SP500");
+
+  useEffect(() => {
+    if (seriesParam) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [seriesParam]);
 
   const handleTabChange = (newTab: "us" | "international" | "bonds") => {
     setSearchParams(
