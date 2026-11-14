@@ -72,8 +72,8 @@ body {
 
 body {
   min-height: 100vh;
-  background-color: var(--indices-bg-default, #0f172a);
-  color: var(--indices-text-primary, #f8fafc);
+  background-color: var(--indices-bg-default, #050D0A);
+  color: var(--indices-text-primary, #ffffff);
   transition:
     background-color 0.25s ease,
     color 0.25s ease;

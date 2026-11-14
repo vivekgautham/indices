@@ -47,8 +47,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
             opacity: 0.8,
           }}
         >
-          Market Benchmark Index Directory • Educational & Informational
-          Reference
+          Market Benchmark Index Directory
         </Typography>
       </Stack>
 

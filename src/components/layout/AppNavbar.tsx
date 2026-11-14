@@ -308,7 +308,7 @@ export const AppNavbar: React.FC = () => {
               width: "100%",
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 0.75,
+              gap: { xs: 0.5, sm: 0.75 },
               p: 0.5,
               borderRadius: 2.5,
               backgroundColor:
@@ -332,10 +332,11 @@ export const AppNavbar: React.FC = () => {
                     position: "relative",
                     textTransform: "none",
                     fontWeight: active ? 800 : 600,
-                    fontSize: { xs: "0.78rem", sm: "0.82rem" },
+                    fontSize: { xs: "0.75rem", sm: "0.82rem" },
                     letterSpacing: "-0.01em",
-                    py: 0.7,
-                    px: { xs: 1, sm: 1.5 },
+                    py: { xs: 0.6, sm: 0.7 },
+                    px: { xs: 0.5, sm: 1.5 },
+                    minWidth: 0,
                     borderRadius: 2,
                     justifyContent: "center",
                     color: active ? "text.primary" : "text.secondary",
@@ -351,6 +352,10 @@ export const AppNavbar: React.FC = () => {
                       : "none",
                     transition: "all 0.18s ease-in-out",
                     whiteSpace: "nowrap",
+                    "& .MuiButton-startIcon": {
+                      mr: { xs: 0.5, sm: 1 },
+                      ml: { xs: 0, sm: -0.5 },
+                    },
                     "&:hover": {
                       color: "text.primary",
                       backgroundColor:
