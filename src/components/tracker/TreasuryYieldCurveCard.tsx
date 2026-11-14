@@ -159,8 +159,8 @@ export const TreasuryYieldCurveCard: React.FC<TreasuryYieldCurveCardProps> = ({
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: { xs: "flex-start", md: "center" },
+            flexDirection: { xs: "column", lg: "row" },
+            alignItems: { xs: "flex-start", lg: "center" },
             justifyContent: "space-between",
             gap: 1.5,
             mb: 2.5,

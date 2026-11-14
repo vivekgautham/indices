@@ -550,6 +550,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "SP500"
                         ? "rgba(99, 102, 241, 0.15)"
@@ -597,6 +599,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "SP500EW"
                         ? "rgba(16, 185, 129, 0.15)"
@@ -648,6 +652,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "NASDAQ100"
                         ? "rgba(99, 102, 241, 0.15)"
@@ -699,6 +705,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "NASDAQCOM"
                         ? "rgba(99, 102, 241, 0.15)"
@@ -752,6 +760,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "DJIA"
                         ? "rgba(99, 102, 241, 0.15)"
@@ -803,6 +813,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "RUI"
                         ? "rgba(99, 102, 241, 0.15)"
@@ -854,6 +866,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "RUT"
                         ? "rgba(139, 92, 246, 0.15)"
@@ -906,6 +920,8 @@ export default function BenchmarkTrackerPage() {
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor:
                       selectedSeriesId === "VIXCLS"
                         ? "rgba(99, 102, 241, 0.15)"
@@ -972,9 +988,11 @@ export default function BenchmarkTrackerPage() {
                     variant="outlined"
                     onClick={() => handleSelectSeries(item.id)}
                     sx={{
-                      p: 1,
+                      p: 1.25,
                       borderRadius: 2,
                       cursor: "pointer",
+                      minWidth: 0,
+                      overflow: "hidden",
                       backgroundColor: isSelected
                         ? "rgba(14, 165, 233, 0.16)"
                         : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
@@ -989,11 +1007,13 @@ export default function BenchmarkTrackerPage() {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: 0.5,
-                        mb: 0.2,
+                        gap: 0.75,
+                        mb: 0.3,
+                        minWidth: 0,
+                        overflow: "hidden",
                       }}
                     >
-                      <Typography sx={{ fontSize: "0.95rem", lineHeight: 1 }}>
+                      <Typography sx={{ fontSize: "0.95rem", lineHeight: 1, flexShrink: 0 }}>
                         {item.icon}
                       </Typography>
                       <Typography
@@ -1001,7 +1021,10 @@ export default function BenchmarkTrackerPage() {
                         sx={{
                           color: "text.secondary",
                           fontWeight: 700,
-                          fontSize: "0.72rem",
+                          fontSize: "0.74rem",
+                          minWidth: 0,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
                         }}
                       >
                         {item.shortName}
@@ -1032,12 +1055,11 @@ export default function BenchmarkTrackerPage() {
               sx={{
                 display: "grid",
                 gridTemplateColumns: {
-                  xs: "repeat(2, 1fr)",
-                  sm: "repeat(4, 1fr)",
-                  md: "repeat(4, 1fr)",
-                  lg: "repeat(8, 1fr)",
+                  xs: "repeat(auto-fit, minmax(140px, 1fr))",
+                  sm: "repeat(auto-fit, minmax(160px, 1fr))",
+                  md: "repeat(auto-fit, minmax(180px, 1fr))",
                 },
-                gap: 1,
+                gap: 1.25,
                 mt: 2.5,
               }}
             >
@@ -1051,9 +1073,11 @@ export default function BenchmarkTrackerPage() {
                     variant="outlined"
                     onClick={() => handleSelectSeries(item.id)}
                     sx={{
-                      p: 1,
+                      p: 1.25,
                       borderRadius: 2,
                       cursor: "pointer",
+                      minWidth: 0,
+                      overflow: "hidden",
                       backgroundColor: isSelected
                         ? "rgba(99, 102, 241, 0.18)"
                         : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
@@ -1067,27 +1091,31 @@ export default function BenchmarkTrackerPage() {
                     <Box
                       sx={{
                         display: "flex",
-                        alignItems: "center",
-                        gap: 0.5,
-                        mb: 0.2,
+                        alignItems: "flex-start",
+                        gap: 0.75,
+                        mb: 0.4,
+                        minWidth: 0,
                       }}
                     >
-                      <Typography sx={{ fontSize: "0.95rem", lineHeight: 1 }}>
+                      <Typography sx={{ fontSize: "0.95rem", lineHeight: 1.2, flexShrink: 0, mt: "1px" }}>
                         {item.icon}
                       </Typography>
                       <Typography
-                        noWrap
                         sx={{
                           color: "text.secondary",
                           fontWeight: 700,
-                          fontSize: "0.72rem",
+                          fontSize: "0.75rem",
+                          lineHeight: 1.25,
+                          whiteSpace: "normal",
+                          wordBreak: "break-word",
+                          minWidth: 0,
                         }}
                       >
                         {item.shortName}
                       </Typography>
                     </Box>
                     <Typography
-                      sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                      sx={{ fontWeight: 800, fontSize: "0.95rem", my: 0.2 }}
                     >
                       {formatSeriesValue(item.latestValue, item.format, 2)}
                     </Typography>
@@ -1096,6 +1124,9 @@ export default function BenchmarkTrackerPage() {
                         color: isPositive ? "#10b981" : "#ef4444",
                         fontWeight: 700,
                         fontSize: "0.72rem",
+                        lineHeight: 1.2,
+                        whiteSpace: "normal",
+                        wordBreak: "break-word",
                       }}
                     >
                       {item.format === "percent"

@@ -727,7 +727,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
   DGS3MO: {
     id: "DGS3MO",
     name: "3-Month Treasury Constant Maturity Rate",
-    shortName: "3-Month T-Bill Yield",
+    shortName: "3-Month T-Bill",
     category: "bond",
     subcategory: "Ultra Short-Term T-Bills",
     units: "%",
@@ -747,7 +747,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
   DGS2: {
     id: "DGS2",
     name: "2-Year Treasury Constant Maturity Yield",
-    shortName: "2-Year Treasury Yield",
+    shortName: "2-Year Treasury",
     category: "bond",
     subcategory: "Short-Term / Fed Policy",
     units: "%",
@@ -767,7 +767,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
   DGS5: {
     id: "DGS5",
     name: "5-Year Treasury Constant Maturity Yield",
-    shortName: "5-Year Treasury Yield",
+    shortName: "5-Year Treasury",
     category: "bond",
     subcategory: "Intermediate Treasury Notes",
     units: "%",
@@ -786,7 +786,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
   DGS10: {
     id: "DGS10",
     name: "10-Year Treasury Constant Maturity Yield",
-    shortName: "10-Year Treasury Yield",
+    shortName: "10-Year Treasury",
     category: "bond",
     subcategory: "Benchmark Sovereign Risk-Free Rate",
     units: "%",
@@ -806,7 +806,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
   DGS30: {
     id: "DGS30",
     name: "30-Year Treasury Constant Maturity Rate",
-    shortName: "30-Year Treasury Yield",
+    shortName: "30-Year Treasury",
     category: "bond",
     subcategory: "Long-Term Treasury Bond",
     units: "%",
