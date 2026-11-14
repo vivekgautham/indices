@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import AppNavbar from "./components/layout/AppNavbar";
 import { usePageTracking } from "./hooks/usePageTracking";
+import HomePage from "./pages/HomePage";
 import IndexDetailPage from "./pages/IndexDetailPage";
 import IndexListPage from "./pages/IndexListPage";
 
@@ -35,7 +36,8 @@ export default function App() {
       <Box component="main" sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <Suspense fallback={<PageLoading />}>
           <Routes>
-            <Route path="/" element={<IndexListPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/indices" element={<IndexListPage />} />
             <Route path="/tracker" element={<BenchmarkTrackerPage />} />
             <Route
               path="/benchmark-tracker"

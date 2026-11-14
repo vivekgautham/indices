@@ -158,7 +158,7 @@ export default function IndexDetailPage() {
             </Typography>
             <Button
               component={RouterLink}
-              to="/"
+              to="/indices"
               variant="contained"
               startIcon={<ArrowBackIcon />}
               sx={{ mt: 2, borderRadius: 2.5, fontWeight: 700 }}
@@ -193,7 +193,7 @@ export default function IndexDetailPage() {
       >
         <Button
           component={RouterLink}
-          to="/"
+          to="/indices"
           startIcon={<ArrowBackIcon />}
           sx={{
             borderRadius: 2.5,

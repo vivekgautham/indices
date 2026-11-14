@@ -53,6 +53,12 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>${BASE_URL}/indices</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>${BASE_URL}/tracker</loc>
     <lastmod>${TODAY}</lastmod>
     <changefreq>daily</changefreq>
@@ -298,6 +304,21 @@ ${JSON.stringify(datasetSchema, null, 2)}
   );
   fs.writeFileSync(path.join(trackerDir, "index.html"), trackerHtml, "utf8");
   console.log("✓ Generated dist/tracker/index.html");
+
+  // Generate dist/indices/index.html with catalog prerender
+  const indicesDir = path.join(distDir, "indices");
+  fs.mkdirSync(indicesDir, { recursive: true });
+  let indicesHtml = baseHtml;
+  indicesHtml = indicesHtml.replace(
+    /<title>.*?<\/title>/i,
+    `<title>Global Market Indices Directory | 179+ Benchmarks & Tracking ETFs 📊</title>`
+  );
+  indicesHtml = indicesHtml.replace(
+    /<div id="root"><\/div>/i,
+    `<div id="root"></div>\n    <noscript>\n${homepagePrerender.trim()}\n    </noscript>`
+  );
+  fs.writeFileSync(path.join(indicesDir, "index.html"), indicesHtml, "utf8");
+  console.log("✓ Generated dist/indices/index.html");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;

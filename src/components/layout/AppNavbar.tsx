@@ -1,4 +1,5 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   AppBar,
@@ -35,12 +36,19 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Home",
     to: "/",
     icon: <HomeOutlinedIcon sx={{ fontSize: 18 }} />,
+    isActive: (pathname) => pathname === "/" || pathname === "",
+  },
+  {
+    id: "indices",
+    label: "Indices",
+    to: "/indices",
+    icon: <LayersOutlinedIcon sx={{ fontSize: 18 }} />,
     isActive: (pathname) =>
-      pathname === "/" || pathname === "" || pathname.startsWith("/index/"),
+      pathname.startsWith("/indices") || pathname.startsWith("/index/"),
   },
   {
     id: "tracker",
-    label: "Benchmark Tracker",
+    label: "Tracker",
     to: "/tracker",
     icon: <ShowChartIcon sx={{ fontSize: 18 }} />,
     isActive: (pathname) =>
@@ -299,7 +307,7 @@ export const AppNavbar: React.FC = () => {
               mx: "auto",
               width: "100%",
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              gridTemplateColumns: "repeat(3, 1fr)",
               gap: 0.75,
               p: 0.5,
               borderRadius: 2.5,
