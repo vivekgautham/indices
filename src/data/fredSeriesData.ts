@@ -162,6 +162,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#2563eb",
     icon: "🏛️",
   },
+  RUT: {
+    id: "RUT",
+    name: "Russell 2000 Index",
+    shortName: "Russell 2000",
+    category: "equity",
+    subcategory: "Small-Cap Equities",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "FTSE Russell",
+    description:
+      "Measures the performance of the small-cap segment of the U.S. equity universe, tracking the 2,000 smallest companies in the broad Russell 3000 Index.",
+    marketSignificance:
+      "The definitive global benchmark for U.S. small-cap equity performance, widely referenced for domestic risk appetite, credit conditions, and M&A momentum.",
+    relatedIndexId: "russell-2000",
+    trackingEtfs: ["IWM", "VTWO"],
+    format: "number",
+    decimals: 2,
+    badgeColor: "#8b5cf6",
+    icon: "🌱",
+  },
   VIXCLS: {
     id: "VIXCLS",
     name: "Cboe Volatility Index (VIX)",

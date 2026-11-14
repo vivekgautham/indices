@@ -182,9 +182,10 @@ export default function BenchmarkTrackerPage() {
     const nasdaqCom = dataset.series.NASDAQCOM;
     const djia = dataset.series.DJIA;
     const rui = dataset.series.RUI;
+    const rut = dataset.series.RUT;
     const vix = dataset.series.VIXCLS;
 
-    return { sp, spew, ndx, nasdaqCom, djia, rui, vix };
+    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, vix };
   }, [dataset]);
 
   // International Quick KPI benchmarks
@@ -482,8 +483,8 @@ export default function BenchmarkTrackerPage() {
                   Daily barometer tracking <strong>S&amp;P 500</strong>,{" "}
                   <strong>S&amp;P 500 Equal Weight</strong>,{" "}
                   <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
-                  <strong>Dow Jones</strong>, <strong>Russell 1000</strong>, and{" "}
-                  <strong>CBOE VIX</strong>. Click any benchmark to inspect its
+                  <strong>Dow Jones</strong>, <strong>Russell 1000</strong>,{" "}
+                  <strong>Russell 2000</strong>, and <strong>CBOE VIX</strong>. Click any benchmark to inspect its
                   detailed performance graph.
                 </>
               )}
@@ -499,7 +500,7 @@ export default function BenchmarkTrackerPage() {
                 gridTemplateColumns: {
                   xs: "repeat(2, 1fr)",
                   sm: "repeat(4, 1fr)",
-                  md: "repeat(7, 1fr)",
+                  lg: "repeat(8, 1fr)",
                 },
                 gap: 1,
                 mt: 2.5,
@@ -805,6 +806,57 @@ export default function BenchmarkTrackerPage() {
                   >
                     {usKpiSummary.rui.change >= 0 ? "+" : ""}
                     {usKpiSummary.rui.changePct.toFixed(2)}%
+                  </Typography>
+                </Paper>
+              )}
+
+              {usKpiSummary.rut && (
+                <Paper
+                  variant="outlined"
+                  onClick={() => handleSelectSeries("RUT")}
+                  sx={{
+                    p: 1,
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    backgroundColor:
+                      selectedSeriesId === "RUT"
+                        ? "rgba(139, 92, 246, 0.15)"
+                        : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                    borderColor:
+                      selectedSeriesId === "RUT"
+                        ? "#8b5cf6"
+                        : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                    "&:hover": { borderColor: "#a78bfa" },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "text.secondary",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    Russell 2000
+                  </Typography>
+                  <Typography
+                    sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                  >
+                    {formatSeriesValue(
+                      usKpiSummary.rut.latestValue,
+                      "number",
+                      2,
+                    )}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color:
+                        usKpiSummary.rut.change >= 0 ? "#10b981" : "#ef4444",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    {usKpiSummary.rut.change >= 0 ? "+" : ""}
+                    {usKpiSummary.rut.changePct.toFixed(2)}%
                   </Typography>
                 </Paper>
               )}

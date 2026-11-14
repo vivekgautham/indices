@@ -238,6 +238,7 @@ ${JSON.stringify(datasetSchema, null, 2)}
             <li><strong>NASDAQ-100 Index (NASDAQ100)</strong> – Top 100 non-financial tech and innovation champions (Proxy: QQQ, QQQM).</li>
             <li><strong>NASDAQ Composite Index (NASDAQCOM)</strong> – Comprehensive benchmark of 3,000+ Nasdaq equities.</li>
             <li><strong>Russell 1000 Index (RUI)</strong> – Institutional broad large-to-mid cap benchmark.</li>
+            <li><strong>Russell 2000 Index (RUT)</strong> – World leading small-cap equity benchmark (Proxy: IWM, VTWO).</li>
             <li><strong>CBOE Volatility Index (VIXCLS)</strong> – The market's 30-day forward implied volatility fear gauge.</li>
           </ul>
         </section>

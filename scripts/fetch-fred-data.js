@@ -24,6 +24,7 @@ const SERIES = [
   { id: "NASDAQCOM", name: "NASDAQ Composite", category: "equity" },
   { id: "DJIA", name: "Dow Jones Industrial Average", category: "equity" },
   { id: "RUI", name: "Russell 1000", category: "equity", yahooTicker: "^RUI" },
+  { id: "RUT", name: "Russell 2000", category: "equity", yahooTicker: "^RUT" },
   { id: "VIXCLS", name: "CBOE Volatility Index (VIX)", category: "equity" },
 
   // Economic, Global & Macro Indexes
@@ -221,6 +222,7 @@ const YAHOO_BENCHMARK_MAP = {
   NASDAQCOM: "%5EIXIC",
   DJIA: "%5EDJI",
   RUI: "%5ERUI",
+  RUT: "%5ERUT",
   VIXCLS: "%5EVIX",
 };
 
