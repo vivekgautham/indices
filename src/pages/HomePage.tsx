@@ -25,6 +25,8 @@ const POPULAR_QUERIES = [
   { label: "S&P 500", query: "S&P 500" },
   { label: "Nasdaq 100", query: "Nasdaq 100" },
   { label: "Russell 2000", query: "Russell 2000" },
+  { label: "Revenue / RWL", query: "RWL" },
+  { label: "Quality / JQUA", query: "JQUA" },
   { label: "Semiconductors", query: "Semiconductor" },
   { label: "Dividend Growth", query: "Dividend Growth" },
   { label: "Momentum", query: "Momentum" },
@@ -33,7 +35,7 @@ const POPULAR_QUERIES = [
 ];
 
 const PLATFORM_STATS = [
-  { value: "179+", label: "Documented Indices", desc: "Equities, Fixed Income, Smart Beta" },
+  { value: "180+", label: "Documented Indices", desc: "Equities, Fixed Income, Smart Beta" },
   { value: "17", label: "Global Providers", desc: "S&P, MSCI, FTSE, Nasdaq, STOXX" },
   { value: "$15T+", label: "Tracked ETF Assets", desc: "Replicated by US & UCITS Funds" },
   { value: "46", label: "Live Market Feeds", desc: "Daily prices, yields, sector sparklines" },
@@ -131,7 +133,7 @@ export default function HomePage() {
               }}
             >
               Institutional-grade methodologies, factor screens, and ETF mappings
-              covering <strong>179+ indices</strong> across <strong>17 global providers</strong>.
+              covering <strong>180+ indices</strong> across <strong>17 global providers</strong>.
               Compare float-adjusted market cap, constituent rules, and real-time sovereign yield curves in one unified interface.
             </Typography>
 
@@ -149,7 +151,7 @@ export default function HomePage() {
                 fullWidth
                 value={heroSearch}
                 onChange={(e) => setHeroSearch(e.target.value)}
-                placeholder="Search 179+ indices, tickers, or providers (e.g. S&P 500, QQQ)..."
+                placeholder="Search 180+ indices, tickers, or providers (e.g. S&P 500, QQQ, JQUA)..."
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -270,7 +272,7 @@ export default function HomePage() {
                   },
                 }}
               >
-                Browse All 179+ Indices
+                Browse All 180+ Indices
               </Button>
               <Button
                 component={RouterLink}
@@ -688,7 +690,7 @@ export default function HomePage() {
               Ready to Explore Global Benchmarks?
             </Typography>
             <Typography sx={{ color: "text.secondary", maxWidth: 540, mx: "auto", mb: 3.5, fontSize: { xs: "0.95rem", sm: "1.05rem" } }}>
-              Dive into all 179+ equity, smart beta, and sovereign indices with full methodology criteria, fee metrics, and live ETF trackers.
+              Dive into all 180+ equity, smart beta, and sovereign indices with full methodology criteria, fee metrics, and live ETF trackers.
             </Typography>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
               <Button
