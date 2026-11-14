@@ -4,8 +4,6 @@ import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Chip,
   Container,
   InputAdornment,
@@ -20,6 +18,9 @@ import { useFredData } from "../api/fredApi";
 import { useProvidersData } from "../api/indicesApi";
 import SiteFooter from "../components/layout/SiteFooter";
 import { ProviderLogo } from "../components/ProviderLogo";
+import { INDICES_DATA } from "../data/indicesData";
+
+const TOTAL_INDICES = INDICES_DATA.length;
 
 const POPULAR_QUERIES = [
   { label: "S&P 500", query: "S&P 500" },
@@ -35,7 +36,7 @@ const POPULAR_QUERIES = [
 ];
 
 const PLATFORM_STATS = [
-  { value: "180+", label: "Documented Indices", desc: "Equities, Fixed Income, Smart Beta" },
+  { value: `${TOTAL_INDICES}+`, label: "Documented Indices", desc: "Equities, Fixed Income, Smart Beta" },
   { value: "17", label: "Global Providers", desc: "S&P, MSCI, FTSE, Nasdaq, STOXX" },
   { value: "$15T+", label: "Tracked ETF Assets", desc: "Replicated by US & UCITS Funds" },
   { value: "46", label: "Live Market Feeds", desc: "Daily prices, yields, sector sparklines" },
@@ -133,7 +134,7 @@ export default function HomePage() {
               }}
             >
               Institutional-grade methodologies, factor screens, and ETF mappings
-              covering <strong>180+ indices</strong> across <strong>17 global providers</strong>.
+              covering <strong>{TOTAL_INDICES}+ indices</strong> across <strong>17 global providers</strong>.
               Compare float-adjusted market cap, constituent rules, and real-time sovereign yield curves in one unified interface.
             </Typography>
 
@@ -151,7 +152,7 @@ export default function HomePage() {
                 fullWidth
                 value={heroSearch}
                 onChange={(e) => setHeroSearch(e.target.value)}
-                placeholder="Search 180+ indices, tickers, or providers (e.g. S&P 500, QQQ, JQUA)..."
+                placeholder={`Search ${TOTAL_INDICES}+ indices, tickers, or providers (e.g. S&P 500, QQQ, JQUA, RWL)...`}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -272,7 +273,7 @@ export default function HomePage() {
                   },
                 }}
               >
-                Browse All 180+ Indices
+                Browse All {TOTAL_INDICES}+ Indices
               </Button>
               <Button
                 component={RouterLink}
@@ -399,193 +400,7 @@ export default function HomePage() {
         </Box>
       )}
 
-      {/* 3. The Three Core Pillars of Market Indices */}
-      <Box sx={{ py: { xs: 6, sm: 8, md: 10 }, backgroundColor: "#050D0A" }}>
-        <Container maxWidth="lg">
-          <Stack spacing={2} textAlign="center" alignItems="center" sx={{ mb: 6 }}>
-            <Typography
-              variant="overline"
-              sx={{ color: "#00DD94", fontWeight: 800, letterSpacing: "0.08em", fontSize: "0.8rem" }}
-            >
-              Why Market Indices
-            </Typography>
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 900,
-                fontSize: { xs: "1.8rem", sm: "2.4rem", md: "2.8rem" },
-                letterSpacing: "-0.025em",
-                color: "#ffffff",
-              }}
-            >
-              Open Financial Infrastructure for Modern Investors
-            </Typography>
-            <Typography sx={{ color: "text.secondary", maxWidth: 680, fontSize: "1.05rem" }}>
-              Most financial portals hide index methodology inside paid terminals. We provide open, structured access to the formulas driving passive investing.
-            </Typography>
-          </Stack>
-
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
-              gap: 3,
-            }}
-          >
-            {/* Pillar 1 */}
-            <Card
-              sx={{
-                borderRadius: 3.5,
-                backgroundColor: "rgba(15, 23, 42, 0.4)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                transition: "all 0.25s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  borderColor: "rgba(0, 221, 148, 0.5)",
-                  boxShadow: "0 12px 32px rgba(0, 221, 148, 0.12)",
-                },
-              }}
-            >
-              <CardContent sx={{ p: { xs: 2.5, sm: 3.5 } }}>
-                <Box
-                  sx={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 2.5,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "1.6rem",
-                    backgroundColor: "rgba(0, 221, 148, 0.14)",
-                    color: "#00DD94",
-                    mb: 2.5,
-                    border: "1px solid rgba(0, 221, 148, 0.3)",
-                  }}
-                >
-                  🔬
-                </Box>
-                <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: "#ffffff" }}>
-                  Constituent &amp; Factor Transparency
-                </Typography>
-                <Typography sx={{ color: "text.secondary", fontSize: "0.95rem", lineHeight: 1.6, mb: 2 }}>
-                  Inspect how each benchmark is selected, weighted, and reconstituted. Screen by Momentum, Quality, Value, High Dividend, Equal Weight, or Sector tilts.
-                </Typography>
-                <Button
-                  component={RouterLink}
-                  to="/indices?category=themes"
-                  size="small"
-                  endIcon={<ArrowForwardIcon />}
-                  sx={{ color: "#00DD94", fontWeight: 700, p: 0, textTransform: "none" }}
-                >
-                  Explore Factor Tilts
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Pillar 2 */}
-            <Card
-              sx={{
-                borderRadius: 3.5,
-                backgroundColor: "rgba(15, 23, 42, 0.4)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                transition: "all 0.25s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  borderColor: "rgba(56, 189, 248, 0.5)",
-                  boxShadow: "0 12px 32px rgba(56, 189, 248, 0.12)",
-                },
-              }}
-            >
-              <CardContent sx={{ p: { xs: 2.5, sm: 3.5 } }}>
-                <Box
-                  sx={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 2.5,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "1.6rem",
-                    backgroundColor: "rgba(56, 189, 248, 0.14)",
-                    color: "#38bdf8",
-                    mb: 2.5,
-                    border: "1px solid rgba(56, 189, 248, 0.3)",
-                  }}
-                >
-                  ⚡
-                </Box>
-                <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: "#ffffff" }}>
-                  Institutional ETF Replication Mapping
-                </Typography>
-                <Typography sx={{ color: "text.secondary", fontSize: "0.95rem", lineHeight: 1.6, mb: 2 }}>
-                  Never guess which fund tracks which index. Instantly view passive US ETFs, European UCITS listings (15% tax treaties), active prospectus benchmarks, and AUM totals.
-                </Typography>
-                <Button
-                  component={RouterLink}
-                  to="/indices"
-                  size="small"
-                  endIcon={<ArrowForwardIcon />}
-                  sx={{ color: "#38bdf8", fontWeight: 700, p: 0, textTransform: "none" }}
-                >
-                  View 330+ Tracked ETFs
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Pillar 3 */}
-            <Card
-              sx={{
-                borderRadius: 3.5,
-                backgroundColor: "rgba(15, 23, 42, 0.4)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                transition: "all 0.25s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  borderColor: "rgba(139, 92, 246, 0.5)",
-                  boxShadow: "0 12px 32px rgba(139, 92, 246, 0.12)",
-                },
-              }}
-            >
-              <CardContent sx={{ p: { xs: 2.5, sm: 3.5 } }}>
-                <Box
-                  sx={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 2.5,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "1.6rem",
-                    backgroundColor: "rgba(139, 92, 246, 0.14)",
-                    color: "#8b5cf6",
-                    mb: 2.5,
-                    border: "1px solid rgba(139, 92, 246, 0.3)",
-                  }}
-                >
-                  📈
-                </Box>
-                <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: "#ffffff" }}>
-                  Live Sovereign Yields &amp; Breadth
-                </Typography>
-                <Typography sx={{ color: "text.secondary", fontSize: "0.95rem", lineHeight: 1.6, mb: 2 }}>
-                  Stream real-time U.S. Treasury yield curves (3M to 30Y), 10Y-2Y recession indicators, Cap-Weight vs Equal-Weight breadth spreads, and 11 S&amp;P 500 industry sectors.
-                </Typography>
-                <Button
-                  component={RouterLink}
-                  to="/tracker"
-                  size="small"
-                  endIcon={<ArrowForwardIcon />}
-                  sx={{ color: "#8b5cf6", fontWeight: 700, p: 0, textTransform: "none" }}
-                >
-                  Launch Live Tracker
-                </Button>
-              </CardContent>
-            </Card>
-          </Box>
-        </Container>
-      </Box>
-
-      {/* 4. Institutional Providers Showcase */}
+      {/* 3. Institutional Providers Showcase */}
       <Box sx={{ py: { xs: 6, sm: 8 }, backgroundColor: "#050D0A", borderTop: "1px solid rgba(255, 255, 255, 0.08)" }}>
         <Container maxWidth="lg">
           <Stack spacing={2} textAlign="center" sx={{ mb: 4 }}>
@@ -690,7 +505,7 @@ export default function HomePage() {
               Ready to Explore Global Benchmarks?
             </Typography>
             <Typography sx={{ color: "text.secondary", maxWidth: 540, mx: "auto", mb: 3.5, fontSize: { xs: "0.95rem", sm: "1.05rem" } }}>
-              Dive into all 180+ equity, smart beta, and sovereign indices with full methodology criteria, fee metrics, and live ETF trackers.
+              Dive into all {TOTAL_INDICES}+ equity, smart beta, and sovereign indices with full methodology criteria, fee metrics, and live ETF trackers.
             </Typography>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
               <Button
