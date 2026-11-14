@@ -1,6 +1,7 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import LaunchIcon from "@mui/icons-material/Launch";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   Box,
   Button,
@@ -27,6 +28,7 @@ import {
   getEtfStrategyDescription,
   isActivelyManagedEtf,
 } from "../utils/etfClassification";
+import { INDEX_TO_FRED_SERIES_ID } from "../data/fredSeriesData";
 import { getStockAnalysisEtfUrl } from "../utils/stockAnalysis";
 
 export default function IndexDetailPage() {
@@ -222,6 +224,30 @@ export default function IndexDetailPage() {
           alignItems="center"
           flexWrap="wrap"
         >
+          {INDEX_TO_FRED_SERIES_ID[index.id] && (
+            <Button
+              component={RouterLink}
+              to={`/tracker?series=${INDEX_TO_FRED_SERIES_ID[index.id]}`}
+              variant="contained"
+              startIcon={<ShowChartIcon sx={{ fontSize: 16 }} />}
+              sx={{
+                borderRadius: 2.5,
+                backgroundColor: "#00DD94",
+                color: "#050D0A",
+                fontWeight: 800,
+                fontSize: "0.82rem",
+                px: 2,
+                py: 0.75,
+                textTransform: "none",
+                boxShadow: "0 4px 14px rgba(0, 221, 148, 0.3)",
+                "&:hover": {
+                  backgroundColor: "#00f0a0",
+                },
+              }}
+            >
+              Open in Tracker
+            </Button>
+          )}
           <ShareButton
             item={{
               title: `${index.name} (${index.symbol}) | Market Indices`,

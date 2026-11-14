@@ -1,19 +1,16 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import SearchIcon from "@mui/icons-material/Search";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   Box,
   Button,
   Chip,
   Container,
-  InputAdornment,
   Paper,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useFredData } from "../api/fredApi";
 import { useProvidersData } from "../api/indicesApi";
 import SiteFooter from "../components/layout/SiteFooter";
@@ -21,19 +18,6 @@ import { ProviderLogo } from "../components/ProviderLogo";
 import { INDICES_DATA } from "../data/indicesData";
 
 const TOTAL_INDICES = INDICES_DATA.length;
-
-const POPULAR_QUERIES = [
-  { label: "S&P 500", query: "S&P 500" },
-  { label: "Nasdaq 100", query: "Nasdaq 100" },
-  { label: "Russell 2000", query: "Russell 2000" },
-  { label: "Revenue / RWL", query: "RWL" },
-  { label: "Quality / JQUA", query: "JQUA" },
-  { label: "Semiconductors", query: "Semiconductor" },
-  { label: "Dividend Growth", query: "Dividend Growth" },
-  { label: "Momentum", query: "Momentum" },
-  { label: "India / Nifty", query: "Nifty" },
-  { label: "Treasuries", query: "Treasury" },
-];
 
 const PLATFORM_STATS = [
   { value: `${TOTAL_INDICES}+`, label: "Documented Indices", desc: "Equities, Fixed Income, Smart Beta" },
@@ -43,19 +27,8 @@ const PLATFORM_STATS = [
 ];
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const [heroSearch, setHeroSearch] = useState("");
   const { data: fredData } = useFredData();
   const { data: providers = [] } = useProvidersData();
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (heroSearch.trim()) {
-      navigate(`/indices?q=${encodeURIComponent(heroSearch.trim())}`);
-    } else {
-      navigate("/indices");
-    }
-  };
 
   // Top streaming ticker strip data
   const tickerItems = useMemo(() => {
@@ -63,6 +36,7 @@ export default function HomePage() {
     const ids = [
       "SP500",
       "NASDAQ100",
+      "RUI",
       "RUT",
       "DJIA",
       "DGS10",
@@ -138,118 +112,11 @@ export default function HomePage() {
               Compare float-adjusted market cap, constituent rules, and real-time sovereign yield curves in one unified interface.
             </Typography>
 
-            {/* Interactive Search Box */}
-            <Box
-              component="form"
-              onSubmit={handleSearchSubmit}
-              sx={{
-                width: "100%",
-                maxWidth: 680,
-                mt: 1.5,
-              }}
-            >
-              <TextField
-                fullWidth
-                value={heroSearch}
-                onChange={(e) => setHeroSearch(e.target.value)}
-                placeholder={`Search ${TOTAL_INDICES}+ indices, tickers, or providers (e.g. S&P 500, QQQ, JQUA, RWL)...`}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon sx={{ color: "#00DD94", fontSize: { xs: 20, sm: 24 }, ml: { xs: 0, sm: 0.5 } }} />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{
-                          backgroundColor: "#00DD94",
-                          color: "#050D0A",
-                          fontWeight: 800,
-                          fontSize: { xs: "0.78rem", sm: "0.85rem" },
-                          borderRadius: 2,
-                          px: { xs: 1.6, sm: 2.2 },
-                          py: { xs: 0.65, sm: 0.8 },
-                          minWidth: { xs: "auto", sm: 64 },
-                          textTransform: "none",
-                          "&:hover": {
-                            backgroundColor: "#00f0a0",
-                          },
-                        }}
-                      >
-                        Explore
-                      </Button>
-                    </InputAdornment>
-                  ),
-                  sx: {
-                    borderRadius: 3,
-                    backgroundColor: "rgba(15, 23, 42, 0.75)",
-                    backdropFilter: "blur(12px)",
-                    border: "1px solid rgba(0, 221, 148, 0.35)",
-                    boxShadow: "0 8px 32px rgba(0, 221, 148, 0.12)",
-                    fontSize: { xs: "0.9rem", sm: "1rem" },
-                    color: "#ffffff",
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "transparent",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "rgba(0, 221, 148, 0.6)",
-                    },
-                    "&.Mui-focused": {
-                      boxShadow: "0 0 24px rgba(0, 221, 148, 0.3)",
-                      borderColor: "#00DD94",
-                    },
-                  },
-                }}
-              />
-
-              {/* Popular Query Shortcut Chips */}
-              <Stack
-                direction="row"
-                flexWrap="wrap"
-                justifyContent="center"
-                alignItems="center"
-                gap={0.8}
-                sx={{ mt: 1.5 }}
-              >
-                <Typography
-                  variant="caption"
-                  sx={{ color: "text.secondary", fontWeight: 700, mr: 0.5 }}
-                >
-                  Popular:
-                </Typography>
-                {POPULAR_QUERIES.map((q) => (
-                  <Chip
-                    key={q.label}
-                    label={q.label}
-                    size="small"
-                    clickable
-                    onClick={() => navigate(`/indices?q=${encodeURIComponent(q.query)}`)}
-                    sx={{
-                      fontSize: "0.74rem",
-                      fontWeight: 600,
-                      borderRadius: 1.5,
-                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                      color: "text.secondary",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 221, 148, 0.12)",
-                        color: "#00DD94",
-                        borderColor: "rgba(0, 221, 148, 0.3)",
-                      },
-                    }}
-                  />
-                ))}
-              </Stack>
-            </Box>
-
             {/* Dual Main CTA Buttons */}
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={2}
-              sx={{ pt: 2, width: { xs: "100%", sm: "auto" } }}
+              sx={{ pt: 1, width: { xs: "100%", sm: "auto" } }}
             >
               <Button
                 component={RouterLink}
@@ -305,98 +172,145 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      {/* 2. Live Market Ticker Streaming Strip */}
+      {/* 2. Rolling Market Benchmarks Ticker Strip */}
       {tickerItems.length > 0 && (
         <Box
           sx={{
-            py: 1.5,
-            px: { xs: 1.5, sm: 2 },
+            py: 1.25,
             backgroundColor: "#081210",
             borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-            overflowX: "auto",
-            WebkitOverflowScrolling: "touch",
-            scrollbarWidth: "none",
-            "&::-webkit-scrollbar": { display: "none" },
+            display: "flex",
+            alignItems: "center",
+            overflow: "hidden",
+            position: "relative",
           }}
         >
-          <Container maxWidth={false}>
-            <Stack direction="row" spacing={1.5} alignItems="center" sx={{ minWidth: "max-content" }}>
-              <Typography
-                variant="caption"
+          {/* Pinned Benchmarks Label */}
+          <Box
+            sx={{
+              flexShrink: 0,
+              zIndex: 3,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              pl: { xs: 2, sm: 3 },
+              pr: { xs: 1.5, sm: 2.5 },
+              backgroundColor: "#081210",
+              boxShadow: "16px 0 20px -4px #081210",
+            }}
+          >
+            <Box
+              sx={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                backgroundColor: "#00DD94",
+                boxShadow: "0 0 8px #00DD94",
+              }}
+            />
+            <Typography
+              variant="caption"
+              sx={{
+                color: "#00DD94",
+                fontWeight: 800,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                fontSize: "0.72rem",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Benchmarks:
+            </Typography>
+          </Box>
+
+          {/* Rolling Ticker Marquee */}
+          <Box
+            sx={{
+              display: "flex",
+              overflow: "hidden",
+              flex: 1,
+              position: "relative",
+              maskImage: "linear-gradient(to right, transparent, black 16px, black calc(100% - 24px), transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 16px, black calc(100% - 24px), transparent)",
+              "&:hover .ticker-marquee-track": {
+                animationPlayState: "paused",
+              },
+            }}
+          >
+            {[0, 1].map((copyIndex) => (
+              <Box
+                key={copyIndex}
+                className="ticker-marquee-track"
+                aria-hidden={copyIndex === 1 ? "true" : undefined}
                 sx={{
-                  color: "#00DD94",
-                  fontWeight: 800,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  fontSize: "0.7rem",
                   display: "flex",
-                  alignItems: "center",
-                  gap: 0.5,
-                  mr: 1,
+                  gap: 1.5,
+                  pr: 1.5,
+                  flexShrink: 0,
+                  willChange: "transform",
+                  animation: "tickerRoll 42s linear infinite",
+                  "@keyframes tickerRoll": {
+                    "0%": { transform: "translateX(0)" },
+                    "100%": { transform: "translateX(-100%)" },
+                  },
+                  "@media (prefers-reduced-motion: reduce)": {
+                    animation: "none",
+                  },
                 }}
               >
-                <Box
-                  sx={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    backgroundColor: "#00DD94",
-                    boxShadow: "0 0 8px #00DD94",
-                  }}
-                />
-                Live Benchmarks:
-              </Typography>
-
-              {tickerItems.map((s) => {
-                const isPositive = s.change >= 0;
-                return (
-                  <Paper
-                    key={s.id}
-                    component={RouterLink}
-                    to="/tracker"
-                    variant="outlined"
-                    sx={{
-                      textDecoration: "none",
-                      px: 1.5,
-                      py: 0.6,
-                      borderRadius: 2,
-                      backgroundColor: "rgba(255, 255, 255, 0.03)",
-                      borderColor: "rgba(255, 255, 255, 0.08)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1.2,
-                      transition: "all 0.15s ease",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 221, 148, 0.08)",
-                        borderColor: "rgba(0, 221, 148, 0.4)",
-                      },
-                    }}
-                  >
-                    <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "text.primary" }}>
-                      {s.shortName || s.name}
-                    </Typography>
-                    <Typography sx={{ fontSize: "0.78rem", fontWeight: 800, color: "#ffffff" }}>
-                      {s.format === "percent"
-                        ? `${s.latestValue.toFixed(2)}%`
-                        : s.latestValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </Typography>
-                    <Typography
+                {tickerItems.map((s) => {
+                  const isPositive = s.change >= 0;
+                  return (
+                    <Paper
+                      key={`${copyIndex}-${s.id}`}
+                      component={RouterLink}
+                      to={`/tracker?series=${s.id}`}
+                      variant="outlined"
                       sx={{
-                        fontSize: "0.72rem",
-                        fontWeight: 700,
-                        color: isPositive ? "#10b981" : "#ef4444",
-                        display: "flex",
+                        textDecoration: "none",
+                        px: 1.5,
+                        py: 0.6,
+                        borderRadius: 2,
+                        backgroundColor: "rgba(255, 255, 255, 0.03)",
+                        borderColor: "rgba(255, 255, 255, 0.08)",
+                        display: "inline-flex",
                         alignItems: "center",
+                        gap: 1.2,
+                        flexShrink: 0,
+                        transition: "all 0.15s ease",
+                        "&:hover": {
+                          backgroundColor: "rgba(0, 221, 148, 0.08)",
+                          borderColor: "rgba(0, 221, 148, 0.4)",
+                        },
                       }}
                     >
-                      {isPositive ? "+" : ""}
-                      {s.changePct.toFixed(2)}%
-                    </Typography>
-                  </Paper>
-                );
-              })}
-            </Stack>
-          </Container>
+                      <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "text.primary", whiteSpace: "nowrap" }}>
+                        {s.shortName || s.name}
+                      </Typography>
+                      <Typography sx={{ fontSize: "0.78rem", fontWeight: 800, color: "#ffffff", whiteSpace: "nowrap" }}>
+                        {s.format === "percent"
+                          ? `${s.latestValue.toFixed(2)}%`
+                          : s.latestValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          color: isPositive ? "#10b981" : "#ef4444",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {isPositive ? "+" : ""}
+                        {s.changePct.toFixed(2)}%
+                      </Typography>
+                    </Paper>
+                  );
+                })}
+              </Box>
+            ))}
+          </Box>
         </Box>
       )}
 

@@ -47,20 +47,34 @@ export default function BenchmarkTrackerPage() {
   const seriesParam = searchParams.get("series");
   const tabParam = searchParams.get("tab");
 
+  // Normalize seriesParam if passed as relatedIndexId (e.g. russell-1000) or case-insensitive ID
+  const normalizedSeriesId = useMemo(() => {
+    if (!seriesParam) return null;
+    if (dataset.series[seriesParam]) return seriesParam;
+    const directUpper = seriesParam.toUpperCase();
+    if (dataset.series[directUpper]) return directUpper;
+    const match = Object.values(dataset.series).find(
+      (s) =>
+        s.id.toLowerCase() === seriesParam.toLowerCase() ||
+        (s.relatedIndexId && s.relatedIndexId.toLowerCase() === seriesParam.toLowerCase()),
+    );
+    return match ? match.id : seriesParam;
+  }, [seriesParam, dataset.series]);
+
   // Automatically determine if the selected series is international or bond
   const isSelectedInternational = useMemo(() => {
     return (
-      seriesParam != null &&
-      dataset.internationalSeries.some((s) => s.id === seriesParam)
+      normalizedSeriesId != null &&
+      dataset.internationalSeries.some((s) => s.id === normalizedSeriesId)
     );
-  }, [seriesParam, dataset.internationalSeries]);
+  }, [normalizedSeriesId, dataset.internationalSeries]);
 
   const isSelectedBond = useMemo(() => {
     return (
-      seriesParam != null &&
-      dataset.bondSeries.some((s) => s.id === seriesParam)
+      normalizedSeriesId != null &&
+      dataset.bondSeries.some((s) => s.id === normalizedSeriesId)
     );
-  }, [seriesParam, dataset.bondSeries]);
+  }, [normalizedSeriesId, dataset.bondSeries]);
 
   const activeTab: "us" | "international" | "bonds" =
     tabParam === "international"
@@ -74,7 +88,7 @@ export default function BenchmarkTrackerPage() {
             : "us";
 
   const selectedSeriesId =
-    seriesParam ||
+    normalizedSeriesId ||
     (activeTab === "international"
       ? "FTSE_100"
       : activeTab === "bonds"

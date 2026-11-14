@@ -1025,3 +1025,15 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
 };
 
 export const FRED_SERIES_LIST = Object.values(FRED_SERIES_CATALOG);
+
+export const INDEX_TO_FRED_SERIES_ID: Record<string, string> = Object.entries(
+  FRED_SERIES_CATALOG,
+).reduce(
+  (acc, [seriesId, meta]) => {
+    if (meta.relatedIndexId) {
+      acc[meta.relatedIndexId] = seriesId;
+    }
+    return acc;
+  },
+  {} as Record<string, string>,
+);
