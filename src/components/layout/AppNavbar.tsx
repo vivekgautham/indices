@@ -8,13 +8,13 @@ import {
   Container,
   Stack,
   Toolbar,
-  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AppLogo } from "../common/AppLogo";
 import ShareButton from "../ShareButton";
 
 export interface NavItem {
@@ -108,87 +108,64 @@ export const AppNavbar: React.FC = () => {
             gap: { xs: 1, sm: 2 },
           }}
         >
-          {/* Left: Brand Logo & Title with Exploratory Tooltip */}
-          <Tooltip
-            title="Explore the world's premier benchmark providers and their iconic market indices, tracking ETFs, constituent criteria, and weighting methodologies."
-            arrow
-            placement="bottom-start"
-            enterDelay={250}
+          {/* Left: Brand Logo & Title */}
+          <Box
+            component={Link}
+            to="/"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: { xs: 1, sm: 1.25 },
+              textDecoration: "none",
+              color: "inherit",
+              cursor: "pointer",
+              py: 0.5,
+              flexShrink: 0,
+              "&:hover .brand-text": {
+                opacity: 0.9,
+              },
+            }}
           >
-            <Box
-              component={Link}
-              to="/"
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: { xs: 1, sm: 1.25 },
-                textDecoration: "none",
-                color: "inherit",
-                cursor: "pointer",
-                py: 0.5,
-                flexShrink: 0,
-                "&:hover .brand-text": {
-                  opacity: 0.9,
-                },
-              }}
-            >
-              <Box
+            <AppLogo size={34} showGlow />
+            <Box>
+              <Typography
+                className="brand-text"
                 sx={{
-                  width: { xs: 30, sm: 34 },
-                  height: { xs: 30, sm: 34 },
-                  borderRadius: 2,
+                  fontWeight: 800,
+                  fontSize: { xs: "1rem", sm: "1.2rem" },
+                  letterSpacing: "-0.025em",
+                  lineHeight: 1.1,
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: { xs: "1.05rem", sm: "1.2rem" },
-                  background: `linear-gradient(135deg, ${theme.palette.primary.main}33 0%, ${theme.palette.secondary.main}33 100%)`,
-                  border: `1px solid ${theme.palette.primary.main}55`,
-                  boxShadow: `0 2px 8px ${theme.palette.primary.main}33`,
-                  flexShrink: 0,
+                  gap: 0.75,
+                  whiteSpace: "nowrap",
                 }}
               >
-                📊
-              </Box>
-              <Box>
-                <Typography
-                  className="brand-text"
-                  sx={{
-                    fontWeight: 800,
-                    fontSize: { xs: "1rem", sm: "1.2rem" },
-                    letterSpacing: "-0.025em",
-                    lineHeight: 1.1,
-                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.75,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  Market Indices
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    display: { xs: "none", sm: "block" },
-                    fontSize: "0.68rem",
-                    color: "text.secondary",
-                    fontWeight: 600,
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                    lineHeight: 1,
-                    mt: 0.2,
-                  }}
-                >
-                  Global Benchmark Catalog
-                </Typography>
-              </Box>
+                Market Indices
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  fontSize: "0.68rem",
+                  color: "text.secondary",
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  lineHeight: 1,
+                  mt: 0.2,
+                }}
+              >
+                Global Benchmark Catalog
+              </Typography>
             </Box>
-          </Tooltip>
+          </Box>
 
           {/* Center (Desktop md+ only): Morningstar-Style Global Navigation Tabs */}
           <Stack

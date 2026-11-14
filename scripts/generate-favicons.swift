@@ -34,17 +34,17 @@ func renderFavicon(size: CGFloat) -> Data? {
     let rect = CGRect(origin: .zero, size: CGSize(width: size, height: size))
     let cornerRadius = size * 0.22
 
-    // 1. Background Rounded Rect with Indigo -> Violet -> Pink Gradient
+    // 1. Background Rounded Rect with Deep Obsidian -> Midnight Emerald Gradient
     let bgPath = NSBezierPath(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
     bgPath.addClip()
 
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     let colors = [
-        NSColor(red: 79/255.0, green: 70/255.0, blue: 229/255.0, alpha: 1.0).cgColor, // Indigo #4f46e5
-        NSColor(red: 124/255.0, green: 58/255.0, blue: 237/255.0, alpha: 1.0).cgColor, // Violet #7c3aed
-        NSColor(red: 236/255.0, green: 72/255.0, blue: 153/255.0, alpha: 1.0).cgColor  // Pink #ec4899
+        NSColor(red: 7/255.0, green: 16/255.0, blue: 24/255.0, alpha: 1.0).cgColor,   // #071018 Deep Navy
+        NSColor(red: 10/255.0, green: 25/255.0, blue: 38/255.0, alpha: 1.0).cgColor,  // #0a1926 Midnight
+        NSColor(red: 6/255.0, green: 35/255.0, blue: 25/255.0, alpha: 1.0).cgColor   // #062319 Deep Emerald
     ] as CFArray
-    let locations: [CGFloat] = [0.0, 0.55, 1.0]
+    let locations: [CGFloat] = [0.0, 0.5, 1.0]
     if let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: locations) {
         cgContext.drawLinearGradient(gradient,
                                      start: CGPoint(x: 0, y: size),
@@ -54,21 +54,21 @@ func renderFavicon(size: CGFloat) -> Data? {
 
     // 2. Subtle glossy top highlight
     let highlightColors = [
-        NSColor(white: 1.0, alpha: 0.16).cgColor,
+        NSColor(red: 0/255.0, green: 221/255.0, blue: 148/255.0, alpha: 0.22).cgColor,
         NSColor(white: 1.0, alpha: 0.0).cgColor
     ] as CFArray
     if let highlightGrad = CGGradient(colorsSpace: colorSpace, colors: highlightColors, locations: [0.0, 1.0]) {
         cgContext.drawLinearGradient(highlightGrad,
-                                     start: CGPoint(x: 0, y: size),
-                                     end: CGPoint(x: size, y: size * 0.5),
+                                     start: CGPoint(x: size, y: size),
+                                     end: CGPoint(x: 0, y: 0),
                                      options: [])
     }
 
-    // 3. Inner border
+    // 3. Inner border with Emerald tint
     let borderPath = NSBezierPath(roundedRect: rect.insetBy(dx: max(0.5, size * 0.015), dy: max(0.5, size * 0.015)),
                                   xRadius: cornerRadius * 0.92,
                                   yRadius: cornerRadius * 0.92)
-    NSColor(white: 1.0, alpha: 0.22).setStroke()
+    NSColor(red: 0/255.0, green: 221/255.0, blue: 148/255.0, alpha: 0.38).setStroke()
     borderPath.lineWidth = max(1.0, size * 0.025)
     borderPath.stroke()
 
@@ -81,42 +81,56 @@ func renderFavicon(size: CGFloat) -> Data? {
     let bar1Height = size * 0.30
     let bar1Rect = CGRect(x: size * 0.20, y: baselineY, width: barWidth, height: bar1Height)
     let bar1Path = NSBezierPath(roundedRect: bar1Rect, xRadius: barRadius, yRadius: barRadius)
-    NSColor(white: 1.0, alpha: 0.65).setFill()
+    NSColor(red: 0/255.0, green: 221/255.0, blue: 148/255.0, alpha: 0.45).setFill()
     bar1Path.fill()
 
     // Bar 2 (Middle)
     let bar2Height = size * 0.46
     let bar2Rect = CGRect(x: size * 0.43, y: baselineY, width: barWidth, height: bar2Height)
     let bar2Path = NSBezierPath(roundedRect: bar2Rect, xRadius: barRadius, yRadius: barRadius)
-    NSColor(white: 1.0, alpha: 0.82).setFill()
+    NSColor(red: 0/255.0, green: 245/255.0, blue: 255/255.0, alpha: 0.65).setFill()
     bar2Path.fill()
 
     // Bar 3 (Right - Tallest)
     let bar3Height = size * 0.60
     let bar3Rect = CGRect(x: size * 0.66, y: baselineY, width: barWidth, height: bar3Height)
     let bar3Path = NSBezierPath(roundedRect: bar3Rect, xRadius: barRadius, yRadius: barRadius)
-    NSColor(white: 1.0, alpha: 0.98).setFill()
+    NSColor(red: 0/255.0, green: 245/255.0, blue: 255/255.0, alpha: 0.88).setFill()
     bar3Path.fill()
 
-    // 5. Upward Trend Polyline with Emerald/Green Accent
-    let trendPath = NSBezierPath()
-    trendPath.move(to: CGPoint(x: size * 0.16, y: size * 0.46))
-    trendPath.line(to: CGPoint(x: size * 0.39, y: size * 0.56))
-    trendPath.line(to: CGPoint(x: size * 0.58, y: size * 0.50))
-    trendPath.line(to: CGPoint(x: size * 0.82, y: size * 0.80))
+    // Baseline axis
+    let baselinePath = NSBezierPath()
+    baselinePath.move(to: CGPoint(x: size * 0.16, y: baselineY))
+    baselinePath.line(to: CGPoint(x: size * 0.84, y: baselineY))
+    baselinePath.lineWidth = max(1.0, size * 0.02)
+    NSColor(white: 1.0, alpha: 0.15).setStroke()
+    baselinePath.stroke()
 
-    trendPath.lineWidth = max(1.8, size * 0.075)
+    // 5. Upward Trend Polyline with Emerald/Cyan Accent
+    let trendPath = NSBezierPath()
+    trendPath.move(to: CGPoint(x: size * 0.16, y: size * 0.44))
+    trendPath.line(to: CGPoint(x: size * 0.37, y: size * 0.56))
+    trendPath.line(to: CGPoint(x: size * 0.54, y: size * 0.51))
+    trendPath.line(to: CGPoint(x: size * 0.80, y: size * 0.80))
+
+    trendPath.lineWidth = max(2.0, size * 0.08)
     trendPath.lineCapStyle = .round
     trendPath.lineJoinStyle = .round
-    NSColor(red: 52/255.0, green: 211/255.0, blue: 153/255.0, alpha: 1.0).setStroke() // Vibrant emerald #34d399
+    NSColor(red: 0/255.0, green: 221/255.0, blue: 148/255.0, alpha: 1.0).setStroke() // Kalshi emerald #00dd94
     trendPath.stroke()
 
     // Peak Accent Dot
-    let dotRadius = max(2.0, size * 0.065)
-    let dotRect = CGRect(x: size * 0.82 - dotRadius, y: size * 0.80 - dotRadius, width: dotRadius * 2, height: dotRadius * 2)
+    let dotRadius = max(2.2, size * 0.07)
+    let dotRect = CGRect(x: size * 0.80 - dotRadius, y: size * 0.80 - dotRadius, width: dotRadius * 2, height: dotRadius * 2)
     let dotPath = NSBezierPath(ovalIn: dotRect)
     NSColor.white.setFill()
     dotPath.fill()
+
+    let innerDotRadius = dotRadius * 0.5
+    let innerDotRect = CGRect(x: size * 0.80 - innerDotRadius, y: size * 0.80 - innerDotRadius, width: innerDotRadius * 2, height: innerDotRadius * 2)
+    let innerDotPath = NSBezierPath(ovalIn: innerDotRect)
+    NSColor(red: 0/255.0, green: 245/255.0, blue: 255/255.0, alpha: 1.0).setFill()
+    innerDotPath.fill()
 
     NSGraphicsContext.restoreGraphicsState()
 
