@@ -317,17 +317,57 @@ export default function HomePage() {
       {/* 3. Institutional Providers Showcase */}
       <Box sx={{ py: { xs: 6, sm: 8 }, backgroundColor: "#050D0A", borderTop: "1px solid rgba(255, 255, 255, 0.08)" }}>
         <Container maxWidth="lg">
-          <Stack spacing={2} textAlign="center" sx={{ mb: 4 }}>
-            <Typography variant="overline" sx={{ color: "#00DD94", fontWeight: 800, letterSpacing: "0.08em" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              width: "100%",
+              mb: 4,
+            }}
+          >
+            <Typography
+              variant="overline"
+              sx={{
+                color: "#00DD94",
+                fontWeight: 800,
+                letterSpacing: "0.08em",
+                textAlign: "center",
+                display: "block",
+                width: "100%",
+                mb: 0.5,
+              }}
+            >
               Global Standards
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 900, color: "#ffffff" }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 900,
+                color: "#ffffff",
+                textAlign: "center",
+                display: "block",
+                width: "100%",
+                mb: 1.5,
+              }}
+            >
               17 Premier Index Administrators Covered
             </Typography>
-            <Typography sx={{ color: "text.secondary", maxWidth: 640, mx: "auto" }}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                maxWidth: 640,
+                width: "100%",
+                mx: "auto",
+                textAlign: "center",
+                display: "block",
+              }}
+            >
               Filter benchmarks by official sponsor and explore methodologies from the world’s leading index calculation agents.
             </Typography>
-          </Stack>
+          </Box>
 
           <Stack direction="row" flexWrap="wrap" justifyContent="center" gap={1.2}>
             {providers.map((p) => (

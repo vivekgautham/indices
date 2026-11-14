@@ -579,7 +579,7 @@ export default function IndexListPage() {
                     color: "text.secondary",
                     fontSize: 21,
                     flexShrink: 0,
-                    mr: 0.25,
+                    mr: 0.5,
                     transition: "all 0.2s ease",
                   }}
                 />
@@ -595,7 +595,7 @@ export default function IndexListPage() {
                             ? "all"
                             : selectedProvider
                         }
-                        size={14}
+                        size={15}
                       />
                     }
                     label={
@@ -620,12 +620,14 @@ export default function IndexListPage() {
                       flexShrink: 0,
                       backgroundColor: theme.palette.primary.main,
                       color: theme.palette.primary.contrastText,
+                      pl: 1,
                       "& .MuiChip-icon": {
-                        ml: 0.75,
-                        mr: -0.25,
+                        ml: 0,
+                        mr: 0.75,
                       },
                       "& .MuiChip-label": {
-                        px: 1,
+                        pl: 0,
+                        pr: 1,
                         lineHeight: 1,
                       },
                       "& .MuiChip-deleteIcon": {
@@ -665,6 +667,8 @@ export default function IndexListPage() {
                       display: "inline-flex",
                       alignItems: "center",
                       flexShrink: 0,
+                      pl: 0.75,
+                      pr: 0.25,
                       backgroundColor:
                         selectedStyle === "growth"
                           ? "rgba(16, 185, 129, 0.15)"
@@ -685,7 +689,7 @@ export default function IndexListPage() {
                             : "#f59e0b"
                       }`,
                       "& .MuiChip-label": {
-                        px: 1,
+                        px: 0.75,
                         lineHeight: 1,
                       },
                       "& .MuiChip-deleteIcon": {
@@ -723,8 +727,10 @@ export default function IndexListPage() {
                       display: "inline-flex",
                       alignItems: "center",
                       flexShrink: 0,
+                      pl: 0.75,
+                      pr: 0.25,
                       "& .MuiChip-label": {
-                        px: 1,
+                        px: 0.75,
                         lineHeight: 1,
                       },
                       "& .MuiChip-deleteIcon": {
