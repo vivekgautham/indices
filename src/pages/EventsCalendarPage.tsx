@@ -2,7 +2,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DownloadIcon from "@mui/icons-material/FileDownload";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import TodayIcon from "@mui/icons-material/Today";
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import {
@@ -23,7 +22,6 @@ import SiteFooter from "../components/layout/SiteFooter";
 import {
   CATEGORY_COLORS,
   CATEGORY_LABELS,
-  EventCategory,
   formatIsoDate,
   getMonthMarketEvents,
   groupEventsByDate,
@@ -103,7 +101,6 @@ export default function EventsCalendarPage() {
   ); // 1-indexed (1 - 12)
 
   const [selectedDate, setSelectedDate] = useState<string>(() => todayIso);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"calendar" | "agenda">("calendar");
 
   // Dynamic document title for client-side SEO
@@ -113,38 +110,32 @@ export default function EventsCalendarPage() {
   }, []);
 
   // Fetch all events for the active month
-  const rawEvents = useMemo(() => {
+  const monthEvents = useMemo(() => {
     return getMonthMarketEvents(currentYear, currentMonth);
   }, [currentYear, currentMonth]);
 
-  // Filter events by selected category
-  const filteredEvents = useMemo(() => {
-    if (selectedCategory === "all") return rawEvents;
-    return rawEvents.filter((e) => e.category === selectedCategory);
-  }, [rawEvents, selectedCategory]);
-
   // Group events by date YYYY-MM-DD
   const eventsByDate = useMemo(() => {
-    return groupEventsByDate(filteredEvents);
-  }, [filteredEvents]);
+    return groupEventsByDate(monthEvents);
+  }, [monthEvents]);
 
-  // Summary counts for filter chips
+  // Summary counts for KPI header cards
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {
-      all: rawEvents.length,
+      all: monthEvents.length,
       rebalance: 0,
       witching: 0,
       opex: 0,
       fomc: 0,
       holiday: 0,
     };
-    for (const e of rawEvents) {
+    for (const e of monthEvents) {
       if (counts[e.category] !== undefined) {
         counts[e.category]++;
       }
     }
     return counts;
-  }, [rawEvents]);
+  }, [monthEvents]);
 
   // Calendar Grid Days Calculation
   const calendarCells = useMemo(() => {
@@ -217,8 +208,8 @@ export default function EventsCalendarPage() {
 
   // Selected Day Events
   const selectedDayEvents = useMemo(() => {
-    return filteredEvents.filter((e) => e.date === selectedDate);
-  }, [filteredEvents, selectedDate]);
+    return monthEvents.filter((e) => e.date === selectedDate);
+  }, [monthEvents, selectedDate]);
 
   // Navigation handlers
   const handlePrevMonth = () => {
@@ -343,7 +334,7 @@ export default function EventsCalendarPage() {
                     color: "#ffffff",
                   }}
                 >
-                  {rawEvents.length} Events
+                  {monthEvents.length} Events
                 </Typography>
               </Paper>
 
@@ -556,98 +547,10 @@ export default function EventsCalendarPage() {
               onClick={() => setViewMode("agenda")}
               startIcon={<ViewAgendaIcon sx={{ fontSize: 16 }} />}
             >
-              Agenda Feed ({filteredEvents.length})
+              Agenda Feed ({monthEvents.length})
             </Button>
           </ButtonGroup>
         </Box>
-
-        {/* Category Filter Chips Bar */}
-        <Stack
-          direction="row"
-          spacing={1}
-          alignItems="center"
-          sx={{
-            overflowX: "auto",
-            pb: 1,
-            mb: 2.5,
-            scrollbarWidth: "none",
-            "&::-webkit-scrollbar": { display: "none" },
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mr: 0.5 }}>
-            <FilterListIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-            <Typography
-              variant="caption"
-              sx={{ fontWeight: 800, color: "text.secondary", textTransform: "uppercase" }}
-            >
-              Filter:
-            </Typography>
-          </Box>
-
-          <Chip
-            label={`All Events (${categoryCounts.all})`}
-            size="small"
-            clickable
-            onClick={() => setSelectedCategory("all")}
-            sx={{
-              fontWeight: 700,
-              fontSize: "0.78rem",
-              borderRadius: 2,
-              color: selectedCategory === "all" ? "#fff" : "text.secondary",
-              backgroundColor:
-                selectedCategory === "all"
-                  ? "rgba(99, 102, 241, 0.3)"
-                  : "rgba(255, 255, 255, 0.04)",
-              border: "1px solid",
-              borderColor:
-                selectedCategory === "all"
-                  ? "rgba(99, 102, 241, 0.6)"
-                  : "rgba(255, 255, 255, 0.08)",
-            }}
-          />
-
-          {(
-            [
-              "rebalance",
-              "witching",
-              "opex",
-              "fomc",
-              "holiday",
-            ] as EventCategory[]
-          ).map((cat) => {
-            const isSelected = selectedCategory === cat;
-            const styling = CATEGORY_COLORS[cat];
-            const count = categoryCounts[cat] || 0;
-
-            return (
-              <Chip
-                key={cat}
-                label={`${CATEGORY_LABELS[cat]} (${count})`}
-                size="small"
-                clickable
-                onClick={() => setSelectedCategory(cat)}
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.78rem",
-                  borderRadius: 2,
-                  color: isSelected ? styling.text : "text.secondary",
-                  backgroundColor: isSelected
-                    ? styling.bg
-                    : "rgba(255, 255, 255, 0.04)",
-                  border: "1px solid",
-                  borderColor: isSelected
-                    ? styling.border
-                    : "rgba(255, 255, 255, 0.08)",
-                  "& .MuiChip-label": {
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.6,
-                  },
-                }}
-              />
-            );
-          })}
-        </Stack>
 
         {/* ------------------------------------------------------------- */}
         {/* VIEW 1: MONTHLY CALENDAR GRID                                  */}
@@ -942,10 +845,10 @@ export default function EventsCalendarPage() {
               sx={{ fontWeight: 800, color: "#ffffff", mb: 2 }}
             >
               All Scheduled Events in {MONTH_NAMES[currentMonth - 1]}{" "}
-              {currentYear} ({filteredEvents.length})
+              {currentYear} ({monthEvents.length})
             </Typography>
 
-            {filteredEvents.length === 0 ? (
+            {monthEvents.length === 0 ? (
               <Paper
                 variant="outlined"
                 sx={{
@@ -957,12 +860,12 @@ export default function EventsCalendarPage() {
                 }}
               >
                 <Typography sx={{ color: "text.secondary" }}>
-                  No events found matching the selected filter in this month.
+                  No events scheduled for this month.
                 </Typography>
               </Paper>
             ) : (
               <Stack spacing={2}>
-                {filteredEvents.map((event) => (
+                {monthEvents.map((event) => (
                   <EventCard key={event.id} event={event} />
                 ))}
               </Stack>

@@ -1,4 +1,5 @@
 import { FOMC_SCHEDULES, getFomcMinutesDate } from "../data/fomcSchedule";
+import { GLOBAL_MARKET_HOLIDAYS } from "../data/globalMarketHolidays";
 
 export type EventCategory =
   | "rebalance"
@@ -526,12 +527,32 @@ export function getMonthMarketEvents(year: number, month: number): MarketEvent[]
   }
 
   // -----------------------------------------------------------------
-  // 4. US Market Holidays
+  // 4. Global Equity Market Holidays (US, UK, Japan, Eurozone, HK, Canada, Australia)
   // -----------------------------------------------------------------
-  const yearHolidays = getUsMarketHolidays(year);
-  for (const hol of yearHolidays) {
+  let matchedGlobalHolidays = 0;
+  for (const hol of GLOBAL_MARKET_HOLIDAYS) {
     if (hol.date.startsWith(monthStr)) {
-      events.push(hol);
+      matchedGlobalHolidays++;
+      events.push({
+        id: `holiday-${hol.exchange.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()}-${hol.date}-${hol.name.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()}`,
+        title: `${hol.flag} ${hol.exchange}: ${hol.name}`,
+        date: hol.date,
+        category: "holiday",
+        impact: "low",
+        provider: `${hol.country} (${hol.exchange})`,
+        description: `${hol.country} equity markets closed on ${hol.exchange} for ${hol.name}.`,
+        tags: ["Market Holiday", "Exchange Closed", hol.exchange, hol.country],
+      });
+    }
+  }
+
+  // Fallback for years outside verified global holidays dataset
+  if (matchedGlobalHolidays === 0) {
+    const yearHolidays = getUsMarketHolidays(year);
+    for (const hol of yearHolidays) {
+      if (hol.date.startsWith(monthStr)) {
+        events.push(hol);
+      }
     }
   }
 
