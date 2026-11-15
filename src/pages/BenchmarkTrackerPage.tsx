@@ -293,25 +293,39 @@ export default function BenchmarkTrackerPage() {
           <Tabs
             value={activeTab}
             onChange={(_, val) => handleTabChange(val)}
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
             sx={{
               minHeight: 40,
+              maxWidth: "100%",
+              width: { xs: "100%", md: "auto" },
               backgroundColor: "rgba(15, 23, 42, 0.45)",
               p: 0.5,
               borderRadius: 3,
               border:
                 "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+              "& .MuiTabs-scroller": {
+                overflowX: "auto !important",
+              },
+              "& .MuiTabs-flexContainer": {
+                gap: { xs: 0.5, sm: 0.75 },
+              },
               "& .MuiTabs-indicator": {
                 display: "none",
               },
               "& .MuiTab-root": {
                 minHeight: 32,
+                minWidth: "unset",
                 py: 0.6,
                 px: { xs: 1.25, sm: 2 },
-                fontSize: { xs: "0.76rem", sm: "0.82rem" },
+                fontSize: { xs: "0.74rem", sm: "0.82rem" },
                 fontWeight: 700,
                 textTransform: "none",
                 borderRadius: 2.5,
                 color: "text.secondary",
+                flexShrink: 0,
+                whiteSpace: "nowrap",
                 transition: "all 0.15s ease-in-out",
                 "&.Mui-selected": {
                   color: "#fff",
@@ -322,27 +336,65 @@ export default function BenchmarkTrackerPage() {
             }}
           >
             <Tab
-              icon={<ShowChartIcon sx={{ fontSize: 16 }} />}
+              icon={<ShowChartIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
               iconPosition="start"
               label="U.S. Benchmarks"
               value="us"
             />
             <Tab
-              icon={<PublicIcon sx={{ fontSize: 16 }} />}
+              icon={<PublicIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
               iconPosition="start"
-              label={`International Benchmarks (${dataset.internationalSeries.length})`}
+              label={
+                <span>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "none", sm: "inline" } }}
+                  >
+                    {`International Benchmarks (${dataset.internationalSeries.length})`}
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "inline", sm: "none" } }}
+                  >
+                    {`International (${dataset.internationalSeries.length})`}
+                  </Box>
+                </span>
+              }
               value="international"
             />
             <Tab
-              icon={<AccountBalanceIcon sx={{ fontSize: 16 }} />}
+              icon={<AccountBalanceIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
               iconPosition="start"
-              label={`U.S. Treasury Yields & Bonds (${dataset.bondSeries.length})`}
+              label={
+                <span>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "none", sm: "inline" } }}
+                  >
+                    {`U.S. Treasury Yields & Bonds (${dataset.bondSeries.length})`}
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "inline", sm: "none" } }}
+                  >
+                    {`Yields & Bonds (${dataset.bondSeries.length})`}
+                  </Box>
+                </span>
+              }
               value="bonds"
             />
           </Tabs>
 
           {/* Action buttons */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.25,
+              width: { xs: "100%", md: "auto" },
+              justifyContent: { xs: "flex-end", md: "flex-start" },
+            }}
+          >
             <Tooltip title="Configure St. Louis Fed FRED API Key (Optional)">
               <Button
                 variant="outlined"

@@ -298,15 +298,22 @@ export const InternationalBenchmarksCard: React.FC<
             onChange={(_, val) => setSelectedRegion(val)}
             variant="scrollable"
             scrollButtons="auto"
+            allowScrollButtonsMobile
             sx={{
               minHeight: 38,
+              "& .MuiTabs-scroller": {
+                overflowX: "auto !important",
+              },
               "& .MuiTab-root": {
                 minHeight: 38,
+                minWidth: "unset",
                 py: 0.5,
-                px: 1.75,
-                fontSize: "0.8rem",
+                px: { xs: 1.25, sm: 1.75 },
+                fontSize: { xs: "0.75rem", sm: "0.8rem" },
                 fontWeight: 700,
                 textTransform: "none",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
               },
             }}
           >
