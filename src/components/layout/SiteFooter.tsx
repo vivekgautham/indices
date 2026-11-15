@@ -1,6 +1,7 @@
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import AppVersionBadge from "./AppVersionBadge";
 import CopyrightBadge from "./CopyrightBadge";
 
@@ -48,6 +49,58 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
           }}
         >
           Market Benchmark Index Directory
+        </Typography>
+      </Stack>
+
+      {/* Sitewide Navigation Links for SEO Link Equity */}
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        flexWrap="wrap"
+        sx={{
+          fontSize: "0.78rem",
+          fontWeight: 600,
+        }}
+      >
+        <Typography
+          component={RouterLink}
+          to="/indices"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            "&:hover": { color: "#00DD94" },
+          }}
+        >
+          Indices
+        </Typography>
+        <Typography
+          component={RouterLink}
+          to="/tracker"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            "&:hover": { color: "#00DD94" },
+          }}
+        >
+          Tracker
+        </Typography>
+        <Typography
+          component={RouterLink}
+          to="/events"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            "&:hover": { color: "#00DD94" },
+          }}
+        >
+          Events Calendar
         </Typography>
       </Stack>
 

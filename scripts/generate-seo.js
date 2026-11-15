@@ -64,6 +64,12 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/events</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 `;
 
 for (const index of INDICES_DATA) {
@@ -97,6 +103,11 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
           <p style="font-size: 18px; color: #475569; max-width: 800px; margin: 0 auto;">
             Explore comprehensive data, methodology, and tracking ETFs for ${INDICES_DATA.length}+ global equity, fixed income, commodity, and currency benchmarks across 17 index providers.
           </p>
+          <nav style="margin-top: 16px; display: flex; justify-content: center; gap: 16px; font-weight: 600;">
+            <a href="/indices" style="color: #00DD94; text-decoration: none;">Indices Directory</a> •
+            <a href="/tracker" style="color: #00DD94; text-decoration: none;">Live Macro Tracker</a> •
+            <a href="/events" style="color: #00DD94; text-decoration: none;">Market Events &amp; Index Rebalance Calendar</a>
+          </nav>
         </header>
 
         <section style="margin-bottom: 32px;">
@@ -319,6 +330,184 @@ ${JSON.stringify(datasetSchema, null, 2)}
   );
   fs.writeFileSync(path.join(indicesDir, "index.html"), indicesHtml, "utf8");
   console.log("✓ Generated dist/indices/index.html");
+
+  // Generate dist/events/index.html with events calendar prerender & structured data
+  const eventsDir = path.join(distDir, "events");
+  fs.mkdirSync(eventsDir, { recursive: true });
+  const eventsTitle = `Institutional Market Events & Index Rebalance Calendar 📅 | MarketIndices`;
+  const eventsDesc = `Institutional calendar tracking major benchmark rebalances (S&P 500, FTSE Russell, MSCI), quadruple witching, options & VIX expirations, and Federal Reserve FOMC policy decisions.`;
+
+  // Structured Data: BreadcrumbList + FAQPage Schema
+  const eventsBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${BASE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Events Calendar",
+        item: `${BASE_URL}/events`,
+      },
+    ],
+  };
+
+  const eventsFaqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "When does the S&P 500 rebalance?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "S&P Dow Jones Indices conducts quarterly rebalancing for the S&P 500, S&P MidCap 400, and S&P SmallCap 600 effective after the market close on the third Friday of March, June, September, and December (coinciding with Quadruple Witching). Preliminary constituent addition and deletion announcements are published on the first Friday of the rebalance month.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When does the FTSE Russell Index Reconstitution take place?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The FTSE Russell annual index reconstitution takes place every June. Preliminary market capitalization rankings ('Rank Day') are established in early May, preliminary additions and deletions are updated every Friday in June, and the final reconstitution becomes effective after the market close on the fourth Friday of June with massive closing auction volume.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What is Quadruple Witching and when does it occur?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Quadruple Witching is the simultaneous expiration of single-stock options, stock index options, stock index futures, and single-stock futures. It occurs on the third Friday of March, June, September, and December, and generates some of the highest trading volume and liquidity sessions of the year.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When do MSCI indices conduct index reviews?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "MSCI conducts four reviews per year: two Semi-Annual Index Reviews (May and November) and two Quarterly Index Reviews (February and August). Rebalance changes become effective at the market close on the last business day of those respective months across MSCI World, MSCI Emerging Markets, and MSCI ACWI.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When does the Federal Reserve release FOMC meeting minutes?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "By statutory Federal Reserve policy, FOMC meeting minutes are officially published exactly three weeks (21 calendar days) after each interest rate policy decision date at 2:00 PM Eastern Time.",
+        },
+      },
+    ],
+  };
+
+  const eventsSemanticHtml = `
+      <main style="max-width: 1100px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+        <header style="margin-bottom: 32px; text-align: center;">
+          <h1 style="font-size: 32px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Institutional Market Events &amp; Index Rebalance Calendar</h1>
+          <p style="font-size: 18px; color: #475569; max-width: 800px; margin: 0 auto;">
+            The central institutional calendar tracking major equity index rebalances, quadruple witching, monthly options expirations, and Federal Reserve FOMC interest rate announcements.
+          </p>
+          <nav style="margin-top: 16px; display: flex; justify-content: center; gap: 16px; font-weight: 600;">
+            <a href="/" style="color: #4f46e5; text-decoration: none;">Home</a> •
+            <a href="/indices" style="color: #4f46e5; text-decoration: none;">Indices Directory</a> •
+            <a href="/tracker" style="color: #4f46e5; text-decoration: none;">Live Macro Tracker</a>
+          </nav>
+        </header>
+
+        <section style="margin-bottom: 32px;">
+          <h2 style="font-size: 24px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">1. Major Index Reconstitution &amp; Rebalancing Schedules</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 16px;">
+            <div style="padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; background: #ffffff;">
+              <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">S&amp;P Dow Jones Indices (S&amp;P 500, 400, 600)</h3>
+              <p style="font-size: 14px; color: #475569;">Quarterly Rebalance announced on the 1st Friday and effective after the market close on the <strong>3rd Friday of March, June, September, and December</strong>.</p>
+              <div style="font-size: 13px; color: #64748b;">Key Proxies: <a href="/index/sp-500">SPY</a>, VOO, IVV, IJH, IJR</div>
+            </div>
+            <div style="padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; background: #ffffff;">
+              <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">FTSE Russell (Russell 1000, Russell 2000)</h3>
+              <p style="font-size: 14px; color: #475569;">Annual Reconstitution Rank Day in early May; final changes take effect at the market close on the <strong>4th Friday of June</strong> with record closing cross volume.</p>
+              <div style="font-size: 13px; color: #64748b;">Key Proxies: <a href="/index/russell-2000">IWM</a>, <a href="/index/russell-1000">IWB</a>, IWF, IWD</div>
+            </div>
+            <div style="padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; background: #ffffff;">
+              <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">MSCI (MSCI World, MSCI ACWI, Emerging Markets)</h3>
+              <p style="font-size: 14px; color: #475569;">Quarterly and Semi-Annual Index Reviews effective on the <strong>last business day of February, May, August, and November</strong> at European and US market closes.</p>
+              <div style="font-size: 13px; color: #64748b;">Key Proxies: <a href="/index/msci-acwi">ACWI</a>, <a href="/index/msci-emerging-markets">EEM</a>, <a href="/index/msci-eafe">EFA</a>, URTH</div>
+            </div>
+            <div style="padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; background: #ffffff;">
+              <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">Nasdaq (Nasdaq-100)</h3>
+              <p style="font-size: 14px; color: #475569;">Annual Reconstitution takes effect at the market close on the <strong>3rd Friday of December</strong> (trading open on Monday), plus quarterly share adjustments.</p>
+              <div style="font-size: 13px; color: #64748b;">Key Proxies: <a href="/index/nasdaq-100">QQQ</a>, QQQM, TQQQ</div>
+            </div>
+          </div>
+        </section>
+
+        <section style="margin-bottom: 32px;">
+          <h2 style="font-size: 24px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">2. Derivatives Expirations &amp; Quadruple Witching</h2>
+          <ul style="padding-left: 20px; color: #334155; line-height: 1.8;">
+            <li><strong>Triple / Quadruple Witching:</strong> Simultaneous expiration of stock options, index options, index futures, and single-stock futures on the 3rd Friday of March, June, September, and December.</li>
+            <li><strong>Monthly OPEX:</strong> Standard monthly options expiration on the 3rd Friday of January, February, April, May, July, August, October, and November.</li>
+            <li><strong>Cboe VIX Settlement:</strong> Volatility derivatives cash settlement on the Wednesday morning preceding the 3rd Friday of each month.</li>
+          </ul>
+        </section>
+
+        <section style="margin-bottom: 32px;">
+          <h2 style="font-size: 24px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">3. Federal Reserve FOMC Monetary Policy Decisions &amp; Minutes</h2>
+          <p style="color: #475569;">
+            The Federal Open Market Committee (FOMC) meets eight times annually to set the federal funds target rate range. Policy statements are issued at 2:00 PM Eastern Time followed by the Chair's press conference at 2:30 PM ET. Detailed FOMC Meeting Minutes are released exactly 21 days later.
+          </p>
+        </section>
+
+        <section style="margin-bottom: 32px;">
+          <h2 style="font-size: 24px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Frequently Asked Questions (FAQ)</h2>
+          <dl style="margin-top: 16px;">
+            ${eventsFaqSchema.mainEntity.map((faq) => `
+              <dt style="font-weight: 700; font-size: 16px; color: #0f172a; margin-top: 16px;">${escapeHtml(faq.name)}</dt>
+              <dd style="margin-left: 0; margin-top: 4px; color: #475569;">${escapeHtml(faq.acceptedAnswer.text)}</dd>
+            `).join("")}
+          </dl>
+        </section>
+      </main>
+  `;
+
+  let eventsHtml = baseHtml
+    .replace(
+      /<title>.*?<\/title>/i,
+      `<title>${escapeHtml(eventsTitle)}</title>`
+    )
+    .replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
+      `<meta name="description" content="${eventsDesc}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${BASE_URL}/events" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:title" content="${escapeHtml(eventsTitle)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:description" content="${eventsDesc}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:url" content="${BASE_URL}/events" />`
+    )
+    .replace(
+      /<div id="root"><\/div>/i,
+      `<div id="root"></div>\n    <noscript>\n${eventsSemanticHtml.trim()}\n    </noscript>`
+    )
+    .replace(
+      /<\/head>/i,
+      `  <script type="application/ld+json">\n${JSON.stringify(eventsBreadcrumbSchema, null, 2)}\n  </script>\n  <script type="application/ld+json">\n${JSON.stringify(eventsFaqSchema, null, 2)}\n  </script>\n</head>`
+    );
+
+  fs.writeFileSync(path.join(eventsDir, "index.html"), eventsHtml, "utf8");
+  console.log("✓ Generated dist/events/index.html with FAQ & Breadcrumb Structured Data");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;

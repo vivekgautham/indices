@@ -12,6 +12,10 @@ const BenchmarkTrackerPage = lazy(
   () => import("./pages/BenchmarkTrackerPage"),
 );
 
+const EventsCalendarPage = lazy(
+  () => import("./pages/EventsCalendarPage"),
+);
+
 function PageLoading() {
   return (
     <Box
@@ -42,6 +46,11 @@ export default function App() {
             <Route
               path="/benchmark-tracker"
               element={<Navigate to="/tracker" replace />}
+            />
+            <Route path="/events" element={<EventsCalendarPage />} />
+            <Route
+              path="/calendar"
+              element={<Navigate to="/events" replace />}
             />
             <Route path="/index/:indexId" element={<IndexDetailPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

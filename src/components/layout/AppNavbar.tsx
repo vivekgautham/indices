@@ -1,3 +1,4 @@
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
@@ -55,6 +56,15 @@ export const NAV_ITEMS: NavItem[] = [
       pathname.startsWith("/tracker") ||
       pathname.startsWith("/benchmark-tracker"),
   },
+  {
+    id: "events",
+    label: "Events",
+    to: "/events",
+    icon: <CalendarMonthOutlinedIcon sx={{ fontSize: 18 }} />,
+    isActive: (pathname) =>
+      pathname.startsWith("/events") ||
+      pathname.startsWith("/calendar"),
+  },
 ];
 
 export const AppNavbar: React.FC = () => {
@@ -71,6 +81,16 @@ export const AppNavbar: React.FC = () => {
       return {
         title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
         text: "Explore daily and historical charts for major US equity benchmarks from FRED.",
+        path: fullPath,
+      };
+    }
+    if (
+      location.pathname.startsWith("/events") ||
+      location.pathname.startsWith("/calendar")
+    ) {
+      return {
+        title: "Market Events & Index Rebalance Calendar | Market Indices",
+        text: "Institutional calendar tracking index reconstitutions, quadruple witching, options expirations, and FOMC meetings.",
         path: fullPath,
       };
     }
@@ -307,8 +327,8 @@ export const AppNavbar: React.FC = () => {
               mx: "auto",
               width: "100%",
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: { xs: 0.5, sm: 0.75 },
+              gridTemplateColumns: `repeat(${NAV_ITEMS.length}, 1fr)`,
+              gap: { xs: 0.35, sm: 0.75 },
               p: 0.5,
               borderRadius: 2.5,
               backgroundColor:
@@ -332,10 +352,10 @@ export const AppNavbar: React.FC = () => {
                     position: "relative",
                     textTransform: "none",
                     fontWeight: active ? 800 : 600,
-                    fontSize: { xs: "0.75rem", sm: "0.82rem" },
+                    fontSize: { xs: "0.72rem", sm: "0.82rem" },
                     letterSpacing: "-0.01em",
                     py: { xs: 0.6, sm: 0.7 },
-                    px: { xs: 0.5, sm: 1.5 },
+                    px: { xs: 0.25, sm: 1.5 },
                     minWidth: 0,
                     borderRadius: 2,
                     justifyContent: "center",
