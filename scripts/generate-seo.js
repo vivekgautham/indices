@@ -322,7 +322,7 @@ ${JSON.stringify(datasetSchema, null, 2)}
   let indicesHtml = baseHtml;
   indicesHtml = indicesHtml.replace(
     /<title>.*?<\/title>/i,
-    `<title>Global Market Indices Directory | 181+ Benchmarks & Tracking ETFs 📊</title>`
+    `<title>Global Market Indices Directory | ${INDICES_DATA.length}+ Benchmarks & Tracking ETFs 📊</title>`
   );
   indicesHtml = indicesHtml.replace(
     /<div id="root"><\/div>/i,
