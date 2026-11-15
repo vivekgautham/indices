@@ -265,6 +265,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/sp-insurance-select-industry</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/kbw-property-casualty</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/dow-jones-us-select-regional-banks</loc>
     <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -950,6 +962,12 @@
   </url>
   <url>
     <loc>https://marketindices.xyz/index/stoxx-europe-600</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/stoxx-europe-600-insurance</loc>
     <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
