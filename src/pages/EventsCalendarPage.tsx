@@ -127,6 +127,7 @@ export default function EventsCalendarPage() {
       witching: 0,
       opex: 0,
       fomc: 0,
+      macro: 0,
       holiday: 0,
     };
     for (const e of monthEvents) {
@@ -307,7 +308,8 @@ export default function EventsCalendarPage() {
                 display: "grid",
                 gridTemplateColumns: {
                   xs: "repeat(2, 1fr)",
-                  sm: "repeat(4, 1fr)",
+                  sm: "repeat(3, 1fr)",
+                  md: "repeat(5, 1fr)",
                 },
                 gap: 1.5,
               }}
@@ -335,6 +337,32 @@ export default function EventsCalendarPage() {
                   }}
                 >
                   {monthEvents.length} Events
+                </Typography>
+              </Paper>
+
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 1.5,
+                  borderRadius: 2.5,
+                  backgroundColor: "rgba(6, 182, 212, 0.04)",
+                  borderColor: "rgba(6, 182, 212, 0.2)",
+                }}
+              >
+                <Typography
+                  variant="caption"
+                  sx={{ color: "#22d3ee", fontWeight: 700 }}
+                >
+                  Macro (CPI & Jobs)
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "1.4rem",
+                    fontWeight: 900,
+                    color: "#22d3ee",
+                  }}
+                >
+                  {categoryCounts.macro}
                 </Typography>
               </Paper>
 

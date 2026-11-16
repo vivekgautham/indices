@@ -397,7 +397,7 @@ ${JSON.stringify(datasetSchema, null, 2)}
   const eventsDir = path.join(distDir, "events");
   fs.mkdirSync(eventsDir, { recursive: true });
   const eventsTitle = `Institutional Market Events & Index Rebalance Calendar 📅 | MarketIndices`;
-  const eventsDesc = `Institutional calendar tracking major benchmark rebalances (S&P 500, FTSE Russell, MSCI), quadruple witching, options & VIX expirations, and Federal Reserve FOMC policy decisions.`;
+  const eventsDesc = `Institutional calendar tracking major benchmark rebalances (S&P 500, FTSE Russell, MSCI), quadruple witching, options & VIX expirations, FOMC policy decisions, CPI inflation, and Unemployment / Jobs reports.`;
 
   // Structured Data: BreadcrumbList + FAQPage Schema
   const eventsBreadcrumbSchema = {
@@ -461,6 +461,14 @@ ${JSON.stringify(datasetSchema, null, 2)}
         acceptedAnswer: {
           "@type": "Answer",
           text: "By statutory Federal Reserve policy, FOMC meeting minutes are officially published exactly three weeks (21 calendar days) after each interest rate policy decision date at 2:00 PM Eastern Time.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When are the U.S. CPI and Unemployment / Jobs reports released?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The U.S. Bureau of Labor Statistics (BLS) releases the Consumer Price Index (CPI) inflation report monthly around the second Wednesday of the month at 8:30 AM Eastern Time. The Employment Situation (Nonfarm Payrolls and Unemployment Rate) is published on the first Friday of each month at 8:30 AM Eastern Time. The University of Michigan Consumer Sentiment survey is released twice monthly at 10:00 AM Eastern Time.",
         },
       },
     ],

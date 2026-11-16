@@ -1,11 +1,13 @@
-import { FOMC_SCHEDULES, getFomcMinutesDate } from "../data/fomcSchedule";
-import { GLOBAL_MARKET_HOLIDAYS } from "../data/globalMarketHolidays";
+import { FOMC_SCHEDULES, getFomcMinutesDate } from "../data/fomcSchedule.ts";
+import { GLOBAL_MARKET_HOLIDAYS } from "../data/globalMarketHolidays.ts";
+import { MACRO_ECONOMIC_SCHEDULE } from "../data/macroSchedule.ts";
 
 export type EventCategory =
   | "rebalance"
   | "witching"
   | "opex"
   | "fomc"
+  | "macro"
   | "holiday";
 
 export type EventImpact = "high" | "medium" | "low";
@@ -29,6 +31,7 @@ export const CATEGORY_LABELS: Record<EventCategory, string> = {
   witching: "Triple / Quad Witching",
   opex: "Options & VIX Expiry",
   fomc: "FOMC & Fed Minutes",
+  macro: "Macro Reports (CPI, Jobs, Sentiment)",
   holiday: "Market Holidays",
 };
 
@@ -59,6 +62,12 @@ export const CATEGORY_COLORS: Record<
     border: "rgba(245, 158, 11, 0.35)",
     text: "#fbbf24",
     dot: "#f59e0b",
+  },
+  macro: {
+    bg: "rgba(6, 182, 212, 0.12)",
+    border: "rgba(6, 182, 212, 0.35)",
+    text: "#22d3ee",
+    dot: "#06b6d4",
   },
   holiday: {
     bg: "rgba(239, 68, 68, 0.12)",
@@ -527,7 +536,59 @@ export function getMonthMarketEvents(year: number, month: number): MarketEvent[]
   }
 
   // -----------------------------------------------------------------
-  // 4. Global Equity Market Holidays (US, UK, Japan, Eurozone, HK, Canada, Australia)
+  // 4. Macroeconomic Reports (CPI, Employment / Jobs, Consumer Sentiment)
+  // -----------------------------------------------------------------
+  for (const report of MACRO_ECONOMIC_SCHEDULE) {
+    if (report.date.startsWith(monthStr)) {
+      let impact: EventImpact = "high";
+      let provider = "Bureau of Labor Statistics (BLS)";
+      let affectedTickers = ["SPY", "QQQ", "TLT", "DXY"];
+      let tags = ["Macro", "Economic Data"];
+
+      if (report.type === "cpi") {
+        impact = "high";
+        provider = "U.S. Bureau of Labor Statistics (BLS)";
+        affectedTickers = ["SPY", "QQQ", "TLT", "TIP", "DXY"];
+        tags = ["CPI", "Inflation", "Consumer Price Index", "Fed Rates"];
+      } else if (report.type === "jobs") {
+        impact = "high";
+        provider = "U.S. Bureau of Labor Statistics (BLS)";
+        affectedTickers = ["SPY", "QQQ", "IWM", "TLT", "DXY"];
+        tags = [
+          "Jobs Report",
+          "Nonfarm Payrolls",
+          "Unemployment Rate",
+          "Labor Market",
+        ];
+      } else if (report.type === "sentiment") {
+        impact = "medium";
+        provider = "University of Michigan";
+        affectedTickers = ["SPY", "XLY", "XLP", "TLT"];
+        tags = [
+          "Consumer Sentiment",
+          "Inflation Expectations",
+          "UMich",
+          "Consumer Spending",
+        ];
+      }
+
+      events.push({
+        id: `macro-${report.type}-${report.date}`,
+        title: report.title,
+        date: report.date,
+        category: "macro",
+        impact,
+        provider,
+        time: report.time,
+        description: `${report.description} (Ref: ${report.referencePeriod})`,
+        affectedTickers,
+        tags,
+      });
+    }
+  }
+
+  // -----------------------------------------------------------------
+  // 5. Global Equity Market Holidays (US, UK, Japan, Eurozone, HK, Canada, Australia)
   // -----------------------------------------------------------------
   let matchedGlobalHolidays = 0;
   for (const hol of GLOBAL_MARKET_HOLIDAYS) {
