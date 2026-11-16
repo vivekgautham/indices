@@ -70,6 +70,18 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/markets</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/exchanges</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
 `;
 
 for (const index of INDICES_DATA) {
@@ -103,10 +115,11 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
           <p style="font-size: 18px; color: #475569; max-width: 800px; margin: 0 auto;">
             Explore comprehensive data, methodology, and tracking ETFs for ${INDICES_DATA.length}+ global equity, fixed income, commodity, and currency benchmarks across 17 index providers.
           </p>
-          <nav style="margin-top: 16px; display: flex; justify-content: center; gap: 16px; font-weight: 600;">
+          <nav style="margin-top: 16px; display: flex; justify-content: center; gap: 16px; font-weight: 600; flex-wrap: wrap;">
             <a href="/indices" style="color: #00DD94; text-decoration: none;">Indices Directory</a> •
             <a href="/tracker" style="color: #00DD94; text-decoration: none;">Live Macro Tracker</a> •
-            <a href="/events" style="color: #00DD94; text-decoration: none;">Market Events &amp; Index Rebalance Calendar</a>
+            <a href="/events" style="color: #00DD94; text-decoration: none;">Market Events Calendar</a> •
+            <a href="/exchanges" style="color: #00DD94; text-decoration: none;">World Exchanges &amp; Markets</a>
           </nav>
         </header>
 
@@ -508,6 +521,82 @@ ${JSON.stringify(datasetSchema, null, 2)}
 
   fs.writeFileSync(path.join(eventsDir, "index.html"), eventsHtml, "utf8");
   console.log("✓ Generated dist/events/index.html with FAQ & Breadcrumb Structured Data");
+
+  // Generate dist/exchanges/index.html with exchanges directory prerender & structured data
+  const exchangesDir = path.join(distDir, "exchanges");
+  fs.mkdirSync(exchangesDir, { recursive: true });
+  const exchangesTitle = `World Stock Exchanges & Markets 🌐 | Live Trading Status & Market Cap | MarketIndices`;
+  const exchangesDesc = `Real-time trading status, session countdowns, and institutional market capitalization across the world's top 30 financial exchanges (NYSE, Nasdaq, TSE, Euronext, LSE, HKEX, SSE, NSE).`;
+
+  const exchangesBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${BASE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Exchanges",
+        item: `${BASE_URL}/exchanges`,
+      },
+    ],
+  };
+
+  const exchangesSemanticHtml = `
+    <main style="max-width: 1000px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+      <nav style="margin-bottom: 16px; font-size: 14px; color: #64748b;">
+        <a href="/" style="color: #00DD94; text-decoration: none;">Home</a> &gt; <span>World Exchanges</span>
+      </nav>
+      <header style="margin-bottom: 24px;">
+        <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">World Stock Exchanges &amp; Financial Markets</h1>
+        <p style="font-size: 16px; color: #475569;">
+          Real-time session status, countdown timers, and institutional market capitalization for the top 30 world stock, derivatives, and commodities exchanges.
+        </p>
+      </header>
+    </main>
+  `;
+
+  const exchangesHtml = baseHtml
+    .replace(/<title>.*?<\/title>/i, `<title>${exchangesTitle}</title>`)
+    .replace(
+      /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
+      `<meta name="description" content="${exchangesDesc}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+      `<link rel="canonical" href="${BASE_URL}/exchanges" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:title" content="${exchangesTitle}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:description" content="${exchangesDesc}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:url" content="${BASE_URL}/exchanges" />`
+    )
+    .replace(
+      /<div id="root"><\/div>/i,
+      `<div id="root"></div>\n    <noscript>\n${exchangesSemanticHtml.trim()}\n    </noscript>`
+    )
+    .replace(
+      /<\/head>/i,
+      `  <script type="application/ld+json">\n${JSON.stringify(exchangesBreadcrumbSchema, null, 2)}\n  </script>\n</head>`
+    );
+
+  fs.writeFileSync(path.join(exchangesDir, "index.html"), exchangesHtml, "utf8");
+  const marketsDir = path.join(distDir, "markets");
+  fs.mkdirSync(marketsDir, { recursive: true });
+  fs.writeFileSync(path.join(marketsDir, "index.html"), exchangesHtml, "utf8");
+  console.log("✓ Generated dist/markets/index.html & dist/exchanges/index.html with Breadcrumb Structured Data");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;

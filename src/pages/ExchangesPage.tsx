@@ -1,0 +1,542 @@
+import GridViewIcon from "@mui/icons-material/GridView";
+import PublicIcon from "@mui/icons-material/Public";
+import SearchIcon from "@mui/icons-material/Search";
+import TableRowsIcon from "@mui/icons-material/TableRows";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Chip,
+  Container,
+  InputAdornment,
+  OutlinedInput,
+  Paper,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
+import { ExchangeCard } from "../components/exchanges/ExchangeCard";
+import { ExchangeDetailDrawer } from "../components/exchanges/ExchangeDetailDrawer";
+import { ExchangeStatusTicker } from "../components/exchanges/ExchangeStatusTicker";
+import { ExchangeTable } from "../components/exchanges/ExchangeTable";
+import SiteFooter from "../components/layout/SiteFooter";
+import { WORLD_EXCHANGES } from "../data/exchangesData";
+import {
+  AssetClass,
+  ExchangeLiveStatus,
+  ExchangeRegion,
+  WorldExchange,
+} from "../types/exchange";
+import { getExchangeLiveStatus } from "../utils/marketHours";
+
+export default function ExchangesPage() {
+  const theme = useTheme();
+
+  // Real-time clock updating every second
+  const [currentTime, setCurrentTime] = useState<Date>(() => new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // UI state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState<ExchangeRegion | "All">(
+    "All",
+  );
+  const [openOnly, setOpenOnly] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState<AssetClass | "All">("All");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+
+  // Selected exchange for detail drawer
+  const [selectedExchange, setSelectedExchange] =
+    useState<WorldExchange | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Compute live statuses for all exchanges based on currentTime
+  const exchangeStatuses = useMemo(() => {
+    const map = new Map<string, ExchangeLiveStatus>();
+    WORLD_EXCHANGES.forEach((ex) => {
+      map.set(ex.id, getExchangeLiveStatus(ex, currentTime));
+    });
+    return map;
+  }, [currentTime]);
+
+  // Max market cap for scale bars
+  const maxCap = useMemo(() => {
+    return Math.max(...WORLD_EXCHANGES.map((e) => e.marketCapUsdTrillion));
+  }, []);
+
+  // Filtering
+  const filteredExchanges = useMemo(() => {
+    return WORLD_EXCHANGES.filter((ex) => {
+      const status = exchangeStatuses.get(ex.id);
+
+      // Search match
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase().trim();
+        const matchesName = ex.name.toLowerCase().includes(query);
+        const matchesShort = ex.shortName.toLowerCase().includes(query);
+        const matchesMic = ex.mic.toLowerCase().includes(query);
+        const matchesCountry = ex.country.toLowerCase().includes(query);
+        const matchesCity = ex.city.toLowerCase().includes(query);
+        const matchesAsset = ex.assetClasses.some((a) =>
+          a.toLowerCase().includes(query),
+        );
+        if (
+          !matchesName &&
+          !matchesShort &&
+          !matchesMic &&
+          !matchesCountry &&
+          !matchesCity &&
+          !matchesAsset
+        ) {
+          return false;
+        }
+      }
+
+      // Region match
+      if (selectedRegion !== "All" && ex.region !== selectedRegion) {
+        return false;
+      }
+
+      // Open only match
+      if (openOnly && status?.status !== "OPEN") {
+        return false;
+      }
+
+      // Asset class match
+      if (selectedAsset !== "All" && !ex.assetClasses.includes(selectedAsset)) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [searchQuery, selectedRegion, openOnly, selectedAsset, exchangeStatuses]);
+
+  const handleSelectExchange = (ex: WorldExchange) => {
+    setSelectedExchange(ex);
+    setDrawerOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setDrawerOpen(false);
+  };
+
+  const selectedExchangeStatus = selectedExchange
+    ? exchangeStatuses.get(selectedExchange.id) || null
+    : null;
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        bgcolor: "background.default",
+      }}
+    >
+      <Container maxWidth="xl" sx={{ py: { xs: 3, md: 4.5 }, flex: 1 }}>
+        {/* Page Title & Subtitle */}
+        <Box sx={{ mb: 3 }}>
+          <Stack
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            mb={1}
+            flexWrap="wrap"
+          >
+            <PublicIcon
+              sx={{ fontSize: 32, color: theme.palette.primary.main }}
+            />
+            <Typography variant="h4" component="h1" sx={{ fontWeight: 800 }}>
+              World Exchanges & Markets
+            </Typography>
+            <Chip
+              label="Top 30 Global"
+              size="small"
+              sx={{
+                fontWeight: 700,
+                color: theme.palette.primary.main,
+                bgcolor: "rgba(0, 221, 148, 0.1)",
+                border: "1px solid rgba(0, 221, 148, 0.25)",
+              }}
+            />
+          </Stack>
+          <Typography
+            variant="body1"
+            sx={{ color: "text.secondary", maxWidth: 840 }}
+          >
+            Real-time session status, countdown timers, and institutional market
+            capitalization for the top 30 world stock, derivatives, and
+            commodities exchanges.
+          </Typography>
+        </Box>
+
+        {/* Command Center Status Ticker */}
+        <ExchangeStatusTicker
+          exchanges={WORLD_EXCHANGES}
+          statuses={exchangeStatuses}
+          currentTime={currentTime}
+        />
+
+        {/* Control & Filter Bar */}
+        <Paper
+          elevation={0}
+          sx={{
+            p: 2,
+            mb: 3,
+            borderRadius: 2.5,
+            border: `1px solid ${theme.palette.divider}`,
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? "rgba(18, 24, 32, 0.6)"
+                : "rgba(255, 255, 255, 0.8)",
+          }}
+        >
+          <Stack spacing={2}>
+            {/* Top Row: Search + Open Filter + View Mode Switcher */}
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              spacing={2}
+              alignItems={{ xs: "stretch", md: "center" }}
+              justifyContent="space-between"
+            >
+              {/* Search Bar */}
+              <OutlinedInput
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search exchange name, MIC (e.g. XNYS), city, country..."
+                size="small"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon
+                      sx={{ color: "text.secondary", fontSize: 20 }}
+                    />
+                  </InputAdornment>
+                }
+                sx={{
+                  flex: { xs: 1, md: 0.6 },
+                  borderRadius: 2,
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(255, 255, 255, 0.03)"
+                      : "rgba(0, 0, 0, 0.02)",
+                }}
+              />
+
+              <Stack
+                direction="row"
+                spacing={1.5}
+                alignItems="center"
+                justifyContent={{ xs: "space-between", md: "flex-end" }}
+              >
+                {/* Open Only Filter Toggle */}
+                <Button
+                  variant={openOnly ? "contained" : "outlined"}
+                  onClick={() => setOpenOnly(!openOnly)}
+                  size="small"
+                  startIcon={
+                    <Box
+                      sx={{
+                        width: 7,
+                        height: 7,
+                        borderRadius: "50%",
+                        bgcolor: openOnly ? "#000" : "#00DD94",
+                      }}
+                    />
+                  }
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 700,
+                    borderRadius: 2,
+                    borderColor: openOnly
+                      ? "transparent"
+                      : "rgba(0, 221, 148, 0.4)",
+                    color: openOnly ? "#000" : "text.primary",
+                    bgcolor: openOnly
+                      ? theme.palette.primary.main
+                      : "transparent",
+                    "&:hover": {
+                      bgcolor: openOnly
+                        ? theme.palette.primary.dark
+                        : "rgba(0, 221, 148, 0.08)",
+                    },
+                  }}
+                >
+                  Open Now
+                </Button>
+
+                {/* View Mode Switcher */}
+                <ButtonGroup
+                  size="small"
+                  sx={{
+                    bgcolor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(255, 255, 255, 0.04)"
+                        : "rgba(0, 0, 0, 0.04)",
+                    borderRadius: 2,
+                    p: 0.4,
+                    border: `1px solid ${theme.palette.divider}`,
+                  }}
+                >
+                  <Button
+                    onClick={() => setViewMode("grid")}
+                    variant={viewMode === "grid" ? "contained" : "text"}
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 700,
+                      borderRadius: 1.5,
+                      minWidth: 70,
+                      boxShadow: "none",
+                      bgcolor:
+                        viewMode === "grid"
+                          ? theme.palette.primary.main
+                          : "transparent",
+                      color: viewMode === "grid" ? "#000" : "text.secondary",
+                      "&:hover": {
+                        bgcolor:
+                          viewMode === "grid"
+                            ? theme.palette.primary.dark
+                            : "rgba(255, 255, 255, 0.05)",
+                      },
+                    }}
+                    startIcon={<GridViewIcon sx={{ fontSize: 16 }} />}
+                  >
+                    Grid
+                  </Button>
+                  <Button
+                    onClick={() => setViewMode("table")}
+                    variant={viewMode === "table" ? "contained" : "text"}
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 700,
+                      borderRadius: 1.5,
+                      minWidth: 70,
+                      boxShadow: "none",
+                      bgcolor:
+                        viewMode === "table"
+                          ? theme.palette.primary.main
+                          : "transparent",
+                      color: viewMode === "table" ? "#000" : "text.secondary",
+                      "&:hover": {
+                        bgcolor:
+                          viewMode === "table"
+                            ? theme.palette.primary.dark
+                            : "rgba(255, 255, 255, 0.05)",
+                      },
+                    }}
+                    startIcon={<TableRowsIcon sx={{ fontSize: 16 }} />}
+                  >
+                    Table
+                  </Button>
+                </ButtonGroup>
+              </Stack>
+            </Stack>
+
+            {/* Bottom Row: Region Tabs & Asset Class Chips */}
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={2}
+              alignItems={{ xs: "flex-start", lg: "center" }}
+              justifyContent="space-between"
+            >
+              {/* Region Tabs */}
+              <Tabs
+                value={selectedRegion}
+                onChange={(_, val) => setSelectedRegion(val)}
+                variant="scrollable"
+                scrollButtons="auto"
+                sx={{
+                  minHeight: 36,
+                  "& .MuiTab-root": {
+                    minHeight: 36,
+                    py: 0.5,
+                    px: 1.8,
+                    fontWeight: 700,
+                    textTransform: "none",
+                    fontSize: "0.86rem",
+                  },
+                }}
+              >
+                <Tab label="All Regions (30)" value="All" />
+                <Tab label="Americas (8)" value="Americas" />
+                <Tab label="EMEA (11)" value="EMEA" />
+                <Tab label="APAC (11)" value="APAC" />
+              </Tabs>
+
+              {/* Asset Class Filter Chips */}
+              <Stack
+                direction="row"
+                spacing={0.8}
+                flexWrap="wrap"
+                alignItems="center"
+              >
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 600,
+                    display: { xs: "none", sm: "block" },
+                  }}
+                >
+                  Asset:
+                </Typography>
+                {(
+                  [
+                    "All",
+                    "Equities",
+                    "Derivatives",
+                    "Commodities",
+                    "Fixed Income",
+                    "ETFs",
+                  ] as const
+                ).map((asset) => {
+                  const isSelected = selectedAsset === asset;
+                  return (
+                    <Chip
+                      key={asset}
+                      label={asset}
+                      size="small"
+                      onClick={() => setSelectedAsset(asset)}
+                      clickable
+                      sx={{
+                        fontWeight: isSelected ? 800 : 500,
+                        fontSize: "0.75rem",
+                        height: 24,
+                        bgcolor: isSelected
+                          ? theme.palette.mode === "dark"
+                            ? "rgba(255, 255, 255, 0.15)"
+                            : "rgba(0, 0, 0, 0.1)"
+                          : "transparent",
+                        border: `1px solid ${
+                          isSelected
+                            ? theme.palette.text.primary
+                            : theme.palette.divider
+                        }`,
+                      }}
+                    />
+                  );
+                })}
+              </Stack>
+            </Stack>
+          </Stack>
+        </Paper>
+
+        {/* Results Counter */}
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={2}
+        >
+          <Typography
+            variant="caption"
+            sx={{
+              color: "text.secondary",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 0.5,
+            }}
+          >
+            Showing {filteredExchanges.length} of {WORLD_EXCHANGES.length}{" "}
+            Exchanges
+          </Typography>
+        </Stack>
+
+        {/* Empty State */}
+        {filteredExchanges.length === 0 && (
+          <Paper
+            elevation={0}
+            sx={{
+              p: 6,
+              textAlign: "center",
+              borderRadius: 3,
+              border: `1px dashed ${theme.palette.divider}`,
+              bgcolor: "transparent",
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
+              No exchanges match your criteria
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: "text.secondary", mb: 2.5 }}
+            >
+              Try clearing the search query or adjusting active filters.
+            </Typography>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedRegion("All");
+                setOpenOnly(false);
+                setSelectedAsset("All");
+              }}
+              sx={{ textTransform: "none", fontWeight: 700 }}
+            >
+              Reset Filters
+            </Button>
+          </Paper>
+        )}
+
+        {/* Grid View */}
+        {viewMode === "grid" && filteredExchanges.length > 0 && (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                xl: "repeat(4, 1fr)",
+              },
+              gap: 2.5,
+            }}
+          >
+            {filteredExchanges.map((ex) => {
+              const status = exchangeStatuses.get(ex.id);
+              if (!status) return null;
+              return (
+                <ExchangeCard
+                  key={ex.id}
+                  exchange={ex}
+                  status={status}
+                  maxCap={maxCap}
+                  onSelect={handleSelectExchange}
+                />
+              );
+            })}
+          </Box>
+        )}
+
+        {/* Table View */}
+        {viewMode === "table" && filteredExchanges.length > 0 && (
+          <ExchangeTable
+            exchanges={filteredExchanges}
+            statuses={exchangeStatuses}
+            onSelect={handleSelectExchange}
+          />
+        )}
+
+        {/* Slide-Over Detail Drawer */}
+        <ExchangeDetailDrawer
+          exchange={selectedExchange}
+          status={selectedExchangeStatus}
+          open={drawerOpen}
+          onClose={handleCloseDrawer}
+        />
+      </Container>
+
+      {/* Footer */}
+      <SiteFooter />
+    </Box>
+  );
+}

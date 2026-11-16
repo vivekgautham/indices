@@ -1,6 +1,7 @@
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
+import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import {
   AppBar,
@@ -62,8 +63,15 @@ export const NAV_ITEMS: NavItem[] = [
     to: "/events",
     icon: <CalendarMonthOutlinedIcon sx={{ fontSize: 18 }} />,
     isActive: (pathname) =>
-      pathname.startsWith("/events") ||
-      pathname.startsWith("/calendar"),
+      pathname.startsWith("/events") || pathname.startsWith("/calendar"),
+  },
+  {
+    id: "markets",
+    label: "Markets",
+    to: "/markets",
+    icon: <PublicOutlinedIcon sx={{ fontSize: 18 }} />,
+    isActive: (pathname) =>
+      pathname.startsWith("/markets") || pathname.startsWith("/exchanges"),
   },
 ];
 
@@ -91,6 +99,16 @@ export const AppNavbar: React.FC = () => {
       return {
         title: "Market Events & Index Rebalance Calendar | Market Indices",
         text: "Institutional calendar tracking index reconstitutions, quadruple witching, options expirations, and FOMC meetings.",
+        path: fullPath,
+      };
+    }
+    if (
+      location.pathname.startsWith("/markets") ||
+      location.pathname.startsWith("/exchanges")
+    ) {
+      return {
+        title: "World Exchanges & Markets | Market Indices",
+        text: "Real-time trading status, session countdowns, and market capitalization across the world's top 30 financial exchanges.",
         path: fullPath,
       };
     }

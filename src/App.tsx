@@ -8,13 +8,11 @@ import HomePage from "./pages/HomePage";
 import IndexDetailPage from "./pages/IndexDetailPage";
 import IndexListPage from "./pages/IndexListPage";
 
-const BenchmarkTrackerPage = lazy(
-  () => import("./pages/BenchmarkTrackerPage"),
-);
+const BenchmarkTrackerPage = lazy(() => import("./pages/BenchmarkTrackerPage"));
 
-const EventsCalendarPage = lazy(
-  () => import("./pages/EventsCalendarPage"),
-);
+const EventsCalendarPage = lazy(() => import("./pages/EventsCalendarPage"));
+
+const ExchangesPage = lazy(() => import("./pages/ExchangesPage"));
 
 function PageLoading() {
   return (
@@ -37,7 +35,10 @@ export default function App() {
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <AppNavbar />
-      <Box component="main" sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      <Box
+        component="main"
+        sx={{ flex: 1, display: "flex", flexDirection: "column" }}
+      >
         <Suspense fallback={<PageLoading />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -51,6 +52,11 @@ export default function App() {
             <Route
               path="/calendar"
               element={<Navigate to="/events" replace />}
+            />
+            <Route path="/markets" element={<ExchangesPage />} />
+            <Route
+              path="/exchanges"
+              element={<Navigate to="/markets" replace />}
             />
             <Route path="/index/:indexId" element={<IndexDetailPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
