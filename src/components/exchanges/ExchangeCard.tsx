@@ -6,9 +6,7 @@ import {
   CardActionArea,
   CardContent,
   Chip,
-  LinearProgress,
   Stack,
-  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -19,14 +17,12 @@ import { getStatusColorConfig } from "../../utils/marketHours";
 interface Props {
   exchange: WorldExchange;
   status: ExchangeLiveStatus;
-  maxCap: number; // for proportion bar
   onSelect: (exchange: WorldExchange) => void;
 }
 
 export const ExchangeCard: React.FC<Props> = ({
   exchange,
   status,
-  maxCap,
   onSelect,
 }) => {
   const theme = useTheme();
@@ -51,11 +47,6 @@ export const ExchangeCard: React.FC<Props> = ({
         return theme.palette.text.secondary;
     }
   };
-
-  const capPercentage = Math.min(
-    100,
-    Math.round((exchange.marketCapUsdTrillion / maxCap) * 100),
-  );
 
   return (
     <Card
@@ -222,58 +213,74 @@ export const ExchangeCard: React.FC<Props> = ({
             </Stack>
           </Box>
 
-          {/* Market Cap & Scale Indicator */}
-          <Box sx={{ mb: 2 }}>
+          {/* Trading Hours Schedule Summary */}
+          <Box
+            sx={{
+              p: 1.2,
+              borderRadius: 1.8,
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 255, 255, 0.03)"
+                  : "rgba(0, 0, 0, 0.03)",
+              border: `1px solid ${theme.palette.divider}`,
+              mb: 2,
+            }}
+          >
             <Stack
               direction="row"
               justifyContent="space-between"
-              alignItems="baseline"
-              mb={0.5}
+              alignItems="center"
+              mb={0.3}
             >
               <Typography
                 variant="caption"
                 sx={{
                   color: "text.secondary",
                   textTransform: "uppercase",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: "0.68rem",
                   letterSpacing: 0.5,
                 }}
               >
-                Market Cap
+                Local Trading Hours
               </Typography>
               <Typography
-                variant="body1"
+                variant="caption"
                 sx={{
-                  fontWeight: 800,
+                  fontWeight: 700,
                   fontFamily: "monospace",
-                  color: theme.palette.text.primary,
+                  color: "text.primary",
                 }}
               >
-                {exchange.marketCapDisplay}
+                {exchange.regularHours.open} - {exchange.regularHours.close}
               </Typography>
             </Stack>
-            <Tooltip
-              title={`${capPercentage}% of largest exchange (${maxCap}T)`}
-              arrow
+
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              <LinearProgress
-                variant="determinate"
-                value={capPercentage}
+              <Typography
+                variant="caption"
                 sx={{
-                  height: 5,
-                  borderRadius: 2.5,
-                  bgcolor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(255, 255, 255, 0.06)"
-                      : "rgba(0, 0, 0, 0.06)",
-                  "& .MuiLinearProgress-bar": {
-                    bgcolor: theme.palette.primary.main,
-                    borderRadius: 2.5,
-                  },
+                  color: "text.secondary",
+                  fontSize: "0.68rem",
                 }}
-              />
-            </Tooltip>
+              >
+                Your Timezone
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  fontFamily: "monospace",
+                  color: theme.palette.primary.main,
+                  fontWeight: 700,
+                }}
+              >
+                {status.userLocalOpenTime} - {status.userLocalCloseTime}
+              </Typography>
+            </Stack>
           </Box>
 
           {/* Traded Asset Classes */}

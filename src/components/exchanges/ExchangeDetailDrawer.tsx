@@ -242,13 +242,13 @@ export const ExchangeDetailDrawer: React.FC<Props> = ({
           }}
         >
           <Typography variant="caption" sx={{ color: "text.secondary" }}>
-            Market Capitalization
+            Timezone Standard
           </Typography>
           <Typography
             variant="h6"
             sx={{ fontWeight: 800, fontFamily: "monospace", mt: 0.3 }}
           >
-            {exchange.marketCapDisplay}
+            {exchange.timezoneAbbr}
           </Typography>
         </Box>
 

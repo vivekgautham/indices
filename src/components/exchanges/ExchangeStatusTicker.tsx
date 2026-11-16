@@ -1,6 +1,6 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import PublicIcon from "@mui/icons-material/Public";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { Box, Chip, Paper, Stack, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { ExchangeLiveStatus, WorldExchange } from "../../types/exchange";
@@ -17,12 +17,6 @@ export const ExchangeStatusTicker: React.FC<Props> = ({
   currentTime,
 }) => {
   const theme = useTheme();
-
-  // Summary aggregates
-  const totalCap = exchanges.reduce(
-    (sum, ex) => sum + ex.marketCapUsdTrillion,
-    0,
-  );
 
   let openCount = 0;
   let preOrLunchCount = 0;
@@ -94,10 +88,10 @@ export const ExchangeStatusTicker: React.FC<Props> = ({
           spacing={{ xs: 2, sm: 3 }}
           alignItems={{ xs: "flex-start", sm: "center" }}
         >
-          {/* Market Cap Metric */}
+          {/* Global Coverage Metric */}
           <Box>
             <Stack direction="row" spacing={1} alignItems="center">
-              <TrendingUpIcon
+              <AccountBalanceIcon
                 sx={{ fontSize: 18, color: theme.palette.primary.main }}
               />
               <Typography
@@ -109,14 +103,14 @@ export const ExchangeStatusTicker: React.FC<Props> = ({
                   letterSpacing: 0.8,
                 }}
               >
-                Top 30 Market Cap
+                Tracked Markets
               </Typography>
             </Stack>
             <Typography
               variant="h5"
               sx={{ fontWeight: 800, mt: 0.2, fontFamily: "monospace" }}
             >
-              ${totalCap.toFixed(1)}T
+              {exchanges.length} Bourses
             </Typography>
           </Box>
 

@@ -108,7 +108,7 @@ export const AppNavbar: React.FC = () => {
     ) {
       return {
         title: "World Exchanges & Markets | Market Indices",
-        text: "Real-time trading status, session countdowns, and market capitalization across the world's top 30 financial exchanges.",
+        text: "Real-time trading status, session countdowns, and trading hours across the world's top 30 financial exchanges.",
         path: fullPath,
       };
     }

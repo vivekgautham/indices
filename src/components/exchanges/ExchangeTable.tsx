@@ -27,7 +27,7 @@ interface Props {
   onSelect: (exchange: WorldExchange) => void;
 }
 
-type SortField = "rank" | "name" | "cap" | "status";
+type SortField = "rank" | "name" | "status";
 type SortOrder = "asc" | "desc";
 
 export const ExchangeTable: React.FC<Props> = ({
@@ -44,7 +44,7 @@ export const ExchangeTable: React.FC<Props> = ({
       setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
     } else {
       setSortField(field);
-      setSortOrder(field === "cap" ? "desc" : "asc");
+      setSortOrder("asc");
     }
   };
 
@@ -57,9 +57,6 @@ export const ExchangeTable: React.FC<Props> = ({
           break;
         case "name":
           comparison = a.name.localeCompare(b.name);
-          break;
-        case "cap":
-          comparison = b.marketCapUsdTrillion - a.marketCapUsdTrillion;
           break;
         case "status": {
           const stA = statuses.get(a.id)?.status || "";
@@ -125,16 +122,6 @@ export const ExchangeTable: React.FC<Props> = ({
                 onClick={() => handleSort("status")}
               >
                 Live Status & Countdown
-              </TableSortLabel>
-            </TableCell>
-
-            <TableCell align="right" sx={{ fontWeight: 700 }}>
-              <TableSortLabel
-                active={sortField === "cap"}
-                direction={sortOrder}
-                onClick={() => handleSort("cap")}
-              >
-                Market Cap
               </TableSortLabel>
             </TableCell>
 
@@ -270,20 +257,6 @@ export const ExchangeTable: React.FC<Props> = ({
                       {st.nextEvent}
                     </Typography>
                   </Stack>
-                </TableCell>
-
-                {/* Market Cap */}
-                <TableCell align="right">
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      fontWeight: 800,
-                      fontFamily: "monospace",
-                      color: "text.primary",
-                    }}
-                  >
-                    {ex.marketCapDisplay}
-                  </Typography>
                 </TableCell>
 
                 {/* Local Time */}

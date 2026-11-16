@@ -1,3 +1,4 @@
+import ClearIcon from "@mui/icons-material/Clear";
 import GridViewIcon from "@mui/icons-material/GridView";
 import PublicIcon from "@mui/icons-material/Public";
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,6 +9,7 @@ import {
   ButtonGroup,
   Chip,
   Container,
+  IconButton,
   InputAdornment,
   OutlinedInput,
   Paper,
@@ -67,11 +69,6 @@ export default function ExchangesPage() {
     });
     return map;
   }, [currentTime]);
-
-  // Max market cap for scale bars
-  const maxCap = useMemo(() => {
-    return Math.max(...WORLD_EXCHANGES.map((e) => e.marketCapUsdTrillion));
-  }, []);
 
   // Filtering
   const filteredExchanges = useMemo(() => {
@@ -173,9 +170,8 @@ export default function ExchangesPage() {
             variant="body1"
             sx={{ color: "text.secondary", maxWidth: 840 }}
           >
-            Real-time session status, countdown timers, and institutional market
-            capitalization for the top 30 world stock, derivatives, and
-            commodities exchanges.
+            Real-time session status, countdown timers, and trading hours for
+            the top 30 world stock, derivatives, and commodities exchanges.
           </Typography>
         </Box>
 
@@ -201,35 +197,82 @@ export default function ExchangesPage() {
           }}
         >
           <Stack spacing={2}>
-            {/* Top Row: Search + Open Filter + View Mode Switcher */}
+            {/* Full-Width Search Bar */}
+            <OutlinedInput
+              fullWidth
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search exchange name, MIC (e.g. XNYS), city, country, or asset class..."
+              size="small"
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon
+                    sx={{ color: "text.secondary", fontSize: 20, mr: 0.5 }}
+                  />
+                </InputAdornment>
+              }
+              endAdornment={
+                searchQuery ? (
+                  <InputAdornment position="end">
+                    <IconButton
+                      size="small"
+                      onClick={() => setSearchQuery("")}
+                      sx={{ color: "text.secondary", p: 0.5 }}
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ) : null
+              }
+              sx={{
+                width: "100%",
+                borderRadius: 2,
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(255, 255, 255, 0.03)"
+                    : "rgba(0, 0, 0, 0.02)",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.divider,
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.primary.main,
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.primary.main,
+                },
+              }}
+            />
+
+            {/* Filter Controls Row: Region Tabs + Open Filter + View Mode Switcher */}
             <Stack
               direction={{ xs: "column", md: "row" }}
               spacing={2}
               alignItems={{ xs: "stretch", md: "center" }}
               justifyContent="space-between"
             >
-              {/* Search Bar */}
-              <OutlinedInput
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search exchange name, MIC (e.g. XNYS), city, country..."
-                size="small"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon
-                      sx={{ color: "text.secondary", fontSize: 20 }}
-                    />
-                  </InputAdornment>
-                }
+              {/* Region Tabs */}
+              <Tabs
+                value={selectedRegion}
+                onChange={(_, val) => setSelectedRegion(val)}
+                variant="scrollable"
+                scrollButtons="auto"
                 sx={{
-                  flex: { xs: 1, md: 0.6 },
-                  borderRadius: 2,
-                  bgcolor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(255, 255, 255, 0.03)"
-                      : "rgba(0, 0, 0, 0.02)",
+                  minHeight: 36,
+                  "& .MuiTab-root": {
+                    minHeight: 36,
+                    py: 0.5,
+                    px: 1.8,
+                    fontWeight: 700,
+                    textTransform: "none",
+                    fontSize: "0.86rem",
+                  },
                 }}
-              />
+              >
+                <Tab label="All Regions (30)" value="All" />
+                <Tab label="Americas (8)" value="Americas" />
+                <Tab label="EMEA (11)" value="EMEA" />
+                <Tab label="APAC (11)" value="APAC" />
+              </Tabs>
 
               <Stack
                 direction="row"
@@ -340,91 +383,62 @@ export default function ExchangesPage() {
               </Stack>
             </Stack>
 
-            {/* Bottom Row: Region Tabs & Asset Class Chips */}
+            {/* Bottom Row: Asset Class Chips */}
             <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={2}
-              alignItems={{ xs: "flex-start", lg: "center" }}
-              justifyContent="space-between"
+              direction="row"
+              spacing={0.8}
+              flexWrap="wrap"
+              alignItems="center"
+              pt={0.5}
+              sx={{ borderTop: `1px solid ${theme.palette.divider}` }}
             >
-              {/* Region Tabs */}
-              <Tabs
-                value={selectedRegion}
-                onChange={(_, val) => setSelectedRegion(val)}
-                variant="scrollable"
-                scrollButtons="auto"
+              <Typography
+                variant="caption"
                 sx={{
-                  minHeight: 36,
-                  "& .MuiTab-root": {
-                    minHeight: 36,
-                    py: 0.5,
-                    px: 1.8,
-                    fontWeight: 700,
-                    textTransform: "none",
-                    fontSize: "0.86rem",
-                  },
+                  color: "text.secondary",
+                  fontWeight: 600,
+                  display: { xs: "none", sm: "block" },
+                  mr: 0.5,
                 }}
               >
-                <Tab label="All Regions (30)" value="All" />
-                <Tab label="Americas (8)" value="Americas" />
-                <Tab label="EMEA (11)" value="EMEA" />
-                <Tab label="APAC (11)" value="APAC" />
-              </Tabs>
-
-              {/* Asset Class Filter Chips */}
-              <Stack
-                direction="row"
-                spacing={0.8}
-                flexWrap="wrap"
-                alignItems="center"
-              >
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: "text.secondary",
-                    fontWeight: 600,
-                    display: { xs: "none", sm: "block" },
-                  }}
-                >
-                  Asset:
-                </Typography>
-                {(
-                  [
-                    "All",
-                    "Equities",
-                    "Derivatives",
-                    "Commodities",
-                    "Fixed Income",
-                    "ETFs",
-                  ] as const
-                ).map((asset) => {
-                  const isSelected = selectedAsset === asset;
-                  return (
-                    <Chip
-                      key={asset}
-                      label={asset}
-                      size="small"
-                      onClick={() => setSelectedAsset(asset)}
-                      clickable
-                      sx={{
-                        fontWeight: isSelected ? 800 : 500,
-                        fontSize: "0.75rem",
-                        height: 24,
-                        bgcolor: isSelected
-                          ? theme.palette.mode === "dark"
-                            ? "rgba(255, 255, 255, 0.15)"
-                            : "rgba(0, 0, 0, 0.1)"
-                          : "transparent",
-                        border: `1px solid ${
-                          isSelected
-                            ? theme.palette.text.primary
-                            : theme.palette.divider
-                        }`,
-                      }}
-                    />
-                  );
-                })}
-              </Stack>
+                Asset Class:
+              </Typography>
+              {(
+                [
+                  "All",
+                  "Equities",
+                  "Derivatives",
+                  "Commodities",
+                  "Fixed Income",
+                  "ETFs",
+                ] as const
+              ).map((asset) => {
+                const isSelected = selectedAsset === asset;
+                return (
+                  <Chip
+                    key={asset}
+                    label={asset}
+                    size="small"
+                    onClick={() => setSelectedAsset(asset)}
+                    clickable
+                    sx={{
+                      fontWeight: isSelected ? 800 : 500,
+                      fontSize: "0.75rem",
+                      height: 24,
+                      bgcolor: isSelected
+                        ? theme.palette.mode === "dark"
+                          ? "rgba(255, 255, 255, 0.15)"
+                          : "rgba(0, 0, 0, 0.1)"
+                        : "transparent",
+                      border: `1px solid ${
+                        isSelected
+                          ? theme.palette.text.primary
+                          : theme.palette.divider
+                      }`,
+                    }}
+                  />
+                );
+              })}
             </Stack>
           </Stack>
         </Paper>
@@ -509,7 +523,6 @@ export default function ExchangesPage() {
                   key={ex.id}
                   exchange={ex}
                   status={status}
-                  maxCap={maxCap}
                   onSelect={handleSelectExchange}
                 />
               );

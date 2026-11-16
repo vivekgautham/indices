@@ -525,8 +525,8 @@ ${JSON.stringify(datasetSchema, null, 2)}
   // Generate dist/exchanges/index.html with exchanges directory prerender & structured data
   const exchangesDir = path.join(distDir, "exchanges");
   fs.mkdirSync(exchangesDir, { recursive: true });
-  const exchangesTitle = `World Stock Exchanges & Markets 🌐 | Live Trading Status & Market Cap | MarketIndices`;
-  const exchangesDesc = `Real-time trading status, session countdowns, and institutional market capitalization across the world's top 30 financial exchanges (NYSE, Nasdaq, TSE, Euronext, LSE, HKEX, SSE, NSE).`;
+  const exchangesTitle = `World Stock Exchanges & Markets 🌐 | Live Trading Status & Hours | MarketIndices`;
+  const exchangesDesc = `Real-time trading status, session countdowns, and trading hours across the world's top 30 financial exchanges (NYSE, Nasdaq, TSE, Euronext, LSE, HKEX, SSE, NSE).`;
 
   const exchangesBreadcrumbSchema = {
     "@context": "https://schema.org",
@@ -555,7 +555,7 @@ ${JSON.stringify(datasetSchema, null, 2)}
       <header style="margin-bottom: 24px;">
         <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">World Stock Exchanges &amp; Financial Markets</h1>
         <p style="font-size: 16px; color: #475569;">
-          Real-time session status, countdown timers, and institutional market capitalization for the top 30 world stock, derivatives, and commodities exchanges.
+          Real-time session status, countdown timers, and trading hours for the top 30 world stock, derivatives, and commodities exchanges.
         </p>
       </header>
     </main>
