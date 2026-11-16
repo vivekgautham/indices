@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { INDICES_DATA } from "../src/data/indicesData.ts";
 import { PROVIDERS_DATA } from "../src/data/providersData.ts";
+import { WORLD_EXCHANGES } from "../src/data/exchangesData.ts";
 import { isActivelyManagedEtf } from "../src/utils/etfClassification.ts";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -43,7 +44,7 @@ if (fs.existsSync(distDir)) {
   console.log("✓ Generated dist/robots.txt");
 }
 
-// 2. Generate sitemap.xml
+// 2. Generate sitemap.xml (Only final canonical 200-OK URLs)
 let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -76,12 +77,6 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>${BASE_URL}/exchanges</loc>
-    <lastmod>${TODAY}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
 `;
 
 for (const index of INDICES_DATA) {
@@ -97,7 +92,7 @@ for (const index of INDICES_DATA) {
 sitemapXml += `</urlset>\n`;
 
 fs.writeFileSync(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf8");
-console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 2} URLs)`);
+console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 5} URLs)`);
 if (fs.existsSync(distDir)) {
   fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemapXml, "utf8");
   console.log(`✓ Generated dist/sitemap.xml`);
@@ -119,7 +114,7 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
             <a href="/indices" style="color: #00DD94; text-decoration: none;">Indices Directory</a> •
             <a href="/tracker" style="color: #00DD94; text-decoration: none;">Live Macro Tracker</a> •
             <a href="/events" style="color: #00DD94; text-decoration: none;">Market Events Calendar</a> •
-            <a href="/exchanges" style="color: #00DD94; text-decoration: none;">World Exchanges &amp; Markets</a>
+            <a href="/markets" style="color: #00DD94; text-decoration: none;">World Exchanges &amp; Markets</a>
           </nav>
         </header>
 
@@ -159,9 +154,15 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
   fs.writeFileSync(path.join(distDir, "index.html"), enhancedHomepageHtml, "utf8");
   console.log("✓ Injected crawlable directory inside <noscript> into dist/index.html");
 
-  // Create dist/404.html
-  fs.writeFileSync(path.join(distDir, "404.html"), enhancedHomepageHtml, "utf8");
-  console.log("✓ Created dist/404.html");
+  // Create dist/404.html with noindex, nofollow to prevent soft-404 indexing in Google Search Console
+  const notFoundHtml = enhancedHomepageHtml
+    .replace(/<title>.*?<\/title>/i, `<title>404 Page Not Found | MarketIndices.xyz</title>`)
+    .replace(
+      /<meta\s+name="robots"\s+content=".*?"\s*\/?>/i,
+      `<meta name="robots" content="noindex, nofollow" />`
+    );
+  fs.writeFileSync(path.join(distDir, "404.html"), notFoundHtml, "utf8");
+  console.log("✓ Created dist/404.html with noindex, nofollow");
 
   // Create dist/tracker/index.html
   const trackerDir = path.join(distDir, "tracker");
@@ -329,20 +330,68 @@ ${JSON.stringify(datasetSchema, null, 2)}
   fs.writeFileSync(path.join(trackerDir, "index.html"), trackerHtml, "utf8");
   console.log("✓ Generated dist/tracker/index.html");
 
-  // Generate dist/indices/index.html with catalog prerender
+  // Generate dist/indices/index.html with catalog prerender & self-referencing canonical
   const indicesDir = path.join(distDir, "indices");
   fs.mkdirSync(indicesDir, { recursive: true });
-  let indicesHtml = baseHtml;
-  indicesHtml = indicesHtml.replace(
-    /<title>.*?<\/title>/i,
-    `<title>Global Market Indices Directory | ${INDICES_DATA.length}+ Benchmarks & Tracking ETFs 📊</title>`
-  );
-  indicesHtml = indicesHtml.replace(
-    /<div id="root"><\/div>/i,
-    `<div id="root"></div>\n    <noscript>\n${homepagePrerender.trim()}\n    </noscript>`
-  );
+  const indicesTitle = `Global Market Indices Directory | ${INDICES_DATA.length}+ Benchmarks & Tracking ETFs 📊 | MarketIndices`;
+  const indicesDesc = `Explore and compare ${INDICES_DATA.length}+ global market benchmark indices across S&P, NASDAQ, MSCI, FTSE Russell, KRX, STOXX, Euronext, Nikkei, and 330+ tracking ETFs.`;
+
+  const indicesBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${BASE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Indices",
+        item: `${BASE_URL}/indices`,
+      },
+    ],
+  };
+
+  const indicesHtml = baseHtml
+    .replace(/<title>.*?<\/title>/i, `<title>${indicesTitle}</title>`)
+    .replace(
+      /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
+      `<meta name="description" content="${indicesDesc}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+      `<link rel="canonical" href="${BASE_URL}/indices" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:title" content="${indicesTitle}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:description" content="${indicesDesc}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:url" content="${BASE_URL}/indices" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:url" content="${BASE_URL}/indices" />`
+    )
+    .replace(
+      /<div id="root"><\/div>/i,
+      `<div id="root"></div>\n    <noscript>\n${homepagePrerender.trim()}\n    </noscript>`
+    )
+    .replace(
+      /<\/head>/i,
+      `  <script type="application/ld+json">\n${JSON.stringify(indicesBreadcrumbSchema, null, 2)}\n  </script>\n</head>`
+    );
+
   fs.writeFileSync(path.join(indicesDir, "index.html"), indicesHtml, "utf8");
-  console.log("✓ Generated dist/indices/index.html");
+  console.log("✓ Generated dist/indices/index.html with self-referencing canonical & BreadcrumbList");
 
   // Generate dist/events/index.html with events calendar prerender & structured data
   const eventsDir = path.join(distDir, "events");
@@ -511,6 +560,10 @@ ${JSON.stringify(datasetSchema, null, 2)}
       `<meta property="og:url" content="${BASE_URL}/events" />`
     )
     .replace(
+      /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:url" content="${BASE_URL}/events" />`
+    )
+    .replace(
       /<div id="root"><\/div>/i,
       `<div id="root"></div>\n    <noscript>\n${eventsSemanticHtml.trim()}\n    </noscript>`
     )
@@ -522,13 +575,13 @@ ${JSON.stringify(datasetSchema, null, 2)}
   fs.writeFileSync(path.join(eventsDir, "index.html"), eventsHtml, "utf8");
   console.log("✓ Generated dist/events/index.html with FAQ & Breadcrumb Structured Data");
 
-  // Generate dist/exchanges/index.html with exchanges directory prerender & structured data
-  const exchangesDir = path.join(distDir, "exchanges");
-  fs.mkdirSync(exchangesDir, { recursive: true });
-  const exchangesTitle = `World Stock Exchanges & Markets 🌐 | Live Trading Status & Hours | MarketIndices`;
-  const exchangesDesc = `Real-time trading status, session countdowns, and trading hours across the world's top 30 financial exchanges (NYSE, Nasdaq, TSE, Euronext, LSE, HKEX, SSE, NSE).`;
+  // Generate dist/markets/index.html with markets directory prerender & structured data
+  const marketsDir = path.join(distDir, "markets");
+  fs.mkdirSync(marketsDir, { recursive: true });
+  const marketsTitle = `World Stock Exchanges & Markets 🌐 | Live Trading Status & Hours | MarketIndices`;
+  const marketsDesc = `Real-time trading status, session countdowns, and trading hours across the world's top 30 financial exchanges (NYSE, Nasdaq, TSE, Euronext, LSE, HKEX, SSE, NSE).`;
 
-  const exchangesBreadcrumbSchema = {
+  const marketsBreadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -541,62 +594,157 @@ ${JSON.stringify(datasetSchema, null, 2)}
       {
         "@type": "ListItem",
         position: 2,
-        name: "Exchanges",
-        item: `${BASE_URL}/exchanges`,
+        name: "Markets",
+        item: `${BASE_URL}/markets`,
       },
     ],
   };
 
-  const exchangesSemanticHtml = `
-    <main style="max-width: 1000px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+  const marketsFaqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What are the core regular trading hours of the New York Stock Exchange (NYSE) and Nasdaq?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Both the NYSE and Nasdaq conduct regular equity trading from 09:30 to 16:00 Eastern Time (ET), Monday through Friday. Pre-market trading opens as early as 04:00 ET, and post-market (after-hours) trading extends until 20:00 ET.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which world stock exchanges close for lunch breaks?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Several major Asian exchanges pause trading for lunch, including Tokyo Stock Exchange (11:30 - 12:30 JST), Shanghai & Shenzhen Stock Exchanges (11:30 - 13:00 CST), Hong Kong HKEX (12:00 - 13:00 HKT), Indonesia IDX (12:00 - 13:30 WIB), and Stock Exchange of Thailand (12:30 - 14:00 ICT). Most Western exchanges (NYSE, Nasdaq, Euronext, LSE, Deutsche Börse) trade continuously with no lunch closure.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which stock exchanges are open on Sundays?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The Saudi Exchange (Tadawul) and the Tel Aviv Stock Exchange (TASE) operate on a Sunday through Thursday weekly trading schedule, observing their weekend closure on Friday and Saturday.",
+        },
+      },
+    ],
+  };
+
+  const marketsSemanticHtml = `
+    <main style="max-width: 1050px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
       <nav style="margin-bottom: 16px; font-size: 14px; color: #64748b;">
-        <a href="/" style="color: #00DD94; text-decoration: none;">Home</a> &gt; <span>World Exchanges</span>
+        <a href="/" style="color: #00DD94; text-decoration: none;">Home</a> &gt; <span>World Exchanges &amp; Markets</span>
       </nav>
       <header style="margin-bottom: 24px;">
-        <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">World Stock Exchanges &amp; Financial Markets</h1>
+        <h1 style="font-size: 30px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">World Stock Exchanges &amp; Financial Markets Directory</h1>
         <p style="font-size: 16px; color: #475569;">
           Real-time session status, countdown timers, and trading hours for the top 30 world stock, derivatives, and commodities exchanges.
         </p>
       </header>
+
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 20px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Top 30 Global Stock Exchanges &amp; Trading Hours</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px;">
+          <thead>
+            <tr style="background: #f1f5f9; text-align: left;">
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">Rank</th>
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">Exchange</th>
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">MIC</th>
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">Country / City</th>
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">Timezone</th>
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">Trading Hours</th>
+              <th style="padding: 10px; border: 1px solid #e2e8f0;">Traded Assets</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${WORLD_EXCHANGES.map(ex => `
+              <tr>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">#${ex.globalRank}</td>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 600;">${ex.flag} ${escapeHtml(ex.name)}</td>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace;">${escapeHtml(ex.mic)}</td>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${escapeHtml(ex.city)}, ${escapeHtml(ex.country)}</td>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${escapeHtml(ex.timezoneAbbr)} (${escapeHtml(ex.timezone)})</td>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace;">${ex.regularHours.open} - ${ex.regularHours.close}${ex.lunchBreak ? ` (Lunch: ${ex.lunchBreak.start}-${ex.lunchBreak.end})` : ''}</td>
+                <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${ex.assetClasses.join(", ")}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </section>
     </main>
   `;
 
-  const exchangesHtml = baseHtml
-    .replace(/<title>.*?<\/title>/i, `<title>${exchangesTitle}</title>`)
+  const marketsHtml = baseHtml
+    .replace(/<title>.*?<\/title>/i, `<title>${marketsTitle}</title>`)
     .replace(
       /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
-      `<meta name="description" content="${exchangesDesc}" />`
+      `<meta name="description" content="${marketsDesc}" />`
     )
     .replace(
       /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
-      `<link rel="canonical" href="${BASE_URL}/exchanges" />`
+      `<link rel="canonical" href="${BASE_URL}/markets" />`
     )
     .replace(
       /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
-      `<meta property="og:title" content="${exchangesTitle}" />`
+      `<meta property="og:title" content="${marketsTitle}" />`
     )
     .replace(
       /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
-      `<meta property="og:description" content="${exchangesDesc}" />`
+      `<meta property="og:description" content="${marketsDesc}" />`
     )
     .replace(
       /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
-      `<meta property="og:url" content="${BASE_URL}/exchanges" />`
+      `<meta property="og:url" content="${BASE_URL}/markets" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:url" content="${BASE_URL}/markets" />`
     )
     .replace(
       /<div id="root"><\/div>/i,
-      `<div id="root"></div>\n    <noscript>\n${exchangesSemanticHtml.trim()}\n    </noscript>`
+      `<div id="root"></div>\n    <noscript>\n${marketsSemanticHtml.trim()}\n    </noscript>`
     )
     .replace(
       /<\/head>/i,
-      `  <script type="application/ld+json">\n${JSON.stringify(exchangesBreadcrumbSchema, null, 2)}\n  </script>\n</head>`
+      `  <script type="application/ld+json">\n${JSON.stringify(marketsBreadcrumbSchema, null, 2)}\n  </script>\n  <script type="application/ld+json">\n${JSON.stringify(marketsFaqSchema, null, 2)}\n  </script>\n</head>`
     );
 
-  fs.writeFileSync(path.join(exchangesDir, "index.html"), exchangesHtml, "utf8");
-  const marketsDir = path.join(distDir, "markets");
-  fs.mkdirSync(marketsDir, { recursive: true });
-  fs.writeFileSync(path.join(marketsDir, "index.html"), exchangesHtml, "utf8");
-  console.log("✓ Generated dist/markets/index.html & dist/exchanges/index.html with Breadcrumb Structured Data");
+  fs.writeFileSync(path.join(marketsDir, "index.html"), marketsHtml, "utf8");
+  console.log("✓ Generated dist/markets/index.html with FAQ, Breadcrumbs & 30 Exchanges Directory");
+
+  // Helper for generating static redirect pages on GitHub Pages with noindex
+  function generateRedirectPage(targetPath, title) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=${targetPath}">
+  <link rel="canonical" href="${BASE_URL}${targetPath}">
+  <meta name="robots" content="noindex, follow">
+  <title>Redirecting to ${title} | MarketIndices.xyz</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px; text-align: center;">
+  <p>Redirecting to <a href="${targetPath}">${title}</a>...</p>
+</body>
+</html>`;
+  }
+
+  // Generate clean static redirect pages for alias routes
+  const exchangesDir = path.join(distDir, "exchanges");
+  fs.mkdirSync(exchangesDir, { recursive: true });
+  fs.writeFileSync(path.join(exchangesDir, "index.html"), generateRedirectPage("/markets", "World Exchanges & Markets"), "utf8");
+  console.log("✓ Generated dist/exchanges/index.html (redirect to /markets with noindex)");
+
+  const calendarDir = path.join(distDir, "calendar");
+  fs.mkdirSync(calendarDir, { recursive: true });
+  fs.writeFileSync(path.join(calendarDir, "index.html"), generateRedirectPage("/events", "Market Events Calendar"), "utf8");
+  console.log("✓ Generated dist/calendar/index.html (redirect to /events with noindex)");
+
+  const benchTrackerDir = path.join(distDir, "benchmark-tracker");
+  fs.mkdirSync(benchTrackerDir, { recursive: true });
+  fs.writeFileSync(path.join(benchTrackerDir, "index.html"), generateRedirectPage("/tracker", "Benchmark Tracker"), "utf8");
+  console.log("✓ Generated dist/benchmark-tracker/index.html (redirect to /tracker with noindex)");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;

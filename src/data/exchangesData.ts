@@ -1,4 +1,4 @@
-import { WorldExchange } from "../types/exchange";
+import type { WorldExchange } from "../types/exchange.ts";
 
 export const WORLD_EXCHANGES: WorldExchange[] = [
   {
