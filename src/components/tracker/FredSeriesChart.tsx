@@ -45,6 +45,10 @@ const RANGES: TimeRange[] = ["5D", "1M", "3M", "6M", "YTD", "1Y", "5Y", "MAX"];
 
 type DropThreshold = 1.5 | 2.0 | 3.0;
 
+// High-precision financial monospace font stack for institutional legibility
+const MONO_FONT =
+  'ui-monospace, "JetBrains Mono", "Roboto Mono", "SF Mono", Menlo, Consolas, monospace';
+
 export function formatSeriesValue(
   value: number,
   format: "currency" | "percent" | "number" | "index",
@@ -223,10 +227,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     ? "rgba(16, 185, 129, 0.22)"
     : "rgba(239, 68, 68, 0.22)";
 
-  // Canvas coordinates
+  // Balanced canvas coordinates
   const plotW = 800;
-  const plotH = 260;
-  const padding = { top: 14, right: 8, bottom: 12, left: 8 };
+  const plotH = 300;
+  const padding = { top: 16, right: 10, bottom: 14, left: 10 };
   const chartW = plotW - padding.left - padding.right;
   const chartH = plotH - padding.top - padding.bottom;
 
@@ -579,7 +583,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     };
   }, [latestDma50, latestDma200, series.latestValue]);
 
-  // Horizontal Grid Lines
+  // Horizontal Grid Lines (4 reference steps)
   const gridLines = useMemo(() => {
     const steps = [0.15, 0.4, 0.65, 0.9];
     return steps.map((pct) => {
@@ -598,7 +602,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
         label: c[2].slice(5),
       }));
     }
-    const count = 5;
+    const count = 6;
     const ticks = [];
     for (let i = 0; i < count; i++) {
       const idx = Math.min(
@@ -628,7 +632,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   if (!series || !series.observations || series.observations.length === 0) {
     return (
       <Card variant="outlined" sx={{ p: 3, borderRadius: 3 }}>
-        <Skeleton variant="rectangular" height={280} />
+        <Skeleton variant="rectangular" height={360} />
       </Card>
     );
   }
@@ -680,6 +684,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 sx={{
                   fontWeight: 800,
                   fontSize: "0.7rem",
+                  fontFamily: MONO_FONT,
                   height: 20,
                   backgroundColor: "rgba(99, 102, 241, 0.15)",
                   color: "primary.main",
@@ -718,6 +723,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 borderRadius: 1.5,
                 fontWeight: 700,
                 fontSize: "0.72rem",
+                fontFamily: MONO_FONT,
                 px: { xs: 0.7, sm: 1.25 },
                 py: 0.35,
                 minWidth: { xs: "auto", sm: 36 },
@@ -773,9 +779,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             <Typography
               sx={{
                 fontWeight: 800,
-                fontSize: { xs: "1.35rem", sm: "1.75rem" },
+                fontSize: { xs: "1.45rem", sm: "1.9rem" },
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
+                fontFamily: MONO_FONT,
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -803,6 +810,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               sx={{
                 fontWeight: 800,
                 fontSize: "0.75rem",
+                fontFamily: MONO_FONT,
                 height: 24,
                 backgroundColor:
                   hoverDiff >= 0
@@ -822,11 +830,12 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 alignItems: "center",
                 gap: 0.5,
                 fontWeight: isInspecting ? 700 : 500,
+                fontFamily: MONO_FONT,
               }}
             >
               <CalendarTodayIcon sx={{ fontSize: 13 }} />
               {displayedDate}{" "}
-              {isInspecting ? "(Selected session)" : "(Latest close)"}
+              {isInspecting ? "(Pinned session)" : "(Latest close)"}
             </Typography>
 
             {/* Daily Return (when a point is selected) */}
@@ -838,6 +847,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   height: 20,
                   fontSize: "0.68rem",
                   fontWeight: 700,
+                  fontFamily: MONO_FONT,
                   backgroundColor:
                     hoverDailyStats.change >= 0
                       ? "rgba(16, 185, 129, 0.12)"
@@ -865,6 +875,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   height: 24,
                   fontWeight: 800,
                   fontSize: "0.72rem",
+                  fontFamily: MONO_FONT,
                   backgroundColor: "#ef4444",
                   color: "#ffffff",
                   boxShadow: "0 2px 10px rgba(239, 68, 68, 0.4)",
@@ -965,6 +976,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                           style={{
                             opacity: 0.9,
                             fontSize: "0.68rem",
+                            fontFamily: MONO_FONT,
                             fontVariantNumeric: "tabular-nums",
                           }}
                         >
@@ -979,6 +991,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                           style={{
                             opacity: 0.9,
                             fontSize: "0.68rem",
+                            fontFamily: MONO_FONT,
                             fontVariantNumeric: "tabular-nums",
                           }}
                         >
@@ -1050,6 +1063,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                           style={{
                             opacity: 0.9,
                             fontSize: "0.68rem",
+                            fontFamily: MONO_FONT,
                             fontVariantNumeric: "tabular-nums",
                           }}
                         >
@@ -1064,6 +1078,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                           style={{
                             opacity: 0.9,
                             fontSize: "0.68rem",
+                            fontFamily: MONO_FONT,
                             fontVariantNumeric: "tabular-nums",
                           }}
                         >
@@ -1121,6 +1136,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 sx={{
                   fontWeight: 700,
                   fontSize: "0.72rem",
+                  fontFamily: MONO_FONT,
                   height: 26,
                   backgroundColor: showBigDrops
                     ? "rgba(239, 68, 68, 0.18)"
@@ -1166,6 +1182,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                       height: 20,
                       fontSize: "0.64rem",
                       fontWeight: 700,
+                      fontFamily: MONO_FONT,
                       backgroundColor:
                         dropThreshold === thresh
                           ? "rgba(239, 68, 68, 0.25)"
@@ -1290,12 +1307,12 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </Paper>
         </Collapse>
 
-        {/* Interactive Chart Canvas with Hardware-Accelerated Vector Elements */}
+        {/* Interactive Chart Canvas with Balanced Vertical Height */}
         <Box
           sx={{
             position: "relative",
             width: "100%",
-            height: { xs: 220, sm: 280 },
+            height: { xs: 240, sm: 290, md: 330 },
             userSelect: "none",
           }}
         >
@@ -1305,8 +1322,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               position: "absolute",
               top: 0,
               left: 0,
-              right: 60,
-              bottom: 24,
+              right: 70,
+              bottom: 26,
               cursor: "pointer",
               borderRight: "1px solid",
               borderBottom: "1px solid",
@@ -1517,7 +1534,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               )}
             </svg>
 
-            {/* Pinned Telemetry Tooltip Card (ONLY shown on explicit click, NEVER on hover) */}
+            {/* Pinned Telemetry Tooltip Card (Shown on click with monospace financial typography) */}
             {selectedPoint && (
               <Paper
                 elevation={8}
@@ -1537,8 +1554,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     : "1px solid rgba(255, 255, 255, 0.16)",
                   borderRadius: 2.5,
                   p: 1.5,
-                  minWidth: 195,
-                  maxWidth: 245,
+                  minWidth: 200,
+                  maxWidth: 250,
                   boxShadow: "0 8px 32px rgba(0, 0, 0, 0.55)",
                   zIndex: 5,
                 }}
@@ -1552,9 +1569,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 >
                   <Typography
                     sx={{
-                      fontSize: "0.72rem",
-                      fontWeight: 800,
+                      fontSize: "0.74rem",
+                      fontWeight: 700,
                       color: "text.secondary",
+                      fontFamily: MONO_FONT,
                       display: "flex",
                       alignItems: "center",
                       gap: 0.5,
@@ -1581,12 +1599,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   </IconButton>
                 </Stack>
 
-                {/* Price */}
+                {/* Price in Monospace */}
                 <Typography
                   sx={{
-                    fontSize: "1.1rem",
+                    fontSize: "1.15rem",
                     fontWeight: 800,
                     color: "#ffffff",
+                    fontFamily: MONO_FONT,
                     fontVariantNumeric: "tabular-nums",
                     lineHeight: 1.2,
                   }}
@@ -1598,14 +1617,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   )}
                 </Typography>
 
-                {/* Daily Change */}
+                {/* Daily Change in Monospace */}
                 {selectedPointStats && (
                   <Typography
                     sx={{
-                      fontSize: "0.72rem",
+                      fontSize: "0.74rem",
                       fontWeight: 700,
                       color:
                         selectedPointStats.change >= 0 ? "#10b981" : "#ef4444",
+                      fontFamily: MONO_FONT,
                       fontVariantNumeric: "tabular-nums",
                       mt: 0.25,
                       mb: 0.75,
@@ -1623,19 +1643,20 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   </Typography>
                 )}
 
-                {/* Indicators Breakdown */}
+                {/* Indicators Breakdown in Monospace */}
                 <Stack
-                  spacing={0.3}
+                  spacing={0.4}
                   sx={{
-                    pt: 0.5,
+                    pt: 0.6,
                     borderTop: "1px solid rgba(255, 255, 255, 0.08)",
                   }}
                 >
                   {show50Dma && selectedPointDma50 !== undefined && (
                     <Typography
                       sx={{
-                        fontSize: "0.68rem",
+                        fontSize: "0.7rem",
                         color: "#fbbf24",
+                        fontFamily: MONO_FONT,
                         fontVariantNumeric: "tabular-nums",
                       }}
                     >
@@ -1658,8 +1679,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   {show200Dma && selectedPointDma200 !== undefined && (
                     <Typography
                       sx={{
-                        fontSize: "0.68rem",
+                        fontSize: "0.7rem",
                         color: "#c084fc",
+                        fontFamily: MONO_FONT,
                         fontVariantNumeric: "tabular-nums",
                       }}
                     >
@@ -1690,8 +1712,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                       size="small"
                       sx={{
                         height: 20,
-                        fontSize: "0.65rem",
+                        fontSize: "0.66rem",
                         fontWeight: 800,
+                        fontFamily: MONO_FONT,
                         backgroundColor: "#ef4444",
                         color: "#ffffff",
                         mt: 0.5,
@@ -1703,14 +1726,14 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             )}
           </Box>
 
-          {/* Right Y-Axis HTML Overlay (Fixed, crisp tabular numbers) */}
+          {/* Right Y-Axis HTML Overlay with Crisp Monospace Numbers */}
           <Box
             sx={{
               position: "absolute",
               top: 0,
               right: 0,
-              bottom: 24,
-              width: 60,
+              bottom: 26,
+              width: 70,
               pointerEvents: "none",
             }}
           >
@@ -1721,14 +1744,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   position: "absolute",
                   top: `${(line.y / plotH) * 100}%`,
                   transform: "translateY(-50%)",
-                  left: 6,
+                  left: 8,
                   color: "text.secondary",
-                  fontSize: "0.68rem",
-                  fontWeight: 500,
+                  fontSize: "0.72rem",
+                  fontWeight: 600,
+                  fontFamily: MONO_FONT,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1,
-                  fontFamily:
-                    "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                 }}
               >
                 {formatAxisValue(line.val, series.format)}
@@ -1742,19 +1764,20 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   position: "absolute",
                   top: `${(selectedPoint[1] / plotH) * 100}%`,
                   transform: "translateY(-50%)",
-                  left: 3,
-                  right: 3,
+                  left: 4,
+                  right: 2,
                   backgroundColor: strokeColor,
                   color: "#ffffff",
-                  borderRadius: "3px",
+                  borderRadius: "4px",
                   py: "2px",
-                  px: "3px",
+                  px: "4px",
                   textAlign: "center",
                   fontWeight: 800,
-                  fontSize: "0.65rem",
+                  fontSize: "0.68rem",
+                  fontFamily: MONO_FONT,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1.2,
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.4)",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.5)",
                   zIndex: 2,
                   whiteSpace: "nowrap",
                 }}
@@ -1764,14 +1787,14 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             )}
           </Box>
 
-          {/* Bottom X-Axis HTML Overlay */}
+          {/* Bottom X-Axis HTML Overlay with Monospace Dates */}
           <Box
             sx={{
               position: "absolute",
               left: 0,
-              right: 60,
+              right: 70,
               bottom: 0,
-              height: 24,
+              height: 26,
               pointerEvents: "none",
             }}
           >
@@ -1788,14 +1811,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     position: "absolute",
                     left: `${(tick.x / plotW) * 100}%`,
                     transform,
-                    top: 5,
+                    top: 6,
                     color: "text.secondary",
-                    fontSize: "0.68rem",
-                    fontWeight: 500,
+                    fontSize: "0.7rem",
+                    fontWeight: 600,
+                    fontFamily: MONO_FONT,
                     fontVariantNumeric: "tabular-nums",
                     lineHeight: 1,
-                    fontFamily:
-                      "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -1843,6 +1865,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               sx={{
                 fontWeight: 800,
                 fontSize: "0.88rem",
+                fontFamily: MONO_FONT,
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -1872,6 +1895,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               sx={{
                 fontWeight: 800,
                 fontSize: "0.88rem",
+                fontFamily: MONO_FONT,
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -1901,6 +1925,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               sx={{
                 fontWeight: 800,
                 fontSize: "0.88rem",
+                fontFamily: MONO_FONT,
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -1930,6 +1955,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               sx={{
                 fontWeight: 700,
                 fontSize: "0.8rem",
+                fontFamily: MONO_FONT,
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -1973,6 +1999,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   height: 20,
                   fontSize: "0.68rem",
                   fontWeight: 700,
+                  fontFamily: MONO_FONT,
                   backgroundColor: "rgba(239, 68, 68, 0.12)",
                   color: "#ef4444",
                   border: "1px solid rgba(239, 68, 68, 0.25)",
@@ -2058,6 +2085,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                           sx={{
                             fontWeight: 800,
                             fontSize: "0.78rem",
+                            fontFamily: MONO_FONT,
                             color: isSelected
                               ? "#ffffff"
                               : "text.primary",
@@ -2078,6 +2106,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                             height: 20,
                             fontWeight: 800,
                             fontSize: "0.7rem",
+                            fontFamily: MONO_FONT,
                             backgroundColor: "rgba(239, 68, 68, 0.2)",
                             color: "#ef4444",
                             border: "1px solid rgba(239, 68, 68, 0.35)",
@@ -2096,6 +2125,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                           sx={{
                             color: "text.secondary",
                             fontSize: "0.7rem",
+                            fontFamily: MONO_FONT,
                           }}
                         >
                           Close:{" "}
@@ -2113,6 +2143,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                             fontWeight: 700,
                             color: "#f87171",
                             fontSize: "0.7rem",
+                            fontFamily: MONO_FONT,
                             fontVariantNumeric: "tabular-nums",
                           }}
                         >
