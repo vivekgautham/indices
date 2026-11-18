@@ -13,7 +13,12 @@ const FRED_API_KEY =
 
 const SERIES = [
   // Major U.S. Equity Benchmarks
-  { id: "SP500", name: "S&P 500", category: "equity" },
+  {
+    id: "SP500",
+    name: "S&P 500",
+    category: "equity",
+    yahooTicker: "^GSPC",
+  },
   {
     id: "SP500EW",
     name: "S&P 500 Equal Weight",
