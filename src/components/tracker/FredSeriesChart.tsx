@@ -2,6 +2,8 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CloseIcon from "@mui/icons-material/Close";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LayersIcon from "@mui/icons-material/Layers";
 import TimelineIcon from "@mui/icons-material/Timeline";
@@ -16,7 +18,7 @@ import {
   CardContent,
   Chip,
   Collapse,
-  Divider,
+  IconButton,
   Paper,
   Skeleton,
   Stack,
@@ -24,7 +26,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useId, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { filterObservationsByRange, TimeRange } from "../../api/fredApi";
 import { FredSeriesData } from "../../data/fredSeriesData";
 
@@ -34,6 +42,8 @@ export interface FredSeriesChartProps {
 }
 
 const RANGES: TimeRange[] = ["5D", "1M", "3M", "6M", "YTD", "1Y", "5Y", "MAX"];
+
+type DropThreshold = 1.5 | 2.0 | 3.0;
 
 export function formatSeriesValue(
   value: number,
@@ -91,18 +101,39 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   const theme = useTheme();
   const [selectedRange, setSelectedRange] = useState<TimeRange>(initialRange);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(
+    null,
+  );
 
   // Indicators toggle states (default: active for maximum informative value)
   const [show50Dma, setShow50Dma] = useState<boolean>(true);
   const [show200Dma, setShow200Dma] = useState<boolean>(true);
   const [showBigDrops, setShowBigDrops] = useState<boolean>(true);
+  const [dropThreshold, setDropThreshold] = useState<DropThreshold>(1.5);
   const [showDropPanel, setShowDropPanel] = useState<boolean>(true);
   const [showGuide, setShowGuide] = useState<boolean>(false);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const chartGradId = useId();
 
-  // Full technical indicators computed across all historical observations
+  // Reset selected point when switching series
+  useEffect(() => {
+    setSelectedPointIndex(null);
+  }, [series.id]);
+
+  // Performance refs to throttle mousemove via requestAnimationFrame
+  const rafIdRef = useRef<number | null>(null);
+  const hoverIndexRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, []);
+
+  // Full technical indicators computed once across all historical observations
   const technicals = useMemo(() => {
     if (!series || !series.observations || series.observations.length === 0) {
       return {
@@ -117,7 +148,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
       };
     }
 
-    // Ensure observations are sorted chronologically
+    // Ensure observations are strictly ascending by date
     const obs = [...series.observations].sort((a, b) =>
       a[0].localeCompare(b[0]),
     );
@@ -136,7 +167,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
       const date = obs[i][0];
       const val = obs[i][1];
 
-      // Calculate period/daily return against previous recorded observation
+      // Daily return compared to prior observation
       if (i > 0) {
         const prev = obs[i - 1][1];
         const chg = Number((val - prev).toFixed(4));
@@ -151,21 +182,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
 
       // Rolling 50 DMA
       sum50 += val;
-      if (i >= 50) {
-        sum50 -= obs[i - 50][1];
-      }
-      if (i >= 49) {
-        dma50.set(date, Number((sum50 / 50).toFixed(4)));
-      }
+      if (i >= 50) sum50 -= obs[i - 50][1];
+      if (i >= 49) dma50.set(date, Number((sum50 / 50).toFixed(4)));
 
       // Rolling 200 DMA
       sum200 += val;
-      if (i >= 200) {
-        sum200 -= obs[i - 200][1];
-      }
-      if (i >= 199) {
-        dma200.set(date, Number((sum200 / 200).toFixed(4)));
-      }
+      if (i >= 200) sum200 -= obs[i - 200][1];
+      if (i >= 199) dma200.set(date, Number((sum200 / 200).toFixed(4)));
     }
 
     return {
@@ -177,7 +200,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     };
   }, [series]);
 
-  // Compute stats for the selected time range
+  // Compute stats for selected time range
   const rangeStats = useMemo(() => {
     return filterObservationsByRange(series.observations, selectedRange);
   }, [series.observations, selectedRange]);
@@ -197,17 +220,17 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   const isPositive = change >= 0;
   const strokeColor = isPositive ? "#10b981" : "#ef4444";
   const glowColor = isPositive
-    ? "rgba(16, 185, 129, 0.28)"
-    : "rgba(239, 68, 68, 0.28)";
+    ? "rgba(16, 185, 129, 0.22)"
+    : "rgba(239, 68, 68, 0.22)";
 
-  // Plot dimensions for SVG coordinates (enhanced height for multiple indicators)
+  // Canvas coordinates
   const plotW = 800;
   const plotH = 260;
   const padding = { top: 14, right: 8, bottom: 12, left: 8 };
   const chartW = plotW - padding.left - padding.right;
   const chartH = plotH - padding.top - padding.bottom;
 
-  // Compute effective min and max including visible DMA overlays so lines never clip
+  // Compute effective min & max including visible indicator lines to eliminate clipping
   const { chartMin, valRange } = useMemo(() => {
     let mMin = min;
     let mMax = max;
@@ -233,12 +256,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     }
 
     const rangeDiff = mMax - mMin || 1;
-    const pad = rangeDiff * 0.035;
+    const pad = rangeDiff * 0.04;
     const cMin = mMin - pad;
     const cMax = mMax + pad;
     return {
       chartMin: cMin,
-      chartMax: cMax,
       valRange: cMax - cMin || 1,
     };
   }, [min, max, points, show50Dma, show200Dma, technicals]);
@@ -338,11 +360,12 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     );
   }, [dma200Coords]);
 
-  // Identify Big Drop days in the currently viewed time window
+  // Big Drop days in active range (filtered by current dropThreshold)
   const bigDropEvents = useMemo(() => {
     if (coords.length < 2) return [];
     const drops: BigDropEvent[] = [];
     const isYield = series.format === "percent";
+    const thresholdVal = -dropThreshold;
 
     coords.forEach((coord, idx) => {
       const date = coord[2];
@@ -350,10 +373,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
       const stats = technicals.dailyStats.get(date);
       if (!stats) return;
 
-      // Drop threshold: <= -1.5% for general indices or <= -0.08 / <= -1.5% for bond yields
       const isDrop = isYield
-        ? stats.change <= -0.08 || stats.changePct <= -1.5
-        : stats.changePct <= -1.5;
+        ? stats.change <= -(dropThreshold * 0.05) ||
+          stats.changePct <= thresholdVal
+        : stats.changePct <= thresholdVal;
 
       if (isDrop) {
         drops.push({
@@ -372,51 +395,74 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     });
 
     return drops;
-  }, [coords, series.format, technicals]);
+  }, [coords, series.format, technicals, dropThreshold]);
 
-  // Hover detection
-  const handleMouseMove = (
-    e: React.MouseEvent<HTMLDivElement | SVGSVGElement>,
-  ) => {
+  // Pre-sorted big drops for the table below (memoized so zero re-sort on mousemove)
+  const sortedDropEvents = useMemo(() => {
+    return [...bigDropEvents].sort((a, b) => a.changePct - b.changePct);
+  }, [bigDropEvents]);
+
+  // Ultra-fast, throttled mousemove handler (O(1) index projection, vsync-aligned)
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!svgRef.current || coords.length === 0) return;
     const rect = svgRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
-    const relativeX = (mouseX / rect.width) * plotW;
+    const ratio = Math.max(0, Math.min(1, mouseX / rect.width));
+    const targetIdx = Math.round(ratio * (coords.length - 1));
 
-    // Find nearest point
-    let nearestIdx = 0;
-    let minDiff = Infinity;
-    for (let i = 0; i < coords.length; i++) {
-      const diff = Math.abs(coords[i][0] - relativeX);
-      if (diff < minDiff) {
-        minDiff = diff;
-        nearestIdx = i;
+    if (targetIdx !== hoverIndexRef.current) {
+      hoverIndexRef.current = targetIdx;
+      if (!rafIdRef.current) {
+        rafIdRef.current = requestAnimationFrame(() => {
+          rafIdRef.current = null;
+          setHoverIndex(hoverIndexRef.current);
+        });
       }
     }
-    setHoverIndex(nearestIdx);
   };
 
   const handleMouseLeave = () => {
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+    hoverIndexRef.current = null;
     setHoverIndex(null);
   };
 
+  // Click on plot canvas to select/pin a point (or deselect if clicking same point)
+  const handlePlotClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!svgRef.current || coords.length === 0) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, mouseX / rect.width));
+    const targetIdx = Math.round(ratio * (coords.length - 1));
+
+    setSelectedPointIndex((prev) => (prev === targetIdx ? null : targetIdx));
+  };
+
+  // The active session displayed in the header telemetry:
+  // If a point is clicked/pinned, display its data; otherwise display the latest closing session.
+  const activeInspectionIndex =
+    selectedPointIndex !== null ? selectedPointIndex : null;
+
   const activePoint =
-    hoverIndex !== null && coords[hoverIndex]
-      ? coords[hoverIndex]
+    activeInspectionIndex !== null && coords[activeInspectionIndex]
+      ? coords[activeInspectionIndex]
       : coords.length > 0
         ? coords[coords.length - 1]
         : null;
 
+  const isInspecting = selectedPointIndex !== null;
   const displayedValue = activePoint ? activePoint[3] : endValue;
   const displayedDate = activePoint ? activePoint[2] : endDate;
-  const isHovering = hoverIndex !== null;
 
-  // Comparison to start
+  // Change comparison
   const hoverDiff = activePoint ? activePoint[3] - startValue : change;
   const hoverDiffPct =
     startValue !== 0 ? (hoverDiff / startValue) * 100 : changePct;
 
-  // Technical values at active/hovered inspection point
+  // Inspected date technicals
   const hoverDate = activePoint ? activePoint[2] : series.latestDate;
   const hoverDma50 = technicals.dma50.get(hoverDate);
   const hoverDma200 = technicals.dma200.get(hoverDate);
@@ -425,22 +471,63 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     ? bigDropEvents.find((d) => d.date === activePoint[2])
     : undefined;
 
-  // Y-coordinates of active DMA markers for crosshair visualization
-  const hoverDma50Y =
-    hoverDma50 !== undefined
-      ? padding.top + chartH - ((hoverDma50 - chartMin) / valRange) * chartH
+  // Visual crosshair point (hover or clicked)
+  const visualCrosshairIndex =
+    selectedPointIndex !== null
+      ? selectedPointIndex
+      : hoverIndex !== null
+        ? hoverIndex
+        : null;
+
+  const crosshairPoint =
+    visualCrosshairIndex !== null && coords[visualCrosshairIndex]
+      ? coords[visualCrosshairIndex]
       : null;
 
-  const hoverDma200Y =
-    hoverDma200 !== undefined
-      ? padding.top + chartH - ((hoverDma200 - chartMin) / valRange) * chartH
+  const crosshairDma50 = crosshairPoint
+    ? technicals.dma50.get(crosshairPoint[2])
+    : undefined;
+  const crosshairDma200 = crosshairPoint
+    ? technicals.dma200.get(crosshairPoint[2])
+    : undefined;
+
+  // Y-coordinates of crosshair DMA markers
+  const crosshairDma50Y =
+    crosshairDma50 !== undefined
+      ? padding.top + chartH - ((crosshairDma50 - chartMin) / valRange) * chartH
       : null;
 
-  // Latest DMA values for header chips
+  const crosshairDma200Y =
+    crosshairDma200 !== undefined
+      ? padding.top +
+        chartH -
+        ((crosshairDma200 - chartMin) / valRange) * chartH
+      : null;
+
+  // Selected point details for on-click floating tooltip card
+  const selectedPoint =
+    selectedPointIndex !== null && coords[selectedPointIndex]
+      ? coords[selectedPointIndex]
+      : null;
+
+  const selectedPointStats = selectedPoint
+    ? technicals.dailyStats.get(selectedPoint[2])
+    : undefined;
+  const selectedPointDma50 = selectedPoint
+    ? technicals.dma50.get(selectedPoint[2])
+    : undefined;
+  const selectedPointDma200 = selectedPoint
+    ? technicals.dma200.get(selectedPoint[2])
+    : undefined;
+  const selectedPointDrop = selectedPoint
+    ? bigDropEvents.find((d) => d.date === selectedPoint[2])
+    : undefined;
+
+  // Latest DMA values
   const latestDma50 = technicals.dma50.get(series.latestDate);
   const latestDma200 = technicals.dma200.get(series.latestDate);
 
-  // Structural Trend Posture (Golden Cross / Death Cross)
+  // Structural Trend Posture
   const trendSignal = useMemo(() => {
     if (latestDma50 === undefined || latestDma200 === undefined) return null;
     const isGolden = latestDma50 >= latestDma200;
@@ -449,7 +536,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
 
     if (isGolden && isAbove50 && isAbove200) {
       return {
-        label: "Bullish: Golden Cross (Above 50 & 200 DMA)",
+        label: "Golden Cross (Above 50 & 200 DMA)",
         color: "#10b981",
         bg: "rgba(16, 185, 129, 0.14)",
         border: "rgba(16, 185, 129, 0.35)",
@@ -458,7 +545,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     }
     if (isGolden && !isAbove50 && isAbove200) {
       return {
-        label: "Pullback: Golden Cross (Testing 50 DMA)",
+        label: "Golden Cross (Pullback to 50 DMA)",
         color: "#f59e0b",
         bg: "rgba(245, 158, 11, 0.14)",
         border: "rgba(245, 158, 11, 0.35)",
@@ -467,7 +554,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     }
     if (!isGolden && !isAbove50 && !isAbove200) {
       return {
-        label: "Bearish: Death Cross (Below Both DMAs)",
+        label: "Death Cross (Below 50 & 200 DMA)",
         color: "#ef4444",
         bg: "rgba(239, 68, 68, 0.14)",
         border: "rgba(239, 68, 68, 0.35)",
@@ -476,7 +563,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     }
     if (!isGolden) {
       return {
-        label: "Caution: Death Cross Regime (50 < 200 DMA)",
+        label: "Death Cross Regime (50 < 200 DMA)",
         color: "#f87171",
         bg: "rgba(239, 68, 68, 0.12)",
         border: "rgba(239, 68, 68, 0.28)",
@@ -492,7 +579,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     };
   }, [latestDma50, latestDma200, series.latestValue]);
 
-  // Grid reference lines on the right axis
+  // Horizontal Grid Lines
   const gridLines = useMemo(() => {
     const steps = [0.15, 0.4, 0.65, 0.9];
     return steps.map((pct) => {
@@ -502,13 +589,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     });
   }, [chartMin, valRange, padding.top, chartH]);
 
-  // Date ticks along the bottom axis
+  // Date ticks along bottom axis
   const dateTicks = useMemo(() => {
     if (coords.length < 2) return [];
     if (coords.length <= 7) {
       return coords.map((c) => ({
         x: c[0],
-        label: c[2].slice(5), // "MM-DD" e.g. "10-29"
+        label: c[2].slice(5),
       }));
     }
     const count = 5;
@@ -520,18 +607,22 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
       );
       ticks.push({
         x: coords[idx][0],
-        label: coords[idx][2].slice(2), // "YY-MM-DD"
+        label: coords[idx][2].slice(2),
       });
     }
     return ticks;
   }, [coords]);
 
-  // Handle snap inspection to a specific drop day
   const handleSelectDropDay = (index: number) => {
-    setHoverIndex(index);
+    setSelectedPointIndex(index);
     if (svgRef.current) {
       svgRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+  };
+
+  const handleRangeChange = (rng: TimeRange) => {
+    setSelectedRange(rng);
+    setSelectedPointIndex(null);
   };
 
   if (!series || !series.observations || series.observations.length === 0) {
@@ -554,7 +645,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
       }}
     >
       <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-        {/* Top Header & Range Buttons */}
+        {/* Top Header & Range Switcher */}
         <Stack
           direction={{ xs: "column", sm: "row" }}
           justifyContent="space-between"
@@ -649,7 +740,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               <Button
                 key={rng}
                 className={selectedRange === rng ? "active" : ""}
-                onClick={() => setSelectedRange(rng)}
+                onClick={() => handleRangeChange(rng)}
               >
                 {rng}
               </Button>
@@ -657,30 +748,32 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </ButtonGroup>
         </Stack>
 
-        {/* Real-time Pricing Summary Bar */}
+        {/* Stable Pro Telemetry Strip (Fixed height, completely eliminates layout jumps) */}
         <Box
           sx={{
             display: "flex",
-            alignItems: "baseline",
+            alignItems: "center",
             justifyContent: "space-between",
             flexWrap: "wrap",
             gap: 1.5,
-            mb: 1.5,
+            mb: 1.75,
             pb: 1.5,
             borderBottom:
               "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+            minHeight: 48,
           }}
         >
+          {/* Left: Numerical Telemetry */}
           <Stack
             direction="row"
             alignItems="baseline"
-            spacing={{ xs: 1.5, sm: 2 }}
+            spacing={{ xs: 1.2, sm: 2 }}
             flexWrap="wrap"
           >
             <Typography
               sx={{
                 fontWeight: 800,
-                fontSize: { xs: "1.35rem", sm: "1.7rem" },
+                fontSize: { xs: "1.35rem", sm: "1.75rem" },
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
                 fontVariantNumeric: "tabular-nums",
@@ -723,37 +816,80 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             <Typography
               variant="caption"
               sx={{
-                color: isHovering ? "primary.light" : "text.secondary",
+                color: isInspecting ? "primary.light" : "text.secondary",
                 fontSize: "0.82rem",
                 display: "flex",
                 alignItems: "center",
                 gap: 0.5,
+                fontWeight: isInspecting ? 700 : 500,
               }}
             >
               <CalendarTodayIcon sx={{ fontSize: 13 }} />
-              {displayedDate} {isHovering && "(Hover Inspection)"}
+              {displayedDate}{" "}
+              {isInspecting ? "(Selected session)" : "(Latest close)"}
             </Typography>
+
+            {/* Daily Return (when a point is selected) */}
+            {isInspecting && hoverDailyStats && (
+              <Chip
+                label={`Day: ${hoverDailyStats.change >= 0 ? "+" : ""}${hoverDailyStats.changePct.toFixed(2)}%`}
+                size="small"
+                sx={{
+                  height: 20,
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  backgroundColor:
+                    hoverDailyStats.change >= 0
+                      ? "rgba(16, 185, 129, 0.12)"
+                      : "rgba(239, 68, 68, 0.12)",
+                  color:
+                    hoverDailyStats.change >= 0 ? "#10b981" : "#ef4444",
+                  border: `1px solid ${hoverDailyStats.change >= 0 ? "rgba(16, 185, 129, 0.25)" : "rgba(239, 68, 68, 0.25)"}`,
+                }}
+              />
+            )}
           </Stack>
 
-          {/* Golden/Death Cross Signal Pill */}
-          {trendSignal && (
-            <Chip
-              icon={trendSignal.icon}
-              label={trendSignal.label}
-              size="small"
-              sx={{
-                fontWeight: 800,
-                fontSize: "0.7rem",
-                height: 24,
-                backgroundColor: trendSignal.bg,
-                color: trendSignal.color,
-                border: `1px solid ${trendSignal.border}`,
-              }}
-            />
-          )}
+          {/* Right: Technical Regime Signal / Drop Alert Pill */}
+          <Stack direction="row" alignItems="center" spacing={1}>
+            {activeBigDrop && (
+              <Chip
+                icon={
+                  <ArrowDownwardIcon
+                    sx={{ fontSize: "14px !important", color: "#ffffff" }}
+                  />
+                }
+                label={`Selloff Session: ${activeBigDrop.changePct.toFixed(2)}%`}
+                size="small"
+                sx={{
+                  height: 24,
+                  fontWeight: 800,
+                  fontSize: "0.72rem",
+                  backgroundColor: "#ef4444",
+                  color: "#ffffff",
+                  boxShadow: "0 2px 10px rgba(239, 68, 68, 0.4)",
+                }}
+              />
+            )}
+            {trendSignal && !activeBigDrop && (
+              <Chip
+                icon={trendSignal.icon}
+                label={trendSignal.label}
+                size="small"
+                sx={{
+                  fontWeight: 800,
+                  fontSize: "0.7rem",
+                  height: 24,
+                  backgroundColor: trendSignal.bg,
+                  color: trendSignal.color,
+                  border: `1px solid ${trendSignal.border}`,
+                }}
+              />
+            )}
+          </Stack>
         </Box>
 
-        {/* Technical Indicators Control Toolbar & Live Overlays Bar */}
+        {/* Technical Indicators & Drop Filtering Bar */}
         <Box
           sx={{
             display: "flex",
@@ -762,13 +898,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             flexWrap: "wrap",
             gap: 1.5,
             mb: 2,
-            p: { xs: 1, sm: 1.2 },
-            borderRadius: 2,
+            p: { xs: 1, sm: 1.25 },
+            borderRadius: 2.5,
             backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.45))",
             border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
           }}
         >
-          {/* Indicator Toggles */}
+          {/* Overlay Toggles */}
           <Stack
             direction="row"
             alignItems="center"
@@ -790,7 +926,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 mr: 0.5,
               }}
             >
-              <LayersIcon sx={{ fontSize: 14 }} /> Indicators:
+              <LayersIcon sx={{ fontSize: 14 }} /> Overlays:
             </Typography>
 
             {/* 50 DMA Toggle */}
@@ -824,15 +960,35 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                         }}
                       />
                       <span>50 DMA</span>
-                      {latestDma50 !== undefined && (
-                        <span style={{ opacity: 0.9, fontSize: "0.68rem" }}>
+                      {hoverDma50 !== undefined ? (
+                        <span
+                          style={{
+                            opacity: 0.9,
+                            fontSize: "0.68rem",
+                            fontVariantNumeric: "tabular-nums",
+                          }}
+                        >
+                          ({formatSeriesValue(
+                            hoverDma50,
+                            series.format,
+                            series.decimals,
+                          )})
+                        </span>
+                      ) : latestDma50 !== undefined ? (
+                        <span
+                          style={{
+                            opacity: 0.9,
+                            fontSize: "0.68rem",
+                            fontVariantNumeric: "tabular-nums",
+                          }}
+                        >
                           ({formatSeriesValue(
                             latestDma50,
                             series.format,
                             series.decimals,
                           )})
                         </span>
-                      )}
+                      ) : null}
                     </Box>
                   }
                   size="small"
@@ -889,15 +1045,35 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                         }}
                       />
                       <span>200 DMA</span>
-                      {latestDma200 !== undefined && (
-                        <span style={{ opacity: 0.9, fontSize: "0.68rem" }}>
+                      {hoverDma200 !== undefined ? (
+                        <span
+                          style={{
+                            opacity: 0.9,
+                            fontSize: "0.68rem",
+                            fontVariantNumeric: "tabular-nums",
+                          }}
+                        >
+                          ({formatSeriesValue(
+                            hoverDma200,
+                            series.format,
+                            series.decimals,
+                          )})
+                        </span>
+                      ) : latestDma200 !== undefined ? (
+                        <span
+                          style={{
+                            opacity: 0.9,
+                            fontSize: "0.68rem",
+                            fontVariantNumeric: "tabular-nums",
+                          }}
+                        >
                           ({formatSeriesValue(
                             latestDma200,
                             series.format,
                             series.decimals,
                           )})
                         </span>
-                      )}
+                      ) : null}
                     </Box>
                   }
                   size="small"
@@ -925,7 +1101,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
 
             {/* Big Drops Toggle */}
             <Tooltip
-              title="Show days with single-day decline of ≥ 1.5% in the selected range"
+              title={`Show drop sessions with decline ≥ ${dropThreshold}%`}
               arrow
             >
               <Chip
@@ -961,9 +1137,52 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 }}
               />
             </Tooltip>
+
+            {/* Drop Threshold Filter Pills (Institutional Filter) */}
+            {showBigDrops && (
+              <Stack direction="row" alignItems="center" spacing={0.5} sx={{ ml: 0.5 }}>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontSize: "0.65rem",
+                    color: "text.secondary",
+                    fontWeight: 700,
+                    display: { xs: "none", sm: "block" },
+                  }}
+                >
+                  <FilterListIcon sx={{ fontSize: 12, verticalAlign: "middle" }} /> Cutoff:
+                </Typography>
+                {([1.5, 2.0, 3.0] as DropThreshold[]).map((thresh) => (
+                  <Chip
+                    key={thresh}
+                    label={`≥ ${thresh}%`}
+                    size="small"
+                    clickable
+                    onClick={() => {
+                      setDropThreshold(thresh);
+                      setSelectedPointIndex(null);
+                    }}
+                    sx={{
+                      height: 20,
+                      fontSize: "0.64rem",
+                      fontWeight: 700,
+                      backgroundColor:
+                        dropThreshold === thresh
+                          ? "rgba(239, 68, 68, 0.25)"
+                          : "rgba(255, 255, 255, 0.04)",
+                      color: dropThreshold === thresh ? "#f87171" : "text.secondary",
+                      border:
+                        dropThreshold === thresh
+                          ? "1px solid rgba(239, 68, 68, 0.4)"
+                          : "1px solid transparent",
+                    }}
+                  />
+                ))}
+              </Stack>
+            )}
           </Stack>
 
-          {/* Quick Info & Guide Toggle */}
+          {/* Guide Toggle */}
           <Button
             size="small"
             startIcon={<InfoOutlinedIcon sx={{ fontSize: 14 }} />}
@@ -983,7 +1202,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </Button>
         </Box>
 
-        {/* Collapsible Educational Guide */}
+        {/* Educational Guide Drawer */}
         <Collapse in={showGuide} sx={{ mb: 2 }}>
           <Paper
             variant="outlined"
@@ -1007,7 +1226,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               }}
             >
               <InfoOutlinedIcon sx={{ fontSize: 16 }} />
-              Understanding Technical Indicators &amp; Big Drop Signals
+              Professional Technical Indicators &amp; Capitulation Drops
             </Typography>
             <Box
               sx={{
@@ -1033,9 +1252,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 >
                   🟠 50-Day Moving Average (50 DMA)
                 </Typography>
-                Reflects medium-term momentum over ~10 calendar weeks. Trading
-                above indicates firm intermediate trend; slipping below signals
-                near-term exhaustion or consolidation.
+                Medium-term momentum boundary. When prices hold above the 50
+                DMA, the prevailing institutional rally is intact. Dropping below
+                warns of momentum loss or corrective phases.
               </Box>
               <Box>
                 <Typography
@@ -1048,9 +1267,9 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 >
                   🟣 200-Day Moving Average (200 DMA)
                 </Typography>
-                The institutional gold standard for primary long-term market
-                regimes. Benchmarks above the 200 DMA are in secular bull markets,
-                while trading below warns of structural bear market headwinds.
+                Secular bull/bear dividing line watched by sovereign wealth and
+                pension funds worldwide. Golden Cross (50 DMA &gt; 200 DMA)
+                confirms long-term bull markets.
               </Box>
               <Box>
                 <Typography
@@ -1061,177 +1280,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     mb: 0.3,
                   }}
                 >
-                  🔴 Big Drop Days (≥ 1.5% Decline)
+                  🔴 High-Volatility Selloff Days
                 </Typography>
-                Marks high-volume capitulation, geopolitical shocks, or macro
-                repricing days. Often signal panic extremes, support retests, or
-                dynamic dip-buying inflection points.
+                Single-day drops exceeding the selected threshold (≥ 1.5%, 2.0%,
+                or 3.0%). These represent acute market shocks, panic liquidations,
+                or key inflection pivots.
               </Box>
             </Box>
           </Paper>
         </Collapse>
 
-        {/* Dynamic Inspection HUD Bar (Updates smoothly during mouse crosshair hover) */}
-        {isHovering && (
-          <Paper
-            variant="outlined"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: 2,
-              mb: 1.5,
-              py: 0.8,
-              px: 1.5,
-              borderRadius: 2,
-              backgroundColor: activeBigDrop
-                ? "rgba(239, 68, 68, 0.12)"
-                : "rgba(99, 102, 241, 0.08)",
-              borderColor: activeBigDrop
-                ? "rgba(239, 68, 68, 0.35)"
-                : "rgba(99, 102, 241, 0.25)",
-            }}
-          >
-            {/* Hover Date */}
-            <Typography
-              sx={{
-                fontWeight: 800,
-                fontSize: "0.78rem",
-                color: "text.primary",
-                display: "flex",
-                alignItems: "center",
-                gap: 0.5,
-              }}
-            >
-              <CalendarTodayIcon sx={{ fontSize: 13, color: "primary.light" }} />
-              {hoverDate}
-            </Typography>
-
-            <Divider orientation="vertical" flexItem sx={{ height: 16, my: "auto" }} />
-
-            {/* Price on Date */}
-            <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: "0.78rem",
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
-              Close:{" "}
-              <strong>
-                {formatSeriesValue(
-                  displayedValue,
-                  series.format,
-                  series.decimals,
-                )}
-              </strong>
-            </Typography>
-
-            {/* Daily Return */}
-            {hoverDailyStats && (
-              <Typography
-                sx={{
-                  fontWeight: 800,
-                  fontSize: "0.78rem",
-                  fontVariantNumeric: "tabular-nums",
-                  color:
-                    hoverDailyStats.change >= 0 ? "#10b981" : "#ef4444",
-                }}
-              >
-                Day Return: {hoverDailyStats.change >= 0 ? "+" : ""}
-                {hoverDailyStats.changePct.toFixed(2)}% (
-                {hoverDailyStats.change >= 0 ? "+" : ""}
-                {formatSeriesValue(
-                  hoverDailyStats.change,
-                  series.format,
-                  series.decimals,
-                )}
-                )
-              </Typography>
-            )}
-
-            {/* 50 DMA at Date */}
-            {show50Dma && hoverDma50 !== undefined && (
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "0.75rem",
-                  color: "#fbbf24",
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
-                50 DMA:{" "}
-                {formatSeriesValue(
-                  hoverDma50,
-                  series.format,
-                  series.decimals,
-                )}{" "}
-                (
-                {displayedValue >= hoverDma50 ? "+" : ""}
-                {(
-                  ((displayedValue - hoverDma50) / hoverDma50) *
-                  100
-                ).toFixed(1)}
-                %)
-              </Typography>
-            )}
-
-            {/* 200 DMA at Date */}
-            {show200Dma && hoverDma200 !== undefined && (
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "0.75rem",
-                  color: "#c084fc",
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
-                200 DMA:{" "}
-                {formatSeriesValue(
-                  hoverDma200,
-                  series.format,
-                  series.decimals,
-                )}{" "}
-                (
-                {displayedValue >= hoverDma200 ? "+" : ""}
-                {(
-                  ((displayedValue - hoverDma200) / hoverDma200) *
-                  100
-                ).toFixed(1)}
-                %)
-              </Typography>
-            )}
-
-            {/* Big Drop Alert Badge if this day was a severe selloff */}
-            {activeBigDrop && (
-              <Chip
-                icon={<ArrowDownwardIcon sx={{ fontSize: "14px !important" }} />}
-                label={`Big Drop Alert: ${activeBigDrop.changePct.toFixed(2)}%`}
-                size="small"
-                sx={{
-                  height: 22,
-                  fontWeight: 800,
-                  fontSize: "0.7rem",
-                  backgroundColor: "#ef4444",
-                  color: "#ffffff",
-                  boxShadow: "0 2px 8px rgba(239, 68, 68, 0.4)",
-                  ml: "auto",
-                }}
-              />
-            )}
-          </Paper>
-        )}
-
-        {/* Interactive Chart Canvas with Clean HTML Axis Overlays */}
+        {/* Interactive Chart Canvas with Hardware-Accelerated Vector Elements */}
         <Box
           sx={{
             position: "relative",
             width: "100%",
-            height: { xs: 220, sm: 275 },
+            height: { xs: 220, sm: 280 },
             userSelect: "none",
           }}
         >
-          {/* Plot Area Container */}
+          {/* Plot Area Container (Touch and Mouse interactive, click to inspect) */}
           <Box
             sx={{
               position: "absolute",
@@ -1239,7 +1307,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               left: 0,
               right: 60,
               bottom: 24,
-              cursor: "crosshair",
+              cursor: "pointer",
               borderRight: "1px solid",
               borderBottom: "1px solid",
               borderColor: "divider",
@@ -1247,20 +1315,26 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={handlePlotClick}
           >
             <svg
               ref={svgRef}
               viewBox={`0 0 ${plotW} ${plotH}`}
               preserveAspectRatio="none"
-              style={{ width: "100%", height: "100%", display: "block" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "block",
+                shapeRendering: "geometricPrecision",
+              }}
             >
               <defs>
                 <linearGradient id={chartGradId} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={strokeColor} stopOpacity={0.38} />
+                  <stop offset="0%" stopColor={strokeColor} stopOpacity={0.32} />
                   <stop
-                    offset="70%"
+                    offset="65%"
                     stopColor={strokeColor}
-                    stopOpacity={0.06}
+                    stopOpacity={0.05}
                   />
                   <stop
                     offset="100%"
@@ -1270,12 +1344,12 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 </linearGradient>
                 <filter
                   id={`glow-${chartGradId}`}
-                  x="-20%"
-                  y="-20%"
-                  width="140%"
-                  height="140%"
+                  x="-10%"
+                  y="-10%"
+                  width="120%"
+                  height="120%"
                 >
-                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feGaussianBlur stdDeviation="2.5" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
@@ -1283,7 +1357,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 </filter>
               </defs>
 
-              {/* Horizontal Grid Lines */}
+              {/* Horizontal Reference Lines */}
               {gridLines.map((line, idx) => (
                 <line
                   key={idx}
@@ -1294,11 +1368,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   stroke={theme.palette.divider}
                   strokeDasharray="3 3"
                   strokeWidth="0.8"
-                  opacity={0.5}
+                  opacity={0.4}
                 />
               ))}
 
-              {/* Filled Gradient Area under Main Price */}
+              {/* Filled Gradient Area */}
               <path d={areaD} fill={`url(#${chartGradId})`} />
 
               {/* 200 DMA Curve (Royal Violet) */}
@@ -1307,7 +1381,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   d={dma200PathD}
                   fill="none"
                   stroke="#a855f7"
-                  strokeWidth="2.0"
+                  strokeWidth="1.8"
                   strokeDasharray="5 3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -1321,7 +1395,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   d={dma50PathD}
                   fill="none"
                   stroke="#f59e0b"
-                  strokeWidth="2.0"
+                  strokeWidth="1.8"
                   strokeDasharray="4 2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -1329,89 +1403,83 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 />
               )}
 
-              {/* Glowing Main Benchmark Price Line */}
+              {/* Primary Price Curve */}
               <path
                 d={pathD}
                 fill="none"
                 stroke={strokeColor}
-                strokeWidth="2.4"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 filter={`url(#glow-${chartGradId})`}
               />
 
-              {/* Big Drop Event Markers on the Price Curve */}
+              {/* Big Drop Markers on Price Curve */}
               {showBigDrops &&
                 bigDropEvents.map((drop) => {
-                  const isCurrent =
-                    activePoint && activePoint[2] === drop.date;
+                  const isSelected =
+                    selectedPointIndex !== null &&
+                    selectedPointIndex === drop.index;
                   return (
                     <g
                       key={drop.date}
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setHoverIndex(drop.index);
+                        setSelectedPointIndex(drop.index);
                       }}
                     >
-                      {/* Pulse Halo */}
+                      {/* Outer Pulse Ring */}
                       <circle
                         cx={drop.x}
                         cy={drop.y}
-                        r={isCurrent ? 10 : 7}
+                        r={isSelected ? 10 : 6}
                         fill="rgba(239, 68, 68, 0.28)"
                       />
-                      {/* Core Indicator Circle */}
+                      {/* Inner Dot */}
                       <circle
                         cx={drop.x}
                         cy={drop.y}
-                        r={isCurrent ? 5.5 : 4}
+                        r={isSelected ? 5 : 3.2}
                         fill="#ef4444"
                         stroke="#ffffff"
-                        strokeWidth="1.5"
-                      />
-                      {/* Subtle downward marker triangle */}
-                      <polygon
-                        points={`${drop.x - 3.5},${drop.y - 8} ${drop.x + 3.5},${drop.y - 8} ${drop.x},${drop.y - 4}`}
-                        fill="#ef4444"
+                        strokeWidth="1.2"
                       />
                     </g>
                   );
                 })}
 
-              {/* Hover Crosshairs & Point Markers */}
-              {activePoint && isHovering && (
+              {/* Crosshair on Hover or Selected Point */}
+              {crosshairPoint && (
                 <g>
                   {/* Vertical Crosshair Line */}
                   <line
-                    x1={activePoint[0]}
+                    x1={crosshairPoint[0]}
                     y1={0}
-                    x2={activePoint[0]}
+                    x2={crosshairPoint[0]}
                     y2={plotH}
-                    stroke={theme.palette.text.primary}
-                    strokeDasharray="3 3"
-                    strokeWidth="1.2"
-                    opacity={0.65}
-                  />
-
-                  {/* Horizontal Crosshair Line to Right Axis */}
-                  <line
-                    x1={0}
-                    y1={activePoint[1]}
-                    x2={plotW}
-                    y2={activePoint[1]}
-                    stroke={theme.palette.text.primary}
+                    stroke="rgba(255, 255, 255, 0.45)"
                     strokeDasharray="3 3"
                     strokeWidth="1"
-                    opacity={0.5}
+                  />
+
+                  {/* Horizontal Crosshair Line */}
+                  <line
+                    x1={0}
+                    y1={crosshairPoint[1]}
+                    x2={plotW}
+                    y2={crosshairPoint[1]}
+                    stroke="rgba(255, 255, 255, 0.3)"
+                    strokeDasharray="3 3"
+                    strokeWidth="1"
                   />
 
                   {/* Marker Circle on 200 DMA */}
-                  {show200Dma && hoverDma200Y !== null && (
+                  {show200Dma && crosshairDma200Y !== null && (
                     <circle
-                      cx={activePoint[0]}
-                      cy={hoverDma200Y}
-                      r="4.5"
+                      cx={crosshairPoint[0]}
+                      cy={crosshairDma200Y}
+                      r="4"
                       fill="#a855f7"
                       stroke="#ffffff"
                       strokeWidth="1.5"
@@ -1419,11 +1487,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   )}
 
                   {/* Marker Circle on 50 DMA */}
-                  {show50Dma && hoverDma50Y !== null && (
+                  {show50Dma && crosshairDma50Y !== null && (
                     <circle
-                      cx={activePoint[0]}
-                      cy={hoverDma50Y}
-                      r="4.5"
+                      cx={crosshairPoint[0]}
+                      cy={crosshairDma50Y}
+                      r="4"
                       fill="#f59e0b"
                       stroke="#ffffff"
                       strokeWidth="1.5"
@@ -1432,15 +1500,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
 
                   {/* Primary Marker Circles on Price Point */}
                   <circle
-                    cx={activePoint[0]}
-                    cy={activePoint[1]}
-                    r="7"
+                    cx={crosshairPoint[0]}
+                    cy={crosshairPoint[1]}
+                    r="6.5"
                     fill={glowColor}
                   />
                   <circle
-                    cx={activePoint[0]}
-                    cy={activePoint[1]}
-                    r="4.5"
+                    cx={crosshairPoint[0]}
+                    cy={crosshairPoint[1]}
+                    r="4"
                     fill="#ffffff"
                     stroke={strokeColor}
                     strokeWidth="2.2"
@@ -1448,9 +1516,194 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 </g>
               )}
             </svg>
+
+            {/* Pinned Telemetry Tooltip Card (ONLY shown on explicit click, NEVER on hover) */}
+            {selectedPoint && (
+              <Paper
+                elevation={8}
+                onClick={(e) => e.stopPropagation()}
+                sx={{
+                  position: "absolute",
+                  left: `${(selectedPoint[0] / plotW) * 100}%`,
+                  top: `${(selectedPoint[1] / plotH) * 100}%`,
+                  transform:
+                    selectedPoint[0] > 520
+                      ? "translate(-108%, -50%)"
+                      : "translate(14px, -50%)",
+                  backgroundColor: "rgba(15, 23, 42, 0.94)",
+                  backdropFilter: "blur(12px)",
+                  border: selectedPointDrop
+                    ? "1px solid rgba(239, 68, 68, 0.5)"
+                    : "1px solid rgba(255, 255, 255, 0.16)",
+                  borderRadius: 2.5,
+                  p: 1.5,
+                  minWidth: 195,
+                  maxWidth: 245,
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.55)",
+                  zIndex: 5,
+                }}
+              >
+                {/* Header row: Date + Close Button */}
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  sx={{ mb: 0.5 }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "0.72rem",
+                      fontWeight: 800,
+                      color: "text.secondary",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                    }}
+                  >
+                    <CalendarTodayIcon
+                      sx={{ fontSize: 12, color: "primary.light" }}
+                    />
+                    {selectedPoint[2]}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedPointIndex(null);
+                    }}
+                    sx={{
+                      p: 0.2,
+                      color: "text.secondary",
+                      "&:hover": { color: "text.primary" },
+                    }}
+                  >
+                    <CloseIcon sx={{ fontSize: 13 }} />
+                  </IconButton>
+                </Stack>
+
+                {/* Price */}
+                <Typography
+                  sx={{
+                    fontSize: "1.1rem",
+                    fontWeight: 800,
+                    color: "#ffffff",
+                    fontVariantNumeric: "tabular-nums",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {formatSeriesValue(
+                    selectedPoint[3],
+                    series.format,
+                    series.decimals,
+                  )}
+                </Typography>
+
+                {/* Daily Change */}
+                {selectedPointStats && (
+                  <Typography
+                    sx={{
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      color:
+                        selectedPointStats.change >= 0 ? "#10b981" : "#ef4444",
+                      fontVariantNumeric: "tabular-nums",
+                      mt: 0.25,
+                      mb: 0.75,
+                    }}
+                  >
+                    {selectedPointStats.change >= 0 ? "+" : ""}
+                    {selectedPointStats.changePct.toFixed(2)}% (
+                    {selectedPointStats.change >= 0 ? "+" : ""}
+                    {formatSeriesValue(
+                      selectedPointStats.change,
+                      series.format,
+                      series.decimals,
+                    )}
+                    )
+                  </Typography>
+                )}
+
+                {/* Indicators Breakdown */}
+                <Stack
+                  spacing={0.3}
+                  sx={{
+                    pt: 0.5,
+                    borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+                  }}
+                >
+                  {show50Dma && selectedPointDma50 !== undefined && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.68rem",
+                        color: "#fbbf24",
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      50 DMA:{" "}
+                      {formatSeriesValue(
+                        selectedPointDma50,
+                        series.format,
+                        series.decimals,
+                      )}{" "}
+                      (
+                      {selectedPoint[3] >= selectedPointDma50 ? "+" : ""}
+                      {(
+                        ((selectedPoint[3] - selectedPointDma50) /
+                          selectedPointDma50) *
+                        100
+                      ).toFixed(1)}
+                      %)
+                    </Typography>
+                  )}
+                  {show200Dma && selectedPointDma200 !== undefined && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.68rem",
+                        color: "#c084fc",
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      200 DMA:{" "}
+                      {formatSeriesValue(
+                        selectedPointDma200,
+                        series.format,
+                        series.decimals,
+                      )}{" "}
+                      (
+                      {selectedPoint[3] >= selectedPointDma200 ? "+" : ""}
+                      {(
+                        ((selectedPoint[3] - selectedPointDma200) /
+                          selectedPointDma200) *
+                        100
+                      ).toFixed(1)}
+                      %)
+                    </Typography>
+                  )}
+                  {selectedPointDrop && (
+                    <Chip
+                      icon={
+                        <ArrowDownwardIcon
+                          sx={{ fontSize: "12px !important", color: "#ffffff" }}
+                        />
+                      }
+                      label={`Big Drop: ${selectedPointDrop.changePct.toFixed(2)}%`}
+                      size="small"
+                      sx={{
+                        height: 20,
+                        fontSize: "0.65rem",
+                        fontWeight: 800,
+                        backgroundColor: "#ef4444",
+                        color: "#ffffff",
+                        mt: 0.5,
+                      }}
+                    />
+                  )}
+                </Stack>
+              </Paper>
+            )}
           </Box>
 
-          {/* Right Y-Axis HTML Overlay (Proper, Crisp Font) */}
+          {/* Right Y-Axis HTML Overlay (Fixed, crisp tabular numbers) */}
           <Box
             sx={{
               position: "absolute",
@@ -1482,12 +1735,12 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               </Typography>
             ))}
 
-            {/* Hover Dynamic Price Badge */}
-            {activePoint && isHovering && (
+            {/* Selected Point Price Badge on Right Y-Axis */}
+            {selectedPoint && (
               <Box
                 sx={{
                   position: "absolute",
-                  top: `${(activePoint[1] / plotH) * 100}%`,
+                  top: `${(selectedPoint[1] / plotH) * 100}%`,
                   transform: "translateY(-50%)",
                   left: 3,
                   right: 3,
@@ -1497,21 +1750,21 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   py: "2px",
                   px: "3px",
                   textAlign: "center",
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: "0.65rem",
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1.2,
-                  boxShadow: "0 2px 6px rgba(0, 0, 0, 0.35)",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.4)",
                   zIndex: 2,
                   whiteSpace: "nowrap",
                 }}
               >
-                {formatAxisValue(activePoint[3], series.format)}
+                {formatAxisValue(selectedPoint[3], series.format)}
               </Box>
             )}
           </Box>
 
-          {/* Bottom X-Axis HTML Overlay (Proper, Crisp Font) */}
+          {/* Bottom X-Axis HTML Overlay */}
           <Box
             sx={{
               position: "absolute",
@@ -1691,7 +1944,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </Paper>
         </Box>
 
-        {/* Significant Drop Days Panel (Actionable inspection of worst selloff sessions in period) */}
+        {/* Significant Drop Days Panel */}
         <Box sx={{ mt: 2.5 }}>
           <Box
             sx={{
@@ -1711,10 +1964,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   letterSpacing: "-0.01em",
                 }}
               >
-                Notable Selloff &amp; Big Drop Days ({bigDropEvents.length})
+                Notable Selloff &amp; Big Drop Sessions ({bigDropEvents.length})
               </Typography>
               <Chip
-                label="Decline ≥ 1.5%"
+                label={`Decline ≥ ${dropThreshold}%`}
                 size="small"
                 sx={{
                   height: 20,
@@ -1742,7 +1995,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </Box>
 
           <Collapse in={showDropPanel}>
-            {bigDropEvents.length > 0 ? (
+            {sortedDropEvents.length > 0 ? (
               <Box
                 sx={{
                   display: "grid",
@@ -1754,174 +2007,172 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   gap: 1.5,
                 }}
               >
-                {[...bigDropEvents]
-                  .sort((a, b) => a.changePct - b.changePct)
-                  .slice(0, 9)
-                  .map((drop) => {
-                    const isSelected =
-                      activePoint && activePoint[2] === drop.date;
-                    const dropVs50 =
-                      drop.dma50 !== undefined
-                        ? drop.price >= drop.dma50
-                          ? "Above 50 DMA"
-                          : "Below 50 DMA"
-                        : null;
-                    const dropVs200 =
-                      drop.dma200 !== undefined
-                        ? drop.price >= drop.dma200
-                          ? "Above 200 DMA"
-                          : "Below 200 DMA"
-                        : null;
+                {sortedDropEvents.slice(0, 9).map((drop) => {
+                  const isSelected =
+                    selectedPointIndex !== null &&
+                    selectedPointIndex === drop.index;
+                  const dropVs50 =
+                    drop.dma50 !== undefined
+                      ? drop.price >= drop.dma50
+                        ? "Above 50 DMA"
+                        : "Below 50 DMA"
+                      : null;
+                  const dropVs200 =
+                    drop.dma200 !== undefined
+                      ? drop.price >= drop.dma200
+                        ? "Above 200 DMA"
+                        : "Below 200 DMA"
+                      : null;
 
-                    return (
-                      <Paper
-                        key={drop.date}
-                        variant="outlined"
-                        onClick={() => handleSelectDropDay(drop.index)}
-                        sx={{
-                          p: 1.25,
-                          borderRadius: 2.5,
-                          cursor: "pointer",
-                          backgroundColor: isSelected
-                            ? "rgba(239, 68, 68, 0.14)"
-                            : "var(--indices-subtle-bg, rgba(15, 23, 42, 0.35))",
-                          borderColor: isSelected
-                            ? "#ef4444"
-                            : "var(--indices-border, rgba(255, 255, 255, 0.08))",
-                          transition:
-                            "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                          "&:hover": {
-                            borderColor: "#ef4444",
-                            backgroundColor: "rgba(239, 68, 68, 0.1)",
-                            transform: "translateY(-1px)",
-                          },
-                        }}
+                  return (
+                    <Paper
+                      key={drop.date}
+                      variant="outlined"
+                      onClick={() => handleSelectDropDay(drop.index)}
+                      sx={{
+                        p: 1.25,
+                        borderRadius: 2.5,
+                        cursor: "pointer",
+                        backgroundColor: isSelected
+                          ? "rgba(239, 68, 68, 0.14)"
+                          : "var(--indices-subtle-bg, rgba(15, 23, 42, 0.35))",
+                        borderColor: isSelected
+                          ? "#ef4444"
+                          : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                        transition:
+                          "all 0.18s cubic-bezier(0.4, 0, 0.2, 1)",
+                        "&:hover": {
+                          borderColor: "#ef4444",
+                          backgroundColor: "rgba(239, 68, 68, 0.1)",
+                          transform: "translateY(-1px)",
+                        },
+                      }}
+                    >
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        sx={{ mb: 0.75 }}
                       >
-                        <Stack
-                          direction="row"
-                          justifyContent="space-between"
-                          alignItems="center"
-                          sx={{ mb: 0.75 }}
+                        <Typography
+                          sx={{
+                            fontWeight: 800,
+                            fontSize: "0.78rem",
+                            color: isSelected
+                              ? "#ffffff"
+                              : "text.primary",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 0.5,
+                          }}
                         >
-                          <Typography
-                            sx={{
-                              fontWeight: 800,
-                              fontSize: "0.78rem",
-                              color: isSelected
-                                ? "#ffffff"
-                                : "text.primary",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 0.5,
-                            }}
-                          >
-                            <CalendarTodayIcon
-                              sx={{ fontSize: 13, color: "text.secondary" }}
-                            />
-                            {drop.date}
-                          </Typography>
-                          <Chip
-                            label={`${drop.changePct.toFixed(2)}%`}
-                            size="small"
-                            sx={{
-                              height: 20,
-                              fontWeight: 800,
-                              fontSize: "0.7rem",
-                              backgroundColor: "rgba(239, 68, 68, 0.2)",
-                              color: "#ef4444",
-                              border: "1px solid rgba(239, 68, 68, 0.35)",
-                            }}
+                          <CalendarTodayIcon
+                            sx={{ fontSize: 13, color: "text.secondary" }}
                           />
-                        </Stack>
+                          {drop.date}
+                        </Typography>
+                        <Chip
+                          label={`${drop.changePct.toFixed(2)}%`}
+                          size="small"
+                          sx={{
+                            height: 20,
+                            fontWeight: 800,
+                            fontSize: "0.7rem",
+                            backgroundColor: "rgba(239, 68, 68, 0.2)",
+                            color: "#ef4444",
+                            border: "1px solid rgba(239, 68, 68, 0.35)",
+                          }}
+                        />
+                      </Stack>
 
-                        <Stack
-                          direction="row"
-                          justifyContent="space-between"
-                          alignItems="baseline"
-                          sx={{ mb: 0.5 }}
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="baseline"
+                        sx={{ mb: 0.5 }}
+                      >
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            color: "text.secondary",
+                            fontSize: "0.7rem",
+                          }}
                         >
-                          <Typography
-                            variant="caption"
-                            sx={{
-                              color: "text.secondary",
-                              fontSize: "0.7rem",
-                            }}
-                          >
-                            Close:{" "}
-                            <strong>
-                              {formatSeriesValue(
-                                drop.price,
-                                series.format,
-                                series.decimals,
-                              )}
-                            </strong>
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            sx={{
-                              fontWeight: 700,
-                              color: "#f87171",
-                              fontSize: "0.7rem",
-                              fontVariantNumeric: "tabular-nums",
-                            }}
-                          >
+                          Close:{" "}
+                          <strong>
                             {formatSeriesValue(
-                              drop.change,
+                              drop.price,
                               series.format,
                               series.decimals,
                             )}
-                          </Typography>
-                        </Stack>
-
-                        {/* Technical posture tags on drop date */}
-                        <Stack
-                          direction="row"
-                          spacing={0.5}
-                          flexWrap="wrap"
-                          useFlexGap
+                          </strong>
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            fontWeight: 700,
+                            color: "#f87171",
+                            fontSize: "0.7rem",
+                            fontVariantNumeric: "tabular-nums",
+                          }}
                         >
-                          {dropVs50 && (
-                            <Chip
-                              label={dropVs50}
-                              size="small"
-                              sx={{
-                                height: 16,
-                                fontSize: "0.62rem",
-                                fontWeight: 700,
-                                backgroundColor:
-                                  dropVs50 === "Above 50 DMA"
-                                    ? "rgba(245, 158, 11, 0.12)"
-                                    : "rgba(239, 68, 68, 0.1)",
-                                color:
-                                  dropVs50 === "Above 50 DMA"
-                                    ? "#fbbf24"
-                                    : "#f87171",
-                              }}
-                            />
+                          {formatSeriesValue(
+                            drop.change,
+                            series.format,
+                            series.decimals,
                           )}
-                          {dropVs200 && (
-                            <Chip
-                              label={dropVs200}
-                              size="small"
-                              sx={{
-                                height: 16,
-                                fontSize: "0.62rem",
-                                fontWeight: 700,
-                                backgroundColor:
-                                  dropVs200 === "Above 200 DMA"
-                                    ? "rgba(168, 85, 247, 0.12)"
-                                    : "rgba(239, 68, 68, 0.1)",
-                                color:
-                                  dropVs200 === "Above 200 DMA"
-                                    ? "#c084fc"
-                                    : "#f87171",
-                              }}
-                            />
-                          )}
-                        </Stack>
-                      </Paper>
-                    );
-                  })}
+                        </Typography>
+                      </Stack>
+
+                      {/* Technical posture tags on drop date */}
+                      <Stack
+                        direction="row"
+                        spacing={0.5}
+                        flexWrap="wrap"
+                        useFlexGap
+                      >
+                        {dropVs50 && (
+                          <Chip
+                            label={dropVs50}
+                            size="small"
+                            sx={{
+                              height: 16,
+                              fontSize: "0.62rem",
+                              fontWeight: 700,
+                              backgroundColor:
+                                dropVs50 === "Above 50 DMA"
+                                  ? "rgba(245, 158, 11, 0.12)"
+                                  : "rgba(239, 68, 68, 0.1)",
+                              color:
+                                dropVs50 === "Above 50 DMA"
+                                  ? "#fbbf24"
+                                  : "#f87171",
+                            }}
+                          />
+                        )}
+                        {dropVs200 && (
+                          <Chip
+                            label={dropVs200}
+                            size="small"
+                            sx={{
+                              height: 16,
+                              fontSize: "0.62rem",
+                              fontWeight: 700,
+                              backgroundColor:
+                                dropVs200 === "Above 200 DMA"
+                                  ? "rgba(168, 85, 247, 0.12)"
+                                  : "rgba(239, 68, 68, 0.1)",
+                              color:
+                                dropVs200 === "Above 200 DMA"
+                                  ? "#c084fc"
+                                  : "#f87171",
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </Paper>
+                  );
+                })}
               </Box>
             ) : (
               <Paper
@@ -1938,7 +2189,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   variant="caption"
                   sx={{ color: "text.secondary", fontSize: "0.78rem" }}
                 >
-                  ✨ No severe single-day drops (≥ 1.5%) were recorded in the{" "}
+                  ✨ No single-day drops (≥ {dropThreshold}%) were recorded in the{" "}
                   <strong>{selectedRange}</strong> time window. The benchmark
                   traded with low downside volatility.
                 </Typography>
