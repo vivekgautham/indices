@@ -6,7 +6,10 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
+import DragHandleIcon from "@mui/icons-material/DragHandle";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LayersIcon from "@mui/icons-material/Layers";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
@@ -135,6 +138,10 @@ export interface BigDropEvent {
   dma200?: number;
 }
 
+const DEFAULT_HEIGHT = 360;
+const MIN_HEIGHT = 220;
+const MAX_HEIGHT = 720;
+
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
   initialRange = "1Y",
@@ -161,6 +168,104 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(
     null,
   );
+
+  // Dynamic Graph Height State & Drag Resizing
+  const [chartHeight, setChartHeight] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem("tracker_chart_height");
+      if (saved) {
+        const parsed = parseInt(saved, 10);
+        if (parsed >= MIN_HEIGHT && parsed <= MAX_HEIGHT) return parsed;
+      }
+    } catch {
+      /* ignore storage error */
+    }
+    return DEFAULT_HEIGHT;
+  });
+
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isDraggingHeight, setIsDraggingHeight] = useState<boolean>(false);
+  const dragStartYRef = useRef<number>(0);
+  const dragStartHeightRef = useRef<number>(DEFAULT_HEIGHT);
+
+  // Keyboard shortcut: Esc to exit fullscreen
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFullscreen]);
+
+  const handleResizeMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingHeight(true);
+    dragStartYRef.current = e.clientY;
+    dragStartHeightRef.current = chartHeight;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const delta = moveEvent.clientY - dragStartYRef.current;
+      const newH = Math.min(
+        MAX_HEIGHT,
+        Math.max(MIN_HEIGHT, dragStartHeightRef.current + delta),
+      );
+      setChartHeight(newH);
+    };
+
+    const onMouseUp = (upEvent: MouseEvent) => {
+      setIsDraggingHeight(false);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      const delta = upEvent.clientY - dragStartYRef.current;
+      const finalH = Math.min(
+        MAX_HEIGHT,
+        Math.max(MIN_HEIGHT, dragStartHeightRef.current + delta),
+      );
+      try {
+        localStorage.setItem("tracker_chart_height", String(finalH));
+      } catch {
+        /* ignore storage error */
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  };
+
+  const handleResizeTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 0) return;
+    setIsDraggingHeight(true);
+    dragStartYRef.current = e.touches[0].clientY;
+    dragStartHeightRef.current = chartHeight;
+
+    let currentH = chartHeight;
+    const onTouchMove = (moveEvent: TouchEvent) => {
+      if (moveEvent.touches.length === 0) return;
+      const delta = moveEvent.touches[0].clientY - dragStartYRef.current;
+      currentH = Math.min(
+        MAX_HEIGHT,
+        Math.max(MIN_HEIGHT, dragStartHeightRef.current + delta),
+      );
+      setChartHeight(currentH);
+    };
+
+    const onTouchEnd = () => {
+      setIsDraggingHeight(false);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      try {
+        localStorage.setItem("tracker_chart_height", String(currentH));
+      } catch {
+        /* ignore storage error */
+      }
+    };
+
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onTouchEnd);
+  };
 
   // Indicators toggle states (default: active for maximum informative value)
   const [show50Dma, setShow50Dma] = useState<boolean>(true);
@@ -952,11 +1057,21 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     <Card
       variant="outlined"
       sx={{
-        borderRadius: 3.5,
+        borderRadius: isFullscreen ? 0 : 3.5,
         borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
-        backgroundColor: "var(--indices-card-bg, rgba(30, 41, 59, 0.5))",
-        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.08)",
-        overflow: "hidden",
+        backgroundColor: isFullscreen
+          ? "rgba(10, 15, 29, 0.98)"
+          : "var(--indices-card-bg, rgba(30, 41, 59, 0.5))",
+        boxShadow: isFullscreen
+          ? "none"
+          : "0 8px 32px rgba(0, 0, 0, 0.08)",
+        overflow: isFullscreen ? "auto" : "hidden",
+        ...(isFullscreen && {
+          position: "fixed",
+          inset: 0,
+          zIndex: 1400,
+          backdropFilter: "blur(20px)",
+        }),
       }}
     >
       <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
@@ -1701,24 +1816,131 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             </Stack>
           </Stack>
 
-          {/* Guide Toggle */}
-          <Button
-            size="small"
-            startIcon={<InfoOutlinedIcon sx={{ fontSize: 14 }} />}
-            onClick={() => setShowGuide((prev) => !prev)}
-            sx={{
-              fontSize: "0.7rem",
-              fontWeight: 700,
-              textTransform: "none",
-              color: "text.secondary",
-              py: 0.3,
-              px: 1,
-              borderRadius: 1.5,
-              "&:hover": { color: "primary.light" },
-            }}
-          >
-            {showGuide ? "Hide Guide" : "Indicator Guide"}
-          </Button>
+          {/* Right Controls: Height Presets + Fullscreen + Guide Toggle */}
+          <Stack direction="row" alignItems="center" spacing={1}>
+            {/* Height Presets */}
+            <ButtonGroup
+              size="small"
+              variant="outlined"
+              aria-label="chart height presets"
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                backgroundColor: "var(--indices-card-bg, rgba(0, 0, 0, 0.25))",
+                borderRadius: 2,
+                p: 0.25,
+                "& .MuiButton-root": {
+                  border: "none",
+                  borderRadius: 1.5,
+                  fontWeight: 700,
+                  fontSize: "0.68rem",
+                  fontFamily: MONO_FONT,
+                  px: 0.9,
+                  py: 0.25,
+                  minWidth: "28px",
+                  color: "text.secondary",
+                  "&:hover": {
+                    backgroundColor:
+                      "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.08))",
+                    color: "text.primary",
+                  },
+                  "&.active": {
+                    backgroundColor: "primary.main",
+                    color: "#ffffff",
+                    boxShadow: "0 2px 8px rgba(79, 70, 229, 0.35)",
+                  },
+                },
+              }}
+            >
+              {[
+                { label: "S", height: 260 },
+                { label: "M", height: 360 },
+                { label: "L", height: 480 },
+                { label: "XL", height: 620 },
+              ].map((preset) => (
+                <Tooltip
+                  key={preset.label}
+                  title={`Preset ${preset.label} (${preset.height}px)`}
+                  arrow
+                >
+                  <Button
+                    className={
+                      !isFullscreen &&
+                      Math.abs(chartHeight - preset.height) <= 15
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() => {
+                      setChartHeight(preset.height);
+                      try {
+                        localStorage.setItem(
+                          "tracker_chart_height",
+                          String(preset.height),
+                        );
+                      } catch {
+                        /* ignore storage error */
+                      }
+                    }}
+                  >
+                    {preset.label}
+                  </Button>
+                </Tooltip>
+              ))}
+            </ButtonGroup>
+
+            {/* Fullscreen Toggle */}
+            <Tooltip
+              title={
+                isFullscreen ? "Exit Fullscreen (Esc)" : "Fullscreen Dashboard"
+              }
+              arrow
+            >
+              <IconButton
+                size="small"
+                onClick={() => setIsFullscreen((prev) => !prev)}
+                sx={{
+                  color: isFullscreen ? "primary.main" : "text.secondary",
+                  border: "1px solid",
+                  borderColor: isFullscreen
+                    ? "primary.main"
+                    : "var(--indices-border, rgba(255, 255, 255, 0.12))",
+                  backgroundColor: isFullscreen
+                    ? "rgba(99, 102, 241, 0.15)"
+                    : "transparent",
+                  p: 0.5,
+                  borderRadius: 1.5,
+                  "&:hover": {
+                    backgroundColor: "rgba(99, 102, 241, 0.2)",
+                    color: "primary.light",
+                  },
+                }}
+              >
+                {isFullscreen ? (
+                  <FullscreenExitIcon sx={{ fontSize: 18 }} />
+                ) : (
+                  <FullscreenIcon sx={{ fontSize: 18 }} />
+                )}
+              </IconButton>
+            </Tooltip>
+
+            {/* Guide Toggle */}
+            <Button
+              size="small"
+              startIcon={<InfoOutlinedIcon sx={{ fontSize: 14 }} />}
+              onClick={() => setShowGuide((prev) => !prev)}
+              sx={{
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                textTransform: "none",
+                color: "text.secondary",
+                py: 0.3,
+                px: 1,
+                borderRadius: 1.5,
+                "&:hover": { color: "primary.light" },
+              }}
+            >
+              {showGuide ? "Hide Guide" : "Guide"}
+            </Button>
+          </Stack>
         </Box>
 
         {/* Educational Guide Drawer */}
@@ -1825,13 +2047,21 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           </Paper>
         </Collapse>
 
-        {/* Interactive Chart Canvas with Balanced Vertical Height */}
+        {/* Interactive Chart Canvas with Dynamic Vertical Height */}
         <Box
           sx={{
             position: "relative",
             width: "100%",
-            height: { xs: 290, sm: 330, md: 360 },
-            userSelect: "none",
+            height: isFullscreen
+              ? "calc(100vh - 280px)"
+              : {
+                  xs: Math.max(240, chartHeight - 40),
+                  sm: chartHeight,
+                  md: chartHeight,
+                },
+            minHeight: isFullscreen ? 360 : MIN_HEIGHT,
+            userSelect: isDraggingHeight ? "none" : "auto",
+            transition: isDraggingHeight ? "none" : "height 0.15s ease-out",
           }}
         >
           {/* Plot Area Container (Touch and Mouse interactive, click to inspect) */}
@@ -2596,6 +2826,80 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             })}
           </Box>
         </Box>
+
+        {/* Interactive Drag Handle to Resize Graph Height */}
+        {!isFullscreen && (
+          <Box
+            onMouseDown={handleResizeMouseDown}
+            onTouchStart={handleResizeTouchStart}
+            onDoubleClick={() => {
+              setChartHeight(DEFAULT_HEIGHT);
+              try {
+                localStorage.setItem(
+                  "tracker_chart_height",
+                  String(DEFAULT_HEIGHT),
+                );
+              } catch {
+                /* ignore storage error */
+              }
+            }}
+            title="Drag vertically to adjust height • Double-click to reset (360px)"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: 22,
+              mt: 1,
+              mb: 0.5,
+              cursor: "row-resize",
+              userSelect: "none",
+              transition: "all 0.15s ease",
+              opacity: isDraggingHeight ? 1 : 0.65,
+              "&:hover": {
+                opacity: 1,
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                px: 1.5,
+                py: 0.2,
+                borderRadius: 2,
+                backgroundColor: isDraggingHeight
+                  ? "rgba(99, 102, 241, 0.25)"
+                  : "var(--indices-subtle-bg, rgba(255, 255, 255, 0.04))",
+                border: "1px solid",
+                borderColor: isDraggingHeight
+                  ? "primary.main"
+                  : "var(--indices-border, rgba(255, 255, 255, 0.1))",
+                transition: "all 0.2s ease",
+              }}
+            >
+              <DragHandleIcon
+                sx={{
+                  fontSize: 16,
+                  color: isDraggingHeight ? "primary.light" : "text.secondary",
+                  mr: 0.5,
+                }}
+              />
+              <Typography
+                variant="caption"
+                sx={{
+                  fontSize: "0.64rem",
+                  fontFamily: MONO_FONT,
+                  fontWeight: 700,
+                  color: isDraggingHeight ? "primary.light" : "text.secondary",
+                  letterSpacing: "0.03em",
+                }}
+              >
+                {chartHeight}px
+              </Typography>
+            </Box>
+          </Box>
+        )}
 
         {/* Statistical Range Footer Cards */}
         <Box
