@@ -1191,7 +1191,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             mb: 1.75,
             pb: 1.5,
             borderBottom:
-              "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+              "1px solid rgba(255, 255, 255, 0.08)",
             minHeight: 48,
           }}
         >
@@ -1406,8 +1406,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             mb: 2,
             p: { xs: 1, sm: 1.25 },
             borderRadius: 2.5,
-            backgroundColor: "var(--indices-subtle-bg, rgba(15, 23, 42, 0.45))",
-            border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+            backgroundColor: "rgba(15, 23, 42, 0.55)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
           }}
         >
           {/* Left: Chart Type Selector + Overlay Toggles */}
@@ -1526,7 +1526,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               sx={{
                 width: 1,
                 height: 20,
-                backgroundColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
+                backgroundColor: "rgba(255, 255, 255, 0.12)",
                 display: { xs: "none", sm: "block" },
               }}
             />
@@ -2073,9 +2073,8 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               right: { xs: 54, sm: 65, md: 72 },
               bottom: 26,
               cursor: "pointer",
-              borderRight: "1px solid",
-              borderBottom: "1px solid",
-              borderColor: "divider",
+              borderRight: "1px solid rgba(255, 255, 255, 0.08)",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
               overflow: "visible",
             }}
             onMouseMove={handleMouseMove}
@@ -2859,11 +2858,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 borderRadius: 2,
                 backgroundColor: isDraggingHeight
                   ? "rgba(99, 102, 241, 0.25)"
-                  : "var(--indices-subtle-bg, rgba(255, 255, 255, 0.04))",
+                  : "rgba(255, 255, 255, 0.04)",
                 border: "1px solid",
                 borderColor: isDraggingHeight
                   ? "primary.main"
-                  : "var(--indices-border, rgba(255, 255, 255, 0.1))",
+                  : "rgba(255, 255, 255, 0.1)",
                 transition: "all 0.2s ease",
               }}
             >
