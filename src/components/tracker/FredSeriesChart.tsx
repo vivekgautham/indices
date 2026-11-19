@@ -267,10 +267,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     window.addEventListener("touchend", onTouchEnd);
   };
 
-  // Indicators toggle states (default: active for maximum informative value)
+  // Indicators toggle states (DMA active by default; big drops off by default)
   const [show50Dma, setShow50Dma] = useState<boolean>(true);
   const [show200Dma, setShow200Dma] = useState<boolean>(true);
-  const [showBigDrops, setShowBigDrops] = useState<boolean>(true);
+  const [showBigDrops, setShowBigDrops] = useState<boolean>(false);
   const [dropThreshold, setDropThreshold] = useState<DropThreshold>(1.5);
   const [showDropPanel, setShowDropPanel] = useState<boolean>(true);
   const [showGuide, setShowGuide] = useState<boolean>(false);
