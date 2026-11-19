@@ -280,10 +280,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     ? "rgba(16, 185, 129, 0.22)"
     : "rgba(239, 68, 68, 0.22)";
 
-  // Balanced canvas coordinates
+  // Balanced canvas coordinates with generous top headroom for tooltips and highs
   const plotW = 800;
   const plotH = 300;
-  const padding = { top: 16, right: 10, bottom: 14, left: 10 };
+  const padding = { top: 26, right: 10, bottom: 16, left: 10 };
   const chartW = plotW - padding.left - padding.right;
   const chartH = plotH - padding.top - padding.bottom;
 
@@ -1830,7 +1830,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
           sx={{
             position: "relative",
             width: "100%",
-            height: { xs: 240, sm: 290, md: 330 },
+            height: { xs: 290, sm: 330, md: 360 },
             userSelect: "none",
           }}
         >
@@ -1840,13 +1840,13 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               position: "absolute",
               top: 0,
               left: 0,
-              right: 70,
+              right: { xs: 54, sm: 65, md: 72 },
               bottom: 26,
               cursor: "pointer",
               borderRight: "1px solid",
               borderBottom: "1px solid",
               borderColor: "divider",
-              overflow: "hidden",
+              overflow: "visible",
             }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -1861,6 +1861,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 height: "100%",
                 display: "block",
                 shapeRendering: "geometricPrecision",
+                overflow: "hidden",
               }}
             >
               <defs>
@@ -2223,253 +2224,264 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             </svg>
 
             {/* Pinned Telemetry Tooltip Card (Shown on click with monospace financial typography) */}
-            {selectedPoint && (
-              <Paper
-                elevation={8}
-                onClick={(e) => e.stopPropagation()}
-                sx={{
-                  position: "absolute",
-                  left: `${(selectedPoint[0] / plotW) * 100}%`,
-                  top: `${(selectedPoint[1] / plotH) * 100}%`,
-                  transform:
-                    selectedPoint[0] > 520
-                      ? "translate(-108%, -50%)"
-                      : "translate(14px, -50%)",
-                  backgroundColor: "rgba(15, 23, 42, 0.94)",
-                  backdropFilter: "blur(12px)",
-                  border: selectedPointDrop
-                    ? "1px solid rgba(239, 68, 68, 0.5)"
-                    : "1px solid rgba(255, 255, 255, 0.16)",
-                  borderRadius: 2.5,
-                  p: 1.5,
-                  minWidth: 200,
-                  maxWidth: 250,
-                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.55)",
-                  zIndex: 5,
-                }}
-              >
-                {/* Header row: Date + Close Button */}
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  sx={{ mb: 0.5 }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: "0.74rem",
-                      fontWeight: 700,
-                      color: "text.secondary",
-                      fontFamily: MONO_FONT,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 0.5,
-                    }}
-                  >
-                    <CalendarTodayIcon
-                      sx={{ fontSize: 12, color: "primary.light" }}
-                    />
-                    {selectedPoint[2]}
-                  </Typography>
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedPointIndex(null);
-                    }}
-                    sx={{
-                      p: 0.2,
-                      color: "text.secondary",
-                      "&:hover": { color: "text.primary" },
-                    }}
-                  >
-                    <CloseIcon sx={{ fontSize: 13 }} />
-                  </IconButton>
-                </Stack>
+            {selectedPoint && (() => {
+              const ptX = selectedPoint[0];
+              const ptY = selectedPoint[1];
+              // Horizontal placement: ensure card is kept within canvas bounds
+              const tipLeft = Math.max(
+                8,
+                Math.min(plotW - 235, ptX > 480 ? ptX - 225 : ptX + 14),
+              );
+              // Vertical placement: if near the top (ptY < 130), place BELOW the point so it never overflows off the top!
+              // If near the bottom (ptY > 210), place ABOVE the point so it never overflows off the bottom!
+              const tipTop =
+                ptY < 130 ? ptY + 14 : ptY > 210 ? ptY - 165 : ptY - 80;
+              const clampedTop = Math.max(8, Math.min(plotH - 175, tipTop));
 
-                {/* Price in Monospace */}
-                <Typography
+              return (
+                <Paper
+                  elevation={10}
+                  onClick={(e) => e.stopPropagation()}
                   sx={{
-                    fontSize: "1.15rem",
-                    fontWeight: 800,
-                    color: "#ffffff",
-                    fontFamily: MONO_FONT,
-                    fontVariantNumeric: "tabular-nums",
-                    lineHeight: 1.2,
+                    position: "absolute",
+                    left: `${(tipLeft / plotW) * 100}%`,
+                    top: `${(clampedTop / plotH) * 100}%`,
+                    backgroundColor: "rgba(15, 23, 42, 0.95)",
+                    backdropFilter: "blur(12px)",
+                    border: selectedPointDrop
+                      ? "1px solid rgba(239, 68, 68, 0.5)"
+                      : "1px solid rgba(255, 255, 255, 0.16)",
+                    borderRadius: 2.5,
+                    p: 1.5,
+                    minWidth: { xs: 190, sm: 210 },
+                    maxWidth: { xs: 230, sm: 250 },
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.65)",
+                    zIndex: 10,
                   }}
                 >
-                  {formatSeriesValue(
-                    selectedPoint[3],
-                    series.format,
-                    series.decimals,
-                  )}
-                </Typography>
-
-                {/* OHLC Breakdown for Candlestick / Bar Mode */}
-                {isCandleMode && activeCandle && (
-                  <Box
-                    sx={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      gap: 0.5,
-                      my: 0.75,
-                      p: 0.75,
-                      borderRadius: 1.5,
-                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                      fontFamily: MONO_FONT,
-                      fontSize: "0.68rem",
-                    }}
+                  {/* Header row: Date + Close Button */}
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{ mb: 0.5 }}
                   >
-                    <div>
-                      <span style={{ opacity: 0.6 }}>Open: </span>
-                      <strong>
-                        {formatSeriesValue(
-                          activeCandle.open,
-                          series.format,
-                          series.decimals,
-                        )}
-                      </strong>
-                    </div>
-                    <div>
-                      <span style={{ opacity: 0.6 }}>High: </span>
-                      <strong style={{ color: "#10b981" }}>
-                        {formatSeriesValue(
-                          activeCandle.high,
-                          series.format,
-                          series.decimals,
-                        )}
-                      </strong>
-                    </div>
-                    <div>
-                      <span style={{ opacity: 0.6 }}>Low: </span>
-                      <strong style={{ color: "#ef4444" }}>
-                        {formatSeriesValue(
-                          activeCandle.low,
-                          series.format,
-                          series.decimals,
-                        )}
-                      </strong>
-                    </div>
-                    <div>
-                      <span style={{ opacity: 0.6 }}>Close: </span>
-                      <strong>
-                        {formatSeriesValue(
-                          activeCandle.close,
-                          series.format,
-                          series.decimals,
-                        )}
-                      </strong>
-                    </div>
-                  </Box>
-                )}
+                    <Typography
+                      sx={{
+                        fontSize: "0.74rem",
+                        fontWeight: 700,
+                        color: "text.secondary",
+                        fontFamily: MONO_FONT,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                      }}
+                    >
+                      <CalendarTodayIcon
+                        sx={{ fontSize: 12, color: "primary.light" }}
+                      />
+                      {selectedPoint[2]}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedPointIndex(null);
+                      }}
+                      sx={{
+                        p: 0.2,
+                        color: "text.secondary",
+                        "&:hover": { color: "text.primary" },
+                      }}
+                    >
+                      <CloseIcon sx={{ fontSize: 13 }} />
+                    </IconButton>
+                  </Stack>
 
-                {/* Daily Change in Monospace */}
-                {!isCandleMode && selectedPointStats && (
+                  {/* Price in Monospace */}
                   <Typography
                     sx={{
-                      fontSize: "0.74rem",
-                      fontWeight: 700,
-                      color:
-                        selectedPointStats.change >= 0 ? "#10b981" : "#ef4444",
+                      fontSize: "1.15rem",
+                      fontWeight: 800,
+                      color: "#ffffff",
                       fontFamily: MONO_FONT,
                       fontVariantNumeric: "tabular-nums",
-                      mt: 0.25,
-                      mb: 0.75,
+                      lineHeight: 1.2,
                     }}
                   >
-                    {selectedPointStats.change >= 0 ? "+" : ""}
-                    {selectedPointStats.changePct.toFixed(2)}% (
-                    {selectedPointStats.change >= 0 ? "+" : ""}
                     {formatSeriesValue(
-                      selectedPointStats.change,
+                      selectedPoint[3],
                       series.format,
                       series.decimals,
                     )}
-                    )
                   </Typography>
-                )}
 
-                {/* Indicators Breakdown in Monospace */}
-                <Stack
-                  spacing={0.4}
-                  sx={{
-                    pt: 0.6,
-                    borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-                  }}
-                >
-                  {show50Dma && selectedPointDma50 !== undefined && (
-                    <Typography
+                  {/* OHLC Breakdown for Candlestick / Bar Mode */}
+                  {isCandleMode && activeCandle && (
+                    <Box
                       sx={{
-                        fontSize: "0.7rem",
-                        color: "#fbbf24",
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: 0.5,
+                        my: 0.75,
+                        p: 0.75,
+                        borderRadius: 1.5,
+                        backgroundColor: "rgba(255, 255, 255, 0.05)",
                         fontFamily: MONO_FONT,
-                        fontVariantNumeric: "tabular-nums",
+                        fontSize: "0.68rem",
                       }}
                     >
-                      50 DMA:{" "}
-                      {formatSeriesValue(
-                        selectedPointDma50,
-                        series.format,
-                        series.decimals,
-                      )}{" "}
-                      (
-                      {selectedPoint[3] >= selectedPointDma50 ? "+" : ""}
-                      {(
-                        ((selectedPoint[3] - selectedPointDma50) /
-                          selectedPointDma50) *
-                        100
-                      ).toFixed(1)}
-                      %)
-                    </Typography>
+                      <div>
+                        <span style={{ opacity: 0.6 }}>Open: </span>
+                        <strong>
+                          {formatSeriesValue(
+                            activeCandle.open,
+                            series.format,
+                            series.decimals,
+                          )}
+                        </strong>
+                      </div>
+                      <div>
+                        <span style={{ opacity: 0.6 }}>High: </span>
+                        <strong style={{ color: "#10b981" }}>
+                          {formatSeriesValue(
+                            activeCandle.high,
+                            series.format,
+                            series.decimals,
+                          )}
+                        </strong>
+                      </div>
+                      <div>
+                        <span style={{ opacity: 0.6 }}>Low: </span>
+                        <strong style={{ color: "#ef4444" }}>
+                          {formatSeriesValue(
+                            activeCandle.low,
+                            series.format,
+                            series.decimals,
+                          )}
+                        </strong>
+                      </div>
+                      <div>
+                        <span style={{ opacity: 0.6 }}>Close: </span>
+                        <strong>
+                          {formatSeriesValue(
+                            activeCandle.close,
+                            series.format,
+                            series.decimals,
+                          )}
+                        </strong>
+                      </div>
+                    </Box>
                   )}
-                  {show200Dma && selectedPointDma200 !== undefined && (
+
+                  {/* Daily Change in Monospace */}
+                  {!isCandleMode && selectedPointStats && (
                     <Typography
                       sx={{
-                        fontSize: "0.7rem",
-                        color: "#c084fc",
+                        fontSize: "0.74rem",
+                        fontWeight: 700,
+                        color:
+                          selectedPointStats.change >= 0 ? "#10b981" : "#ef4444",
                         fontFamily: MONO_FONT,
                         fontVariantNumeric: "tabular-nums",
+                        mt: 0.25,
+                        mb: 0.75,
                       }}
                     >
-                      200 DMA:{" "}
+                      {selectedPointStats.change >= 0 ? "+" : ""}
+                      {selectedPointStats.changePct.toFixed(2)}% (
+                      {selectedPointStats.change >= 0 ? "+" : ""}
                       {formatSeriesValue(
-                        selectedPointDma200,
+                        selectedPointStats.change,
                         series.format,
                         series.decimals,
-                      )}{" "}
-                      (
-                      {selectedPoint[3] >= selectedPointDma200 ? "+" : ""}
-                      {(
-                        ((selectedPoint[3] - selectedPointDma200) /
-                          selectedPointDma200) *
-                        100
-                      ).toFixed(1)}
-                      %)
+                      )}
+                      )
                     </Typography>
                   )}
-                  {selectedPointDrop && (
-                    <Chip
-                      icon={
-                        <ArrowDownwardIcon
-                          sx={{ fontSize: "12px !important", color: "#ffffff" }}
-                        />
-                      }
-                      label={`Big Drop: ${selectedPointDrop.changePct.toFixed(2)}%`}
-                      size="small"
-                      sx={{
-                        height: 20,
-                        fontSize: "0.66rem",
-                        fontWeight: 800,
-                        fontFamily: MONO_FONT,
-                        backgroundColor: "#ef4444",
-                        color: "#ffffff",
-                        mt: 0.5,
-                      }}
-                    />
-                  )}
-                </Stack>
-              </Paper>
-            )}
+
+                  {/* Indicators Breakdown in Monospace */}
+                  <Stack
+                    spacing={0.4}
+                    sx={{
+                      pt: 0.6,
+                      borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+                    }}
+                  >
+                    {show50Dma && selectedPointDma50 !== undefined && (
+                      <Typography
+                        sx={{
+                          fontSize: "0.7rem",
+                          color: "#fbbf24",
+                          fontFamily: MONO_FONT,
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        50 DMA:{" "}
+                        {formatSeriesValue(
+                          selectedPointDma50,
+                          series.format,
+                          series.decimals,
+                        )}{" "}
+                        (
+                        {selectedPoint[3] >= selectedPointDma50 ? "+" : ""}
+                        {(
+                          ((selectedPoint[3] - selectedPointDma50) /
+                            selectedPointDma50) *
+                          100
+                        ).toFixed(1)}
+                        %)
+                      </Typography>
+                    )}
+                    {show200Dma && selectedPointDma200 !== undefined && (
+                      <Typography
+                        sx={{
+                          fontSize: "0.7rem",
+                          color: "#c084fc",
+                          fontFamily: MONO_FONT,
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        200 DMA:{" "}
+                        {formatSeriesValue(
+                          selectedPointDma200,
+                          series.format,
+                          series.decimals,
+                        )}{" "}
+                        (
+                        {selectedPoint[3] >= selectedPointDma200 ? "+" : ""}
+                        {(
+                          ((selectedPoint[3] - selectedPointDma200) /
+                            selectedPointDma200) *
+                          100
+                        ).toFixed(1)}
+                        %)
+                      </Typography>
+                    )}
+                    {selectedPointDrop && (
+                      <Chip
+                        icon={
+                          <ArrowDownwardIcon
+                            sx={{ fontSize: "12px !important", color: "#ffffff" }}
+                          />
+                        }
+                        label={`Big Drop: ${selectedPointDrop.changePct.toFixed(2)}%`}
+                        size="small"
+                        sx={{
+                          height: 20,
+                          fontSize: "0.66rem",
+                          fontWeight: 800,
+                          fontFamily: MONO_FONT,
+                          backgroundColor: "#ef4444",
+                          color: "#ffffff",
+                          mt: 0.5,
+                        }}
+                      />
+                    )}
+                  </Stack>
+                </Paper>
+              );
+            })()}
           </Box>
 
           {/* Right Y-Axis HTML Overlay with Crisp Monospace Numbers */}
@@ -2479,7 +2491,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               top: 0,
               right: 0,
               bottom: 26,
-              width: 70,
+              width: { xs: 54, sm: 65, md: 72 },
               pointerEvents: "none",
             }}
           >
@@ -2490,13 +2502,14 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   position: "absolute",
                   top: `${(line.y / plotH) * 100}%`,
                   transform: "translateY(-50%)",
-                  left: 8,
+                  left: { xs: 4, sm: 8 },
                   color: "text.secondary",
-                  fontSize: "0.72rem",
+                  fontSize: { xs: "0.62rem", sm: "0.72rem" },
                   fontWeight: 600,
                   fontFamily: MONO_FONT,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1,
+                  whiteSpace: "nowrap",
                 }}
               >
                 {formatAxisValue(line.val, series.format)}
@@ -2510,22 +2523,24 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   position: "absolute",
                   top: `${(selectedPoint[1] / plotH) * 100}%`,
                   transform: "translateY(-50%)",
-                  left: 4,
-                  right: 2,
+                  left: { xs: 2, sm: 4 },
+                  right: 1,
                   backgroundColor: strokeColor,
                   color: "#ffffff",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   py: "2px",
-                  px: "4px",
+                  px: { xs: "2px", sm: "4px" },
                   textAlign: "center",
                   fontWeight: 800,
-                  fontSize: "0.68rem",
+                  fontSize: { xs: "0.60rem", sm: "0.68rem" },
                   fontFamily: MONO_FONT,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1.2,
                   boxShadow: "0 2px 8px rgba(0, 0, 0, 0.5)",
                   zIndex: 2,
                   whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
                 }}
               >
                 {formatAxisValue(selectedPoint[3], series.format)}
@@ -2538,7 +2553,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             sx={{
               position: "absolute",
               left: 0,
-              right: 70,
+              right: { xs: 54, sm: 65, md: 72 },
               bottom: 0,
               height: 26,
               pointerEvents: "none",
@@ -2550,6 +2565,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               else if (idx === dateTicks.length - 1)
                 transform = "translateX(-100%)";
 
+              // On mobile screens, only show start, middle, and end ticks to prevent text collision
+              const isStartOrEnd = idx === 0 || idx === dateTicks.length - 1;
+              const isMiddle = idx === Math.floor(dateTicks.length / 2);
+              const showOnMobile = isStartOrEnd || isMiddle;
+
               return (
                 <Typography
                   key={idx}
@@ -2559,12 +2579,15 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     transform,
                     top: 6,
                     color: "text.secondary",
-                    fontSize: "0.7rem",
+                    fontSize: { xs: "0.62rem", sm: "0.7rem" },
                     fontWeight: 600,
                     fontFamily: MONO_FONT,
                     fontVariantNumeric: "tabular-nums",
                     lineHeight: 1,
                     whiteSpace: "nowrap",
+                    display: showOnMobile
+                      ? "block"
+                      : { xs: "none", sm: "block" },
                   }}
                 >
                   {tick.label}
