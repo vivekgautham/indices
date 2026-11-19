@@ -1403,11 +1403,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             justifyContent: "space-between",
             flexWrap: "wrap",
             gap: 1.5,
-            mb: 2,
-            p: { xs: 1, sm: 1.25 },
-            borderRadius: 2.5,
-            backgroundColor: "rgba(15, 23, 42, 0.55)",
-            border: "1px solid rgba(255, 255, 255, 0.08)",
+            mb: 0.5,
           }}
         >
           {/* Left: Chart Type Selector + Overlay Toggles */}
@@ -1944,7 +1940,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
         </Box>
 
         {/* Educational Guide Drawer */}
-        <Collapse in={showGuide} sx={{ mb: 2 }}>
+        <Collapse in={showGuide} sx={{ mb: showGuide ? 1.5 : 0 }}>
           <Paper
             variant="outlined"
             sx={{
