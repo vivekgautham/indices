@@ -145,12 +145,12 @@ const MAX_HEIGHT = 720;
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
   initialRange = "1Y",
-  initialChartType = "baseline",
+  initialChartType = "candles",
 }) => {
   const theme = useTheme();
   const [selectedRange, setSelectedRange] = useState<TimeRange>(initialRange);
   const [chartType, setChartType] = useState<ChartType>(() => {
-    if (initialChartType && initialChartType !== "baseline") return initialChartType;
+    if (initialChartType && initialChartType !== "candles") return initialChartType;
     try {
       const saved = localStorage.getItem("tracker_chart_type");
       if (
@@ -162,7 +162,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     } catch {
       /* ignore storage error */
     }
-    return "baseline";
+    return "candles";
   });
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(
@@ -1466,6 +1466,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               >
                 {[
                   {
+                    type: "candles" as ChartType,
+                    label: "Candles",
+                    icon: <CandlestickChartIcon sx={{ fontSize: 13 }} />,
+                  },
+                  {
                     type: "baseline" as ChartType,
                     label: "Baseline",
                     icon: <TimelineIcon sx={{ fontSize: 13 }} />,
@@ -1474,11 +1479,6 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     type: "mountain" as ChartType,
                     label: "Mountain",
                     icon: <AreaChartIcon sx={{ fontSize: 13 }} />,
-                  },
-                  {
-                    type: "candles" as ChartType,
-                    label: "Candles",
-                    icon: <CandlestickChartIcon sx={{ fontSize: 13 }} />,
                   },
                   {
                     type: "line" as ChartType,
@@ -2183,17 +2183,6 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     strokeDasharray="4 3"
                     strokeWidth="1.2"
                   />
-                  <text
-                    x={plotW - 14}
-                    y={Math.max(14, yBaseline - 5)}
-                    fill="rgba(255, 255, 255, 0.75)"
-                    fontSize="9.5"
-                    fontWeight="700"
-                    fontFamily={MONO_FONT}
-                    textAnchor="end"
-                  >
-                    Base: {formatSeriesValue(startValue, series.format, series.decimals)}
-                  </text>
                 </g>
               )}
 
