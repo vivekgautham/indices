@@ -138,13 +138,13 @@ export interface BigDropEvent {
   dma200?: number;
 }
 
-const DEFAULT_HEIGHT = 360;
+const DEFAULT_HEIGHT = 480;
 const MIN_HEIGHT = 220;
 const MAX_HEIGHT = 720;
 
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
-  initialRange = "1Y",
+  initialRange = "3M",
   initialChartType = "candles",
 }) => {
   const theme = useTheme();
@@ -2832,7 +2832,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 /* ignore storage error */
               }
             }}
-            title="Drag vertically to adjust height • Double-click to reset (360px)"
+            title={`Drag vertically to adjust height • Double-click to reset (${DEFAULT_HEIGHT}px)`}
             sx={{
               display: "flex",
               alignItems: "center",

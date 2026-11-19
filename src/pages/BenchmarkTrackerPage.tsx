@@ -1194,7 +1194,7 @@ export default function BenchmarkTrackerPage() {
 
         {/* Featured Interactive Benchmark Chart */}
         <Box sx={{ mb: 3.5 }}>
-          <FredSeriesChart series={activeSeries} initialRange="1Y" />
+          <FredSeriesChart series={activeSeries} initialRange="3M" />
         </Box>
 
         {/* Tab-Specific Content */}
