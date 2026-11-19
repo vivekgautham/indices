@@ -12,6 +12,12 @@ if (window.location.hash.startsWith("#/")) {
   window.history.replaceState(null, "", cleanPath);
 }
 
+// Automatically reload when new deployments update chunk hashes, preventing blank screens
+window.addEventListener("vite:preloadError", (event) => {
+  event.preventDefault();
+  window.location.reload();
+});
+
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

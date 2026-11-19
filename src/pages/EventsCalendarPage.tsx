@@ -45,42 +45,54 @@ const MONTH_NAMES = [
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+const DEFAULT_CATEGORY_COLOR = {
+  bg: "rgba(0, 221, 148, 0.12)",
+  border: "rgba(0, 221, 148, 0.35)",
+  text: "#00DD94",
+  dot: "#00DD94",
+};
+
 /**
  * Generates an .ics file download for a market event
  */
 function downloadIcsEvent(event: MarketEvent) {
-  const [year, month, day] = event.date.split("-").map(Number);
-  const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
-  const dateStr = `${year}${pad(month)}${pad(day)}`;
+  try {
+    const [year, month, day] = (event.date || "").split("-").map(Number);
+    if (!year || !month || !day) return;
+    const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
+    const dateStr = `${year}${pad(month)}${pad(day)}`;
 
-  const icsLines = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//MarketIndices.xyz//Institutional Events Calendar//EN",
-    "CALSCALE:GREGORIAN",
-    "METHOD:PUBLISH",
-    "BEGIN:VEVENT",
-    `UID:${event.id}@marketindices.xyz`,
-    `DTSTAMP:${dateStr}T120000Z`,
-    `DTSTART;VALUE=DATE:${dateStr}`,
-    `SUMMARY:${event.title.replace(/,/g, "\\,")}`,
-    `DESCRIPTION:${event.description.replace(/\n/g, "\\n").replace(/,/g, "\\,")}`,
-    `STATUS:CONFIRMED`,
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ];
+    const icsLines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//MarketIndices.xyz//Institutional Events Calendar//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      `UID:${event.id || dateStr}@marketindices.xyz`,
+      `DTSTAMP:${dateStr}T120000Z`,
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `SUMMARY:${(event.title || "").replace(/,/g, "\\,")}`,
+      `DESCRIPTION:${(event.description || "").replace(/\n/g, "\\n").replace(/,/g, "\\,")}`,
+      `STATUS:CONFIRMED`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ];
 
-  const blob = new Blob([icsLines.join("\r\n")], {
-    type: "text/calendar;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", `${event.id}.ics`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+    const blob = new Blob([icsLines.join("\r\n")], {
+      type: "text/calendar;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `${event.id || "event"}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Failed to generate .ics file", err);
+  }
 }
 
 export default function EventsCalendarPage() {
@@ -109,20 +121,35 @@ export default function EventsCalendarPage() {
       "Market Events & Index Rebalance Calendar 📅 | Market Indices";
   }, []);
 
-  // Fetch all events for the active month
+  // Fetch all events for the active month with defensive sanitization
+  const safeYear = Number.isFinite(currentYear) ? currentYear : today.getFullYear();
+  const safeMonth =
+    Number.isFinite(currentMonth) && currentMonth >= 1 && currentMonth <= 12
+      ? currentMonth
+      : today.getMonth() + 1;
+
   const monthEvents = useMemo(() => {
-    return getMonthMarketEvents(currentYear, currentMonth);
-  }, [currentYear, currentMonth]);
+    try {
+      return getMonthMarketEvents(safeYear, safeMonth) || [];
+    } catch (err) {
+      console.error("Failed to fetch market events for month", err);
+      return [];
+    }
+  }, [safeYear, safeMonth]);
 
   // Group events by date YYYY-MM-DD
   const eventsByDate = useMemo(() => {
-    return groupEventsByDate(monthEvents);
+    try {
+      return groupEventsByDate(monthEvents || []);
+    } catch {
+      return {};
+    }
   }, [monthEvents]);
 
   // Summary counts for KPI header cards
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {
-      all: monthEvents.length,
+      all: (monthEvents || []).length,
       rebalance: 0,
       witching: 0,
       opex: 0,
@@ -130,8 +157,8 @@ export default function EventsCalendarPage() {
       macro: 0,
       holiday: 0,
     };
-    for (const e of monthEvents) {
-      if (counts[e.category] !== undefined) {
+    for (const e of monthEvents || []) {
+      if (e?.category && counts[e.category] !== undefined) {
         counts[e.category]++;
       }
     }
@@ -141,14 +168,14 @@ export default function EventsCalendarPage() {
   // Calendar Grid Days Calculation
   const calendarCells = useMemo(() => {
     const daysInMonth = new Date(
-      Date.UTC(currentYear, currentMonth, 0)
+      Date.UTC(safeYear, safeMonth, 0)
     ).getUTCDate();
     const firstDayOfWeek = new Date(
-      Date.UTC(currentYear, currentMonth - 1, 1)
+      Date.UTC(safeYear, safeMonth - 1, 1)
     ).getUTCDay(); // 0 = Sun, 1 = Mon...
 
     const daysInPrevMonth = new Date(
-      Date.UTC(currentYear, currentMonth - 1, 0)
+      Date.UTC(safeYear, safeMonth - 1, 0)
     ).getUTCDate();
 
     interface CalendarCell {
@@ -164,8 +191,8 @@ export default function EventsCalendarPage() {
     // 1. Previous month trailing days
     for (let i = firstDayOfWeek - 1; i >= 0; i--) {
       const day = daysInPrevMonth - i;
-      const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1;
-      const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+      const prevMonth = safeMonth === 1 ? 12 : safeMonth - 1;
+      const prevYear = safeMonth === 1 ? safeYear - 1 : safeYear;
       const dateStr = formatIsoDate(prevYear, prevMonth, day);
       cells.push({
         dateStr,
@@ -178,22 +205,22 @@ export default function EventsCalendarPage() {
 
     // 2. Current month days
     for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = formatIsoDate(currentYear, currentMonth, day);
+      const dateStr = formatIsoDate(safeYear, safeMonth, day);
       cells.push({
         dateStr,
         dayNumber: day,
         isCurrentMonth: true,
         isToday: dateStr === todayIso,
-        events: eventsByDate[dateStr] || [],
+        events: (eventsByDate && eventsByDate[dateStr]) || [],
       });
     }
 
     // 3. Next month leading days (fill up to complete weeks, 35 or 42 cells)
     const totalCells = cells.length <= 35 ? 35 : 42;
-    const remaining = totalCells - cells.length;
+    const remaining = Math.max(0, totalCells - cells.length);
     for (let day = 1; day <= remaining; day++) {
-      const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
-      const nextYear = currentMonth === 12 ? currentYear + 1 : currentYear;
+      const nextMonth = safeMonth === 12 ? 1 : safeMonth + 1;
+      const nextYear = safeMonth === 12 ? safeYear + 1 : safeYear;
       const dateStr = formatIsoDate(nextYear, nextMonth, day);
       cells.push({
         dateStr,
@@ -205,11 +232,11 @@ export default function EventsCalendarPage() {
     }
 
     return cells;
-  }, [currentYear, currentMonth, eventsByDate, todayIso]);
+  }, [safeYear, safeMonth, eventsByDate, todayIso]);
 
   // Selected Day Events
   const selectedDayEvents = useMemo(() => {
-    return monthEvents.filter((e) => e.date === selectedDate);
+    return (monthEvents || []).filter((e) => e?.date === selectedDate);
   }, [monthEvents, selectedDate]);
 
   // Navigation handlers
@@ -722,18 +749,22 @@ export default function EventsCalendarPage() {
                               gap: 0.3,
                             }}
                           >
-                            {cell.events.map((ev) => (
-                              <Box
-                                key={ev.id}
-                                sx={{
-                                  width: 5,
-                                  height: 5,
-                                  borderRadius: "50%",
-                                  backgroundColor:
-                                    CATEGORY_COLORS[ev.category].dot,
-                                }}
-                              />
-                            ))}
+                            {cell.events.map((ev) => {
+                              const dotColor =
+                                CATEGORY_COLORS[ev?.category]?.dot ||
+                                DEFAULT_CATEGORY_COLOR.dot;
+                              return (
+                                <Box
+                                  key={ev.id}
+                                  sx={{
+                                    width: 5,
+                                    height: 5,
+                                    borderRadius: "50%",
+                                    backgroundColor: dotColor,
+                                  }}
+                                />
+                              );
+                            })}
                           </Box>
                         )}
                       </Box>
@@ -752,7 +783,9 @@ export default function EventsCalendarPage() {
                         }}
                       >
                         {cell.events.map((ev) => {
-                          const col = CATEGORY_COLORS[ev.category];
+                          const col =
+                            CATEGORY_COLORS[ev?.category] ||
+                            DEFAULT_CATEGORY_COLOR;
                           return (
                             <Box
                               key={ev.id}
@@ -911,7 +944,10 @@ export default function EventsCalendarPage() {
  * Institutional Event Card Component
  */
 function EventCard({ event }: { event: MarketEvent }) {
-  const styling = CATEGORY_COLORS[event.category];
+  const styling =
+    CATEGORY_COLORS[event?.category] || DEFAULT_CATEGORY_COLOR;
+  const categoryLabel =
+    CATEGORY_LABELS[event?.category] || "Market Event";
 
   return (
     <Paper
@@ -942,7 +978,7 @@ function EventCard({ event }: { event: MarketEvent }) {
         {/* Left Badges */}
         <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
           <Chip
-            label={CATEGORY_LABELS[event.category]}
+            label={categoryLabel}
             size="small"
             sx={{
               fontWeight: 800,
