@@ -52,7 +52,7 @@ export default function ExchangesPage() {
   const [selectedRegion, setSelectedRegion] = useState<ExchangeRegion | "All">(
     "All",
   );
-  const [openOnly, setOpenOnly] = useState(false);
+  const [openOnly, setOpenOnly] = useState(true);
   const [selectedAsset, setSelectedAsset] = useState<AssetClass | "All">("All");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
