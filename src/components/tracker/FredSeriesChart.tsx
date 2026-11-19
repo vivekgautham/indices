@@ -138,12 +138,12 @@ export interface BigDropEvent {
 export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   series,
   initialRange = "1Y",
-  initialChartType,
+  initialChartType = "baseline",
 }) => {
   const theme = useTheme();
   const [selectedRange, setSelectedRange] = useState<TimeRange>(initialRange);
   const [chartType, setChartType] = useState<ChartType>(() => {
-    if (initialChartType) return initialChartType;
+    if (initialChartType && initialChartType !== "baseline") return initialChartType;
     try {
       const saved = localStorage.getItem("tracker_chart_type");
       if (
@@ -155,7 +155,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     } catch {
       /* ignore storage error */
     }
-    return "mountain";
+    return "baseline";
   });
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(
@@ -1351,6 +1351,11 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               >
                 {[
                   {
+                    type: "baseline" as ChartType,
+                    label: "Baseline",
+                    icon: <TimelineIcon sx={{ fontSize: 13 }} />,
+                  },
+                  {
                     type: "mountain" as ChartType,
                     label: "Mountain",
                     icon: <AreaChartIcon sx={{ fontSize: 13 }} />,
@@ -1369,11 +1374,6 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     type: "bars" as ChartType,
                     label: "Bars",
                     icon: <BarChartIcon sx={{ fontSize: 13 }} />,
-                  },
-                  {
-                    type: "baseline" as ChartType,
-                    label: "Baseline",
-                    icon: <TimelineIcon sx={{ fontSize: 13 }} />,
                   },
                 ].map((ct) => (
                   <Button
