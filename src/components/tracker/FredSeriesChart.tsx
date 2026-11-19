@@ -152,7 +152,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   const [chartType, setChartType] = useState<ChartType>(() => {
     if (initialChartType && initialChartType !== "candles") return initialChartType;
     try {
-      const saved = localStorage.getItem("tracker_chart_type");
+      const saved = localStorage.getItem("tracker_chart_type_v2");
       if (
         saved &&
         ["mountain", "candles", "line", "bars", "baseline"].includes(saved)
@@ -1497,7 +1497,7 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     onClick={() => {
                       setChartType(ct.type);
                       try {
-                        localStorage.setItem("tracker_chart_type", ct.type);
+                        localStorage.setItem("tracker_chart_type_v2", ct.type);
                       } catch {
                         /* ignore storage error */
                       }
