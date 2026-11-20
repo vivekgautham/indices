@@ -7,11 +7,11 @@ import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LayersIcon from "@mui/icons-material/Layers";
+import SettingsIcon from "@mui/icons-material/Settings";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
@@ -27,6 +27,7 @@ import {
   Collapse,
   IconButton,
   Paper,
+  Popover,
   Skeleton,
   Stack,
   Tooltip,
@@ -187,6 +188,18 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
   const [isDraggingHeight, setIsDraggingHeight] = useState<boolean>(false);
   const dragStartYRef = useRef<number>(0);
   const dragStartHeightRef = useRef<number>(DEFAULT_HEIGHT);
+
+  // Settings Popover State (Gear Icon)
+  const [settingsAnchor, setSettingsAnchor] = useState<HTMLElement | null>(null);
+  const isSettingsOpen = Boolean(settingsAnchor);
+
+  const handleOpenSettings = (event: React.MouseEvent<HTMLElement>) => {
+    setSettingsAnchor(event.currentTarget);
+  };
+
+  const handleCloseSettings = () => {
+    setSettingsAnchor(null);
+  };
 
   // Keyboard shortcut: Esc to exit fullscreen
   useEffect(() => {
@@ -1178,6 +1191,33 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               </Button>
             ))}
           </ButtonGroup>
+
+          {/* Quick Chart Options Gear Icon */}
+          <Tooltip title="Chart Options (Style, Overlays, Canvas Height)">
+            <IconButton
+              size="small"
+              onClick={handleOpenSettings}
+              sx={{
+                color: isSettingsOpen ? "primary.main" : "text.secondary",
+                border: "1px solid",
+                borderColor: isSettingsOpen
+                  ? "primary.main"
+                  : "var(--indices-border, rgba(255, 255, 255, 0.12))",
+                backgroundColor: isSettingsOpen
+                  ? "rgba(99, 102, 241, 0.15)"
+                  : "var(--indices-card-bg, rgba(0, 0, 0, 0.25))",
+                borderRadius: 1.5,
+                p: 0.55,
+                display: { xs: "none", sm: "inline-flex" },
+                "&:hover": {
+                  backgroundColor: "rgba(99, 102, 241, 0.2)",
+                  color: "primary.light",
+                },
+              }}
+            >
+              <SettingsIcon sx={{ fontSize: 17 }} />
+            </IconButton>
+          </Tooltip>
         </Stack>
 
         {/* Stable Pro Telemetry Strip (Fixed height, completely eliminates layout jumps) */}
@@ -1406,482 +1446,192 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             mb: 0.5,
           }}
         >
-          {/* Left: Chart Type Selector + Overlay Toggles */}
+          {/* Left: Active Chart Style & Overlay Badges */}
           <Stack
             direction="row"
             alignItems="center"
-            spacing={1.5}
+            spacing={1}
             flexWrap="wrap"
             useFlexGap
           >
-            {/* Chart Type Selector */}
-            <Stack direction="row" alignItems="center" spacing={0.75}>
-              <Typography
-                variant="caption"
-                sx={{
-                  fontWeight: 800,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "text.secondary",
-                  fontSize: "0.68rem",
-                  display: { xs: "none", sm: "block" },
-                }}
-              >
-                Chart:
-              </Typography>
-              <ButtonGroup
-                size="small"
-                variant="outlined"
-                aria-label="chart type selector"
-                sx={{
-                  backgroundColor: "var(--indices-card-bg, rgba(0, 0, 0, 0.25))",
-                  borderRadius: 2,
-                  p: 0.25,
-                  "& .MuiButton-root": {
-                    border: "none",
-                    borderRadius: 1.5,
-                    fontWeight: 700,
-                    fontSize: "0.7rem",
-                    fontFamily: MONO_FONT,
-                    px: { xs: 0.75, sm: 1.1 },
-                    py: 0.35,
-                    minWidth: "auto",
-                    color: "text.secondary",
-                    "&:hover": {
-                      backgroundColor:
-                        "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.08))",
-                      color: "text.primary",
-                    },
-                    "&.active": {
-                      backgroundColor: "primary.main",
-                      color: "#ffffff",
-                      boxShadow: "0 2px 8px rgba(79, 70, 229, 0.35)",
-                    },
-                  },
-                }}
-              >
-                {[
-                  {
-                    type: "candles" as ChartType,
-                    label: "Candles",
-                    icon: <CandlestickChartIcon sx={{ fontSize: 13 }} />,
-                  },
-                  {
-                    type: "baseline" as ChartType,
-                    label: "Baseline",
-                    icon: <TimelineIcon sx={{ fontSize: 13 }} />,
-                  },
-                  {
-                    type: "mountain" as ChartType,
-                    label: "Mountain",
-                    icon: <AreaChartIcon sx={{ fontSize: 13 }} />,
-                  },
-                  {
-                    type: "line" as ChartType,
-                    label: "Line",
-                    icon: <ShowChartIcon sx={{ fontSize: 13 }} />,
-                  },
-                  {
-                    type: "bars" as ChartType,
-                    label: "Bars",
-                    icon: <BarChartIcon sx={{ fontSize: 13 }} />,
-                  },
-                ].map((ct) => (
-                  <Button
-                    key={ct.type}
-                    className={chartType === ct.type ? "active" : ""}
-                    onClick={() => {
-                      setChartType(ct.type);
-                      try {
-                        localStorage.setItem("tracker_chart_type_v2", ct.type);
-                      } catch {
-                        /* ignore storage error */
-                      }
-                    }}
-                    startIcon={ct.icon}
-                    sx={{
-                      "& .MuiButton-startIcon": {
-                        mr: { xs: 0, sm: 0.5 },
-                        ml: 0,
-                      },
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{ display: { xs: "none", sm: "inline" } }}
-                    >
-                      {ct.label}
-                    </Box>
-                  </Button>
-                ))}
-              </ButtonGroup>
-            </Stack>
-
-            {/* Vertical Divider */}
-            <Box
-              sx={{
-                width: 1,
-                height: 20,
-                backgroundColor: "rgba(255, 255, 255, 0.12)",
-                display: { xs: "none", sm: "block" },
-              }}
-            />
-
-            {/* Overlay Toggles */}
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing={1}
-              flexWrap="wrap"
-              useFlexGap
-            >
-              <Typography
-                variant="caption"
-                sx={{
-                  fontWeight: 800,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "text.secondary",
-                  fontSize: "0.68rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 0.5,
-                  mr: 0.5,
-                }}
-              >
-                <LayersIcon sx={{ fontSize: 14 }} /> Overlays:
-              </Typography>
-
-            {/* 50 DMA Toggle */}
-            <Tooltip
-              title={
-                technicals.hasEnough50
-                  ? "50-Day Simple Moving Average (Intermediate Momentum)"
-                  : "Insufficient historical data (< 50 trading days)"
-              }
-              arrow
-            >
-              <span>
-                <Chip
-                  clickable={technicals.hasEnough50}
-                  disabled={!technicals.hasEnough50}
-                  onClick={() => setShow50Dma((prev) => !prev)}
-                  label={
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 0.75,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: 14,
-                          height: 3,
-                          borderRadius: 1,
-                          backgroundColor: "#f59e0b",
-                        }}
-                      />
-                      <span>50 DMA</span>
-                      {hoverDma50 !== undefined ? (
-                        <span
-                          style={{
-                            opacity: 0.9,
-                            fontSize: "0.68rem",
-                            fontFamily: MONO_FONT,
-                            fontVariantNumeric: "tabular-nums",
-                          }}
-                        >
-                          ({formatSeriesValue(
-                            hoverDma50,
-                            series.format,
-                            series.decimals,
-                          )})
-                        </span>
-                      ) : latestDma50 !== undefined ? (
-                        <span
-                          style={{
-                            opacity: 0.9,
-                            fontSize: "0.68rem",
-                            fontFamily: MONO_FONT,
-                            fontVariantNumeric: "tabular-nums",
-                          }}
-                        >
-                          ({formatSeriesValue(
-                            latestDma50,
-                            series.format,
-                            series.decimals,
-                          )})
-                        </span>
-                      ) : null}
-                    </Box>
-                  }
-                  size="small"
-                  variant={show50Dma ? "filled" : "outlined"}
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "0.72rem",
-                    height: 26,
-                    backgroundColor: show50Dma
-                      ? "rgba(245, 158, 11, 0.18)"
-                      : "transparent",
-                    color: show50Dma ? "#fbbf24" : "text.secondary",
-                    borderColor: show50Dma
-                      ? "#f59e0b"
-                      : "rgba(255, 255, 255, 0.15)",
-                    "&:hover": {
-                      backgroundColor: show50Dma
-                        ? "rgba(245, 158, 11, 0.28)"
-                        : "rgba(255, 255, 255, 0.06)",
-                    },
-                  }}
-                />
-              </span>
-            </Tooltip>
-
-            {/* 200 DMA Toggle */}
-            <Tooltip
-              title={
-                technicals.hasEnough200
-                  ? "200-Day Simple Moving Average (Long-Term Structural Trend)"
-                  : "Insufficient historical data (< 200 trading days)"
-              }
-              arrow
-            >
-              <span>
-                <Chip
-                  clickable={technicals.hasEnough200}
-                  disabled={!technicals.hasEnough200}
-                  onClick={() => setShow200Dma((prev) => !prev)}
-                  label={
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 0.75,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: 14,
-                          height: 3,
-                          borderRadius: 1,
-                          backgroundColor: "#a855f7",
-                        }}
-                      />
-                      <span>200 DMA</span>
-                      {hoverDma200 !== undefined ? (
-                        <span
-                          style={{
-                            opacity: 0.9,
-                            fontSize: "0.68rem",
-                            fontFamily: MONO_FONT,
-                            fontVariantNumeric: "tabular-nums",
-                          }}
-                        >
-                          ({formatSeriesValue(
-                            hoverDma200,
-                            series.format,
-                            series.decimals,
-                          )})
-                        </span>
-                      ) : latestDma200 !== undefined ? (
-                        <span
-                          style={{
-                            opacity: 0.9,
-                            fontSize: "0.68rem",
-                            fontFamily: MONO_FONT,
-                            fontVariantNumeric: "tabular-nums",
-                          }}
-                        >
-                          ({formatSeriesValue(
-                            latestDma200,
-                            series.format,
-                            series.decimals,
-                          )})
-                        </span>
-                      ) : null}
-                    </Box>
-                  }
-                  size="small"
-                  variant={show200Dma ? "filled" : "outlined"}
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "0.72rem",
-                    height: 26,
-                    backgroundColor: show200Dma
-                      ? "rgba(168, 85, 247, 0.18)"
-                      : "transparent",
-                    color: show200Dma ? "#c084fc" : "text.secondary",
-                    borderColor: show200Dma
-                      ? "#a855f7"
-                      : "rgba(255, 255, 255, 0.15)",
-                    "&:hover": {
-                      backgroundColor: show200Dma
-                        ? "rgba(168, 85, 247, 0.28)"
-                        : "rgba(255, 255, 255, 0.06)",
-                    },
-                  }}
-                />
-              </span>
-            </Tooltip>
-
-            {/* Big Drops Toggle */}
-            <Tooltip
-              title={`Show drop sessions with decline ≥ ${dropThreshold}%`}
-              arrow
-            >
+            {/* Active Chart Style Chip */}
+            <Tooltip title="Current chart style (Click to configure in Chart Options)">
               <Chip
-                clickable
-                onClick={() => setShowBigDrops((prev) => !prev)}
                 icon={
-                  <WarningAmberIcon
-                    sx={{
-                      fontSize: "14px !important",
-                      color: showBigDrops ? "#ef4444" : "inherit",
-                    }}
-                  />
+                  chartType === "candles" ? (
+                    <CandlestickChartIcon sx={{ fontSize: "14px !important" }} />
+                  ) : chartType === "baseline" ? (
+                    <TimelineIcon sx={{ fontSize: "14px !important" }} />
+                  ) : chartType === "mountain" ? (
+                    <AreaChartIcon sx={{ fontSize: "14px !important" }} />
+                  ) : chartType === "line" ? (
+                    <ShowChartIcon sx={{ fontSize: "14px !important" }} />
+                  ) : (
+                    <BarChartIcon sx={{ fontSize: "14px !important" }} />
+                  )
                 }
-                label={`Big Drops (${bigDropEvents.length})`}
+                label={
+                  chartType === "candles"
+                    ? "Candlesticks"
+                    : chartType === "baseline"
+                    ? "Baseline"
+                    : chartType === "mountain"
+                    ? "Mountain"
+                    : chartType === "line"
+                    ? "Line"
+                    : "Bars"
+                }
                 size="small"
-                variant={showBigDrops ? "filled" : "outlined"}
+                onClick={handleOpenSettings}
+                clickable
                 sx={{
                   fontWeight: 700,
                   fontSize: "0.72rem",
-                  fontFamily: MONO_FONT,
                   height: 26,
-                  backgroundColor: showBigDrops
-                    ? "rgba(239, 68, 68, 0.18)"
-                    : "transparent",
-                  color: showBigDrops ? "#f87171" : "text.secondary",
-                  borderColor: showBigDrops
-                    ? "#ef4444"
-                    : "rgba(255, 255, 255, 0.15)",
+                  backgroundColor: "rgba(99, 102, 241, 0.12)",
+                  color: "primary.light",
+                  border: "1px solid rgba(99, 102, 241, 0.3)",
                   "&:hover": {
-                    backgroundColor: showBigDrops
-                      ? "rgba(239, 68, 68, 0.28)"
-                      : "rgba(255, 255, 255, 0.06)",
+                    backgroundColor: "rgba(99, 102, 241, 0.22)",
                   },
                 }}
               />
             </Tooltip>
 
-            {/* Drop Threshold Filter Pills (Institutional Filter) */}
-            {showBigDrops && (
-              <Stack direction="row" alignItems="center" spacing={0.5} sx={{ ml: 0.5 }}>
-                <Typography
-                  variant="caption"
+            {/* Active 50 DMA Chip (if enabled) */}
+            {show50Dma && technicals.hasEnough50 && (
+              <Tooltip title="50-Day Moving Average Active (Click to configure)">
+                <Chip
+                  label={
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                      <Box sx={{ width: 10, height: 3, borderRadius: 1, bgcolor: "#f59e0b" }} />
+                      <span>
+                        50 DMA
+                        {hoverDma50 !== undefined
+                          ? `: ${formatSeriesValue(hoverDma50, series.format, series.decimals)}`
+                          : latestDma50 !== undefined
+                          ? `: ${formatSeriesValue(latestDma50, series.format, series.decimals)}`
+                          : ""}
+                      </span>
+                    </Box>
+                  }
+                  size="small"
+                  onClick={handleOpenSettings}
+                  clickable
                   sx={{
-                    fontSize: "0.65rem",
-                    color: "text.secondary",
                     fontWeight: 700,
-                    display: { xs: "none", sm: "block" },
+                    fontSize: "0.72rem",
+                    fontFamily: MONO_FONT,
+                    height: 26,
+                    backgroundColor: "rgba(245, 158, 11, 0.15)",
+                    color: "#fbbf24",
+                    border: "1px solid #f59e0b",
+                    "&:hover": {
+                      backgroundColor: "rgba(245, 158, 11, 0.25)",
+                    },
                   }}
-                >
-                  <FilterListIcon sx={{ fontSize: 12, verticalAlign: "middle" }} /> Cutoff:
-                </Typography>
-                {([1.5, 2.0, 3.0] as DropThreshold[]).map((thresh) => (
-                  <Chip
-                    key={thresh}
-                    label={`≥ ${thresh}%`}
-                    size="small"
-                    clickable
-                    onClick={() => {
-                      setDropThreshold(thresh);
-                      setSelectedPointIndex(null);
-                    }}
-                    sx={{
-                      height: 20,
-                      fontSize: "0.64rem",
-                      fontWeight: 700,
-                      fontFamily: MONO_FONT,
-                      backgroundColor:
-                        dropThreshold === thresh
-                          ? "rgba(239, 68, 68, 0.25)"
-                          : "rgba(255, 255, 255, 0.04)",
-                      color: dropThreshold === thresh ? "#f87171" : "text.secondary",
-                      border:
-                        dropThreshold === thresh
-                          ? "1px solid rgba(239, 68, 68, 0.4)"
-                          : "1px solid transparent",
-                    }}
-                  />
-                ))}
-              </Stack>
+                />
+              </Tooltip>
             )}
-            </Stack>
+
+            {/* Active 200 DMA Chip (if enabled) */}
+            {show200Dma && technicals.hasEnough200 && (
+              <Tooltip title="200-Day Moving Average Active (Click to configure)">
+                <Chip
+                  label={
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                      <Box sx={{ width: 10, height: 3, borderRadius: 1, bgcolor: "#a855f7" }} />
+                      <span>
+                        200 DMA
+                        {hoverDma200 !== undefined
+                          ? `: ${formatSeriesValue(hoverDma200, series.format, series.decimals)}`
+                          : latestDma200 !== undefined
+                          ? `: ${formatSeriesValue(latestDma200, series.format, series.decimals)}`
+                          : ""}
+                      </span>
+                    </Box>
+                  }
+                  size="small"
+                  onClick={handleOpenSettings}
+                  clickable
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                    fontFamily: MONO_FONT,
+                    height: 26,
+                    backgroundColor: "rgba(168, 85, 247, 0.15)",
+                    color: "#c084fc",
+                    border: "1px solid #a855f7",
+                    "&:hover": {
+                      backgroundColor: "rgba(168, 85, 247, 0.25)",
+                    },
+                  }}
+                />
+              </Tooltip>
+            )}
+
+            {/* Active Big Drops Alert Chip (if enabled) */}
+            {showBigDrops && (
+              <Tooltip title={`Big Drops Selloff Detection (≥${dropThreshold}%)`}>
+                <Chip
+                  icon={
+                    <WarningAmberIcon
+                      sx={{ fontSize: "14px !important", color: "#ef4444" }}
+                    />
+                  }
+                  label={`Drops (≥${dropThreshold}%): ${bigDropEvents.length}`}
+                  size="small"
+                  onClick={handleOpenSettings}
+                  clickable
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "0.72rem",
+                    fontFamily: MONO_FONT,
+                    height: 26,
+                    backgroundColor: "rgba(239, 68, 68, 0.15)",
+                    color: "#f87171",
+                    border: "1px solid #ef4444",
+                    "&:hover": {
+                      backgroundColor: "rgba(239, 68, 68, 0.25)",
+                    },
+                  }}
+                />
+              </Tooltip>
+            )}
           </Stack>
 
-          {/* Right Controls: Height Presets + Fullscreen + Guide Toggle */}
+          {/* Right Controls: Gear Icon Chart Options + Fullscreen + Guide */}
           <Stack direction="row" alignItems="center" spacing={1}>
-            {/* Height Presets */}
-            <ButtonGroup
-              size="small"
-              variant="outlined"
-              aria-label="chart height presets"
-              sx={{
-                display: { xs: "none", sm: "inline-flex" },
-                backgroundColor: "var(--indices-card-bg, rgba(0, 0, 0, 0.25))",
-                borderRadius: 2,
-                p: 0.25,
-                "& .MuiButton-root": {
-                  border: "none",
-                  borderRadius: 1.5,
+            <Tooltip title="Chart Options (Style, Overlays, Canvas Height)">
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<SettingsIcon sx={{ fontSize: 15 }} />}
+                onClick={handleOpenSettings}
+                sx={{
+                  borderRadius: 2,
+                  px: 1.25,
+                  py: 0.35,
+                  fontSize: "0.74rem",
                   fontWeight: 700,
-                  fontSize: "0.68rem",
-                  fontFamily: MONO_FONT,
-                  px: 0.9,
-                  py: 0.25,
-                  minWidth: "28px",
-                  color: "text.secondary",
+                  textTransform: "none",
+                  borderColor: isSettingsOpen
+                    ? "primary.main"
+                    : "var(--indices-border, rgba(255, 255, 255, 0.15))",
+                  color: isSettingsOpen ? "#fff" : "text.secondary",
+                  backgroundColor: isSettingsOpen
+                    ? "rgba(99, 102, 241, 0.25)"
+                    : "transparent",
                   "&:hover": {
-                    backgroundColor:
-                      "var(--indices-card-hover-bg, rgba(255, 255, 255, 0.08))",
-                    color: "text.primary",
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(99, 102, 241, 0.18)",
+                    color: "primary.light",
                   },
-                  "&.active": {
-                    backgroundColor: "primary.main",
-                    color: "#ffffff",
-                    boxShadow: "0 2px 8px rgba(79, 70, 229, 0.35)",
-                  },
-                },
-              }}
-            >
-              {[
-                { label: "S", height: 260 },
-                { label: "M", height: 360 },
-                { label: "L", height: 480 },
-                { label: "XL", height: 620 },
-              ].map((preset) => (
-                <Tooltip
-                  key={preset.label}
-                  title={`Preset ${preset.label} (${preset.height}px)`}
-                  arrow
-                >
-                  <Button
-                    className={
-                      !isFullscreen &&
-                      Math.abs(chartHeight - preset.height) <= 15
-                        ? "active"
-                        : ""
-                    }
-                    onClick={() => {
-                      setChartHeight(preset.height);
-                      try {
-                        localStorage.setItem(
-                          "tracker_chart_height",
-                          String(preset.height),
-                        );
-                      } catch {
-                        /* ignore storage error */
-                      }
-                    }}
-                  >
-                    {preset.label}
-                  </Button>
-                </Tooltip>
-              ))}
-            </ButtonGroup>
+                }}
+              >
+                Chart Options
+              </Button>
+            </Tooltip>
 
             {/* Fullscreen Toggle */}
             <Tooltip
@@ -3320,6 +3070,480 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
             {series.marketSignificance} {series.description}
           </Typography>
         </Box>
+
+        {/* Comprehensive Chart Options Popover (Gear Icon) */}
+        <Popover
+          open={isSettingsOpen}
+          anchorEl={settingsAnchor}
+          onClose={handleCloseSettings}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          slotProps={{
+            paper: {
+              sx: {
+                width: { xs: 310, sm: 380 },
+                maxWidth: "92vw",
+                p: 2.25,
+                borderRadius: 3,
+                backgroundColor: "var(--indices-card-bg, #0f172a)",
+                backgroundImage: "none",
+                backdropFilter: "blur(20px)",
+                border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.12))",
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.7)",
+              },
+            },
+          }}
+        >
+          {/* Popover Header */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              pb: 1.5,
+              mb: 2,
+              borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+            }}
+          >
+            <Stack direction="row" spacing={1} alignItems="center">
+              <SettingsIcon sx={{ fontSize: 18, color: "primary.main" }} />
+              <Typography sx={{ fontWeight: 800, fontSize: "0.95rem" }}>
+                Chart Options &amp; Settings
+              </Typography>
+            </Stack>
+            <IconButton
+              size="small"
+              onClick={handleCloseSettings}
+              sx={{ color: "text.secondary", p: 0.5 }}
+            >
+              <CloseIcon sx={{ fontSize: 16 }} />
+            </IconButton>
+          </Box>
+
+          {/* Section 1: Chart Style / Type */}
+          <Box sx={{ mb: 2.25 }}>
+            <Typography
+              variant="caption"
+              sx={{
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "text.secondary",
+                fontSize: "0.68rem",
+                display: "block",
+                mb: 1,
+              }}
+            >
+              Chart Style
+            </Typography>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(3, 1fr)" },
+                gap: 0.75,
+              }}
+            >
+              {[
+                {
+                  type: "candles" as ChartType,
+                  label: "Candles",
+                  icon: <CandlestickChartIcon sx={{ fontSize: 15 }} />,
+                },
+                {
+                  type: "baseline" as ChartType,
+                  label: "Baseline",
+                  icon: <TimelineIcon sx={{ fontSize: 15 }} />,
+                },
+                {
+                  type: "mountain" as ChartType,
+                  label: "Mountain",
+                  icon: <AreaChartIcon sx={{ fontSize: 15 }} />,
+                },
+                {
+                  type: "line" as ChartType,
+                  label: "Line",
+                  icon: <ShowChartIcon sx={{ fontSize: 15 }} />,
+                },
+                {
+                  type: "bars" as ChartType,
+                  label: "Bars",
+                  icon: <BarChartIcon sx={{ fontSize: 15 }} />,
+                },
+              ].map((ct) => {
+                const isSelected = chartType === ct.type;
+                return (
+                  <Button
+                    key={ct.type}
+                    size="small"
+                    variant={isSelected ? "contained" : "outlined"}
+                    onClick={() => {
+                      setChartType(ct.type);
+                      try {
+                        localStorage.setItem("tracker_chart_type_v2", ct.type);
+                      } catch {
+                        /* ignore storage error */
+                      }
+                    }}
+                    startIcon={ct.icon}
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 700,
+                      fontSize: "0.75rem",
+                      borderRadius: 2,
+                      py: 0.6,
+                      px: 1,
+                      justifyContent: "flex-start",
+                      color: isSelected ? "#fff" : "text.secondary",
+                      backgroundColor: isSelected
+                        ? "primary.main"
+                        : "rgba(255, 255, 255, 0.03)",
+                      borderColor: isSelected
+                        ? "primary.main"
+                        : "rgba(255, 255, 255, 0.1)",
+                      "&:hover": {
+                        backgroundColor: isSelected
+                          ? "primary.dark"
+                          : "rgba(255, 255, 255, 0.08)",
+                      },
+                    }}
+                  >
+                    {ct.label}
+                  </Button>
+                );
+              })}
+            </Box>
+          </Box>
+
+          {/* Section 2: Technical Overlays */}
+          <Box sx={{ mb: 2.25 }}>
+            <Typography
+              variant="caption"
+              sx={{
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "text.secondary",
+                fontSize: "0.68rem",
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                mb: 1,
+              }}
+            >
+              <LayersIcon sx={{ fontSize: 13 }} /> Technical Overlays
+            </Typography>
+            <Stack spacing={1}>
+              {/* 50 DMA */}
+              <Box
+                onClick={() => technicals.hasEnough50 && setShow50Dma((prev) => !prev)}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  p: 1,
+                  borderRadius: 2,
+                  cursor: technicals.hasEnough50 ? "pointer" : "not-allowed",
+                  opacity: technicals.hasEnough50 ? 1 : 0.5,
+                  bgcolor: show50Dma
+                    ? "rgba(245, 158, 11, 0.12)"
+                    : "rgba(255, 255, 255, 0.02)",
+                  border: `1px solid ${
+                    show50Dma
+                      ? "rgba(245, 158, 11, 0.4)"
+                      : "rgba(255, 255, 255, 0.08)"
+                  }`,
+                  transition: "all 0.15s ease",
+                  "&:hover": {
+                    bgcolor: show50Dma
+                      ? "rgba(245, 158, 11, 0.18)"
+                      : "rgba(255, 255, 255, 0.06)",
+                  },
+                }}
+              >
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Box
+                    sx={{
+                      width: 12,
+                      height: 3,
+                      borderRadius: 1,
+                      bgcolor: "#f59e0b",
+                    }}
+                  />
+                  <Box>
+                    <Typography sx={{ fontWeight: 700, fontSize: "0.8rem" }}>
+                      50-Day Moving Average
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "text.secondary", fontSize: "0.68rem" }}
+                    >
+                      Intermediate momentum
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Chip
+                  size="small"
+                  label={show50Dma ? "ON" : "OFF"}
+                  sx={{
+                    fontWeight: 800,
+                    fontSize: "0.65rem",
+                    height: 20,
+                    bgcolor: show50Dma ? "#f59e0b" : "rgba(255, 255, 255, 0.1)",
+                    color: show50Dma ? "#000" : "text.secondary",
+                  }}
+                />
+              </Box>
+
+              {/* 200 DMA */}
+              <Box
+                onClick={() => technicals.hasEnough200 && setShow200Dma((prev) => !prev)}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  p: 1,
+                  borderRadius: 2,
+                  cursor: technicals.hasEnough200 ? "pointer" : "not-allowed",
+                  opacity: technicals.hasEnough200 ? 1 : 0.5,
+                  bgcolor: show200Dma
+                    ? "rgba(168, 85, 247, 0.12)"
+                    : "rgba(255, 255, 255, 0.02)",
+                  border: `1px solid ${
+                    show200Dma
+                      ? "rgba(168, 85, 247, 0.4)"
+                      : "rgba(255, 255, 255, 0.08)"
+                  }`,
+                  transition: "all 0.15s ease",
+                  "&:hover": {
+                    bgcolor: show200Dma
+                      ? "rgba(168, 85, 247, 0.18)"
+                      : "rgba(255, 255, 255, 0.06)",
+                  },
+                }}
+              >
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Box
+                    sx={{
+                      width: 12,
+                      height: 3,
+                      borderRadius: 1,
+                      bgcolor: "#a855f7",
+                    }}
+                  />
+                  <Box>
+                    <Typography sx={{ fontWeight: 700, fontSize: "0.8rem" }}>
+                      200-Day Moving Average
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "text.secondary", fontSize: "0.68rem" }}
+                    >
+                      Long-term structural trend
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Chip
+                  size="small"
+                  label={show200Dma ? "ON" : "OFF"}
+                  sx={{
+                    fontWeight: 800,
+                    fontSize: "0.65rem",
+                    height: 20,
+                    bgcolor: show200Dma ? "#a855f7" : "rgba(255, 255, 255, 0.1)",
+                    color: show200Dma ? "#fff" : "text.secondary",
+                  }}
+                />
+              </Box>
+
+              {/* Big Drops */}
+              <Box
+                sx={{
+                  p: 1,
+                  borderRadius: 2,
+                  bgcolor: showBigDrops
+                    ? "rgba(239, 68, 68, 0.08)"
+                    : "rgba(255, 255, 255, 0.02)",
+                  border: `1px solid ${
+                    showBigDrops
+                      ? "rgba(239, 68, 68, 0.35)"
+                      : "rgba(255, 255, 255, 0.08)"
+                  }`,
+                }}
+              >
+                <Box
+                  onClick={() => setShowBigDrops((prev) => !prev)}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    cursor: "pointer",
+                    mb: showBigDrops ? 1 : 0,
+                  }}
+                >
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <WarningAmberIcon sx={{ fontSize: 16, color: "#ef4444" }} />
+                    <Box>
+                      <Typography sx={{ fontWeight: 700, fontSize: "0.8rem" }}>
+                        Big Drops Detection
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        sx={{ color: "text.secondary", fontSize: "0.68rem" }}
+                      >
+                        Highlights sharp selloff sessions
+                      </Typography>
+                    </Box>
+                  </Stack>
+                  <Chip
+                    size="small"
+                    label={showBigDrops ? `ON (${bigDropEvents.length})` : "OFF"}
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "0.65rem",
+                      height: 20,
+                      bgcolor: showBigDrops ? "#ef4444" : "rgba(255, 255, 255, 0.1)",
+                      color: showBigDrops ? "#fff" : "text.secondary",
+                    }}
+                  />
+                </Box>
+
+                {showBigDrops && (
+                  <Box
+                    sx={{
+                      pt: 0.75,
+                      borderTop: "1px dashed rgba(239, 68, 68, 0.2)",
+                    }}
+                  >
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        fontSize: "0.65rem",
+                        color: "text.secondary",
+                        fontWeight: 700,
+                        display: "block",
+                        mb: 0.5,
+                      }}
+                    >
+                      Threshold Cutoff:
+                    </Typography>
+                    <Stack direction="row" spacing={0.75}>
+                      {([1.5, 2.0, 3.0] as DropThreshold[]).map((thresh) => (
+                        <Chip
+                          key={thresh}
+                          label={`≥ ${thresh}%`}
+                          size="small"
+                          clickable
+                          onClick={() => {
+                            setDropThreshold(thresh);
+                            setSelectedPointIndex(null);
+                          }}
+                          sx={{
+                            height: 22,
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            fontFamily: MONO_FONT,
+                            backgroundColor:
+                              dropThreshold === thresh
+                                ? "rgba(239, 68, 68, 0.25)"
+                                : "rgba(255, 255, 255, 0.05)",
+                            color:
+                              dropThreshold === thresh ? "#f87171" : "text.secondary",
+                            border:
+                              dropThreshold === thresh
+                                ? "1px solid rgba(239, 68, 68, 0.5)"
+                                : "1px solid transparent",
+                          }}
+                        />
+                      ))}
+                    </Stack>
+                  </Box>
+                )}
+              </Box>
+            </Stack>
+          </Box>
+
+          {/* Section 3: Canvas Height Presets */}
+          <Box>
+            <Typography
+              variant="caption"
+              sx={{
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "text.secondary",
+                fontSize: "0.68rem",
+                display: "block",
+                mb: 1,
+              }}
+            >
+              Canvas Height Presets
+            </Typography>
+            <ButtonGroup
+              size="small"
+              fullWidth
+              variant="outlined"
+              sx={{
+                backgroundColor: "rgba(0, 0, 0, 0.25)",
+                borderRadius: 2,
+                p: 0.25,
+                "& .MuiButton-root": {
+                  border: "none",
+                  borderRadius: 1.5,
+                  fontWeight: 700,
+                  fontSize: "0.72rem",
+                  fontFamily: MONO_FONT,
+                  py: 0.5,
+                  color: "text.secondary",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    color: "text.primary",
+                  },
+                  "&.active": {
+                    backgroundColor: "primary.main",
+                    color: "#ffffff",
+                    boxShadow: "0 2px 8px rgba(79, 70, 229, 0.35)",
+                  },
+                },
+              }}
+            >
+              {[
+                { label: "S (260px)", height: 260 },
+                { label: "M (360px)", height: 360 },
+                { label: "L (480px)", height: 480 },
+                { label: "XL (620px)", height: 620 },
+              ].map((preset) => (
+                <Button
+                  key={preset.label}
+                  className={
+                    !isFullscreen &&
+                    Math.abs(chartHeight - preset.height) <= 15
+                      ? "active"
+                      : ""
+                  }
+                  onClick={() => {
+                    setChartHeight(preset.height);
+                    try {
+                      localStorage.setItem(
+                        "tracker_chart_height",
+                        String(preset.height),
+                      );
+                    } catch {
+                      /* ignore storage error */
+                    }
+                  }}
+                >
+                  {preset.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </Box>
+        </Popover>
       </CardContent>
     </Card>
   );
