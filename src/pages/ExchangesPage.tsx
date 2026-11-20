@@ -1,5 +1,7 @@
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ClearIcon from "@mui/icons-material/Clear";
 import GridViewIcon from "@mui/icons-material/GridView";
+import PieChartIcon from "@mui/icons-material/PieChart";
 import PublicIcon from "@mui/icons-material/Public";
 import SearchIcon from "@mui/icons-material/Search";
 import TableRowsIcon from "@mui/icons-material/TableRows";
@@ -20,11 +22,13 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ExchangeCard } from "../components/exchanges/ExchangeCard";
 import { ExchangeDetailDrawer } from "../components/exchanges/ExchangeDetailDrawer";
 import { ExchangeStatusTicker } from "../components/exchanges/ExchangeStatusTicker";
 import { ExchangeTable } from "../components/exchanges/ExchangeTable";
 import SiteFooter from "../components/layout/SiteFooter";
+import { CountryMarketCapTable } from "../components/markets/CountryMarketCapTable";
 import { WORLD_EXCHANGES } from "../data/exchangesData";
 import {
   AssetClass,
@@ -36,6 +40,26 @@ import { getExchangeLiveStatus } from "../utils/marketHours";
 
 export default function ExchangesPage() {
   const theme = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Subtab navigation state ("sessions" vs "capitalization")
+  const currentTabParam = searchParams.get("tab");
+  const activeTab: "sessions" | "capitalization" =
+    currentTabParam === "capitalization" || currentTabParam === "market-cap"
+      ? "capitalization"
+      : "sessions";
+
+  const handleTabChange = (newTab: "sessions" | "capitalization") => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (newTab === "sessions") {
+        next.delete("tab");
+      } else {
+        next.set("tab", "capitalization");
+      }
+      return next;
+    });
+  };
 
   // Real-time clock updating every second
   const [currentTime, setCurrentTime] = useState<Date>(() => new Date());
@@ -141,7 +165,7 @@ export default function ExchangesPage() {
     >
       <Container maxWidth="xl" sx={{ py: { xs: 3, md: 4.5 }, flex: 1 }}>
         {/* Page Title & Subtitle */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2.5 }}>
           <Stack
             direction="row"
             spacing={1.5}
@@ -153,7 +177,9 @@ export default function ExchangesPage() {
               sx={{ fontSize: 32, color: theme.palette.primary.main }}
             />
             <Typography variant="h4" component="h1" sx={{ fontWeight: 800 }}>
-              World Exchanges & Markets
+              {activeTab === "capitalization"
+                ? "Global Market Capitalization"
+                : "World Exchanges & Markets"}
             </Typography>
             <Chip
               label="Top 30 Global"
@@ -170,19 +196,84 @@ export default function ExchangesPage() {
             variant="body1"
             sx={{ color: "text.secondary", maxWidth: 840 }}
           >
-            Real-time session status, countdown timers, and trading hours for
-            the top 30 world stock, derivatives, and commodities exchanges.
+            {activeTab === "capitalization"
+              ? "Total public equity market capitalization of the top 30 countries worldwide, national market share, tracked companies, and flagship corporations."
+              : "Real-time session status, countdown timers, and trading hours for the top 30 world stock, derivatives, and commodities exchanges."}
           </Typography>
         </Box>
 
-        {/* Command Center Status Ticker */}
-        <ExchangeStatusTicker
-          exchanges={WORLD_EXCHANGES}
-          statuses={exchangeStatuses}
-          currentTime={currentTime}
-        />
+        {/* Subtab Navigation Bar */}
+        <Box sx={{ mb: 3 }}>
+          <Tabs
+            value={activeTab}
+            onChange={(_, val) => handleTabChange(val)}
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            sx={{
+              minHeight: 40,
+              maxWidth: "100%",
+              width: { xs: "100%", md: "auto" },
+              backgroundColor: "rgba(15, 23, 42, 0.45)",
+              p: 0.5,
+              borderRadius: 3,
+              border:
+                "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+              "& .MuiTabs-scroller": {
+                overflowX: "auto !important",
+              },
+              "& .MuiTabs-flexContainer": {
+                gap: { xs: 0.5, sm: 0.75 },
+              },
+              "& .MuiTabs-indicator": {
+                display: "none",
+              },
+              "& .MuiTab-root": {
+                minHeight: 32,
+                py: 0.75,
+                px: 2,
+                borderRadius: 2.5,
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                textTransform: "none",
+                transition: "all 0.18s ease-in-out",
+                color: "text.secondary",
+                "&.Mui-selected": {
+                  color: "#ffffff",
+                  backgroundColor: "primary.main",
+                  boxShadow: "0 2px 8px rgba(99, 102, 241, 0.35)",
+                },
+              },
+            }}
+          >
+            <Tab
+              icon={<AccessTimeIcon sx={{ fontSize: 18 }} />}
+              iconPosition="start"
+              label="Sessions"
+              value="sessions"
+            />
+            <Tab
+              icon={<PieChartIcon sx={{ fontSize: 18 }} />}
+              iconPosition="start"
+              label="Market Capitalization"
+              value="capitalization"
+            />
+          </Tabs>
+        </Box>
 
-        {/* Control & Filter Bar */}
+        {/* Tab Content */}
+        {activeTab === "capitalization" ? (
+          <CountryMarketCapTable />
+        ) : (
+          <>
+            {/* Command Center Status Ticker */}
+            <ExchangeStatusTicker
+              exchanges={WORLD_EXCHANGES}
+              statuses={exchangeStatuses}
+              currentTime={currentTime}
+            />
+
+            {/* Control & Filter Bar */}
         <Paper
           elevation={0}
           sx={{
@@ -537,6 +628,8 @@ export default function ExchangesPage() {
             statuses={exchangeStatuses}
             onSelect={handleSelectExchange}
           />
+        )}
+          </>
         )}
 
         {/* Slide-Over Detail Drawer */}

@@ -586,8 +586,8 @@ ${JSON.stringify(datasetSchema, null, 2)}
   // Generate dist/markets/index.html with markets directory prerender & structured data
   const marketsDir = path.join(distDir, "markets");
   fs.mkdirSync(marketsDir, { recursive: true });
-  const marketsTitle = `World Stock Exchanges & Markets 🌐 | Live Trading Status & Hours | MarketIndices`;
-  const marketsDesc = `Real-time trading status, session countdowns, and trading hours across the world's top 30 financial exchanges (NYSE, Nasdaq, TSE, Euronext, LSE, HKEX, SSE, NSE).`;
+  const marketsTitle = `World Stock Exchanges & Markets 🌐 | Live Sessions & Market Capitalization | MarketIndices`;
+  const marketsDesc = `Real-time trading sessions status, countdown timers, and country market capitalization ranking across the world's top 30 financial markets and economies.`;
 
   const marketsBreadcrumbSchema = {
     "@context": "https://schema.org",
