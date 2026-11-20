@@ -558,7 +558,7 @@ export const CountryMarketCapTable: React.FC = () => {
                     sx={{
                       height: 5,
                       borderRadius: 2.5,
-                      mb: 2,
+                      mb: 1.75,
                       bgcolor: "rgba(255, 255, 255, 0.08)",
                       "& .MuiLinearProgress-bar": {
                         borderRadius: 2.5,
@@ -571,57 +571,6 @@ export const CountryMarketCapTable: React.FC = () => {
                       },
                     }}
                   />
-
-                  <Box
-                    sx={{
-                      p: 1.25,
-                      borderRadius: 2,
-                      bgcolor: "rgba(255, 255, 255, 0.03)",
-                      border: `1px solid ${theme.palette.divider}`,
-                      mb: 1.25,
-                    }}
-                  >
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        color: "text.secondary",
-                        fontSize: "0.7rem",
-                        fontWeight: 700,
-                        display: "block",
-                        mb: 0.25,
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Flagship Company
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Stack direction="row" spacing={0.75} alignItems="center">
-                        <Typography sx={{ fontWeight: 700, fontSize: "0.85rem" }}>
-                          {item.topCompany.name}
-                        </Typography>
-                        <Chip
-                          label={item.topCompany.ticker}
-                          size="small"
-                          sx={{
-                            height: 16,
-                            fontSize: "0.62rem",
-                            fontWeight: 700,
-                            bgcolor: "rgba(99, 102, 241, 0.15)",
-                            color: "primary.light",
-                          }}
-                        />
-                      </Stack>
-                      <Typography sx={{ fontWeight: 700, fontSize: "0.82rem" }}>
-                        {item.topCompany.marketCap}
-                      </Typography>
-                    </Box>
-                  </Box>
 
                   <Stack direction="row" spacing={0.5} flexWrap="wrap">
                     {item.primaryExchanges.map((ex) => (

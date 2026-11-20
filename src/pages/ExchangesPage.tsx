@@ -365,7 +365,7 @@ export default function ExchangesPage() {
             sx={{ color: "text.secondary", maxWidth: 840, fontSize: { xs: "0.85rem", sm: "0.95rem" } }}
           >
             {activeTab === "capitalization"
-              ? "Total public equity market capitalization of the top 30 countries worldwide, national market share, tracked companies, and flagship corporations."
+              ? "Total public equity market capitalization of the top 30 countries worldwide, national market share, tracked companies, and primary exchanges."
               : "Real-time session status, countdown timers, and trading hours for the top 30 world stock, derivatives, and commodities exchanges."}
           </Typography>
         </Box>
