@@ -299,7 +299,6 @@ export const CountryMarketCapTable: React.FC = () => {
                 <TableCell sx={{ fontWeight: 800 }} align="center">
                   Companies
                 </TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Largest Company</TableCell>
                 <TableCell sx={{ fontWeight: 800 }}>Primary Exchanges</TableCell>
               </TableRow>
             </TableHead>
@@ -427,40 +426,6 @@ export const CountryMarketCapTable: React.FC = () => {
                       <Typography sx={{ fontWeight: 700, fontSize: "0.9rem" }}>
                         {item.companiesCount.toLocaleString()}
                       </Typography>
-                    </TableCell>
-
-                    {/* Largest Company */}
-                    <TableCell>
-                      <Box>
-                        <Stack
-                          direction="row"
-                          alignItems="center"
-                          spacing={0.75}
-                        >
-                          <Typography
-                            sx={{ fontWeight: 700, fontSize: "0.88rem" }}
-                          >
-                            {item.topCompany.name}
-                          </Typography>
-                          <Chip
-                            label={item.topCompany.ticker}
-                            size="small"
-                            sx={{
-                              height: 18,
-                              fontSize: "0.65rem",
-                              fontWeight: 700,
-                              bgcolor: "rgba(99, 102, 241, 0.15)",
-                              color: "primary.light",
-                            }}
-                          />
-                        </Stack>
-                        <Typography
-                          variant="caption"
-                          sx={{ color: "text.secondary", fontSize: "0.72rem" }}
-                        >
-                          {item.topCompany.marketCap}
-                        </Typography>
-                      </Box>
                     </TableCell>
 
                     {/* Primary Exchanges */}

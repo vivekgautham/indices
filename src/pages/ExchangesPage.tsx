@@ -174,45 +174,7 @@ export default function ExchangesPage() {
         bgcolor: "background.default",
       }}
     >
-      <Container maxWidth="xl" sx={{ py: { xs: 3, md: 4.5 }, flex: 1 }}>
-        {/* Page Title & Subtitle */}
-        <Box sx={{ mb: 2.5 }}>
-          <Stack
-            direction="row"
-            spacing={1.5}
-            alignItems="center"
-            mb={1}
-            flexWrap="wrap"
-          >
-            <PublicIcon
-              sx={{ fontSize: 32, color: theme.palette.primary.main }}
-            />
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 800 }}>
-              {activeTab === "capitalization"
-                ? "Global Market Capitalization"
-                : "World Exchanges & Markets"}
-            </Typography>
-            <Chip
-              label="Top 30 Global"
-              size="small"
-              sx={{
-                fontWeight: 700,
-                color: theme.palette.primary.main,
-                bgcolor: "rgba(0, 221, 148, 0.1)",
-                border: "1px solid rgba(0, 221, 148, 0.25)",
-              }}
-            />
-          </Stack>
-          <Typography
-            variant="body1"
-            sx={{ color: "text.secondary", maxWidth: 840 }}
-          >
-            {activeTab === "capitalization"
-              ? "Total public equity market capitalization of the top 30 countries worldwide, national market share, tracked companies, and flagship corporations."
-              : "Real-time session status, countdown timers, and trading hours for the top 30 world stock, derivatives, and commodities exchanges."}
-          </Typography>
-        </Box>
-
+      <Container maxWidth="xl" sx={{ py: { xs: 2.5, md: 3.5 }, flex: 1 }}>
         {/* Dashboard Actions Bar / Main Navigation Tabs */}
         <Box
           sx={{
@@ -368,6 +330,44 @@ export default function ExchangesPage() {
               />
             )}
           </Box>
+        </Box>
+
+        {/* Page Title & Subtitle */}
+        <Box sx={{ mb: { xs: 2, sm: 2.5 } }}>
+          <Stack
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            mb={0.75}
+            flexWrap="wrap"
+          >
+            <PublicIcon
+              sx={{ fontSize: { xs: 26, sm: 30 }, color: theme.palette.primary.main }}
+            />
+            <Typography variant="h4" component="h1" sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", sm: "2rem" } }}>
+              {activeTab === "capitalization"
+                ? "Global Market Capitalization"
+                : "World Exchanges & Markets"}
+            </Typography>
+            <Chip
+              label="Top 30 Global"
+              size="small"
+              sx={{
+                fontWeight: 700,
+                color: theme.palette.primary.main,
+                bgcolor: "rgba(0, 221, 148, 0.1)",
+                border: "1px solid rgba(0, 221, 148, 0.25)",
+              }}
+            />
+          </Stack>
+          <Typography
+            variant="body1"
+            sx={{ color: "text.secondary", maxWidth: 840, fontSize: { xs: "0.85rem", sm: "0.95rem" } }}
+          >
+            {activeTab === "capitalization"
+              ? "Total public equity market capitalization of the top 30 countries worldwide, national market share, tracked companies, and flagship corporations."
+              : "Real-time session status, countdown timers, and trading hours for the top 30 world stock, derivatives, and commodities exchanges."}
+          </Typography>
         </Box>
 
         {/* Tab Content */}
