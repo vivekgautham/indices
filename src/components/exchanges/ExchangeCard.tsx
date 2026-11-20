@@ -28,26 +28,6 @@ export const ExchangeCard: React.FC<Props> = ({
   const theme = useTheme();
   const colorConfig = getStatusColorConfig(status.status);
 
-  // Asset class color mapping
-  const getAssetBadgeColor = (asset: string) => {
-    switch (asset) {
-      case "Equities":
-        return theme.palette.mode === "dark" ? "#60a5fa" : "#2563eb";
-      case "Derivatives":
-        return "#f59e0b";
-      case "Commodities":
-        return "#10b981";
-      case "Fixed Income":
-        return "#8b5cf6";
-      case "ETFs":
-        return "#ec4899";
-      case "FX":
-        return "#06b6d4";
-      default:
-        return theme.palette.text.secondary;
-    }
-  };
-
   return (
     <Card
       elevation={0}
@@ -280,35 +260,6 @@ export const ExchangeCard: React.FC<Props> = ({
               >
                 {status.userLocalOpenTime} - {status.userLocalCloseTime}
               </Typography>
-            </Stack>
-          </Box>
-
-          {/* Traded Asset Classes */}
-          <Box sx={{ mb: 2 }}>
-            <Stack direction="row" spacing={0.6} flexWrap="wrap" useFlexGap>
-              {exchange.assetClasses.map((asset) => (
-                <Chip
-                  key={asset}
-                  label={asset}
-                  size="small"
-                  sx={{
-                    height: 20,
-                    fontSize: "0.66rem",
-                    fontWeight: 600,
-                    color: getAssetBadgeColor(asset),
-                    bgcolor:
-                      theme.palette.mode === "dark"
-                        ? "rgba(255, 255, 255, 0.04)"
-                        : "rgba(0, 0, 0, 0.04)",
-                    border: `1px solid ${
-                      theme.palette.mode === "dark"
-                        ? "rgba(255, 255, 255, 0.08)"
-                        : "rgba(0, 0, 0, 0.08)"
-                    }`,
-                    "& .MuiChip-label": { px: 0.8 },
-                  }}
-                />
-              ))}
             </Stack>
           </Box>
 

@@ -145,8 +145,6 @@ export const ExchangeTable: React.FC<Props> = ({
 
             <TableCell sx={{ fontWeight: 700 }}>Trading Hours</TableCell>
 
-            <TableCell sx={{ fontWeight: 700 }}>Traded Assets</TableCell>
-
             <TableCell align="center" sx={{ fontWeight: 700 }}>
               Action
             </TableCell>
@@ -314,34 +312,6 @@ export const ExchangeTable: React.FC<Props> = ({
                   >
                     Your time: {st.userLocalOpenTime} - {st.userLocalCloseTime}
                   </Typography>
-                </TableCell>
-
-                {/* Traded Assets */}
-                <TableCell>
-                  <Stack
-                    direction="row"
-                    spacing={0.5}
-                    flexWrap="wrap"
-                    sx={{ maxWidth: 220 }}
-                  >
-                    {ex.assetClasses.map((asset) => (
-                      <Chip
-                        key={asset}
-                        label={asset}
-                        size="small"
-                        sx={{
-                          height: 18,
-                          fontSize: "0.62rem",
-                          fontWeight: 600,
-                          bgcolor:
-                            theme.palette.mode === "dark"
-                              ? "rgba(255, 255, 255, 0.05)"
-                              : "rgba(0, 0, 0, 0.05)",
-                          "& .MuiChip-label": { px: 0.6 },
-                        }}
-                      />
-                    ))}
-                  </Stack>
                 </TableCell>
 
                 {/* Action */}

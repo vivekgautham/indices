@@ -32,7 +32,6 @@ import { CountryMarketCapTable } from "../components/markets/CountryMarketCapTab
 import { COUNTRY_MARKET_CAP_DATA } from "../data/countryMarketCapData";
 import { WORLD_EXCHANGES } from "../data/exchangesData";
 import {
-  AssetClass,
   ExchangeLiveStatus,
   ExchangeRegion,
   MarketSessionStatus,
@@ -79,7 +78,6 @@ export default function ExchangesPage() {
     "All",
   );
   const [openOnly, setOpenOnly] = useState(false);
-  const [selectedAsset, setSelectedAsset] = useState<AssetClass | "All">("All");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
   // Selected exchange for detail drawer
@@ -119,16 +117,12 @@ export default function ExchangesPage() {
         const matchesMic = ex.mic.toLowerCase().includes(query);
         const matchesCountry = ex.country.toLowerCase().includes(query);
         const matchesCity = ex.city.toLowerCase().includes(query);
-        const matchesAsset = ex.assetClasses.some((a) =>
-          a.toLowerCase().includes(query),
-        );
         if (
           !matchesName &&
           !matchesShort &&
           !matchesMic &&
           !matchesCountry &&
-          !matchesCity &&
-          !matchesAsset
+          !matchesCity
         ) {
           return false;
         }
@@ -141,11 +135,6 @@ export default function ExchangesPage() {
 
       // Open only match
       if (openOnly && status?.status !== "OPEN") {
-        return false;
-      }
-
-      // Asset class match
-      if (selectedAsset !== "All" && !ex.assetClasses.includes(selectedAsset)) {
         return false;
       }
 
@@ -169,7 +158,7 @@ export default function ExchangesPage() {
 
       return a.globalRank - b.globalRank;
     });
-  }, [searchQuery, selectedRegion, openOnly, selectedAsset, exchangeStatuses]);
+  }, [searchQuery, selectedRegion, openOnly, exchangeStatuses]);
 
   const handleSelectExchange = (ex: WorldExchange) => {
     setSelectedExchange(ex);
@@ -421,7 +410,7 @@ export default function ExchangesPage() {
               fullWidth
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search exchange name, MIC (e.g. XNYS), city, country, or asset class..."
+              placeholder="Search exchange name, MIC (e.g. XNYS), city, or country..."
               size="small"
               startAdornment={
                 <InputAdornment position="start">
@@ -608,64 +597,6 @@ export default function ExchangesPage() {
                 </ButtonGroup>
               </Stack>
             </Stack>
-
-            {/* Bottom Row: Asset Class Chips */}
-            <Stack
-              direction="row"
-              spacing={0.8}
-              flexWrap="wrap"
-              alignItems="center"
-              pt={0.5}
-              sx={{ borderTop: `1px solid ${theme.palette.divider}` }}
-            >
-              <Typography
-                variant="caption"
-                sx={{
-                  color: "text.secondary",
-                  fontWeight: 600,
-                  display: { xs: "none", sm: "block" },
-                  mr: 0.5,
-                }}
-              >
-                Asset Class:
-              </Typography>
-              {(
-                [
-                  "All",
-                  "Equities",
-                  "Derivatives",
-                  "Commodities",
-                  "Fixed Income",
-                  "ETFs",
-                ] as const
-              ).map((asset) => {
-                const isSelected = selectedAsset === asset;
-                return (
-                  <Chip
-                    key={asset}
-                    label={asset}
-                    size="small"
-                    onClick={() => setSelectedAsset(asset)}
-                    clickable
-                    sx={{
-                      fontWeight: isSelected ? 800 : 500,
-                      fontSize: "0.75rem",
-                      height: 24,
-                      bgcolor: isSelected
-                        ? theme.palette.mode === "dark"
-                          ? "rgba(255, 255, 255, 0.15)"
-                          : "rgba(0, 0, 0, 0.1)"
-                        : "transparent",
-                      border: `1px solid ${
-                        isSelected
-                          ? theme.palette.text.primary
-                          : theme.palette.divider
-                      }`,
-                    }}
-                  />
-                );
-              })}
-            </Stack>
           </Stack>
         </Paper>
 
@@ -718,7 +649,6 @@ export default function ExchangesPage() {
                 setSearchQuery("");
                 setSelectedRegion("All");
                 setOpenOnly(false);
-                setSelectedAsset("All");
               }}
               sx={{ textTransform: "none", fontWeight: 700 }}
             >
