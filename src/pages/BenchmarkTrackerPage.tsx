@@ -213,8 +213,9 @@ export default function BenchmarkTrackerPage() {
     const rui = dataset.series.RUI;
     const rut = dataset.series.RUT;
     const vix = dataset.series.VIXCLS;
+    const move = dataset.series.MOVE_INDEX;
 
-    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, vix };
+    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, vix, move };
   }, [dataset]);
 
   // International Quick KPI benchmarks
@@ -256,6 +257,7 @@ export default function BenchmarkTrackerPage() {
       "DFII10",
       "FEDFUNDS",
       "BAMLH0A0HYM2",
+      "MOVE_INDEX",
     ];
     return ids.map((id) => dataset.series[id]).filter(Boolean);
   }, [dataset]);
@@ -587,8 +589,9 @@ export default function BenchmarkTrackerPage() {
                 display: "grid",
                 gridTemplateColumns: {
                   xs: "repeat(2, 1fr)",
-                  sm: "repeat(4, 1fr)",
-                  lg: "repeat(8, 1fr)",
+                  sm: "repeat(3, 1fr)",
+                  md: "repeat(5, 1fr)",
+                  lg: "repeat(9, 1fr)",
                 },
                 gap: 1,
                 mt: 2.5,
@@ -968,7 +971,6 @@ export default function BenchmarkTrackerPage() {
                   variant="outlined"
                   onClick={() => handleSelectSeries("VIXCLS")}
                   sx={{
-                    gridColumn: { xs: "span 2", sm: "auto" },
                     p: 1,
                     borderRadius: 2,
                     cursor: "pointer",
@@ -992,7 +994,7 @@ export default function BenchmarkTrackerPage() {
                       fontSize: "0.72rem",
                     }}
                   >
-                    VIX Volatility
+                    VIX (Equity Vol)
                   </Typography>
                   <Typography
                     sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
@@ -1011,6 +1013,57 @@ export default function BenchmarkTrackerPage() {
                   >
                     {usKpiSummary.vix.change >= 0 ? "+" : ""}
                     {usKpiSummary.vix.change.toFixed(2)} pts
+                  </Typography>
+                </Paper>
+              )}
+
+              {usKpiSummary.move && (
+                <Paper
+                  variant="outlined"
+                  onClick={() => handleSelectSeries("MOVE_INDEX")}
+                  sx={{
+                    p: 1,
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
+                    backgroundColor:
+                      selectedSeriesId === "MOVE_INDEX"
+                        ? "rgba(245, 158, 11, 0.15)"
+                        : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                    borderColor:
+                      selectedSeriesId === "MOVE_INDEX"
+                        ? "#f59e0b"
+                        : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                    "&:hover": { borderColor: "#f59e0b" },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "text.secondary",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    MOVE (Bond Vol)
+                  </Typography>
+                  <Typography
+                    sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                  >
+                    {usKpiSummary.move.latestValue.toFixed(1)}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color:
+                        usKpiSummary.move.latestValue > 115
+                          ? "#ef4444"
+                          : "#10b981",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    {usKpiSummary.move.change >= 0 ? "+" : ""}
+                    {usKpiSummary.move.change.toFixed(1)} pts
                   </Typography>
                 </Paper>
               )}

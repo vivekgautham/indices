@@ -107,7 +107,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
   },
   crsp: {
     id: "crsp",
-    name: "Center for Research in Security Prices (CRSP / Morningstar)",
+    name: "Center for Research in Security Prices (CRSP)",
     shortName: "CRSP",
     logoText: "CRSP",
     tagline:
@@ -119,9 +119,9 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     website: "https://www.crsp.org",
     accentColor: "#f59e0b",
     badgeBg: "rgba(245, 158, 11, 0.15)",
-    keyEtfPartners: ["The Vanguard Group", "BlackRock (iShares)", "VanEck"],
+    keyEtfPartners: ["The Vanguard Group", "BlackRock (iShares)"],
     coverage:
-      "US Total Market, Mega Cap, Large Cap, Mid Cap, Small Cap, Value & Growth Style Dimensions, Morningstar Economic Moat",
+      "US Total Market, Mega Cap, Large Cap, Mid Cap, Small Cap, Value & Growth Style Dimensions",
     marketShareSummary:
       "Primary benchmark underlying Vanguard's core US index funds, including the $1.9+ trillion Vanguard Total Stock Market (VTI / VTSAX).",
   },
@@ -412,6 +412,55 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
     marketShareSummary:
       "Home to the world's very first ETF (TIPS 35, now the iShares S&P/TSX 60 ETF 'XIU') created in 1990.",
   },
+  solactive: {
+    id: "solactive",
+    name: "Solactive AG",
+    shortName: "Solactive",
+    logoText: "Solactive",
+    tagline: "German Index Engineering & Thematic ETF Innovation.",
+    description:
+      "Headquartered in Frankfurt, Solactive AG is one of the world's fastest-growing benchmark providers. Famous for fast, flexible, and customized index engineering at competitive pricing, Solactive powers hundreds of popular thematic, tech, clean-energy, and crypto ETFs globally.",
+    headquarters: "Frankfurt am Main, Germany",
+    founded: 2007,
+    website: "https://www.solactive.com",
+    accentColor: "#f59e0b",
+    badgeBg: "rgba(245, 158, 11, 0.15)",
+    keyEtfPartners: [
+      "Global X ETFs",
+      "Mirae Asset",
+      "DWS Xtrackers",
+      "Horizons ETFs",
+      "Invesco",
+    ],
+    coverage:
+      "Thematic Equities (AI, Lithium, Autonomous & EV, Genomics), Developed Markets, Fixed Income, Digital Assets",
+    marketShareSummary:
+      "Over 30,000 customized benchmarks calculated globally, powering marquee thematic ETFs with tens of billions in ETF assets under management.",
+  },
+  morningstar: {
+    id: "morningstar",
+    name: "Morningstar Indexes",
+    shortName: "Morningstar",
+    logoText: "Morningstar",
+    tagline: "Independent research, economic moats, and style-box equity benchmarks.",
+    description:
+      "Morningstar Indexes delivers modern market indexing leveraging Morningstar's independent equity research, proprietary Economic Moat ratings, and sustainable ESG intelligence. Widely recognized for Wide Moat investing, dividend growth, and multi-factor strategies.",
+    headquarters: "Chicago, IL, USA",
+    founded: 2002,
+    website: "https://indexes.morningstar.com",
+    accentColor: "#e11d48",
+    badgeBg: "rgba(225, 29, 72, 0.15)",
+    keyEtfPartners: [
+      "VanEck",
+      "BlackRock (iShares)",
+      "Invesco",
+      "State Street SPDR",
+    ],
+    coverage:
+      "Wide Moat Equities, US Broad Market, Style Box (Value/Growth), Dividend Leaders, Sustainability & Multi-Asset",
+    marketShareSummary:
+      "Licenses benchmarks for over 100 ETFs globally, led by the flagship VanEck Morningstar Wide Moat ETF (MOAT) with over $15B+ AUM.",
+  },
 };
 
 export const PROVIDERS_LIST: IndexProvider[] = [
@@ -432,4 +481,6 @@ export const PROVIDERS_LIST: IndexProvider[] = [
   PROVIDERS_DATA.csi,
   PROVIDERS_DATA.krx,
   PROVIDERS_DATA.tsx,
+  PROVIDERS_DATA.solactive,
+  PROVIDERS_DATA.morningstar,
 ];

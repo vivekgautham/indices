@@ -148,6 +148,52 @@ export function matchesPresetTerm(idx: MarketIndex, term: string): boolean {
     );
   }
 
+  // "Crypto / Digital Assets"
+  if (norm === "crypto / digital assets" || norm === "crypto") {
+    return (
+      idx.assetClass === "Digital Asset" ||
+      /crypto|bitcoin|ethereum|digital asset/i.test(idx.category) ||
+      (idx.tags || []).some((t) =>
+        /crypto|digital asset|bitcoin|ethereum/i.test(t),
+      ) ||
+      /crypto|bitcoin|ether/i.test(idx.name)
+    );
+  }
+
+  // "Commodities"
+  if (norm === "commodities" || norm === "commodity") {
+    return (
+      idx.assetClass === "Commodity" ||
+      /commodity|precious metals|gold|silver|crude oil|energy/i.test(
+        idx.category,
+      ) ||
+      (idx.tags || []).some((t) =>
+        /commodity|gold|silver|crude oil|energy/i.test(t),
+      ) ||
+      /commodity|gold|silver/i.test(idx.name)
+    );
+  }
+
+  // "Artificial Intelligence"
+  if (norm === "artificial intelligence" || norm === "ai") {
+    return (
+      /artificial intelligence|robotics|ai/i.test(idx.category) ||
+      (idx.tags || []).some((t) =>
+        /artificial intelligence|ai|machine learning|robotics/i.test(t),
+      ) ||
+      /artificial intelligence|robotics/i.test(idx.name)
+    );
+  }
+
+  // "Global X"
+  if (norm === "global x") {
+    return (
+      (idx.trackingEtfs || []).some((etf) => /global x/i.test(etf.name)) ||
+      (idx.tags || []).some((t) => /global x/i.test(t)) ||
+      /global x/i.test(idx._searchableText || "")
+    );
+  }
+
   // If the term has slashes, treat as OR across slash alternatives
   if (norm.includes("/")) {
     const alternatives = norm

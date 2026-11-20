@@ -84,6 +84,9 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Bonds / Fixed Income",
       "Treasury / Cash",
       "Volatility / VIX",
+      "Crypto / Digital Assets",
+      "Commodities",
+      "Artificial Intelligence",
       "Profitability Screen",
       "UCITS",
     ],
@@ -102,6 +105,7 @@ export const SEARCH_CATEGORIES: SearchCategory[] = [
       "Avantis",
       "VanEck",
       "Fidelity",
+      "Global X",
     ],
   },
   {

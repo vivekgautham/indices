@@ -372,6 +372,9 @@ const suggestions = [
   "Bonds / Fixed Income",
   "Treasury / Cash",
   "Volatility / VIX",
+  "Crypto / Digital Assets",
+  "Commodities",
+  "Artificial Intelligence",
   "Profitability Screen",
   "UCITS",
   // ETF Providers
@@ -383,6 +386,7 @@ const suggestions = [
   "Avantis",
   "VanEck",
   "Fidelity",
+  "Global X",
   // Market Exposure
   "Broad Market",
   "Large Cap",
@@ -445,6 +449,43 @@ function matchesPresetTerm(idx, term) {
       (idx.altSymbols || []).includes("VIX") ||
       (idx.tags || []).some((t) => /volatility|vix/i.test(t)) ||
       /volatility/i.test(idx.name)
+    );
+  }
+  if (norm === "crypto / digital assets" || norm === "crypto") {
+    return (
+      idx.assetClass === "Digital Asset" ||
+      /crypto|bitcoin|ethereum|digital asset/i.test(idx.category) ||
+      (idx.tags || []).some((t) =>
+        /crypto|digital asset|bitcoin|ethereum/i.test(t),
+      ) ||
+      /crypto|bitcoin|ether/i.test(idx.name)
+    );
+  }
+  if (norm === "commodities" || norm === "commodity") {
+    return (
+      idx.assetClass === "Commodity" ||
+      /commodity|precious metals|gold|silver|crude oil|energy/i.test(
+        idx.category,
+      ) ||
+      (idx.tags || []).some((t) =>
+        /commodity|gold|silver|crude oil|energy/i.test(t),
+      ) ||
+      /commodity|gold|silver/i.test(idx.name)
+    );
+  }
+  if (norm === "artificial intelligence" || norm === "ai") {
+    return (
+      /artificial intelligence|robotics|ai/i.test(idx.category) ||
+      (idx.tags || []).some((t) =>
+        /artificial intelligence|ai|machine learning|robotics/i.test(t),
+      ) ||
+      /artificial intelligence|robotics/i.test(idx.name)
+    );
+  }
+  if (norm === "global x") {
+    return (
+      (idx.trackingEtfs || []).some((etf) => /global x/i.test(etf.name)) ||
+      (idx.tags || []).some((t) => /global x/i.test(t))
     );
   }
   if (norm.includes("/")) {

@@ -128,6 +128,18 @@ const LOGO_CONFIG: Record<
     bg: "#ffffff",
     paddingRatio: 0.08,
   },
+  solactive: {
+    src: `${BASE}logos/solactive.svg`,
+    alt: "Solactive",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
+  morningstar: {
+    src: `${BASE}logos/morningstar.svg`,
+    alt: "Morningstar",
+    bg: "#ffffff",
+    paddingRatio: 0.08,
+  },
 };
 
 export const ProviderLogo: React.FC<ProviderLogoProps> = ({

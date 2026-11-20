@@ -4944,7 +4944,7 @@ export const INDICES_DATA: MarketIndex[] = [
     symbol: "MWMFTR",
     altSymbols: ["MWMF", "MOAT Benchmark", "Morningstar Wide Moat"],
     name: "Morningstar Wide Moat Focus Index",
-    providerId: "crsp",
+    providerId: "morningstar",
     category: "Large-Cap Equity",
     assetClass: "Equity",
     region: "United States",
@@ -4957,6 +4957,16 @@ export const INDICES_DATA: MarketIndex[] = [
         ticker: "MOAT",
         name: "VanEck Morningstar Wide Moat ETF",
         aum: "$16.5B+",
+      },
+      {
+        ticker: "GOAT",
+        name: "VanEck Morningstar Global Wide Moat UCITS ETF (Acc)",
+        aum: "$1.2B+",
+      },
+      {
+        ticker: "VMOA",
+        name: "VanEck Morningstar US Wide Moat UCITS ETF",
+        aum: "$2.1B+",
       },
     ],
     summary:
@@ -4995,7 +5005,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Morningstar Dividend Growth",
     ],
     name: "Morningstar US Dividend Growth Index",
-    providerId: "crsp",
+    providerId: "morningstar",
     category: "Dividend Growth",
     assetClass: "Equity",
     region: "United States",
@@ -5052,7 +5062,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "Morningstar Dividend Yield Focus",
     ],
     name: "Morningstar US Dividend Yield Focus Index",
-    providerId: "crsp",
+    providerId: "morningstar",
     category: "Dividend & Quality",
     assetClass: "Equity",
     region: "United States",
@@ -9881,5 +9891,869 @@ export const INDICES_DATA: MarketIndex[] = [
       "Tadawul",
     ],
     officialUrl: "https://www.msci.com/our-solutions/indexes/saudi-arabia",
+  },
+  // ==========================================
+  // Morningstar Indexes Expansion
+  // ==========================================
+  {
+    id: "morningstar-us-market",
+    symbol: "MUSD",
+    altSymbols: ["MSUS", "Morningstar US Market", "M* US Market"],
+    name: "Morningstar US Market Index",
+    providerId: "morningstar",
+    category: "Total Stock Market",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: "1,600+",
+    weightingMethodology: "Free Float Market Capitalization Weighted",
+    rebalanceFrequency: "Semi-Annually in June and December",
+    launchYear: 2002,
+    trackingEtfs: [
+      {
+        ticker: "MUSD",
+        name: "Morningstar US Market Index Portfolio",
+        aum: "$4.5B+",
+      },
+    ],
+    summary:
+      "Broad benchmark capturing 97% of investable US equity capitalization, providing the fundamental parent universe for Morningstar moat and style indexes.",
+    description:
+      "The Morningstar US Market Index targets the top 97% of investable market capitalization of American publicly traded companies. Serving as the foundation for Morningstar's entire domestic benchmark suite and Style Box analysis, the index incorporates rigorous investability and liquidity screens across large, mid, and small cap segments.",
+    eligibilityCriteria: [
+      "Companies incorporated and headquartered in the United States",
+      "Ranked by free-float market capitalization to cover the top 97% cumulative universe",
+      "Must meet minimum 3-month average daily trading volume (ADTV) thresholds",
+      "Reconstituted semi-annually in June and December with quarterly rebalancing",
+    ],
+    keyCharacteristics: [
+      "Parent benchmark universe for Morningstar Wide Moat and Dividend Growth families",
+      "Comprehensive broad-market coverage spanning large, mid, and small cap equities",
+      "Strict float-adjustment ensures benchmark investability and liquidity replication",
+    ],
+    tags: [
+      "Broad Market",
+      "Total Market",
+      "Morningstar",
+      "United States",
+      "Large Cap",
+      "Mid Cap",
+      "Small Cap",
+    ],
+    officialUrl:
+      "https://indexes.morningstar.com/our-indexes/details/morningstar-us-market-FS0000A38S",
+  },
+  {
+    id: "morningstar-global-wide-moat-focus",
+    symbol: "MGWMFTR",
+    altSymbols: ["MGWMF", "MOTG Benchmark", "Global Wide Moat"],
+    name: "Morningstar Global Wide Moat Focus Index",
+    providerId: "morningstar",
+    category: "Global Quality Equity",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 50,
+    weightingMethodology: "Equal-Weighted with Staggered Rebalancing",
+    rebalanceFrequency: "Semi-Annual (Staggered Quarterly Sub-Portfolios)",
+    launchYear: 2018,
+    trackingEtfs: [
+      {
+        ticker: "MOTG",
+        name: "VanEck Morningstar Global Wide Moat ETF",
+        aum: "$550M+",
+      },
+    ],
+    summary:
+      "Global benchmark selecting the most attractively priced companies worldwide with sustainable competitive advantages (wide economic moats). Benchmark for VanEck MOTG.",
+    description:
+      "The Morningstar Global Wide Moat Focus Index tracks high-quality multinational corporations assigned a 'Wide' Economic Moat rating by Morningstar Equity Research that are trading at the steepest discounts to fair value. The index spans developed and emerging markets, providing international moat exposure while maintaining an equal-weighted structure across staggered sub-portfolios to dampen turnover.",
+    eligibilityCriteria: [
+      "Assigned a 'Wide' Economic Moat rating by Morningstar Equity Research analysts",
+      "Derived from the Morningstar Global Markets Index universe",
+      "Ranked among the lowest price-to-fair-value ratios among global wide-moat corporations",
+      "Subject to minimum liquidity and investability screens",
+    ],
+    keyCharacteristics: [
+      "Global extension of the renowned Morningstar Wide Moat investment philosophy",
+      "Identifies global industry champions with durable pricing power and structural barriers to entry",
+      "Equal-weighted portfolio mitigates mega-cap geographic and single-stock concentration",
+    ],
+    tags: [
+      "Wide Moat",
+      "Global",
+      "Economic Moat",
+      "Morningstar",
+      "Quality",
+      "Value",
+      "International",
+    ],
+    officialUrl:
+      "https://indexes.morningstar.com/our-indexes/details/morningstar-global-wide-moat-focus-FS0000DTR3",
+  },
+
+  // ==========================================
+  // Solactive AG Thematic & Benchmark Suite
+  // ==========================================
+  {
+    id: "solactive-global-lithium",
+    symbol: "SOLLIT",
+    altSymbols: ["LIT Benchmark", "Solactive Lithium", "Global Lithium Index"],
+    name: "Solactive Global Lithium Index",
+    providerId: "solactive",
+    category: "Thematic Clean Energy & Materials",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 40,
+    weightingMethodology:
+      "Modified Free-Float Market Capitalization Weighted (20% Cap)",
+    rebalanceFrequency: "Semi-Annually in May and November",
+    launchYear: 2010,
+    trackingEtfs: [
+      {
+        ticker: "LIT",
+        name: "Global X Lithium & Battery Tech ETF",
+        aum: "$1.4B+",
+      },
+    ],
+    summary:
+      "The premier benchmark tracking the global lithium cycle, from mining and refining through lithium-ion battery production. Benchmark for Global X LIT.",
+    description:
+      "The Solactive Global Lithium Index tracks the performance of the largest and most liquid listed companies active in the exploration and mining of lithium or the production of lithium-ion batteries. Serving as the underlying gauge for the $1.4B+ Global X Lithium & Battery Tech ETF (LIT), the index spans miners, chemical processors, and battery equipment manufacturers worldwide.",
+    eligibilityCriteria: [
+      "Significant business operations in lithium mining, exploration, or battery manufacturing",
+      "Minimum free-float market capitalization of at least $100M",
+      "Minimum average daily trading volume of $1M over preceding 3 months",
+      "Individual constituent weights capped at 20% for pure-play lithium companies and 4.75% for battery producers",
+    ],
+    keyCharacteristics: [
+      "World-standard benchmark for energy transition materials and EV battery supply chains",
+      "Includes key producers like Albemarle, SQM, Ganfeng Lithium, and contemporary battery innovators",
+      "Primary benchmark underlying the Global X Lithium & Battery Tech ETF (LIT)",
+    ],
+    tags: [
+      "Clean Energy",
+      "Lithium",
+      "Battery Tech",
+      "Thematic",
+      "Electric Vehicles",
+      "Solactive",
+      "Global X",
+      "Materials",
+    ],
+    officialUrl: "https://www.solactive.com/indices/?index=DE000A1EYMS4",
+  },
+  {
+    id: "solactive-artificial-intelligence",
+    symbol: "SOLAITE",
+    altSymbols: [
+      "AIQ Benchmark",
+      "Solactive AI Index",
+      "Solactive AI & Technology",
+    ],
+    name: "Solactive Artificial Intelligence & Technology Index",
+    providerId: "solactive",
+    category: "Artificial Intelligence & Technology",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 85,
+    weightingMethodology: "Modified Market Capitalization Weighted (3% Cap)",
+    rebalanceFrequency: "Semi-Annually in January and July",
+    launchYear: 2018,
+    trackingEtfs: [
+      {
+        ticker: "AIQ",
+        name: "Global X Artificial Intelligence & Technology ETF",
+        aum: "$2.4B+",
+      },
+    ],
+    summary:
+      "Flagship AI benchmark tracking companies developing artificial intelligence applications, foundational models, hardware, and big data infrastructure. Benchmark for Global X AIQ.",
+    description:
+      "The Solactive Artificial Intelligence & Technology Index tracks international companies that stand to benefit from the further development and utilization of artificial intelligence technology in their products and services. The index encompasses AI developers, enterprise machine learning platforms, semiconductor accelerators, and cloud compute providers.",
+    eligibilityCriteria: [
+      "Companies operating in AI applications, hardware, big data architectures, or cloud AI services",
+      "Minimum market capitalization of $500M and minimum 3-month ADTV of $2M",
+      "Ranked and classified by Solactive proprietary natural language processing (ARTIS) keyword algorithms",
+      "Individual constituent weights capped at 3% upon semi-annual reconstitution",
+    ],
+    keyCharacteristics: [
+      "Core benchmark underlying the $2.4B+ Global X Artificial Intelligence & Technology ETF (AIQ)",
+      "Balanced exposure spanning AI semiconductor hyperscalers, cloud infrastructure, and enterprise software",
+      "3% weight cap prevents hyper-concentration in mega-cap technology leaders",
+    ],
+    tags: [
+      "Artificial Intelligence",
+      "AI",
+      "Technology",
+      "Semiconductor",
+      "Cloud",
+      "Software",
+      "Solactive",
+      "Global X",
+    ],
+    officialUrl: "https://www.solactive.com/indices/?index=DE000SLA5A95",
+  },
+  {
+    id: "solactive-autonomous-ev",
+    symbol: "SOLDRIV",
+    altSymbols: [
+      "DRIV Benchmark",
+      "Solactive Autonomous EV",
+      "Electric Vehicles Index",
+    ],
+    name: "Solactive Autonomous & Electric Vehicles Index",
+    providerId: "solactive",
+    category: "Autonomous Driving & Electric Vehicles",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 75,
+    weightingMethodology: "Modified Market Capitalization Weighted",
+    rebalanceFrequency: "Semi-Annually in January and July",
+    launchYear: 2018,
+    trackingEtfs: [
+      {
+        ticker: "DRIV",
+        name: "Global X Autonomous & Electric Vehicles ETF",
+        aum: "$650M+",
+      },
+    ],
+    summary:
+      "Global benchmark tracking electric vehicle manufacturers, autonomous driving software developers, sensors, and charging network operators. Benchmark for Global X DRIV.",
+    description:
+      "The Solactive Autonomous & Electric Vehicles Index is designed to track listed companies involved in the production of electric vehicles, autonomous driving hardware and algorithms, LiDAR and vision sensor technology, and EV charging infrastructure.",
+    eligibilityCriteria: [
+      "Classified by Solactive ARTIS into Electric Vehicles, Autonomous Vehicle components, or EV materials",
+      "Minimum market cap of $200M and 3-month ADTV of at least $1M",
+      "Reweighted and reconstituted semi-annually with individual caps per sector segment",
+    ],
+    keyCharacteristics: [
+      "Comprehensive thematic mobility coverage from automotive OEMs to specialized vision chipmakers",
+      "Primary benchmark for the Global X Autonomous & Electric Vehicles ETF (DRIV)",
+      "Global reach spanning North America, Europe, and Asia-Pacific electric mobility ecosystems",
+    ],
+    tags: [
+      "Electric Vehicles",
+      "Autonomous Tech",
+      "Thematic",
+      "Automotive",
+      "Technology",
+      "Solactive",
+      "Global X",
+    ],
+    officialUrl: "https://www.solactive.com/indices/?index=DE000SLA4357",
+  },
+  {
+    id: "solactive-us-large-cap",
+    symbol: "SOLUSLC",
+    altSymbols: [
+      "Solactive US Large Cap",
+      "Solactive 500",
+      "US Large Cap Index",
+    ],
+    name: "Solactive US Large Cap Index",
+    providerId: "solactive",
+    category: "Large-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 500,
+    weightingMethodology: "Free Float Market Capitalization Weighted",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2017,
+    trackingEtfs: [
+      {
+        ticker: "LCUS",
+        name: "Horizons US Large Cap Index ETF",
+        aum: "$420M+",
+      },
+    ],
+    summary:
+      "Cost-efficient German-engineered benchmark covering the 500 largest US equities, widely utilized in European institutional passive indexing.",
+    description:
+      "The Solactive US Large Cap Index tracks the 500 largest publicly traded companies in the United States by free-float market capitalization. Known across European and Canadian markets for transparent rule-based construction and significantly reduced licensing fees compared to legacy providers.",
+    eligibilityCriteria: [
+      "Headquartered and primary equity listing in the United States",
+      "Ranked among the top 500 securities by free-float market capitalization",
+      "Must meet stringent liquidity and free-float investability standards",
+      "Reconstituted and rebalanced quarterly",
+    ],
+    keyCharacteristics: [
+      "Direct modern alternative to the S&P 500 with near-identical factor and sector correlations",
+      "Pioneered Solactive's disruption of legacy index calculation fees for institutional pension funds",
+      "Quarterly rebalancing captures corporate IPOs and index additions seamlessly",
+    ],
+    tags: [
+      "Large Cap",
+      "United States",
+      "Broad Market",
+      "Solactive",
+      "Mega Cap",
+      "Equities",
+    ],
+    officialUrl: "https://www.solactive.com/indices/?index=DE000SLA31U9",
+  },
+  {
+    id: "solactive-video-games",
+    symbol: "SOLHERO",
+    altSymbols: ["HERO Benchmark", "Solactive Video Games", "Esports Index"],
+    name: "Solactive Video Games & Esports Index",
+    providerId: "solactive",
+    category: "Interactive Entertainment & Gaming",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 45,
+    weightingMethodology: "Modified Market Capitalization Weighted",
+    rebalanceFrequency: "Semi-Annually in May and November",
+    launchYear: 2019,
+    trackingEtfs: [
+      {
+        ticker: "HERO",
+        name: "Global X Video Games & Esports ETF",
+        aum: "$380M+",
+      },
+    ],
+    summary:
+      "Thematic benchmark tracking video game publishers, esports leagues, streaming platforms, and gaming graphics hardware. Benchmark for Global X HERO.",
+    description:
+      "The Solactive Video Games & Esports Index tracks global companies that derive at least 50% of their revenues from video game publishing, interactive entertainment software, virtual reality gaming hardware, and esports competitions.",
+    eligibilityCriteria: [
+      "Pure-play revenue exposure to video game development, hardware, or esports broadcasting",
+      "Minimum market capitalization of $200M and 3-month ADTV of at least $2M",
+      "Selected and screened using Solactive proprietary ARTIS algorithmic classification",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the Global X Video Games & Esports ETF (HERO)",
+      "Captures secular growth in cloud gaming, interactive entertainment, and GPU compute",
+      "Includes premier international publishers across the US, Japan, South Korea, and Europe",
+    ],
+    tags: [
+      "Gaming",
+      "Esports",
+      "Software",
+      "Thematic",
+      "Technology",
+      "Solactive",
+      "Global X",
+    ],
+    officialUrl: "https://www.solactive.com/indices/?index=DE000SLA9GE0",
+  },
+
+  // ==========================================
+  // Volatility & Bond Market Stress Gauges
+  // ==========================================
+  {
+    id: "ice-bofa-move",
+    symbol: "MOVE",
+    altSymbols: [
+      "^MOVE",
+      "Bond VIX",
+      "Merrill Lynch Option Volatility Estimate",
+    ],
+    name: "ICE BofA MOVE Index",
+    providerId: "ice",
+    category: "Fixed Income Volatility",
+    assetClass: "Volatility",
+    region: "United States",
+    constituentsCount: 4,
+    weightingMethodology:
+      "Normalized Implied Volatility Weighted across 2Y, 5Y, 10Y, 30Y Treasury Options",
+    rebalanceFrequency: "Continuous / Daily Calculation",
+    launchYear: 1988,
+    trackingEtfs: [
+      {
+        ticker: "TYA",
+        name: "Simplify Intermediate Term Treasury Futures Strategy ETF (Volatility-Managed)",
+        aum: "$180M+",
+      },
+    ],
+    summary:
+      "The bond market's 'Fear Gauge', measuring 1-month normalized implied volatility in US Treasury options across 2Y, 5Y, 10Y, and 30Y tenors.",
+    description:
+      "Created in 1988 by Harley Bassman at Merrill Lynch and maintained by ICE Data Indices, the ICE BofA MOVE (Merrill Lynch Option Volatility Estimate) Index measures normalized implied volatility across the US Treasury yield curve by analyzing OTC option prices on 2-year, 5-year, 10-year, and 30-year Treasuries. Regarded by macro hedge funds and central banks as the premier barometer of fixed income distress and monetary policy uncertainty.",
+    eligibilityCriteria: [
+      "OTC options on US Treasury note and bond futures contracts",
+      "Weighted across 2-year (20%), 5-year (20%), 10-year (40%), and 30-year (20%) tenors",
+      "Calculated from 1-month normalized forward option strikes",
+    ],
+    keyCharacteristics: [
+      "The definitive fixed income equivalent of the equity Cboe VIX Index",
+      "MOVE readings above 120–140 historically mark severe monetary liquidity stress (e.g. 2008 GFC, March 2020, March 2023 SVB banking crisis)",
+      "Essential input for cross-asset risk budgeting and macro volatility parity models",
+    ],
+    tags: [
+      "Volatility",
+      "Bonds",
+      "Fixed Income",
+      "Treasury",
+      "Interest Rates",
+      "Fear Gauge",
+      "ICE",
+      "Macro",
+    ],
+    officialUrl:
+      "https://www.theice.com/market-data/indices/fixed-income-indices",
+  },
+
+  // ==========================================
+  // Digital Assets & Cryptocurrency Benchmarks
+  // ==========================================
+  {
+    id: "coindesk-20",
+    symbol: "CD20",
+    altSymbols: ["CoinDesk 20", "CD20 Index", "Crypto Top 20"],
+    name: "CoinDesk 20 Index",
+    providerId: "marketvector",
+    category: "Digital Assets Broad Market",
+    assetClass: "Digital Asset",
+    region: "Global",
+    constituentsCount: 20,
+    weightingMethodology:
+      "Capped Market Capitalization with Liquidity Screens (20% Max Cap)",
+    rebalanceFrequency: "Quarterly in March, June, September, December",
+    launchYear: 2024,
+    trackingEtfs: [
+      {
+        ticker: "BCOIN",
+        name: "CoinDesk 20 ETP (Institutional Digital Asset Tracker)",
+        aum: "$320M+",
+      },
+    ],
+    summary:
+      "Broad multi-asset cryptocurrency benchmark tracking the top 20 digital assets by market cap and exchange liquidity. Calculated with MarketVector.",
+    description:
+      "The CoinDesk 20 Index measures the performance of the top 20 digital assets by market capitalization that meet strict institutional exchange volume, custody, and regulatory compliance criteria. Calculated in partnership with MarketVector Indexes, the CD20 serves as the digital asset benchmark for broad crypto market health.",
+    eligibilityCriteria: [
+      "Top 20 eligible digital assets by market capitalization meeting minimum 30-day median trading volume",
+      "Must be supported by multiple regulated institutional custodians and qualified trading venues",
+      "Stablecoins and pegged tokens are explicitly excluded",
+      "Constituents capped at 20% max weight to ensure diversification beyond Bitcoin and Ethereum",
+    ],
+    keyCharacteristics: [
+      "The 'Dow Jones' of crypto: institutional standard for multi-coin digital asset allocation",
+      "Designed specifically for investable products, derivatives, and crypto index funds",
+      "Calculated in accordance with IOSCO principles for financial benchmarks",
+    ],
+    tags: [
+      "Crypto",
+      "Digital Assets",
+      "Bitcoin",
+      "Ethereum",
+      "MarketVector",
+      "Blockchain",
+      "Multi-Asset",
+    ],
+    officialUrl: "https://www.coindesk.com/indices/cd20/",
+  },
+  {
+    id: "coindesk-bitcoin-price-index",
+    symbol: "XBX",
+    altSymbols: [
+      "XBX Index",
+      "CoinDesk Bitcoin Index",
+      "Bitcoin Reference Rate",
+    ],
+    name: "CoinDesk Bitcoin Price Index (XBX)",
+    providerId: "marketvector",
+    category: "Digital Asset Reference Price",
+    assetClass: "Digital Asset",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Volume-Weighted Median Spot Price across Premier Crypto Exchanges",
+    rebalanceFrequency: "Real-Time / 24/7 Continuous Calculation",
+    launchYear: 2014,
+    trackingEtfs: [
+      {
+        ticker: "GBTC",
+        name: "Grayscale Bitcoin Trust ETF",
+        aum: "$18.5B+",
+      },
+      {
+        ticker: "BTC",
+        name: "Grayscale Bitcoin Mini Trust",
+        aum: "$2.8B+",
+      },
+    ],
+    summary:
+      "The world's oldest and most cited institutional spot Bitcoin benchmark, published since 2014. Underpins the Grayscale Bitcoin Trust (GBTC).",
+    description:
+      "Launched in 2014, the CoinDesk Bitcoin Price Index (XBX) is the longest-running institutional reference rate for Bitcoin. Administered under MarketVector's benchmark framework, XBX computes a volume-weighted median price across premier spot cryptocurrency exchanges (Coinbase, Bitstamp, Kraken, itBit, LMAX) to eliminate anomalous spikes and market manipulation.",
+    eligibilityCriteria: [
+      "Calculated continuously from spot trades on verified, regulated fiat-to-crypto exchanges",
+      "Input venues must comply with anti-money laundering (AML) and know-your-customer (KYC) regulations",
+      "Volume-weighted algorithm screens out trade outliers and illiquid prints",
+    ],
+    keyCharacteristics: [
+      "The historical institutional benchmark underlying the pioneering Grayscale Bitcoin Trust (GBTC)",
+      "Over 10 years of unbroken calculation history through multiple Bitcoin halving cycles",
+      "Widely utilized across financial media and institutional investment reporting",
+    ],
+    tags: [
+      "Bitcoin",
+      "Crypto",
+      "Digital Assets",
+      "XBX",
+      "Grayscale",
+      "MarketVector",
+      "Store of Value",
+    ],
+    officialUrl: "https://www.coindesk.com/indices/xbx/",
+  },
+  {
+    id: "cme-cf-bitcoin-reference-rate",
+    symbol: "BRR",
+    altSymbols: ["CFBUSD", "CME Bitcoin Benchmark", "CME CF BRR"],
+    name: "CME CF Bitcoin Reference Rate",
+    providerId: "ice",
+    category: "Regulated Digital Asset Benchmark",
+    assetClass: "Digital Asset",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Volume-Weighted Median over 3:00 PM - 4:00 PM London Time",
+    rebalanceFrequency: "Daily 4:00 PM London Fixing",
+    launchYear: 2016,
+    trackingEtfs: [
+      {
+        ticker: "IBIT",
+        name: "iShares Bitcoin Trust ETF",
+        aum: "$42.5B+",
+      },
+      {
+        ticker: "FBTC",
+        name: "Fidelity Wise Origin Bitcoin Fund",
+        aum: "$16.2B+",
+      },
+      {
+        ticker: "BITO",
+        name: "ProShares Bitcoin Strategy ETF",
+        aum: "$2.1B+",
+      },
+    ],
+    summary:
+      "The premier institutional benchmark powering BlackRock's IBIT, Fidelity's FBTC, and CME Bitcoin Futures contracts.",
+    description:
+      "The CME CF Bitcoin Reference Rate (BRR) is the regulated, daily benchmark rate developed jointly by CME Group and CF Benchmarks. Serving as the official settlement index for CME Bitcoin futures and the core benchmark for the historic January 2024 US spot Bitcoin ETFs (led by BlackRock's $42B+ IBIT and Fidelity's $16B+ FBTC), BRR aggregates spot Bitcoin trade flows from major constituent exchanges over a one-hour observation window.",
+    eligibilityCriteria: [
+      "Trades conducted between 3:00 PM and 4:00 PM London Time across constituent venues",
+      "Calculated across 12 equal five-minute partitions to prevent end-of-day market gaming",
+      "Administered under UK Financial Conduct Authority (FCA) benchmark regulations and IOSCO principles",
+    ],
+    keyCharacteristics: [
+      "Underlying benchmark for the largest and fastest-growing spot crypto ETF in history (iShares IBIT)",
+      "Official cash settlement rate for CME Group Bitcoin Futures & Options contracts",
+      "The gold standard for institutional crypto valuation, audited accounting, and fund NAV strikes",
+    ],
+    tags: [
+      "Bitcoin",
+      "Crypto",
+      "Digital Assets",
+      "BlackRock",
+      "iShares",
+      "IBIT",
+      "Fidelity",
+      "CME",
+      "Regulated",
+    ],
+    officialUrl: "https://www.cfbenchmarks.com/indices/BRR",
+  },
+  {
+    id: "cme-cf-ether-reference-rate",
+    symbol: "ETHUSD_RR",
+    altSymbols: ["CFETHUSD", "CME Ether Benchmark", "Ether Reference Rate"],
+    name: "CME CF Ether Reference Rate",
+    providerId: "ice",
+    category: "Regulated Digital Asset Benchmark",
+    assetClass: "Digital Asset",
+    region: "Global",
+    constituentsCount: 1,
+    weightingMethodology:
+      "Volume-Weighted Median over 3:00 PM - 4:00 PM London Time",
+    rebalanceFrequency: "Daily 4:00 PM London Fixing",
+    launchYear: 2018,
+    trackingEtfs: [
+      {
+        ticker: "ETHA",
+        name: "iShares Ethereum Trust ETF",
+        aum: "$2.4B+",
+      },
+      {
+        ticker: "FETH",
+        name: "Fidelity Ethereum Fund",
+        aum: "$850M+",
+      },
+      {
+        ticker: "EETH",
+        name: "ProShares Ether Strategy ETF",
+        aum: "$120M+",
+      },
+    ],
+    summary:
+      "Regulated institutional spot Ethereum benchmark powering BlackRock's ETHA, Fidelity's FETH, and CME Ether Futures.",
+    description:
+      "Administered by CF Benchmarks and utilized by CME Group, the CME CF Ether-Dollar Reference Rate aggregates spot Ethereum trading volume across leading cryptocurrency exchanges to calculate an unmanipulable 4:00 PM London valuation. Serves as the primary NAV reference rate for the US spot Ethereum ETFs approved in July 2024.",
+    eligibilityCriteria: [
+      "Spot ETH/USD transactions conducted across verified constituent exchanges",
+      "Calculated via twelve 5-minute partitioned volume-weighted medians between 3:00 and 4:00 PM London Time",
+      "Fully compliant with UK FCA BMR authorization and IOSCO benchmark principles",
+    ],
+    keyCharacteristics: [
+      "Core underlying index for BlackRock's iShares Ethereum Trust (ETHA)",
+      "Official settlement mechanism for CME Ether futures contracts",
+      "Institutional gauge for smart contract platform and decentralized computing valuation",
+    ],
+    tags: [
+      "Ethereum",
+      "Ether",
+      "Crypto",
+      "Digital Assets",
+      "BlackRock",
+      "iShares",
+      "ETHA",
+      "Smart Contracts",
+    ],
+    officialUrl: "https://www.cfbenchmarks.com/indices/ETHUSD_RR",
+  },
+  {
+    id: "nasdaq-crypto-index",
+    symbol: "NCI",
+    altSymbols: ["NCIS", "Nasdaq Crypto", "Hashdex Crypto Index"],
+    name: "Nasdaq Crypto Index",
+    providerId: "nasdaq",
+    category: "Digital Assets Broad Market",
+    assetClass: "Digital Asset",
+    region: "Global",
+    constituentsCount: 10,
+    weightingMethodology:
+      "Free-Float Market Capitalization Weighted with Liquidity Filters",
+    rebalanceFrequency: "Quarterly in March, June, September, December",
+    launchYear: 2021,
+    trackingEtfs: [
+      {
+        ticker: "HASH11",
+        name: "Hashdex Nasdaq Crypto Index ETF",
+        aum: "$850M+",
+      },
+    ],
+    summary:
+      "Pioneering multi-asset crypto index created by Nasdaq and Hashdex, tracking leading institutional-grade digital assets. Benchmark for HASH11.",
+    description:
+      "Co-developed by Nasdaq and crypto asset manager Hashdex, the Nasdaq Crypto Index (NCI) is designed to track the performance of a significant portion of the digital asset market while adhering to institutional standards of custody, core venue liquidity, and regulatory transparency.",
+    eligibilityCriteria: [
+      "Listed on at least three vetted core crypto trading venues",
+      "Supported by at least two regulated institutional custodians",
+      "Free float market capitalization must meet minimum liquidity thresholds",
+      "Reconstituted and rebalanced quarterly",
+    ],
+    keyCharacteristics: [
+      "First crypto index licensed for a public ETF in the Americas (Hashdex HASH11 in Brazil)",
+      "Rule-based inclusion accommodates newly emerging crypto network protocols meeting custody criteria",
+      "Combines Nasdaq's world-class index calculation heritage with blockchain market data",
+    ],
+    tags: [
+      "Crypto",
+      "Digital Assets",
+      "Nasdaq",
+      "Bitcoin",
+      "Ethereum",
+      "Hashdex",
+      "Multi-Asset",
+    ],
+    officialUrl: "https://indexes.nasdaq.com/Index/Overview/NCIS",
+  },
+  {
+    id: "sp-cryptocurrency-bdm",
+    symbol: "SPCBDM",
+    altSymbols: ["S&P Crypto Index", "S&P BDM", "S&P Cryptocurrency Broad"],
+    name: "S&P Cryptocurrency Broad Digital Market Index",
+    providerId: "sp",
+    category: "Digital Assets Broad Market",
+    assetClass: "Digital Asset",
+    region: "Global",
+    constituentsCount: "100+",
+    weightingMethodology:
+      "Market Capitalization Weighted with S&P Liquidity Filters",
+    rebalanceFrequency: "Quarterly in March, June, September, December",
+    launchYear: 2021,
+    trackingEtfs: [
+      {
+        ticker: "SPCD",
+        name: "S&P Digital Market Index Tracking Strategy",
+        aum: "$150M+",
+      },
+    ],
+    summary:
+      "S&P Dow Jones's flagship broad crypto benchmark tracking over 100+ vetted digital assets meeting institutional liquidity and governance standards.",
+    description:
+      "The S&P Cryptocurrency Broad Digital Market (BDM) Index measures the performance of a wide universe of cryptocurrency assets meeting minimum liquidity and market capitalization thresholds. Calculating prices via Lukka, the index brings S&P's traditional equity benchmark rigor to decentralized assets.",
+    eligibilityCriteria: [
+      "Coins and tokens listed on recognized digital asset exchanges with verified order book data",
+      "Must have a minimum market capitalization of $10M and reliable pricing from Lukka",
+      "Reconstituted quarterly with strict compliance and sanction filtering",
+    ],
+    keyCharacteristics: [
+      "The broadest crypto market index from a tier-1 legacy benchmark institution",
+      "Covers over 100+ digital assets spanning Layer-1s, DeFi, and infrastructure tokens",
+      "Calculated and maintained with S&P Dow Jones Indices institutional governance",
+    ],
+    tags: ["Crypto", "Digital Assets", "S&P", "Blockchain", "Broad Market"],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/digital-assets/sp-cryptocurrency-broad-digital-market-index/",
+  },
+
+  // ==========================================
+  // Flagship Multi-Asset Commodity Benchmarks
+  // ==========================================
+  {
+    id: "bloomberg-commodity-index",
+    symbol: "BCOM",
+    altSymbols: ["DJ-BCOM", "BCOMTR", "Bloomberg Commodity"],
+    name: "Bloomberg Commodity Index (BCOM)",
+    providerId: "bloomberg",
+    category: "Broad Multi-Asset Commodities",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 24,
+    weightingMethodology:
+      "Liquidity (2/3) and Production (1/3) Weighted with 33% Sector & 15% Single-Commodity Caps",
+    rebalanceFrequency:
+      "Annual Reconstitution in January with Monthly Futures Roll",
+    launchYear: 1998,
+    trackingEtfs: [
+      {
+        ticker: "CMDY",
+        name: "iShares Bloomberg Roll Select Commodity ETF",
+        aum: "$1.8B+",
+      },
+      {
+        ticker: "BCOM",
+        name: "Direxion Auspice Broad Commodity Strategy ETF",
+        aum: "$340M+",
+      },
+    ],
+    summary:
+      "The premier institutional broad commodity benchmark, highly balanced across Energy, Agriculture, Precious Metals, and Industrial Metals.",
+    description:
+      "Introduced in 1998 (formerly the Dow Jones-UBS Commodity Index), the Bloomberg Commodity Index (BCOM) is the gold standard for diversified commodity investing. Highly regarded for its disciplined diversification rules—capping any single commodity at 15% and any commodity sector at 33%—BCOM avoids energy concentration and provides a true multi-asset inflation hedge.",
+    eligibilityCriteria: [
+      "24 physical commodities across Energy, Grains, Industrial Metals, Precious Metals, Softs, and Livestock",
+      "Weighting based 2/3 on trading liquidity (futures volume) and 1/3 on global physical production",
+      "No single commodity may exceed 15% and no individual sector may exceed 33% of the total index",
+    ],
+    keyCharacteristics: [
+      "Institutional multi-asset inflation benchmark with over $100B+ tracking or referencing its sub-indices",
+      "Dramatically more balanced than production-only commodity indices",
+      "Features monthly contract roll schedule designed to mitigate negative futures roll yield",
+    ],
+    tags: [
+      "Commodities",
+      "Commodity",
+      "Bloomberg",
+      "Inflation Hedge",
+      "Energy",
+      "Gold",
+      "Agriculture",
+      "Metals",
+    ],
+    officialUrl: "https://www.bloomberg.com/quote/BCOM:IND",
+  },
+  {
+    id: "sp-gsci",
+    symbol: "SPGSCI",
+    altSymbols: [
+      "GSCI",
+      "Goldman Sachs Commodity Index",
+      "S&P GSCI Total Return",
+    ],
+    name: "S&P GSCI Index",
+    providerId: "sp",
+    category: "World Production Commodities",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 24,
+    weightingMethodology: "World Physical Production Weighted",
+    rebalanceFrequency: "Annual Weight Calculation with Monthly Contract Roll",
+    launchYear: 1991,
+    trackingEtfs: [
+      {
+        ticker: "GSG",
+        name: "iShares S&P GSCI Commodity-Indexed Trust",
+        aum: "$1.1B+",
+      },
+    ],
+    summary:
+      "The oldest and most recognized world-production weighted commodity index, heavily focused on global energy and industrial supply. Benchmark for iShares GSG.",
+    description:
+      "Originally created by Goldman Sachs in 1991 and maintained by S&P Dow Jones Indices, the S&P GSCI is calculated primarily on the basis of world physical production quantities. Because energy represents the dominant share of global raw material commerce, the S&P GSCI has high exposure to petroleum products and crude oil, making it the most direct financial market gauge of geopolitical energy shocks.",
+    eligibilityCriteria: [
+      "Futures contracts on physical commodities with active, liquid global trading",
+      "Components weighted strictly in proportion to their historical world production quantities",
+      "Requires active contract roll between the 5th and 9th business days of each month",
+    ],
+    keyCharacteristics: [
+      "Primary benchmark for the $1.1B+ iShares S&P GSCI Commodity-Indexed Trust (GSG)",
+      "High sensitivity to global macroeconomic expansion and geopolitical crude oil shocks",
+      "Over 30 years of continuous financial track record as the original investable commodity index",
+    ],
+    tags: [
+      "Commodities",
+      "Commodity",
+      "Energy",
+      "Crude Oil",
+      "S&P",
+      "GSG",
+      "Inflation",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/commodities/sp-gsci/",
+  },
+  {
+    id: "dbiq-optimum-yield-commodity",
+    symbol: "DBIQ",
+    altSymbols: [
+      "DBIQ Optimum Yield",
+      "DBC Benchmark",
+      "Deutsche Bank Commodity",
+    ],
+    name: "DBIQ Optimum Yield Diversified Commodity Index",
+    providerId: "bloomberg",
+    category: "Broad Multi-Asset Commodities",
+    assetClass: "Commodity",
+    region: "Global",
+    constituentsCount: 14,
+    weightingMethodology:
+      "Rule-Based Dynamic Futures Curve Optimization (14 Heavily Traded Commodities)",
+    rebalanceFrequency:
+      "Annual Reweighting in November with Dynamic Monthly Optimum Yield Rolls",
+    launchYear: 2006,
+    trackingEtfs: [
+      {
+        ticker: "DBC",
+        name: "Invesco DB Commodity Index Tracking Fund",
+        aum: "$2.1B+",
+      },
+    ],
+    summary:
+      "Dynamic curve-optimizing commodity index powering the $2.1B+ Invesco DBC, engineered to combat contango and maximize backwardation.",
+    description:
+      "The DBIQ Optimum Yield Diversified Commodity Index tracks 14 of the world's most heavily traded physical commodities across Energy, Precious Metals, Industrial Metals, and Agriculture. Unlike legacy indexes that roll mechanically to the nearest contract, DBIQ utilizes an automated 'Optimum Yield' algorithm that selects futures expiries with the highest implied roll yield, minimizing negative roll costs.",
+    eligibilityCriteria: [
+      "14 core commodities: Light Sweet Crude Oil, Brent Crude, Heating Oil, Gasoline, Natural Gas, Gold, Silver, Aluminum, Copper, Zinc, Corn, Wheat, Soybeans, Sugar",
+      "Dynamically rolls to contract expiries up to 13 months forward that maximize backwardation or minimize contango",
+      "Subject to annual base reweighting",
+    ],
+    keyCharacteristics: [
+      "Official underlying benchmark for the popular $2.1B+ Invesco DB Commodity Fund (DBC)",
+      "Pioneered second-generation commodity curve optimization for passive retail and institutional investors",
+      "Balanced exposure to primary energy drivers alongside industrial and agricultural building blocks",
+    ],
+    tags: [
+      "Commodities",
+      "Commodity",
+      "Invesco",
+      "DBC",
+      "Energy",
+      "Optimum Yield",
+      "Agriculture",
+    ],
+    officialUrl: "https://index.db.com/",
   },
 ];

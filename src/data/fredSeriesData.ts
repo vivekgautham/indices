@@ -922,6 +922,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#dc2626",
     icon: "📉",
   },
+  MOVE_INDEX: {
+    id: "MOVE_INDEX",
+    name: "ICE BofA MOVE Index (Treasury Volatility)",
+    shortName: "MOVE (Bond Fear Gauge)",
+    category: "bond",
+    subcategory: "Fixed Income Volatility",
+    units: "Index Points",
+    frequency: "Daily",
+    source: "ICE Data Indices, LLC",
+    description:
+      "Calculated from 1-month normalized implied volatility across 2Y, 5Y, 10Y, and 30Y Treasury options, the MOVE Index is the bond market's equivalent of the VIX.",
+    marketSignificance:
+      "The premier barometer of interest rate volatility and sovereign debt market liquidity. Historical MOVE surges (above 120–140) precede or coincide with severe banking and financial plumbing stress.",
+    relatedIndexId: "ice-bofa-move",
+    trackingEtfs: [],
+    format: "number",
+    decimals: 1,
+    badgeColor: "#f59e0b",
+    icon: "🌊",
+  },
   AGG_BOND: {
     id: "AGG_BOND",
     name: "Bloomberg U.S. Aggregate Bond Index (Proxy: AGG)",

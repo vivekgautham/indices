@@ -15,7 +15,9 @@ export type ProviderId =
   | "nse"
   | "csi"
   | "krx"
-  | "tsx";
+  | "tsx"
+  | "solactive"
+  | "morningstar";
 
 export interface IndexProvider {
   id: ProviderId;
@@ -57,7 +59,8 @@ export interface MarketIndex {
     | "Fixed Income"
     | "Commodity"
     | "Volatility"
-    | "Multi-Asset";
+    | "Multi-Asset"
+    | "Digital Asset";
   region:
     | "United States"
     | "Global"
