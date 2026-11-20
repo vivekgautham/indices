@@ -121,7 +121,7 @@ const SERIES = [
     id: "CSI_300",
     name: "CSI 300 Index (China A-Shares)",
     category: "international",
-    yahooTicker: "ASHR",
+    yahooTicker: "000300.SS",
   },
   {
     id: "TAIEX",
@@ -303,11 +303,67 @@ async function fetchRecentYahooPoints(ticker) {
   }
 }
 
+async function fetchCsi300Data() {
+  try {
+    const url =
+      "http://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.000300&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&klt=101&fqt=1&end=20500101&lmt=1500";
+    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+    if (res.ok) {
+      const j = await res.json();
+      const klines = j.data?.klines || [];
+      const pts = [];
+      for (const line of klines) {
+        const parts = line.split(",");
+        const date = parts[0];
+        const close = parseFloat(parts[2]);
+        if (date && !isNaN(close)) {
+          pts.push([date, Number(close.toFixed(2))]);
+        }
+      }
+      if (pts.length > 0) {
+        return pts;
+      }
+    }
+  } catch (e) {
+    console.warn("⚠️ Failed to fetch CSI 300 from EastMoney, trying Tencent:", e.message);
+  }
+
+  // Fallback: Tencent Finance
+  try {
+    const url =
+      "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000300,day,,,1200,qfq";
+    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+    if (res.ok) {
+      const j = await res.json();
+      const days = j.data?.sh000300?.day || [];
+      const pts = [];
+      for (const d of days) {
+        const date = d[0];
+        const close = parseFloat(d[2]);
+        if (date && !isNaN(close)) {
+          pts.push([date, Number(close.toFixed(2))]);
+        }
+      }
+      if (pts.length > 0) {
+        return pts;
+      }
+    }
+  } catch (e) {
+    console.warn("⚠️ Failed to fetch CSI 300 from Tencent:", e.message);
+  }
+
+  return null;
+}
+
 async function fetchSeries(id, yahooTicker) {
   let points = null;
 
+  if (id === "CSI_300") {
+    points = await fetchCsi300Data();
+  }
+
   // Yahoo Finance 5-Year Chart if ticker is explicitly mapped
-  if (yahooTicker) {
+  if (!points && yahooTicker) {
     try {
       const url = `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooTicker)}?interval=1d&range=5y`;
       const res = await fetch(url, {

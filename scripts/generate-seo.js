@@ -288,7 +288,7 @@ ${JSON.stringify(datasetSchema, null, 2)}
             <li><strong>Nifty 50 Index 🇮🇳 (NIFTY_50)</strong> – Flagship index of the National Stock Exchange of India.</li>
             <li><strong>KOSPI Composite Index 🇰🇷 (KOSPI)</strong> – South Korea's flagship benchmark (KRX) dominated by semiconductor titans (Samsung, SK Hynix).</li>
             <li><strong>Taiwan TAIEX Index 🇹🇼 (TAIEX)</strong> – Global AI silicon and semiconductor capital (Proxy: EWT).</li>
-            <li><strong>CSI 300 Index 🇨🇳 (CSI_300)</strong> – Mainland China Shanghai &amp; Shenzhen domestic A-shares benchmark (Proxy: ASHR).</li>
+            <li><strong>CSI 300 Index 🇨🇳 (CSI_300)</strong> – Mainland China Shanghai &amp; Shenzhen domestic A-shares benchmark.</li>
             <li><strong>B3 Ibovespa Index 🇧🇷 (IBOVESPA)</strong> – Latin America's premier emerging market natural resource &amp; banking gauge (Proxy: EWZ).</li>
             <li><strong>S&amp;P/BMV IPC Index 🇲🇽 (MEXICO_IPC)</strong> – Mexico's benchmark and North American industrial nearshoring hub (Proxy: EWW).</li>
             <li><strong>Swiss Market Index (SMI) 🇨🇭 (SMI)</strong> – Switzerland's blue-chip healthcare, staples &amp; wealth hub (Proxy: EWL).</li>

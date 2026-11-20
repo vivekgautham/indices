@@ -551,7 +551,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     description:
       "Capitalization-weighted index tracking the top 300 largest and most liquid A-share stocks traded on the Shanghai and Shenzhen Stock Exchanges.",
     marketSignificance:
-      "The premier institutional barometer for mainland China's domestic economy, industrial manufacturing, clean tech, and consumer market (Proxy: ASHR).",
+      "The premier institutional barometer for mainland China's domestic economy, industrial manufacturing, clean tech, and consumer market (Tracking ETF: ASHR).",
     relatedIndexId: "csi-300",
     trackingEtfs: ["ASHR"],
     format: "number",
