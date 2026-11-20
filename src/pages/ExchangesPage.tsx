@@ -29,6 +29,7 @@ import { ExchangeStatusTicker } from "../components/exchanges/ExchangeStatusTick
 import { ExchangeTable } from "../components/exchanges/ExchangeTable";
 import SiteFooter from "../components/layout/SiteFooter";
 import { CountryMarketCapTable } from "../components/markets/CountryMarketCapTable";
+import { COUNTRY_MARKET_CAP_DATA } from "../data/countryMarketCapData";
 import { WORLD_EXCHANGES } from "../data/exchangesData";
 import {
   AssetClass,
@@ -93,6 +94,16 @@ export default function ExchangesPage() {
     });
     return map;
   }, [currentTime]);
+
+  const openCount = useMemo(() => {
+    let count = 0;
+    exchangeStatuses.forEach((status) => {
+      if (status.status === "OPEN") {
+        count += 1;
+      }
+    });
+    return count;
+  }, [exchangeStatuses]);
 
   // Filtering
   const filteredExchanges = useMemo(() => {
@@ -202,8 +213,18 @@ export default function ExchangesPage() {
           </Typography>
         </Box>
 
-        {/* Subtab Navigation Bar */}
-        <Box sx={{ mb: 3 }}>
+        {/* Dashboard Actions Bar / Main Navigation Tabs */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 1.5,
+            mb: { xs: 2, sm: 2.5 },
+          }}
+        >
+          {/* Main Navigation Tabs */}
           <Tabs
             value={activeTab}
             onChange={(_, val) => handleTabChange(val)}
@@ -230,35 +251,123 @@ export default function ExchangesPage() {
               },
               "& .MuiTab-root": {
                 minHeight: 32,
-                py: 0.75,
-                px: 2,
-                borderRadius: 2.5,
+                minWidth: "unset",
+                py: 0.6,
+                px: { xs: 1.25, sm: 2 },
+                fontSize: { xs: "0.74rem", sm: "0.82rem" },
                 fontWeight: 700,
-                fontSize: "0.85rem",
                 textTransform: "none",
-                transition: "all 0.18s ease-in-out",
+                borderRadius: 2.5,
                 color: "text.secondary",
+                flexShrink: 0,
+                whiteSpace: "nowrap",
+                transition: "all 0.15s ease-in-out",
                 "&.Mui-selected": {
-                  color: "#ffffff",
-                  backgroundColor: "primary.main",
-                  boxShadow: "0 2px 8px rgba(99, 102, 241, 0.35)",
+                  color: "#fff",
+                  backgroundColor: "rgba(99, 102, 241, 0.25)",
+                  border: "1px solid rgba(99, 102, 241, 0.5)",
                 },
               },
             }}
           >
             <Tab
-              icon={<AccessTimeIcon sx={{ fontSize: 18 }} />}
+              icon={<AccessTimeIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
               iconPosition="start"
-              label="Sessions"
+              label={
+                <span>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "none", sm: "inline" } }}
+                  >
+                    {`Trading Sessions (${WORLD_EXCHANGES.length})`}
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "inline", sm: "none" } }}
+                  >
+                    {`Sessions (${WORLD_EXCHANGES.length})`}
+                  </Box>
+                </span>
+              }
               value="sessions"
             />
             <Tab
-              icon={<PieChartIcon sx={{ fontSize: 18 }} />}
+              icon={<PieChartIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
               iconPosition="start"
-              label="Market Capitalization"
+              label={
+                <span>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "none", sm: "inline" } }}
+                  >
+                    {`Market Capitalization (${COUNTRY_MARKET_CAP_DATA.countriesCount})`}
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "inline", sm: "none" } }}
+                  >
+                    {`Market Cap (${COUNTRY_MARKET_CAP_DATA.countriesCount})`}
+                  </Box>
+                </span>
+              }
               value="capitalization"
             />
           </Tabs>
+
+          {/* Quick Summary Badge */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.25,
+              width: { xs: "100%", md: "auto" },
+              justifyContent: { xs: "flex-end", md: "flex-start" },
+            }}
+          >
+            {activeTab === "sessions" ? (
+              <Chip
+                icon={
+                  <Box
+                    sx={{
+                      width: 7,
+                      height: 7,
+                      borderRadius: "50%",
+                      bgcolor: "#10b981",
+                      boxShadow: "0 0 8px #10b981",
+                      ml: 0.5,
+                    }}
+                  />
+                }
+                label={`${openCount} Exchanges Open`}
+                size="small"
+                sx={{
+                  borderRadius: 2,
+                  px: 0.5,
+                  py: 0.4,
+                  fontSize: "0.76rem",
+                  fontWeight: 700,
+                  color: "#10b981",
+                  bgcolor: "rgba(16, 185, 129, 0.08)",
+                  border: "1px solid rgba(16, 185, 129, 0.25)",
+                }}
+              />
+            ) : (
+              <Chip
+                label={`Top 30 Cap: ${COUNTRY_MARKET_CAP_DATA.top30TotalFormatted}`}
+                size="small"
+                sx={{
+                  borderRadius: 2,
+                  px: 0.5,
+                  py: 0.4,
+                  fontSize: "0.76rem",
+                  fontWeight: 700,
+                  color: "#6366f1",
+                  bgcolor: "rgba(99, 102, 241, 0.08)",
+                  border: "1px solid rgba(99, 102, 241, 0.25)",
+                }}
+              />
+            )}
+          </Box>
         </Box>
 
         {/* Tab Content */}
@@ -347,15 +456,22 @@ export default function ExchangesPage() {
                 onChange={(_, val) => setSelectedRegion(val)}
                 variant="scrollable"
                 scrollButtons="auto"
+                allowScrollButtonsMobile
                 sx={{
                   minHeight: 36,
+                  "& .MuiTabs-scroller": {
+                    overflowX: "auto !important",
+                  },
                   "& .MuiTab-root": {
                     minHeight: 36,
+                    minWidth: "unset",
                     py: 0.5,
-                    px: 1.8,
+                    px: { xs: 1.25, sm: 1.75 },
                     fontWeight: 700,
                     textTransform: "none",
-                    fontSize: "0.86rem",
+                    fontSize: { xs: "0.75rem", sm: "0.82rem" },
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
                   },
                 }}
               >

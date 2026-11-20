@@ -165,15 +165,22 @@ export const CountryMarketCapTable: React.FC = () => {
               onChange={(_, val) => setSelectedRegion(val)}
               variant="scrollable"
               scrollButtons="auto"
+              allowScrollButtonsMobile
               sx={{
                 minHeight: 36,
+                "& .MuiTabs-scroller": {
+                  overflowX: "auto !important",
+                },
                 "& .MuiTab-root": {
                   minHeight: 36,
+                  minWidth: "unset",
                   py: 0.5,
-                  px: 1.8,
+                  px: { xs: 1.25, sm: 1.75 },
                   fontWeight: 700,
                   textTransform: "none",
-                  fontSize: "0.86rem",
+                  fontSize: { xs: "0.75rem", sm: "0.82rem" },
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
                 },
               }}
             >
