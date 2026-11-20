@@ -35,6 +35,7 @@ import {
   AssetClass,
   ExchangeLiveStatus,
   ExchangeRegion,
+  MarketSessionStatus,
   WorldExchange,
 } from "../types/exchange";
 import { getExchangeLiveStatus } from "../utils/marketHours";
@@ -77,7 +78,7 @@ export default function ExchangesPage() {
   const [selectedRegion, setSelectedRegion] = useState<ExchangeRegion | "All">(
     "All",
   );
-  const [openOnly, setOpenOnly] = useState(true);
+  const [openOnly, setOpenOnly] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState<AssetClass | "All">("All");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
@@ -105,9 +106,9 @@ export default function ExchangesPage() {
     return count;
   }, [exchangeStatuses]);
 
-  // Filtering
+  // Filtering and sorting (Open exchanges first, then by global rank)
   const filteredExchanges = useMemo(() => {
-    return WORLD_EXCHANGES.filter((ex) => {
+    const list = WORLD_EXCHANGES.filter((ex) => {
       const status = exchangeStatuses.get(ex.id);
 
       // Search match
@@ -149,6 +150,24 @@ export default function ExchangesPage() {
       }
 
       return true;
+    });
+
+    const getStatusPriority = (status?: MarketSessionStatus) => {
+      if (status === "OPEN") return 0;
+      if (status === "LUNCH") return 1;
+      if (status === "PRE_MARKET" || status === "POST_MARKET") return 2;
+      return 3;
+    };
+
+    return list.sort((a, b) => {
+      const aPriority = getStatusPriority(exchangeStatuses.get(a.id)?.status);
+      const bPriority = getStatusPriority(exchangeStatuses.get(b.id)?.status);
+
+      if (aPriority !== bPriority) {
+        return aPriority - bPriority;
+      }
+
+      return a.globalRank - b.globalRank;
     });
   }, [searchQuery, selectedRegion, openOnly, selectedAsset, exchangeStatuses]);
 

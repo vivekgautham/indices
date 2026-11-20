@@ -18,7 +18,11 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
-import { ExchangeLiveStatus, WorldExchange } from "../../types/exchange";
+import {
+  ExchangeLiveStatus,
+  MarketSessionStatus,
+  WorldExchange,
+} from "../../types/exchange";
 import { getStatusColorConfig } from "../../utils/marketHours";
 
 interface Props {
@@ -36,7 +40,7 @@ export const ExchangeTable: React.FC<Props> = ({
   onSelect,
 }) => {
   const theme = useTheme();
-  const [sortField, setSortField] = useState<SortField>("rank");
+  const [sortField, setSortField] = useState<SortField>("status");
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 
   const handleSort = (field: SortField) => {
@@ -59,9 +63,21 @@ export const ExchangeTable: React.FC<Props> = ({
           comparison = a.name.localeCompare(b.name);
           break;
         case "status": {
-          const stA = statuses.get(a.id)?.status || "";
-          const stB = statuses.get(b.id)?.status || "";
-          comparison = stA.localeCompare(stB);
+          const stA = statuses.get(a.id)?.status;
+          const stB = statuses.get(b.id)?.status;
+          const getStatusPriority = (s?: MarketSessionStatus) => {
+            if (s === "OPEN") return 0;
+            if (s === "LUNCH") return 1;
+            if (s === "PRE_MARKET" || s === "POST_MARKET") return 2;
+            return 3;
+          };
+          const pA = getStatusPriority(stA);
+          const pB = getStatusPriority(stB);
+          if (pA !== pB) {
+            comparison = pA - pB;
+          } else {
+            comparison = a.globalRank - b.globalRank;
+          }
           break;
         }
       }
