@@ -3,6 +3,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DownloadIcon from "@mui/icons-material/FileDownload";
 import TodayIcon from "@mui/icons-material/Today";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import {
   Box,
@@ -13,11 +14,14 @@ import {
   IconButton,
   Paper,
   Stack,
+  Tab,
+  Tabs,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useSearchParams } from "react-router-dom";
+import { CorporateEarningsCalendar } from "../components/events/CorporateEarningsCalendar";
 import SiteFooter from "../components/layout/SiteFooter";
 import {
   CATEGORY_COLORS,
@@ -105,6 +109,26 @@ export default function EventsCalendarPage() {
     );
   }, [today]);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTabParam = searchParams.get("tab");
+  const activeTab: "events" | "earnings" =
+    currentTabParam === "earnings" ? "earnings" : "events";
+
+  const handleTabChange = (newTab: "events" | "earnings") => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (newTab === "events") {
+          next.delete("tab");
+        } else {
+          next.set("tab", newTab);
+        }
+        return next;
+      },
+      { replace: true }
+    );
+  };
+
   const [currentYear, setCurrentYear] = useState<number>(() =>
     today.getFullYear()
   );
@@ -117,9 +141,14 @@ export default function EventsCalendarPage() {
 
   // Dynamic document title for client-side SEO
   useEffect(() => {
-    document.title =
-      "Market Events & Index Rebalance Calendar 📅 | Market Indices";
-  }, []);
+    if (activeTab === "earnings") {
+      document.title =
+        "Top 50 US Corporate Earnings Calendar 📊 | Market Indices";
+    } else {
+      document.title =
+        "Market Events & Index Rebalance Calendar 📅 | Market Indices";
+    }
+  }, [activeTab]);
 
   // Fetch all events for the active month with defensive sanitization
   const safeYear = Number.isFinite(currentYear) ? currentYear : today.getFullYear();
@@ -277,217 +306,394 @@ export default function EventsCalendarPage() {
       {/* Top Banner / Header */}
       <Box
         sx={{
-          py: { xs: 4, sm: 5 },
+          py: { xs: 3, sm: 4 },
           borderBottom:
             "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
           background:
-            "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(0, 221, 148, 0.14), transparent 70%), #050d0a",
+            activeTab === "earnings"
+              ? "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(99, 102, 241, 0.16), transparent 70%), #050d0a"
+              : "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(0, 221, 148, 0.14), transparent 70%), #050d0a",
         }}
       >
         <Container maxWidth="lg">
-          <Stack spacing={1.5} alignItems="flex-start">
-            <Chip
-              icon={<CalendarMonthIcon sx={{ fontSize: 16 }} />}
-              label="Institutional Market Catalysts & Flows"
-              size="small"
+          {/* Dashboard Subtabs Navigation Bar */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 1.5,
+              mb: { xs: 2.5, sm: 3 },
+            }}
+          >
+            <Tabs
+              value={activeTab}
+              onChange={(_, val) => handleTabChange(val)}
+              variant="scrollable"
+              scrollButtons="auto"
+              allowScrollButtonsMobile
               sx={{
-                fontWeight: 800,
-                fontSize: "0.74rem",
-                color: "#00DD94",
-                backgroundColor: "rgba(0, 221, 148, 0.1)",
-                borderColor: "rgba(0, 221, 148, 0.3)",
-                borderWidth: 1,
-                borderStyle: "solid",
-              }}
-            />
-
-            <Typography
-              variant="h3"
-              component="h1"
-              sx={{
-                fontWeight: 900,
-                color: "#ffffff",
-                letterSpacing: "-0.03em",
-                fontSize: { xs: "1.75rem", sm: "2.4rem", md: "2.8rem" },
-              }}
-            >
-              Market Events &amp; Index Rebalance Calendar
-            </Typography>
-
-            <Typography
-              sx={{
-                color: "text.secondary",
-                fontSize: { xs: "0.92rem", sm: "1.05rem" },
-                maxWidth: 820,
-                lineHeight: 1.6,
-              }}
-            >
-              Institutional calendar tracking major benchmark rebalances (S&amp;P
-              500, FTSE Russell, MSCI), quadruple witching, options &amp; VIX
-              expirations, and Federal Reserve FOMC policy decisions.
-            </Typography>
-
-            {/* Quick Metrics KPI Bar */}
-            <Box
-              sx={{
-                pt: 1.5,
-                width: "100%",
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "repeat(2, 1fr)",
-                  sm: "repeat(3, 1fr)",
-                  md: "repeat(5, 1fr)",
+                minHeight: 40,
+                maxWidth: "100%",
+                width: { xs: "100%", md: "auto" },
+                backgroundColor: "rgba(15, 23, 42, 0.55)",
+                p: 0.5,
+                borderRadius: 3,
+                border:
+                  "1px solid var(--indices-border, rgba(255, 255, 255, 0.08))",
+                "& .MuiTabs-scroller": {
+                  overflowX: "auto !important",
                 },
-                gap: 1.5,
+                "& .MuiTabs-flexContainer": {
+                  gap: { xs: 0.5, sm: 0.75 },
+                },
+                "& .MuiTabs-indicator": {
+                  display: "none",
+                },
+                "& .MuiTab-root": {
+                  minHeight: 32,
+                  minWidth: "unset",
+                  py: 0.6,
+                  px: { xs: 1.25, sm: 2 },
+                  fontSize: { xs: "0.74rem", sm: "0.82rem" },
+                  fontWeight: 700,
+                  textTransform: "none",
+                  borderRadius: 2.5,
+                  color: "text.secondary",
+                  flexShrink: 0,
+                  whiteSpace: "nowrap",
+                  transition: "all 0.15s ease-in-out",
+                  "&.Mui-selected": {
+                    color: "#fff",
+                    backgroundColor:
+                      activeTab === "earnings"
+                        ? "rgba(99, 102, 241, 0.28)"
+                        : "rgba(0, 221, 148, 0.2)",
+                    border:
+                      activeTab === "earnings"
+                        ? "1px solid rgba(99, 102, 241, 0.5)"
+                        : "1px solid rgba(0, 221, 148, 0.45)",
+                  },
+                },
               }}
             >
-              <Paper
-                variant="outlined"
-                sx={{
-                  p: 1.5,
-                  borderRadius: 2.5,
-                  backgroundColor: "rgba(255, 255, 255, 0.02)",
-                  borderColor: "rgba(255, 255, 255, 0.08)",
-                }}
-              >
-                <Typography
-                  variant="caption"
-                  sx={{ color: "text.secondary", fontWeight: 700 }}
-                >
-                  This Month
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "1.4rem",
-                    fontWeight: 900,
-                    color: "#ffffff",
-                  }}
-                >
-                  {monthEvents.length} Events
-                </Typography>
-              </Paper>
+              <Tab
+                icon={<CalendarMonthIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
+                iconPosition="start"
+                label={
+                  <span>
+                    <Box
+                      component="span"
+                      sx={{ display: { xs: "none", sm: "inline" } }}
+                    >
+                      Market Events &amp; Index Rebalance
+                    </Box>
+                    <Box
+                      component="span"
+                      sx={{ display: { xs: "inline", sm: "none" } }}
+                    >
+                      Market Events &amp; Rebalance
+                    </Box>
+                  </span>
+                }
+                value="events"
+              />
+              <Tab
+                icon={<TrendingUpIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
+                iconPosition="start"
+                label="Corporate Earnings (US)"
+                value="earnings"
+              />
+            </Tabs>
 
-              <Paper
-                variant="outlined"
+            {/* Quick Summary Pill */}
+            {activeTab === "earnings" ? (
+              <Chip
+                label="Top 50 US Mega-Caps"
+                size="small"
                 sx={{
-                  p: 1.5,
-                  borderRadius: 2.5,
-                  backgroundColor: "rgba(6, 182, 212, 0.04)",
-                  borderColor: "rgba(6, 182, 212, 0.2)",
+                  borderRadius: 2,
+                  px: 0.5,
+                  py: 0.4,
+                  fontSize: "0.76rem",
+                  fontWeight: 700,
+                  color: "primary.light",
+                  backgroundColor: "rgba(99, 102, 241, 0.12)",
+                  border: "1px solid rgba(99, 102, 241, 0.3)",
                 }}
-              >
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#22d3ee", fontWeight: 700 }}
-                >
-                  Macro (CPI & Jobs)
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "1.4rem",
-                    fontWeight: 900,
-                    color: "#22d3ee",
-                  }}
-                >
-                  {categoryCounts.macro}
-                </Typography>
-              </Paper>
+              />
+            ) : (
+              <Chip
+                label={`${monthEvents.length} Events Scheduled This Month`}
+                size="small"
+                sx={{
+                  borderRadius: 2,
+                  px: 0.5,
+                  py: 0.4,
+                  fontSize: "0.76rem",
+                  fontWeight: 700,
+                  color: "#00DD94",
+                  backgroundColor: "rgba(0, 221, 148, 0.08)",
+                  border: "1px solid rgba(0, 221, 148, 0.3)",
+                }}
+              />
+            )}
+          </Box>
 
-              <Paper
-                variant="outlined"
+          {activeTab === "earnings" ? (
+            <Stack spacing={1.5} alignItems="flex-start">
+              <Chip
+                icon={<TrendingUpIcon sx={{ fontSize: 16 }} />}
+                label="Corporate Earnings (US) • Top 50 Mega-Caps"
+                size="small"
                 sx={{
-                  p: 1.5,
-                  borderRadius: 2.5,
-                  backgroundColor: "rgba(0, 221, 148, 0.04)",
-                  borderColor: "rgba(0, 221, 148, 0.2)",
+                  fontWeight: 800,
+                  fontSize: "0.74rem",
+                  color: "primary.light",
+                  backgroundColor: "rgba(99, 102, 241, 0.1)",
+                  borderColor: "rgba(99, 102, 241, 0.3)",
+                  borderWidth: 1,
+                  borderStyle: "solid",
                 }}
-              >
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#00DD94", fontWeight: 700 }}
-                >
-                  Index Rebalances
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "1.4rem",
-                    fontWeight: 900,
-                    color: "#00DD94",
-                  }}
-                >
-                  {categoryCounts.rebalance}
-                </Typography>
-              </Paper>
+              />
 
-              <Paper
-                variant="outlined"
+              <Typography
+                variant="h3"
+                component="h1"
                 sx={{
-                  p: 1.5,
-                  borderRadius: 2.5,
-                  backgroundColor: "rgba(168, 85, 247, 0.04)",
-                  borderColor: "rgba(168, 85, 247, 0.2)",
+                  fontWeight: 900,
+                  color: "#ffffff",
+                  letterSpacing: "-0.03em",
+                  fontSize: { xs: "1.75rem", sm: "2.4rem", md: "2.8rem" },
                 }}
               >
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#c084fc", fontWeight: 700 }}
-                >
-                  Derivatives Expiries
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "1.4rem",
-                    fontWeight: 900,
-                    color: "#c084fc",
-                  }}
-                >
-                  {categoryCounts.witching + categoryCounts.opex}
-                </Typography>
-              </Paper>
+                Top 50 U.S. Corporate Earnings Calendar
+              </Typography>
 
-              <Paper
-                variant="outlined"
+              <Typography
                 sx={{
-                  p: 1.5,
-                  borderRadius: 2.5,
-                  backgroundColor: "rgba(245, 158, 11, 0.04)",
-                  borderColor: "rgba(245, 158, 11, 0.2)",
+                  color: "text.secondary",
+                  fontSize: { xs: "0.92rem", sm: "1.05rem" },
+                  maxWidth: 820,
+                  lineHeight: 1.6,
                 }}
               >
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#fbbf24", fontWeight: 700 }}
-                >
-                  FOMC Catalysts
-                </Typography>
-                <Typography
+                Quarterly earnings announcement schedules, consensus EPS and revenue
+                estimates, pre-market (BMO) vs. after-hours (AMC) reporting timings,
+                and direct investor relations webcast links for the 50 largest U.S.
+                corporations.
+              </Typography>
+            </Stack>
+          ) : (
+            <Stack spacing={1.5} alignItems="flex-start">
+              <Chip
+                icon={<CalendarMonthIcon sx={{ fontSize: 16 }} />}
+                label="Institutional Market Catalysts &amp; Flows"
+                size="small"
+                sx={{
+                  fontWeight: 800,
+                  fontSize: "0.74rem",
+                  color: "#00DD94",
+                  backgroundColor: "rgba(0, 221, 148, 0.1)",
+                  borderColor: "rgba(0, 221, 148, 0.3)",
+                  borderWidth: 1,
+                  borderStyle: "solid",
+                }}
+              />
+
+              <Typography
+                variant="h3"
+                component="h1"
+                sx={{
+                  fontWeight: 900,
+                  color: "#ffffff",
+                  letterSpacing: "-0.03em",
+                  fontSize: { xs: "1.75rem", sm: "2.4rem", md: "2.8rem" },
+                }}
+              >
+                Market Events &amp; Index Rebalance Calendar
+              </Typography>
+
+              <Typography
+                sx={{
+                  color: "text.secondary",
+                  fontSize: { xs: "0.92rem", sm: "1.05rem" },
+                  maxWidth: 820,
+                  lineHeight: 1.6,
+                }}
+              >
+                Institutional calendar tracking major benchmark rebalances (S&amp;P
+                500, FTSE Russell, MSCI), quadruple witching, options &amp; VIX
+                expirations, and Federal Reserve FOMC policy decisions.
+              </Typography>
+
+              {/* Quick Metrics KPI Bar */}
+              <Box
+                sx={{
+                  pt: 1.5,
+                  width: "100%",
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "repeat(2, 1fr)",
+                    sm: "repeat(3, 1fr)",
+                    md: "repeat(5, 1fr)",
+                  },
+                  gap: 1.5,
+                }}
+              >
+                <Paper
+                  variant="outlined"
                   sx={{
-                    fontSize: "1.4rem",
-                    fontWeight: 900,
-                    color: "#fbbf24",
+                    p: 1.5,
+                    borderRadius: 2.5,
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    borderColor: "rgba(255, 255, 255, 0.08)",
                   }}
                 >
-                  {categoryCounts.fomc}
-                </Typography>
-              </Paper>
-            </Box>
-          </Stack>
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "text.secondary", fontWeight: 700 }}
+                  >
+                    This Month
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      color: "#ffffff",
+                    }}
+                  >
+                    {monthEvents.length} Events
+                  </Typography>
+                </Paper>
+
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 2.5,
+                    backgroundColor: "rgba(6, 182, 212, 0.04)",
+                    borderColor: "rgba(6, 182, 212, 0.2)",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#22d3ee", fontWeight: 700 }}
+                  >
+                    Macro (CPI &amp; Jobs)
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      color: "#22d3ee",
+                    }}
+                  >
+                    {categoryCounts.macro}
+                  </Typography>
+                </Paper>
+
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 2.5,
+                    backgroundColor: "rgba(0, 221, 148, 0.04)",
+                    borderColor: "rgba(0, 221, 148, 0.2)",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#00DD94", fontWeight: 700 }}
+                  >
+                    Index Rebalances
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      color: "#00DD94",
+                    }}
+                  >
+                    {categoryCounts.rebalance}
+                  </Typography>
+                </Paper>
+
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 2.5,
+                    backgroundColor: "rgba(168, 85, 247, 0.04)",
+                    borderColor: "rgba(168, 85, 247, 0.2)",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#c084fc", fontWeight: 700 }}
+                  >
+                    Derivatives Expiries
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      color: "#c084fc",
+                    }}
+                  >
+                    {categoryCounts.witching + categoryCounts.opex}
+                  </Typography>
+                </Paper>
+
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 2.5,
+                    backgroundColor: "rgba(245, 158, 11, 0.04)",
+                    borderColor: "rgba(245, 158, 11, 0.2)",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#fbbf24", fontWeight: 700 }}
+                  >
+                    FOMC Catalysts
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      color: "#fbbf24",
+                    }}
+                  >
+                    {categoryCounts.fomc}
+                  </Typography>
+                </Paper>
+              </Box>
+            </Stack>
+          )}
         </Container>
       </Box>
 
-      {/* Main Interactive Calendar Section */}
+      {/* Main Content Section */}
       <Container maxWidth="lg" sx={{ py: 3, flex: 1 }}>
-        {/* Navigation & Controls Bar */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 2.5,
-          }}
-        >
+        {activeTab === "earnings" ? (
+          <CorporateEarningsCalendar />
+        ) : (
+          <>
+            {/* Navigation & Controls Bar */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 2,
+                mb: 2.5,
+              }}
+            >
           {/* Month / Year Navigator */}
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Box
@@ -933,7 +1139,9 @@ export default function EventsCalendarPage() {
             )}
           </Box>
         )}
-      </Container>
+      </>
+    )}
+  </Container>
 
       <SiteFooter />
     </Box>

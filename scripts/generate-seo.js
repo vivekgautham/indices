@@ -471,6 +471,14 @@ ${JSON.stringify(datasetSchema, null, 2)}
           text: "The U.S. Bureau of Labor Statistics (BLS) releases the Consumer Price Index (CPI) inflation report monthly around the second Wednesday of the month at 8:30 AM Eastern Time. The Employment Situation (Nonfarm Payrolls and Unemployment Rate) is published on the first Friday of each month at 8:30 AM Eastern Time. The University of Michigan Consumer Sentiment survey is released twice monthly at 10:00 AM Eastern Time.",
         },
       },
+      {
+        "@type": "Question",
+        name: "When do the top 50 U.S. mega-cap companies report quarterly corporate earnings?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The top 50 U.S. mega-cap corporations (including Apple, Microsoft, NVIDIA, Amazon, Alphabet, Meta, and Tesla) report quarterly corporate earnings in four seasonal waves: Q1 earnings in late April–May, Q2 earnings in late July–August, Q3 earnings in late October–November, and Q4 earnings in late January–February. MarketIndices tracks earnings announcement schedules, BMO (Before Market Open) vs. AMC (After Market Close) reporting timings, consensus EPS and revenue estimates, and direct investor relations webcast links.",
+        },
+      },
     ],
   };
 
