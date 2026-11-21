@@ -322,20 +322,59 @@ export default function ExchangesPage() {
                 }}
               />
             ) : (
-              <Chip
-                label={`Top 30 Cap: ${COUNTRY_MARKET_CAP_DATA.top30TotalFormatted}`}
-                size="small"
-                sx={{
-                  borderRadius: 2,
-                  px: 0.5,
-                  py: 0.4,
-                  fontSize: "0.76rem",
-                  fontWeight: 700,
-                  color: "#6366f1",
-                  bgcolor: "rgba(99, 102, 241, 0.08)",
-                  border: "1px solid rgba(99, 102, 241, 0.25)",
-                }}
-              />
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                flexWrap="wrap"
+              >
+                <Chip
+                  label={`Top 30 Cap: ${COUNTRY_MARKET_CAP_DATA.top30TotalFormatted}`}
+                  size="small"
+                  sx={{
+                    borderRadius: 2,
+                    px: 0.5,
+                    py: 0.4,
+                    fontSize: "0.76rem",
+                    fontWeight: 700,
+                    color: "#6366f1",
+                    bgcolor: "rgba(99, 102, 241, 0.08)",
+                    border: "1px solid rgba(99, 102, 241, 0.25)",
+                  }}
+                />
+                <Chip
+                  icon={
+                    <AccessTimeIcon
+                      sx={{
+                        fontSize: "12px !important",
+                        color: "text.secondary",
+                        ml: 0.5,
+                      }}
+                    />
+                  }
+                  label={`Updated: ${new Date(
+                    COUNTRY_MARKET_CAP_DATA.updatedAt,
+                  ).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}`}
+                  size="small"
+                  sx={{
+                    borderRadius: 2,
+                    px: 0.5,
+                    py: 0.4,
+                    fontSize: "0.76rem",
+                    fontWeight: 600,
+                    color: "text.secondary",
+                    bgcolor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(255, 255, 255, 0.04)"
+                        : "rgba(0, 0, 0, 0.04)",
+                    border: `1px solid ${theme.palette.divider}`,
+                  }}
+                />
+              </Stack>
             )}
           </Box>
         </Box>
@@ -367,6 +406,37 @@ export default function ExchangesPage() {
                 border: "1px solid rgba(0, 221, 148, 0.25)",
               }}
             />
+            {activeTab === "capitalization" && (
+              <Chip
+                icon={
+                  <AccessTimeIcon
+                    sx={{
+                      fontSize: "13px !important",
+                      color: "text.secondary",
+                    }}
+                  />
+                }
+                label={`Updated ${new Date(
+                  COUNTRY_MARKET_CAP_DATA.updatedAt,
+                ).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}`}
+                size="small"
+                variant="outlined"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "0.74rem",
+                  color: "text.secondary",
+                  borderColor: theme.palette.divider,
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(255, 255, 255, 0.03)"
+                      : "rgba(0, 0, 0, 0.02)",
+                }}
+              />
+            )}
           </Stack>
           <Typography
             variant="body1"

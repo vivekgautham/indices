@@ -220,7 +220,12 @@ export const CountryMarketCapTable: React.FC = () => {
                 variant="caption"
                 sx={{ color: "text.secondary", fontWeight: 600 }}
               >
-                Showing {filteredCountries.length} of 30 countries
+                Showing {filteredCountries.length} of 30 countries • As of{" "}
+                {new Date(dataset.updatedAt).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
               </Typography>
 
               <ButtonGroup size="small" variant="outlined">
@@ -636,7 +641,12 @@ export const CountryMarketCapTable: React.FC = () => {
           variant="caption"
           sx={{ color: "text.secondary", fontSize: "0.72rem" }}
         >
-          Updated: {new Date(dataset.updatedAt).toLocaleDateString()}
+          Updated:{" "}
+          {new Date(dataset.updatedAt).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
         </Typography>
       </Paper>
     </Box>
