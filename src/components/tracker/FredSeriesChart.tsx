@@ -1191,33 +1191,6 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               </Button>
             ))}
           </ButtonGroup>
-
-          {/* Quick Chart Options Gear Icon */}
-          <Tooltip title="Chart Options (Style, Overlays, Canvas Height)">
-            <IconButton
-              size="small"
-              onClick={handleOpenSettings}
-              sx={{
-                color: isSettingsOpen ? "primary.main" : "text.secondary",
-                border: "1px solid",
-                borderColor: isSettingsOpen
-                  ? "primary.main"
-                  : "var(--indices-border, rgba(255, 255, 255, 0.12))",
-                backgroundColor: isSettingsOpen
-                  ? "rgba(99, 102, 241, 0.15)"
-                  : "var(--indices-card-bg, rgba(0, 0, 0, 0.25))",
-                borderRadius: 1.5,
-                p: 0.55,
-                display: { xs: "none", sm: "inline-flex" },
-                "&:hover": {
-                  backgroundColor: "rgba(99, 102, 241, 0.2)",
-                  color: "primary.light",
-                },
-              }}
-            >
-              <SettingsIcon sx={{ fontSize: 17 }} />
-            </IconButton>
-          </Tooltip>
         </Stack>
 
         {/* Stable Pro Telemetry Strip (Fixed height, completely eliminates layout jumps) */}
