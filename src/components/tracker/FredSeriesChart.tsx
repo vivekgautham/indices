@@ -3,6 +3,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
@@ -43,6 +44,7 @@ import React, {
 } from "react";
 import { filterObservationsByRange, TimeRange } from "../../api/fredApi";
 import { FredSeriesData } from "../../data/fredSeriesData";
+import { exportChartAsPng } from "../../utils/exportChartImage";
 
 export type ChartType = "mountain" | "candles" | "line" | "bars" | "baseline";
 
@@ -1058,6 +1060,45 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
     setSelectedPointIndex(null);
   };
 
+  const [isExporting, setIsExporting] = useState<boolean>(false);
+
+  const handleExportImage = () => {
+    setIsExporting(true);
+    try {
+      exportChartAsPng({
+        seriesName: series.name,
+        seriesId: series.id,
+        source: "FRED (Federal Reserve Bank of St. Louis)",
+        format: series.format,
+        decimals: series.decimals,
+        selectedRange,
+        chartType,
+        latestValue: endValue,
+        change,
+        pctChange: changePct,
+        latestDate: series.latestDate || endDate,
+        coords,
+        candleCoords,
+        dma50Coords,
+        dma200Coords,
+        gridLines,
+        dateTicks,
+        plotW,
+        plotH,
+        strokeColor,
+        show50Dma,
+        show200Dma,
+        showBigDrops,
+        dropThreshold,
+        bigDropEvents,
+        latestDma50: technicals.dma50.get(series.latestDate || endDate),
+        latestDma200: technicals.dma200.get(series.latestDate || endDate),
+      });
+    } finally {
+      setTimeout(() => setIsExporting(false), 600);
+    }
+  };
+
   if (!series || !series.observations || series.observations.length === 0) {
     return (
       <Card variant="outlined" sx={{ p: 3, borderRadius: 3 }}>
@@ -1604,6 +1645,35 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
               >
                 Chart Options
               </Button>
+            </Tooltip>
+
+            {/* Export Chart Image (PNG with Watermark for Reddit/Twitter) */}
+            <Tooltip
+              title="Export High-Res PNG Chart (Watermarked for Twitter / Reddit)"
+              arrow
+            >
+              <IconButton
+                size="small"
+                onClick={handleExportImage}
+                disabled={isExporting}
+                aria-label="Export chart as high-resolution PNG image"
+                sx={{
+                  color: isExporting ? "primary.main" : "text.secondary",
+                  border: "1px solid",
+                  borderColor: "var(--indices-border, rgba(255, 255, 255, 0.12))",
+                  backgroundColor: isExporting
+                    ? "rgba(99, 102, 241, 0.2)"
+                    : "transparent",
+                  p: 0.5,
+                  borderRadius: 1.5,
+                  "&:hover": {
+                    backgroundColor: "rgba(99, 102, 241, 0.2)",
+                    color: "primary.light",
+                  },
+                }}
+              >
+                <CameraAltIcon sx={{ fontSize: 18 }} />
+              </IconButton>
             </Tooltip>
 
             {/* Fullscreen Toggle */}
@@ -3515,6 +3585,37 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                 </Button>
               ))}
             </ButtonGroup>
+          </Box>
+
+          {/* Section 4: Export High-Res Watermarked Image */}
+          <Box sx={{ pt: 1, borderTop: "1px solid rgba(255, 255, 255, 0.08)" }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              size="small"
+              startIcon={<CameraAltIcon sx={{ fontSize: 16 }} />}
+              onClick={() => {
+                handleExportImage();
+                handleCloseSettings();
+              }}
+              disabled={isExporting}
+              sx={{
+                borderRadius: 2,
+                py: 0.85,
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                textTransform: "none",
+                borderColor: "rgba(99, 102, 241, 0.4)",
+                color: "primary.light",
+                backgroundColor: "rgba(99, 102, 241, 0.08)",
+                "&:hover": {
+                  backgroundColor: "rgba(99, 102, 241, 0.18)",
+                  borderColor: "primary.main",
+                },
+              }}
+            >
+              Export Chart Image (PNG)
+            </Button>
           </Box>
         </Popover>
       </CardContent>
