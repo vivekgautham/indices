@@ -28,6 +28,10 @@ jobs:
         run: |
           node scripts/fetch-fred-data.js
 
+      - name: Fetch Latest Corporate Earnings Data
+        run: |
+          node scripts/fetch-earnings-data.js
+
       - name: Commit and push if changed
         run: |
           git config --global user.name "github-actions[bot]"

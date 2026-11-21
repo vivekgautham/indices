@@ -2,6 +2,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DownloadIcon from "@mui/icons-material/FileDownload";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import LaunchIcon from "@mui/icons-material/Launch";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import SearchIcon from "@mui/icons-material/Search";
@@ -108,6 +109,55 @@ function downloadIcsEarnings(event: CorporateEarningsEvent) {
     URL.revokeObjectURL(url);
   } catch (err) {
     console.error("Failed to generate .ics earnings calendar file", err);
+  }
+}
+
+function downloadIcsNextQuarterEarnings(event: CorporateEarningsEvent) {
+  if (!event.nextQuarterDate) return;
+  try {
+    const dateStr = event.nextQuarterDate.replace(/-/g, "");
+    const timing = event.nextQuarterTimeOfDay || event.timeOfDay;
+    const timingStr =
+      timing === "BMO"
+        ? "Before Market Open (approx 8:00 AM ET)"
+        : timing === "AMC"
+          ? "After Market Close (approx 4:30 PM ET)"
+          : "During Market Hours";
+
+    const icsLines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//MarketIndices.xyz//Corporate Earnings Calendar//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      `UID:${event.ticker}-next-${dateStr}@marketindices.xyz`,
+      `DTSTAMP:${dateStr}T120000Z`,
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `SUMMARY:${event.ticker} Next Quarter Earnings Release (${event.nextQuarterPeriod || "Projected"})`,
+      `DESCRIPTION:${event.companyName} (${event.ticker}) Projected Next Quarter (${event.nextQuarterPeriod || "Next Qtr"}) Earnings Announcement.\\nStatus: ${event.nextQuarterConfirmed ? "CONFIRMED" : "PROJECTED / ESTIMATED"}\\nTiming: ${timingStr}\\nEst EPS: ${event.nextQuarterEpsEstimate ?? "N/A"}\\nEst Revenue: ${event.nextQuarterRevenueEstimate ?? "N/A"}\\nInvestor Relations: ${event.irUrl}`,
+      `URL:${event.irUrl}`,
+      `STATUS:${event.nextQuarterConfirmed ? "CONFIRMED" : "TENTATIVE"}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ];
+
+    const blob = new Blob([icsLines.join("\r\n")], {
+      type: "text/calendar;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute(
+      "download",
+      `${event.ticker}_next_quarter_earnings_${event.nextQuarterDate}.ics`,
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Failed to generate next quarter .ics calendar file", err);
   }
 }
 
@@ -1018,6 +1068,15 @@ export const CorporateEarningsCalendar: React.FC = () => {
                     fontWeight: 800,
                     fontSize: "0.72rem",
                     color: "text.secondary",
+                  }}
+                >
+                  Next Qtr (Est)
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: 800,
+                    fontSize: "0.72rem",
+                    color: "text.secondary",
                     textAlign: "right",
                   }}
                 >
@@ -1060,7 +1119,7 @@ export const CorporateEarningsCalendar: React.FC = () => {
               {filteredMonthEvents.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={9}
+                    colSpan={10}
                     sx={{ textAlign: "center", py: 4, color: "text.secondary" }}
                   >
                     No top-50 earnings announcements match the selected filters for{" "}
@@ -1159,6 +1218,39 @@ export const CorporateEarningsCalendar: React.FC = () => {
                         </TableCell>
                         <TableCell sx={{ fontFamily: MONO_FONT, fontSize: "0.76rem" }}>
                           {ev.fiscalQuarter}
+                        </TableCell>
+                        <TableCell sx={{ fontFamily: MONO_FONT, fontSize: "0.75rem" }}>
+                          {ev.nextQuarterDate ? (
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                              <span>{ev.nextQuarterDate}</span>
+                              <Chip
+                                label={ev.nextQuarterConfirmed ? "Conf" : "Est"}
+                                size="small"
+                                sx={{
+                                  height: 18,
+                                  fontSize: "0.6rem",
+                                  fontWeight: 800,
+                                  fontFamily: MONO_FONT,
+                                  backgroundColor: ev.nextQuarterConfirmed
+                                    ? "rgba(16, 185, 129, 0.15)"
+                                    : "rgba(245, 158, 11, 0.15)",
+                                  color: ev.nextQuarterConfirmed ? "#34d399" : "#fbbf24",
+                                  border: `1px solid ${
+                                    ev.nextQuarterConfirmed
+                                      ? "rgba(16, 185, 129, 0.3)"
+                                      : "rgba(245, 158, 11, 0.3)"
+                                  }`,
+                                }}
+                              />
+                            </Box>
+                          ) : (
+                            <Typography
+                              component="span"
+                              sx={{ color: "text.secondary", fontSize: "0.75rem" }}
+                            >
+                              —
+                            </Typography>
+                          )}
                         </TableCell>
                         <TableCell
                           sx={{
@@ -1509,7 +1601,142 @@ export const CorporateEarningsCalendar: React.FC = () => {
               </Box>
             )}
 
-            <Stack direction="row" spacing={1.5} sx={{ mt: 2 }}>
+            {/* Following Quarter (Next Qtr) Forward-Looking Projection */}
+            {selectedEvent.nextQuarterDate && (
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 1.5,
+                  borderRadius: 2.5,
+                  backgroundColor: "rgba(99, 102, 241, 0.05)",
+                  borderColor: "rgba(99, 102, 241, 0.25)",
+                  mb: 2,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    mb: 1.25,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "0.82rem",
+                      color: "primary.light",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.75,
+                    }}
+                  >
+                    <span>📅 Following Quarter Release (Next Qtr)</span>
+                  </Typography>
+                  <Chip
+                    label={
+                      selectedEvent.nextQuarterConfirmed
+                        ? "Confirmed Date"
+                        : "Projected (~90-day Cadence)"
+                    }
+                    size="small"
+                    sx={{
+                      height: 20,
+                      fontSize: "0.64rem",
+                      fontWeight: 800,
+                      backgroundColor: selectedEvent.nextQuarterConfirmed
+                        ? "rgba(16, 185, 129, 0.15)"
+                        : "rgba(245, 158, 11, 0.15)",
+                      color: selectedEvent.nextQuarterConfirmed ? "#34d399" : "#fbbf24",
+                      border: `1px solid ${
+                        selectedEvent.nextQuarterConfirmed
+                          ? "rgba(16, 185, 129, 0.3)"
+                          : "rgba(245, 158, 11, 0.3)"
+                      }`,
+                    }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: 1.25,
+                  }}
+                >
+                  <Box>
+                    <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                      Projected Release Date
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 800,
+                        fontFamily: MONO_FONT,
+                        fontSize: "0.88rem",
+                        color: "#ffffff",
+                      }}
+                    >
+                      {selectedEvent.nextQuarterDate}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                      Projected Fiscal Period
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 800,
+                        fontFamily: MONO_FONT,
+                        fontSize: "0.88rem",
+                        color: "#ffffff",
+                      }}
+                    >
+                      {selectedEvent.nextQuarterPeriod || "Next Fiscal Quarter"}
+                    </Typography>
+                  </Box>
+                  {selectedEvent.nextQuarterEpsEstimate !== undefined && (
+                    <Box>
+                      <Typography variant="caption" sx={{ color: "#34d399" }}>
+                        Consensus EPS Est.
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 800,
+                          fontFamily: MONO_FONT,
+                          fontSize: "0.88rem",
+                          color: "#34d399",
+                        }}
+                      >
+                        ${selectedEvent.nextQuarterEpsEstimate}
+                      </Typography>
+                    </Box>
+                  )}
+                  {selectedEvent.nextQuarterRevenueEstimate && (
+                    <Box>
+                      <Typography variant="caption" sx={{ color: "primary.light" }}>
+                        Consensus Rev. Est.
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 800,
+                          fontFamily: MONO_FONT,
+                          fontSize: "0.88rem",
+                          color: "primary.light",
+                        }}
+                      >
+                        {selectedEvent.nextQuarterRevenueEstimate}
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </Paper>
+            )}
+
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={1}
+              sx={{ mt: 2 }}
+            >
               <Button
                 variant="contained"
                 fullWidth
@@ -1520,10 +1747,33 @@ export const CorporateEarningsCalendar: React.FC = () => {
                   borderRadius: 2,
                   textTransform: "none",
                   backgroundColor: "primary.main",
+                  fontSize: "0.8rem",
                 }}
               >
-                Add to Calendar (.ics)
+                Add {selectedEvent.fiscalQuarter} (.ics)
               </Button>
+              {selectedEvent.nextQuarterDate && (
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  startIcon={<EventAvailableIcon />}
+                  onClick={() => downloadIcsNextQuarterEarnings(selectedEvent)}
+                  sx={{
+                    fontWeight: 700,
+                    borderRadius: 2,
+                    textTransform: "none",
+                    borderColor: "rgba(99, 102, 241, 0.4)",
+                    color: "primary.light",
+                    fontSize: "0.8rem",
+                    "&:hover": {
+                      borderColor: "primary.main",
+                      backgroundColor: "rgba(99, 102, 241, 0.08)",
+                    },
+                  }}
+                >
+                  Add Next Qtr (.ics)
+                </Button>
+              )}
               <Button
                 variant="outlined"
                 fullWidth
@@ -1537,9 +1787,11 @@ export const CorporateEarningsCalendar: React.FC = () => {
                   borderRadius: 2,
                   textTransform: "none",
                   borderColor: "rgba(255, 255, 255, 0.15)",
+                  color: "text.secondary",
+                  fontSize: "0.8rem",
                 }}
               >
-                Investor Relations
+                IR Webcast
               </Button>
             </Stack>
           </DialogContent>
