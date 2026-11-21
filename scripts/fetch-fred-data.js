@@ -40,6 +40,12 @@ const SERIES = [
   },
   { id: "DCOILWTICO", name: "Crude Oil (WTI)", category: "macro" },
   {
+    id: "GOLD",
+    name: "Gold (LBMA / COMEX Continuous)",
+    category: "macro",
+    yahooTicker: "GC=F",
+  },
+  {
     id: "MORTGAGE30US",
     name: "30-Year Fixed Mortgage Rate",
     category: "macro",
@@ -247,6 +253,12 @@ const SERIES = [
     category: "bond",
     yahooTicker: "TIP",
   },
+  {
+    id: "MOVE_INDEX",
+    name: "ICE BofA MOVE Index (Treasury Volatility)",
+    category: "bond",
+    yahooTicker: "^MOVE",
+  },
 ];
 
 function downsamplePoints(points) {
@@ -271,6 +283,8 @@ const YAHOO_BENCHMARK_MAP = {
   RUI: "%5ERUI",
   RUT: "%5ERUT",
   VIXCLS: "%5EVIX",
+  MOVE_INDEX: "%5EMOVE",
+  GOLD: "GC=F",
 };
 
 async function fetchRecentYahooPoints(ticker) {
@@ -594,7 +608,17 @@ async function main() {
         `✓ ${item.id.padEnd(12)}: ${observations.length} pts, latest: ${latest[0]} = ${latest[1]} (${change >= 0 ? "+" : ""}${change.toFixed(2)})`,
       );
     } else if (existingData.series && existingData.series[item.id]) {
+      seriesData[item.id] = existingData.series[item.id];
       console.log(`ℹ️ Preserved existing data for ${item.id}`);
+    }
+  }
+
+  // Preserve any other existing series
+  if (existingData.series) {
+    for (const [key, val] of Object.entries(existingData.series)) {
+      if (!seriesData[key]) {
+        seriesData[key] = val;
+      }
     }
   }
 

@@ -244,6 +244,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#d97706",
     icon: "🛢️",
   },
+  GOLD: {
+    id: "GOLD",
+    name: "Gold Continuous Futures & Spot Benchmark",
+    shortName: "Gold",
+    category: "macro",
+    subcategory: "Precious Metals & Commodities",
+    units: "USD / Troy Oz",
+    frequency: "Daily",
+    source: "COMEX / LBMA",
+    description:
+      "Physical gold continuous benchmark price in USD per troy ounce. Widely regarded by central banks, sovereign wealth funds, and institutional allocators as the preeminent monetary store of value and safe-haven reserve asset.",
+    marketSignificance:
+      "Global monetary safe haven, store of purchasing power, and currency debasement hedge. Closely monitored alongside real yields (TIPS), central bank reserve accumulation, and geopolitical flight to quality.",
+    relatedIndexId: "lbma-gold-price",
+    trackingEtfs: ["GLD", "IAU", "PHYS"],
+    format: "currency",
+    decimals: 2,
+    badgeColor: "#eab308",
+    icon: "🪙",
+  },
   MORTGAGE30US: {
     id: "MORTGAGE30US",
     name: "30-Year Fixed Rate Mortgage Average in the United States",

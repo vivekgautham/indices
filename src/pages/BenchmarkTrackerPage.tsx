@@ -79,9 +79,10 @@ export default function BenchmarkTrackerPage() {
   const isSelectedUS = useMemo(() => {
     return (
       normalizedSeriesId != null &&
-      dataset.equitySeries.some((s) => s.id === normalizedSeriesId)
+      (dataset.equitySeries.some((s) => s.id === normalizedSeriesId) ||
+        dataset.macroSeries.some((s) => s.id === normalizedSeriesId))
     );
-  }, [normalizedSeriesId, dataset.equitySeries]);
+  }, [normalizedSeriesId, dataset.equitySeries, dataset.macroSeries]);
 
   const activeTab: "us" | "international" | "bonds" =
     isSelectedInternational
@@ -132,9 +133,9 @@ export default function BenchmarkTrackerPage() {
           }
         } else {
           next.delete("tab");
-          const isUS = dataset.equitySeries.some(
-            (s) => s.id === selectedSeriesId,
-          );
+          const isUS =
+            dataset.equitySeries.some((s) => s.id === selectedSeriesId) ||
+            dataset.macroSeries.some((s) => s.id === selectedSeriesId);
           if (!isUS) {
             next.delete("series");
           }
@@ -214,8 +215,9 @@ export default function BenchmarkTrackerPage() {
     const rut = dataset.series.RUT;
     const vix = dataset.series.VIXCLS;
     const move = dataset.series.MOVE_INDEX;
+    const gold = dataset.series.GOLD;
 
-    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, vix, move };
+    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, vix, move, gold };
   }, [dataset]);
 
   // International Quick KPI benchmarks
@@ -574,7 +576,7 @@ export default function BenchmarkTrackerPage() {
                   <strong>S&amp;P 500 Equal Weight</strong>,{" "}
                   <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
                   <strong>Dow Jones</strong>, <strong>Russell 1000</strong>,{" "}
-                  <strong>Russell 2000</strong>, and <strong>CBOE VIX</strong>. Click any benchmark to inspect its
+                  <strong>Russell 2000</strong>, <strong>CBOE VIX</strong>, <strong>MOVE</strong>, and <strong>Gold</strong>. Click any benchmark to inspect its
                   detailed performance graph.
                 </>
               )}
@@ -589,9 +591,9 @@ export default function BenchmarkTrackerPage() {
                 display: "grid",
                 gridTemplateColumns: {
                   xs: "repeat(2, 1fr)",
-                  sm: "repeat(3, 1fr)",
+                  sm: "repeat(5, 1fr)",
                   md: "repeat(5, 1fr)",
-                  lg: "repeat(9, 1fr)",
+                  lg: "repeat(10, 1fr)",
                 },
                 gap: 1,
                 mt: 2.5,
@@ -1064,6 +1066,59 @@ export default function BenchmarkTrackerPage() {
                   >
                     {usKpiSummary.move.change >= 0 ? "+" : ""}
                     {usKpiSummary.move.change.toFixed(1)} pts
+                  </Typography>
+                </Paper>
+              )}
+
+              {usKpiSummary.gold && (
+                <Paper
+                  variant="outlined"
+                  onClick={() => handleSelectSeries("GOLD")}
+                  sx={{
+                    p: 1,
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
+                    backgroundColor:
+                      selectedSeriesId === "GOLD"
+                        ? "rgba(234, 179, 8, 0.15)"
+                        : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                    borderColor:
+                      selectedSeriesId === "GOLD"
+                        ? "#eab308"
+                        : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                    "&:hover": { borderColor: "#facc15" },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "text.secondary",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    Gold
+                  </Typography>
+                  <Typography
+                    sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                  >
+                    {formatSeriesValue(
+                      usKpiSummary.gold.latestValue,
+                      "currency",
+                      2,
+                    )}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color:
+                        usKpiSummary.gold.change >= 0 ? "#10b981" : "#ef4444",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    {usKpiSummary.gold.change >= 0 ? "+" : ""}
+                    {usKpiSummary.gold.changePct.toFixed(2)}%
                   </Typography>
                 </Paper>
               )}
