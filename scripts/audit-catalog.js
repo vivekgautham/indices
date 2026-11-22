@@ -244,6 +244,8 @@ const userRequestedTickers = [
   "PBUS",
   "FNCL",
   "VFH",
+  "FHLC",
+  "VHT",
   "EWZ",
   "ESGU",
   "SCHM",

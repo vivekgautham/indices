@@ -19,6 +19,7 @@ const EventsCalendarPage = lazyWithRetry(
 );
 
 const ExchangesPage = lazyWithRetry(() => import("./pages/ExchangesPage"));
+const TermsPage = lazyWithRetry(() => import("./pages/TermsPage"));
 
 function PageLoading() {
   return (
@@ -66,6 +67,15 @@ export default function App() {
                 element={<Navigate to="/markets" replace />}
               />
               <Route path="/index/:indexId" element={<IndexDetailPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route
+                path="/terms-of-use"
+                element={<Navigate to="/terms" replace />}
+              />
+              <Route
+                path="/disclaimer"
+                element={<Navigate to="/terms" replace />}
+              />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

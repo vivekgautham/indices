@@ -77,6 +77,12 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/terms</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 `;
 
 for (const index of INDICES_DATA) {
@@ -92,7 +98,7 @@ for (const index of INDICES_DATA) {
 sitemapXml += `</urlset>\n`;
 
 fs.writeFileSync(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf8");
-console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 5} URLs)`);
+console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 6} URLs)`);
 if (fs.existsSync(distDir)) {
   fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemapXml, "utf8");
   console.log(`✓ Generated dist/sitemap.xml`);
@@ -729,6 +735,85 @@ ${JSON.stringify(datasetSchema, null, 2)}
   fs.writeFileSync(path.join(marketsDir, "index.html"), marketsHtml, "utf8");
   console.log("✓ Generated dist/markets/index.html with FAQ, Breadcrumbs & 30 Exchanges Directory");
 
+  // Generate dist/terms/index.html with legal disclaimers & breadcrumbs
+  const termsDir = path.join(distDir, "terms");
+  fs.mkdirSync(termsDir, { recursive: true });
+  const termsTitle = `Terms of Use & Financial Disclaimers | MarketIndices.xyz`;
+  const termsDesc = `Terms of Use, non-advisory disclosures, data accuracy disclaimers, and intellectual property trademark attributions for MarketIndices.xyz.`;
+
+  const termsBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": `${BASE_URL}/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Terms of Use & Disclaimers",
+        "item": `${BASE_URL}/terms`
+      }
+    ]
+  };
+
+  const termsPrerenderHtml = `
+      <main style="max-width: 900px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; line-height: 1.7;">
+        <header style="margin-bottom: 32px;">
+          <p><a href="/" style="color: #00DD94; text-decoration: none; font-weight: 600;">&larr; Back to Home</a></p>
+          <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 12px 0 8px;">Terms of Use &amp; Disclaimers</h1>
+          <p style="color: #64748b; font-size: 14px;">Last Updated: November 2026 • MarketIndices.xyz</p>
+        </header>
+
+        <section style="margin-bottom: 24px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+          <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">1. Acceptance of Terms</h2>
+          <p>By accessing or using MarketIndices.xyz, you agree to comply with and be bound by these Terms of Use. If you do not agree to these terms, please discontinue your use of the website.</p>
+        </section>
+
+        <section style="margin-bottom: 24px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+          <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">2. Not Financial or Investment Advice</h2>
+          <p>MarketIndices.xyz is an educational, research, and directory platform only. None of the materials, indices descriptions, ETF tracking data, yield curves, macroeconomic indicators, or historical performance metrics displayed on this website constitute financial advice, investment advice, tax advice, legal counsel, or accounting advice.</p>
+          <p>MarketIndices.xyz is not a registered investment advisor, broker-dealer, or fiduciary. No content on this website constitutes an endorsement, recommendation, offer, or solicitation to buy, sell, or hold any security, ETF, or financial instrument.</p>
+        </section>
+
+        <section style="margin-bottom: 24px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+          <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">3. Market Data &amp; 'As-Is' Warranty Disclaimer</h2>
+          <p>All data and content are provided on an &ldquo;AS IS&rdquo; and &ldquo;AS AVAILABLE&rdquo; basis without warranties of any kind. Financial markets are dynamic, and data gathered from public filings, APIs, and index providers may experience reporting lags or estimation variances. Users should independently verify all figures against primary issuer filings and official publications.</p>
+        </section>
+
+        <section style="margin-bottom: 24px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+          <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">4. Intellectual Property &amp; Trademark Attributions</h2>
+          <p>All product names, trademarks, registered trademarks, service marks, and trade names referenced on MarketIndices.xyz (including S&amp;P&reg;, MSCI&reg;, Nasdaq&reg;, Russell&reg;, FTSE&reg;, CRSP&reg;, ICE&reg;, STOXX&reg;, Cboe&reg;, and Bloomberg&reg;) belong to their respective proprietary holders. MarketIndices.xyz is an independent educational catalog and is not sponsored, authorized, or endorsed by any benchmark administrator or asset management firm.</p>
+        </section>
+
+        <section style="margin-bottom: 24px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+          <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 0;">5. Limitation of Liability</h2>
+          <p>To the maximum extent permissible by law, MarketIndices.xyz and its maintainers shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from the use of, or inability to use, this website or reliance on information presented.</p>
+        </section>
+      </main>`;
+
+  let termsHtml = baseHtml
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(termsTitle)}</title>`)
+    .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/i, `<meta name="description" content="${escapeHtml(termsDesc)}" />`)
+    .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${BASE_URL}/terms" />`)
+    .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i, `<meta property="og:title" content="${escapeHtml(termsTitle)}" />`)
+    .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i, `<meta property="og:description" content="${escapeHtml(termsDesc)}" />`)
+    .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i, `<meta property="og:url" content="${BASE_URL}/terms" />`)
+    .replace(
+      /<div id="root"><\/div>/i,
+      `<div id="root"></div>\n    <noscript>\n${termsPrerenderHtml.trim()}\n    </noscript>`
+    )
+    .replace(
+      /<\/head>/i,
+      `  <script type="application/ld+json">\n${JSON.stringify(termsBreadcrumbSchema, null, 2)}\n  </script>\n</head>`
+    );
+
+  fs.writeFileSync(path.join(termsDir, "index.html"), termsHtml, "utf8");
+  console.log("✓ Generated dist/terms/index.html with Terms of Use & Disclaimers");
+
   // Helper for generating static redirect pages on GitHub Pages with noindex
   function generateRedirectPage(targetPath, title) {
     return `<!DOCTYPE html>
@@ -761,6 +846,16 @@ ${JSON.stringify(datasetSchema, null, 2)}
   fs.mkdirSync(benchTrackerDir, { recursive: true });
   fs.writeFileSync(path.join(benchTrackerDir, "index.html"), generateRedirectPage("/tracker", "Benchmark Tracker"), "utf8");
   console.log("✓ Generated dist/benchmark-tracker/index.html (redirect to /tracker with noindex)");
+
+  const termsOfUseDir = path.join(distDir, "terms-of-use");
+  fs.mkdirSync(termsOfUseDir, { recursive: true });
+  fs.writeFileSync(path.join(termsOfUseDir, "index.html"), generateRedirectPage("/terms", "Terms of Use & Disclaimers"), "utf8");
+  console.log("✓ Generated dist/terms-of-use/index.html (redirect to /terms with noindex)");
+
+  const disclaimerDir = path.join(distDir, "disclaimer");
+  fs.mkdirSync(disclaimerDir, { recursive: true });
+  fs.writeFileSync(path.join(disclaimerDir, "index.html"), generateRedirectPage("/terms", "Terms of Use & Disclaimers"), "utf8");
+  console.log("✓ Generated dist/disclaimer/index.html (redirect to /terms with noindex)");
 
   // B. Create static route pages for all indices
   let generatedPages = 0;

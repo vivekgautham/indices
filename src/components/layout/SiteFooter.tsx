@@ -102,6 +102,32 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
         >
           Events Calendar
         </Typography>
+        <Typography
+          component={RouterLink}
+          to="/markets"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            "&:hover": { color: "#00DD94" },
+          }}
+        >
+          Markets
+        </Typography>
+        <Typography
+          component={RouterLink}
+          to="/terms"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            "&:hover": { color: "#00DD94" },
+          }}
+        >
+          Terms of Use
+        </Typography>
       </Stack>
 
       {/* Bottom Right: Scroll to Top */}

@@ -31,6 +31,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/terms</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/sp-500</loc>
     <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -476,6 +482,12 @@
   </url>
   <url>
     <loc>https://marketindices.xyz/index/msci-us-imi-financials-25-50</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/msci-us-imi-health-care-25-50</loc>
     <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
