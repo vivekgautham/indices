@@ -332,8 +332,8 @@ export default function IndexDetailPage() {
               label={index.symbol}
               sx={{
                 fontWeight: 800,
-                fontSize: "0.92rem",
-                py: 2,
+                fontSize: "0.88rem",
+                height: 32,
                 px: 0.75,
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.primary.contrastText,
@@ -343,16 +343,27 @@ export default function IndexDetailPage() {
 
             {provider && (
               <Chip
-                icon={<ProviderLogo providerId={provider.id} size={16} />}
+                icon={<ProviderLogo providerId={provider.id} size={18} />}
                 label={provider.name}
                 sx={{
                   fontWeight: 700,
-                  fontSize: "0.8rem",
+                  fontSize: "0.82rem",
                   borderColor: `${accentColor}55`,
                   color: accentColor,
                   borderRadius: 2,
                   border: "1px solid",
                   backgroundColor: `${accentColor}15`,
+                  height: 32,
+                  pl: 1,
+                  pr: 1.25,
+                  "& .MuiChip-icon": {
+                    ml: 0,
+                    mr: 0.75,
+                  },
+                  "& .MuiChip-label": {
+                    pl: 0,
+                    pr: 0,
+                  },
                 }}
               />
             )}
@@ -360,8 +371,10 @@ export default function IndexDetailPage() {
             <Chip
               label={index.category}
               sx={{
-                fontSize: "0.78rem",
+                fontSize: "0.8rem",
                 fontWeight: 600,
+                height: 32,
+                px: 0.5,
                 backgroundColor: "rgba(255, 255, 255, 0.08)",
                 color: "text.secondary",
                 borderRadius: 2,
@@ -371,8 +384,10 @@ export default function IndexDetailPage() {
             <Chip
               label={index.region}
               sx={{
-                fontSize: "0.78rem",
+                fontSize: "0.8rem",
                 fontWeight: 600,
+                height: 32,
+                px: 0.5,
                 backgroundColor: "rgba(255, 255, 255, 0.08)",
                 color: "text.secondary",
                 borderRadius: 2,

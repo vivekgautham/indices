@@ -117,6 +117,16 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                     borderRadius: 1.5,
                     backgroundColor:
                       "var(--indices-subtle-bg, rgba(255, 255, 255, 0.05))",
+                    pl: 0.75,
+                    pr: 1,
+                    "& .MuiChip-icon": {
+                      ml: 0,
+                      mr: 0.5,
+                    },
+                    "& .MuiChip-label": {
+                      pl: 0,
+                      pr: 0,
+                    },
                   }}
                 />
               </Stack>

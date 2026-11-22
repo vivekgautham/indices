@@ -2,7 +2,8 @@ import { Box, SxProps, Theme } from "@mui/material";
 import React from "react";
 import { ProviderId } from "../types";
 
-export interface ProviderLogoProps {
+export interface ProviderLogoProps
+  extends React.HTMLAttributes<HTMLSpanElement> {
   providerId: ProviderId | "all" | "others";
   size?: number;
   sx?: SxProps<Theme>;
@@ -145,7 +146,9 @@ const LOGO_CONFIG: Record<
 export const ProviderLogo: React.FC<ProviderLogoProps> = ({
   providerId,
   size = 20,
+  className,
   sx,
+  ...rest
 }) => {
   const config = LOGO_CONFIG[providerId] || LOGO_CONFIG.all;
   const padding = Math.max(1.5, Math.round(size * config.paddingRatio));
@@ -153,6 +156,7 @@ export const ProviderLogo: React.FC<ProviderLogoProps> = ({
   return (
     <Box
       component="span"
+      className={className}
       sx={{
         display: "inline-flex",
         alignItems: "center",
@@ -170,6 +174,7 @@ export const ProviderLogo: React.FC<ProviderLogoProps> = ({
         p: `${padding}px`,
         ...sx,
       }}
+      {...rest}
     >
       <img
         src={config.src}
