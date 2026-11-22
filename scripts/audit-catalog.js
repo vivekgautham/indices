@@ -202,6 +202,7 @@ const userRequestedTickers = [
   "TIP",
   "VTIP",
   "JNK",
+  "SCYB",
   "MUB",
   "VTEB",
   "BNDX",

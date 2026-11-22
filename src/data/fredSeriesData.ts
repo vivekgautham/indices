@@ -1036,7 +1036,7 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     marketSignificance:
       "High-beta credit risk benchmark sensitive to corporate default rates, refinancing costs, and economic growth expectations.",
     relatedIndexId: "sp-markit-iboxx-usd-liquid-high-yield",
-    trackingEtfs: ["HYG", "JNK"],
+    trackingEtfs: ["HYG", "JNK", "SCYB"],
     format: "currency",
     decimals: 2,
     badgeColor: "#ef4444",
