@@ -3816,6 +3816,73 @@ export const INDICES_DATA: MarketIndex[] = [
       "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-industrials/M1US50I",
   },
   {
+    id: "msci-us-imi-financials-25-50",
+    symbol: "M1USFN",
+    altSymbols: [
+      "FNCL Benchmark",
+      "VFH Benchmark",
+      "MSCI Financials",
+      "MSCI US Financials",
+      "MSCI USA Financials 25/50",
+      "M1US50F",
+      "705971",
+    ],
+    name: "MSCI USA IMI Financials 25/50 Index",
+    providerId: "msci",
+    category: "Financials Sector Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 420,
+    weightingMethodology:
+      "Modified Market Cap (25/50 Capped: max 25% single company, max 50% for all >5% issuers)",
+    rebalanceFrequency: "Quarterly (February, May, August, November)",
+    launchYear: 2013,
+    trackingEtfs: [
+      {
+        ticker: "VFH",
+        name: "Vanguard Financials ETF",
+        aum: "$10.5B+",
+      },
+      {
+        ticker: "FNCL",
+        name: "Fidelity MSCI Financials Index ETF",
+        aum: "$2.3B+",
+      },
+    ],
+    summary:
+      "Comprehensive benchmark of US financial sector equities spanning large, mid, and small caps, tracked by Fidelity's FNCL and Vanguard's VFH.",
+    description:
+      "The MSCI USA IMI Financials 25/50 Index measures the performance of the financial sector across large, mid, and small-cap US equities. Covering diversified banks, regional lenders, investment banks, consumer finance, asset managers, and insurance underwriters, the index implements 25/50 Regulated Investment Company (RIC) capping constraints to prevent over-concentration in mega-cap banking institutions. It serves as the primary benchmark for the $2.3B+ Fidelity MSCI Financials Index ETF (FNCL) and $10.5B+ Vanguard Financials ETF (VFH).",
+    eligibilityCriteria: [
+      "Member of the MSCI US Investable Market Index (IMI) classified under the GICS Financials sector",
+      "Spans large-cap, mid-cap, and small-cap tiers for comprehensive US banking, insurance, and capital markets exposure",
+      "Applies 25/50 RIC diversification capping: single issuer capped at 25%, aggregate weight of all issuers exceeding 5% capped at 50%",
+      "Reconstituted quarterly with buffering rules to moderate turnover",
+    ],
+    keyCharacteristics: [
+      "Primary underlying benchmark for Fidelity MSCI Financials Index ETF (FNCL, $2.3B+ AUM) and Vanguard Financials ETF (VFH, $10.5B+ AUM)",
+      "Broad all-cap constituent count (~420 holdings) compared to ~72 large-cap-only stocks in S&P Financial Select Sector (XLF)",
+      "Balanced exposure across money-center banks, regional banks, multi-line insurance, and market infrastructure leaders",
+      "25/50 capping rules ensure regulatory compliance and portfolio diversification across financial sub-industries",
+    ],
+    tags: [
+      "Financials",
+      "FNCL",
+      "VFH",
+      "Fidelity",
+      "Vanguard",
+      "Banking",
+      "Insurance",
+      "Capital Markets",
+      "25/50 Capped",
+      "All-Cap",
+      "MSCI IMI",
+      "Sector",
+    ],
+    officialUrl:
+      "https://www.msci.com/our-solutions/indexes/real-time-index-data-search/index-details/us-investable-market-25-50-financials/M1US50F",
+  },
+  {
     id: "msci-usa-momentum",
     symbol: "M1USMM",
     altSymbols: ["703025", "MXUS000M", "MTUM Benchmark", "MSCI USA Momentum"],

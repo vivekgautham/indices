@@ -242,6 +242,8 @@ const userRequestedTickers = [
   "VLUE",
   "EUSA",
   "PBUS",
+  "FNCL",
+  "VFH",
   "EWZ",
   "ESGU",
   "SCHM",
