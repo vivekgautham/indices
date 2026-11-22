@@ -2146,17 +2146,17 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                       <circle
                         cx={drop.x}
                         cy={drop.y}
-                        r={isSelected ? 10 : 6}
+                        r={isSelected ? 7 : 4.5}
                         fill="rgba(239, 68, 68, 0.28)"
                       />
                       {/* Inner Dot */}
                       <circle
                         cx={drop.x}
                         cy={drop.y}
-                        r={isSelected ? 5 : 3.2}
+                        r={isSelected ? 3.5 : 2.4}
                         fill="#ef4444"
                         stroke="#ffffff"
-                        strokeWidth="1.2"
+                        strokeWidth="1"
                       />
                     </g>
                   );
@@ -2192,10 +2192,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     <circle
                       cx={crosshairPoint[0]}
                       cy={crosshairDma200Y}
-                      r="4"
+                      r="2.5"
                       fill="#a855f7"
                       stroke="#ffffff"
-                      strokeWidth="1.5"
+                      strokeWidth="1.2"
                     />
                   )}
 
@@ -2204,10 +2204,10 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                     <circle
                       cx={crosshairPoint[0]}
                       cy={crosshairDma50Y}
-                      r="4"
+                      r="2.5"
                       fill="#f59e0b"
                       stroke="#ffffff"
-                      strokeWidth="1.5"
+                      strokeWidth="1.2"
                     />
                   )}
 
@@ -2215,16 +2215,16 @@ export const FredSeriesChart: React.FC<FredSeriesChartProps> = ({
                   <circle
                     cx={crosshairPoint[0]}
                     cy={crosshairPoint[1]}
-                    r="6.5"
+                    r="4"
                     fill={glowColor}
                   />
                   <circle
                     cx={crosshairPoint[0]}
                     cy={crosshairPoint[1]}
-                    r="4"
+                    r="2.5"
                     fill="#ffffff"
                     stroke={strokeColor}
-                    strokeWidth="2.2"
+                    strokeWidth="1.6"
                   />
                 </g>
               )}

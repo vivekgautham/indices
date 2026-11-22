@@ -652,19 +652,19 @@ export const Sp500BreadthInsightCard: React.FC<Sp500BreadthInsightCardProps> = (
                   <circle
                     cx={activeHover.x}
                     cy={activeHover.spY}
-                    r="4.5"
+                    r="2.8"
                     fill="#8b5cf6"
                     stroke="#ffffff"
-                    strokeWidth="2"
+                    strokeWidth="1.4"
                   />
                   {/* Equal Dot */}
                   <circle
                     cx={activeHover.x}
                     cy={activeHover.spewY}
-                    r="4.5"
+                    r="2.8"
                     fill="#10b981"
                     stroke="#ffffff"
-                    strokeWidth="2"
+                    strokeWidth="1.4"
                   />
                 </g>
               )}

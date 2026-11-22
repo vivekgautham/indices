@@ -515,20 +515,20 @@ export const TreasuryYieldCurveCard: React.FC<TreasuryYieldCurveCardProps> = ({
                       <circle
                         cx={pt.x}
                         cy={pt.y}
-                        r="10"
+                        r="7"
                         fill="none"
                         stroke="#818cf8"
-                        strokeWidth="2"
+                        strokeWidth="1.5"
                         strokeOpacity="0.5"
                       />
                     )}
                     <circle
                       cx={pt.x}
                       cy={pt.y}
-                      r={isHovered ? 7 : isSelected ? 6 : 5}
+                      r={isHovered ? 4.5 : isSelected ? 4 : 3.2}
                       fill={isSelected ? "#ffffff" : "#6366f1"}
                       stroke="#818cf8"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                     />
                     {/* Maturity Label */}
                     <text
