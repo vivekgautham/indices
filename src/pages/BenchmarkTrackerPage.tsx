@@ -189,7 +189,7 @@ export default function BenchmarkTrackerPage() {
         ? "International Benchmarks | FTSE 100, Nikkei 225, DAX, Euro Stoxx 50 | Market Indices Explorer"
         : activeTab === "bonds"
           ? "U.S. Treasury Yields & Bond Benchmarks | 10-Year, 2-Year, Yield Curve, TIPS, AGG | Market Indices Explorer"
-          : "Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
+          : "U.S. Equity Benchmark Tracker | S&P 500, NASDAQ 100, Dow Jones, Russell 1000, VIX | Market Indices Explorer";
   }, [activeTab]);
 
   // Active series for the featured top chart
@@ -343,7 +343,22 @@ export default function BenchmarkTrackerPage() {
             <Tab
               icon={<ShowChartIcon sx={{ fontSize: { xs: 15, sm: 16 } }} />}
               iconPosition="start"
-              label="U.S. Benchmarks"
+              label={
+                <span>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "none", sm: "inline" } }}
+                  >
+                    U.S. Equity Benchmarks
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{ display: { xs: "inline", sm: "none" } }}
+                  >
+                    U.S. Equity
+                  </Box>
+                </span>
+              }
               value="us"
             />
             <Tab
@@ -540,7 +555,7 @@ export default function BenchmarkTrackerPage() {
                 ? "U.S. Treasury Yields & Bond Benchmarks"
                 : activeTab === "international"
                   ? "International Benchmark Tracker"
-                  : "Benchmark Tracker"}
+                  : "U.S. Equity Benchmark Tracker"}
             </Typography>
 
             <Typography
