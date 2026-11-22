@@ -248,6 +248,12 @@ const SERIES = [
     yahooTicker: "HYG",
   },
   {
+    id: "SCYB_BOND",
+    name: "ICE BofA US Cash Pay High Yield (Proxy: SCYB)",
+    category: "bond",
+    yahooTicker: "SCYB",
+  },
+  {
     id: "TIP_BOND",
     name: "Bloomberg U.S. TIPS Index (Proxy)",
     category: "bond",

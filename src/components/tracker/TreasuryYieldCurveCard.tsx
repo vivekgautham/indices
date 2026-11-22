@@ -74,7 +74,7 @@ export const TreasuryYieldCurveCard: React.FC<TreasuryYieldCurveCardProps> = ({
     }
     if (selectedFilter === "etfs") {
       return seriesList.filter((s) =>
-        ["AGG_BOND", "TLT_BOND", "LQD_BOND", "HYG_BOND", "TIP_BOND"].includes(
+        ["AGG_BOND", "TLT_BOND", "LQD_BOND", "HYG_BOND", "SCYB_BOND", "TIP_BOND"].includes(
           s.id,
         ),
       );

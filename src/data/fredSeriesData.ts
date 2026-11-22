@@ -1042,6 +1042,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#ef4444",
     icon: "🔥",
   },
+  SCYB_BOND: {
+    id: "SCYB_BOND",
+    name: "ICE BofA US Cash Pay High Yield Constrained Index (Proxy: SCYB)",
+    shortName: "Schwab High Yield (SCYB)",
+    category: "bond",
+    subcategory: "High Yield / Sub-Investment Grade",
+    units: "USD",
+    frequency: "Daily",
+    source: "ICE Data Indices / Schwab",
+    description:
+      "Tracks US dollar-denominated sub-investment grade cash-pay corporate debt with a 2% issuer cap, underlying the ultra-low-cost Schwab SCYB ETF.",
+    marketSignificance:
+      "Modern high-yield benchmark featuring an ultra-low 0.03% expense ratio ETF, reflecting cash-pay below-investment grade credit risk.",
+    relatedIndexId: "ice-bofa-us-cash-pay-high-yield-constrained",
+    trackingEtfs: ["SCYB"],
+    format: "currency",
+    decimals: 2,
+    badgeColor: "#ea580c",
+    icon: "💵",
+  },
   TIP_BOND: {
     id: "TIP_BOND",
     name: "Bloomberg U.S. TIPS Index (Proxy: TIP)",
