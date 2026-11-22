@@ -339,7 +339,7 @@ ${JSON.stringify(datasetSchema, null, 2)}
   // Generate dist/indices/index.html with catalog prerender & self-referencing canonical
   const indicesDir = path.join(distDir, "indices");
   fs.mkdirSync(indicesDir, { recursive: true });
-  const indicesTitle = `Global Market Indices Directory | Benchmarks & Tracking ETFs 📊 | MarketIndices`;
+  const indicesTitle = `Global Market Indices Directory | ${INDICES_DATA.length}+ Benchmarks & Tracking ETFs 📊 | MarketIndices`;
   const indicesDesc = `Explore and compare ${INDICES_DATA.length}+ global market benchmark indices across S&P, NASDAQ, MSCI, FTSE Russell, KRX, STOXX, Euronext, Nikkei, and tracking ETFs.`;
 
   const indicesBreadcrumbSchema = {

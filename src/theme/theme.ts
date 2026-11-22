@@ -182,6 +182,14 @@ export function buildTheme(preset: ThemePreset): Theme {
             borderRadius: 10,
             fontFamily: DEFAULT_FONT,
           },
+          containedPrimary: {
+            backgroundColor: preset.primary.main,
+            color: preset.primary.contrastText,
+            "&:hover": {
+              backgroundColor: preset.primary.light || "#00f0a0",
+              color: preset.primary.contrastText || "#050D0A",
+            },
+          },
         },
       },
       MuiChip: {

@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useFredData } from "../api/fredApi";
 import { useProvidersData } from "../api/indicesApi";
@@ -29,6 +29,10 @@ const PLATFORM_STATS = [
 export default function HomePage() {
   const { data: fredData } = useFredData();
   const { data: providers = [] } = useProvidersData();
+
+  useEffect(() => {
+    document.title = `MarketIndices.xyz – ${TOTAL_INDICES}+ Global Benchmark Indices & Tracking ETFs 📊`;
+  }, []);
 
   // Top streaming ticker strip data
   const tickerItems = useMemo(() => {
@@ -136,7 +140,11 @@ export default function HomePage() {
                   boxShadow: "0 4px 20px rgba(0, 221, 148, 0.35)",
                   "&:hover": {
                     backgroundColor: "#00f0a0",
+                    color: "#050D0A",
                     boxShadow: "0 6px 28px rgba(0, 221, 148, 0.5)",
+                    "& .MuiSvgIcon-root": {
+                      color: "#050D0A",
+                    },
                   },
                 }}
               >
@@ -477,7 +485,13 @@ export default function HomePage() {
                   px: 4,
                   py: 1.4,
                   textTransform: "none",
-                  "&:hover": { backgroundColor: "#00f0a0" },
+                  "&:hover": {
+                    backgroundColor: "#00f0a0",
+                    color: "#050D0A",
+                    "& .MuiSvgIcon-root": {
+                      color: "#050D0A",
+                    },
+                  },
                 }}
               >
                 Launch Indices Directory
