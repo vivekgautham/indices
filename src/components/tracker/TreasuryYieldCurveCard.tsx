@@ -591,10 +591,10 @@ export const TreasuryYieldCurveCard: React.FC<TreasuryYieldCurveCardProps> = ({
               },
             }}
           >
-            <Tab label={`All Fixed Income (${seriesList.length})`} value="all" />
-            <Tab label="Treasury Curve (5)" value="curve" />
-            <Tab label="Spreads & Policy (5)" value="spreads" />
-            <Tab label="Bond Index ETFs (5)" value="etfs" />
+            <Tab label="All Fixed Income" value="all" />
+            <Tab label="Treasury Curve" value="curve" />
+            <Tab label="Spreads & Policy" value="spreads" />
+            <Tab label="Bond Index ETFs" value="etfs" />
           </Tabs>
         </Box>
 

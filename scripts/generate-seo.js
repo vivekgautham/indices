@@ -339,8 +339,8 @@ ${JSON.stringify(datasetSchema, null, 2)}
   // Generate dist/indices/index.html with catalog prerender & self-referencing canonical
   const indicesDir = path.join(distDir, "indices");
   fs.mkdirSync(indicesDir, { recursive: true });
-  const indicesTitle = `Global Market Indices Directory | ${INDICES_DATA.length}+ Benchmarks & Tracking ETFs 📊 | MarketIndices`;
-  const indicesDesc = `Explore and compare ${INDICES_DATA.length}+ global market benchmark indices across S&P, NASDAQ, MSCI, FTSE Russell, KRX, STOXX, Euronext, Nikkei, and 330+ tracking ETFs.`;
+  const indicesTitle = `Global Market Indices Directory | Benchmarks & Tracking ETFs 📊 | MarketIndices`;
+  const indicesDesc = `Explore and compare ${INDICES_DATA.length}+ global market benchmark indices across S&P, NASDAQ, MSCI, FTSE Russell, KRX, STOXX, Euronext, Nikkei, and tracking ETFs.`;
 
   const indicesBreadcrumbSchema = {
     "@context": "https://schema.org",
@@ -1077,7 +1077,7 @@ ${JSON.stringify(faqSchema, null, 2)}
         ` : ""}
 
         <section style="margin-bottom: 28px;">
-          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Tracking ETFs &amp; Investment Products (${(index.trackingEtfs || []).length})</h2>
+          <h2 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Tracking ETFs &amp; Investment Products</h2>
           ${(index.trackingEtfs && index.trackingEtfs.length > 0) ? `
           <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
