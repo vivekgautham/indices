@@ -182,6 +182,26 @@ export const FRED_SERIES_CATALOG: Record<string, FredSeriesMeta> = {
     badgeColor: "#8b5cf6",
     icon: "🌱",
   },
+  MSCI_USA: {
+    id: "MSCI_USA",
+    name: "MSCI USA Index (Proxy: PBUS)",
+    shortName: "MSCI USA (PBUS)",
+    category: "equity",
+    subcategory: "Large & Mid-Cap Equities",
+    units: "USD",
+    frequency: "Daily",
+    source: "MSCI Inc. / Invesco",
+    description:
+      "Measures large and mid-cap US equity performance covering ~85% of US float market capitalization, underlying the Invesco PBUS ETF.",
+    marketSignificance:
+      "Core US building block of MSCI World and ACWI, underlying the ultra-low-cost Invesco PBUS ($10B+ AUM, 0.04% expense) and iShares EUSA ETFs.",
+    relatedIndexId: "msci-usa",
+    trackingEtfs: ["PBUS", "EUSA"],
+    format: "currency",
+    decimals: 2,
+    badgeColor: "#10b981",
+    icon: "🇺🇸",
+  },
   VIXCLS: {
     id: "VIXCLS",
     name: "Cboe Volatility Index (VIX)",

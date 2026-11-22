@@ -30,6 +30,12 @@ const SERIES = [
   { id: "DJIA", name: "Dow Jones Industrial Average", category: "equity" },
   { id: "RUI", name: "Russell 1000", category: "equity", yahooTicker: "^RUI" },
   { id: "RUT", name: "Russell 2000", category: "equity", yahooTicker: "^RUT" },
+  {
+    id: "MSCI_USA",
+    name: "MSCI USA Index (Proxy: PBUS)",
+    category: "equity",
+    yahooTicker: "PBUS",
+  },
   { id: "VIXCLS", name: "CBOE Volatility Index (VIX)", category: "equity" },
 
   // Economic, Global & Macro Indexes

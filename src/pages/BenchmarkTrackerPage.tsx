@@ -213,11 +213,12 @@ export default function BenchmarkTrackerPage() {
     const djia = dataset.series.DJIA;
     const rui = dataset.series.RUI;
     const rut = dataset.series.RUT;
+    const msciUsa = dataset.series.MSCI_USA;
     const vix = dataset.series.VIXCLS;
     const move = dataset.series.MOVE_INDEX;
     const gold = dataset.series.GOLD;
 
-    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, vix, move, gold };
+    return { sp, spew, ndx, nasdaqCom, djia, rui, rut, msciUsa, vix, move, gold };
   }, [dataset]);
 
   // International Quick KPI benchmarks
@@ -576,7 +577,7 @@ export default function BenchmarkTrackerPage() {
                   <strong>S&amp;P 500 Equal Weight</strong>,{" "}
                   <strong>NASDAQ 100</strong>, <strong>Nasdaq Composite</strong>,{" "}
                   <strong>Dow Jones</strong>, <strong>Russell 1000</strong>,{" "}
-                  <strong>Russell 2000</strong>, <strong>CBOE VIX</strong>, <strong>MOVE</strong>, and <strong>Gold</strong>. Click any benchmark to inspect its
+                  <strong>Russell 2000</strong>, <strong>MSCI USA (PBUS)</strong>, <strong>CBOE VIX</strong>, <strong>MOVE</strong>, and <strong>Gold</strong>. Click any benchmark to inspect its
                   detailed performance graph.
                 </>
               )}
@@ -591,9 +592,9 @@ export default function BenchmarkTrackerPage() {
                 display: "grid",
                 gridTemplateColumns: {
                   xs: "repeat(2, 1fr)",
-                  sm: "repeat(5, 1fr)",
-                  md: "repeat(5, 1fr)",
-                  lg: "repeat(10, 1fr)",
+                  sm: "repeat(4, 1fr)",
+                  md: "repeat(6, 1fr)",
+                  lg: "repeat(11, 1fr)",
                 },
                 gap: 1,
                 mt: 2.5,
@@ -964,6 +965,59 @@ export default function BenchmarkTrackerPage() {
                   >
                     {usKpiSummary.rut.change >= 0 ? "+" : ""}
                     {usKpiSummary.rut.changePct.toFixed(2)}%
+                  </Typography>
+                </Paper>
+              )}
+
+              {usKpiSummary.msciUsa && (
+                <Paper
+                  variant="outlined"
+                  onClick={() => handleSelectSeries("MSCI_USA")}
+                  sx={{
+                    p: 1,
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    minWidth: 0,
+                    overflow: "hidden",
+                    backgroundColor:
+                      selectedSeriesId === "MSCI_USA"
+                        ? "rgba(16, 185, 129, 0.15)"
+                        : "var(--indices-card-bg, rgba(15, 23, 42, 0.4))",
+                    borderColor:
+                      selectedSeriesId === "MSCI_USA"
+                        ? "#10b981"
+                        : "var(--indices-border, rgba(255, 255, 255, 0.08))",
+                    "&:hover": { borderColor: "#34d399" },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "text.secondary",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    MSCI USA
+                  </Typography>
+                  <Typography
+                    sx={{ fontWeight: 800, fontSize: "0.92rem", my: 0.1 }}
+                  >
+                    {formatSeriesValue(
+                      usKpiSummary.msciUsa.latestValue,
+                      "currency",
+                      2,
+                    )}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color:
+                        usKpiSummary.msciUsa.change >= 0 ? "#10b981" : "#ef4444",
+                      fontWeight: 700,
+                      fontSize: "0.72rem",
+                    }}
+                  >
+                    {usKpiSummary.msciUsa.change >= 0 ? "+" : ""}
+                    {usKpiSummary.msciUsa.changePct.toFixed(2)}%
                   </Typography>
                 </Paper>
               )}

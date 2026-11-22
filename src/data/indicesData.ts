@@ -7730,6 +7730,7 @@ export const INDICES_DATA: MarketIndex[] = [
     id: "msci-usa",
     symbol: "M1US",
     altSymbols: [
+      "PBUS Benchmark",
       "EUSA Benchmark",
       "MSCI United States Index",
       "MSCI US Large Mid Cap",
@@ -7744,6 +7745,11 @@ export const INDICES_DATA: MarketIndex[] = [
     rebalanceFrequency: "Quarterly (February, May, August, November)",
     launchYear: 1969,
     trackingEtfs: [
+      {
+        ticker: "PBUS",
+        name: "Invesco MSCI USA ETF",
+        aum: "$10.2B+",
+      },
       {
         ticker: "EUSA",
         name: "iShares MSCI USA ETF",
@@ -7768,7 +7774,7 @@ export const INDICES_DATA: MarketIndex[] = [
     keyCharacteristics: [
       "Foundational benchmark representing ~70% of MSCI World and ~63% of MSCI ACWI",
       "Parent universe for multi-billion factor ETFs like QUAL, MTUM, USMV, and VLUE",
-      "Tracked by the $4.5B+ iShares EUSA ETF and the $7B+ iShares CSUS UCITS ETF",
+      "Tracked by the $10.2B+ Invesco PBUS ETF, $4.5B+ iShares EUSA ETF, and $7B+ iShares CSUS UCITS ETF",
     ],
     tags: [
       "Large Cap",
@@ -7776,7 +7782,9 @@ export const INDICES_DATA: MarketIndex[] = [
       "Broad Market",
       "US Equity",
       "MSCI",
+      "PBUS",
       "EUSA",
+      "Invesco",
       "Core",
       "Global Standard",
     ],

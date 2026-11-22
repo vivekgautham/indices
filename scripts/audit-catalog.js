@@ -241,6 +241,7 @@ const userRequestedTickers = [
   "USMV",
   "VLUE",
   "EUSA",
+  "PBUS",
   "EWZ",
   "ESGU",
   "SCHM",
