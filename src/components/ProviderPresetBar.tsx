@@ -140,7 +140,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
             sx={{
               flexShrink: 0,
               py: { xs: 1.2, sm: 1.8 },
-              px: 0.8,
+              px: 1,
               borderRadius: 3,
               borderColor:
                 selectedProvider === "all"
@@ -215,7 +215,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
                 sx={{
                   flexShrink: 0,
                   py: { xs: 1.2, sm: 1.8 },
-                  px: 0.9,
+                  px: 1,
                   borderRadius: 3,
                   border: "1.5px solid",
                   borderColor: isSelected
@@ -321,7 +321,7 @@ export const ProviderPresetBar: React.FC<ProviderPresetBarProps> = ({
               sx={{
                 flexShrink: 0,
                 py: { xs: 1.2, sm: 1.8 },
-                px: 0.9,
+                px: 1,
                 borderRadius: 3,
                 border: "1.5px solid",
                 borderColor: isOthersActive

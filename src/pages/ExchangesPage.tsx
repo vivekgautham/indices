@@ -312,7 +312,7 @@ export default function ExchangesPage() {
                 size="small"
                 sx={{
                   borderRadius: 2,
-                  px: 0.5,
+                  px: 0.75,
                   py: 0.4,
                   fontSize: "0.76rem",
                   fontWeight: 700,
@@ -333,7 +333,7 @@ export default function ExchangesPage() {
                   size="small"
                   sx={{
                     borderRadius: 2,
-                    px: 0.5,
+                    px: 0.75,
                     py: 0.4,
                     fontSize: "0.76rem",
                     fontWeight: 700,
@@ -348,7 +348,6 @@ export default function ExchangesPage() {
                       sx={{
                         fontSize: "12px !important",
                         color: "text.secondary",
-                        ml: 0.5,
                       }}
                     />
                   }

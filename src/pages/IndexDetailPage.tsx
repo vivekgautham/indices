@@ -334,7 +334,7 @@ export default function IndexDetailPage() {
                 fontWeight: 800,
                 fontSize: "0.92rem",
                 py: 2,
-                px: 0.5,
+                px: 0.75,
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.primary.contrastText,
                 borderRadius: 2,
@@ -353,10 +353,6 @@ export default function IndexDetailPage() {
                   borderRadius: 2,
                   border: "1px solid",
                   backgroundColor: `${accentColor}15`,
-                  "& .MuiChip-icon": {
-                    ml: "6px",
-                    mr: "-2px",
-                  },
                 }}
               />
             )}

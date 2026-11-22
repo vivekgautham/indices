@@ -1200,7 +1200,7 @@ export const CorporateEarningsCalendar: React.FC = () => {
                             label={isBmo ? "BMO" : "AMC"}
                             size="small"
                             sx={{
-                              height: 22,
+                              height: 24,
                               fontSize: "0.68rem",
                               fontWeight: 800,
                               fontFamily: MONO_FONT,
@@ -1450,9 +1450,9 @@ export const CorporateEarningsCalendar: React.FC = () => {
                     }
                     size="small"
                     sx={{
-                      height: 20,
+                      height: 24,
                       fontWeight: 800,
-                      fontSize: "0.66rem",
+                      fontSize: "0.68rem",
                       backgroundColor:
                         selectedEvent.timeOfDay === "BMO"
                           ? "rgba(245, 158, 11, 0.2)"

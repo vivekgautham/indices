@@ -1,7 +1,7 @@
 {
   "name": "indices",
   "private": true,
-  "version": "0.0.62",
+  "version": "0.0.63",
   "homepage": "https://marketindices.xyz",
   "type": "module",
   "scripts": {

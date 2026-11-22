@@ -1026,7 +1026,7 @@ export const Sp500SectorTrackerCard: React.FC<Sp500SectorTrackerCardProps> = ({
                       sx={{
                         fontWeight: 800,
                         fontSize: "0.72rem",
-                        height: 22,
+                        height: 24,
                         backgroundColor: isPositive
                           ? "rgba(16, 185, 129, 0.12)"
                           : "rgba(239, 68, 68, 0.12)",

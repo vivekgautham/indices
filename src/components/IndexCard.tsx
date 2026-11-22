@@ -99,7 +99,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                     backgroundColor: theme.palette.primary.main,
                     color: theme.palette.primary.contrastText,
                     borderRadius: 1.5,
-                    px: 0.25,
+                    px: 0.5,
                   }}
                 />
                 <Chip
@@ -117,10 +117,6 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                     borderRadius: 1.5,
                     backgroundColor:
                       "var(--indices-subtle-bg, rgba(255, 255, 255, 0.05))",
-                    "& .MuiChip-icon": {
-                      ml: "4px",
-                      mr: "-2px",
-                    },
                   }}
                 />
               </Stack>
@@ -347,7 +343,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                           }
                           size="small"
                           sx={{
-                            height: 20,
+                            height: 21,
                             fontSize: "0.68rem",
                             fontWeight: 700,
                             backgroundColor: isActive
@@ -360,7 +356,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                             borderRadius: 1,
                             textDecoration: "none",
                             cursor: "pointer",
-                            "& .MuiChip-label": { px: 0.6 },
+                            "& .MuiChip-label": { px: 0.9 },
                             "&:hover": {
                               backgroundColor: isActive
                                 ? "rgba(245, 158, 11, 0.25)"
@@ -416,7 +412,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                         }
                         size="small"
                         sx={{
-                          height: 20,
+                          height: 21,
                           fontSize: "0.68rem",
                           fontWeight: 700,
                           backgroundColor: isActive
@@ -427,7 +423,7 @@ export const IndexCard: React.FC<IndexCardProps> = ({ index, onSelect }) => {
                             ? "1px solid rgba(245, 158, 11, 0.35)"
                             : "1px solid rgba(148, 163, 184, 0.2)",
                           borderRadius: 1,
-                          "& .MuiChip-label": { px: 0.6 },
+                          "& .MuiChip-label": { px: 0.9 },
                         }}
                       />
                     </Tooltip>

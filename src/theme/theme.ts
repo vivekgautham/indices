@@ -1,4 +1,5 @@
 import { createTheme, Theme } from "@mui/material/styles";
+import { chipClasses } from "@mui/material/Chip";
 
 export type ThemeId = "kalshi";
 
@@ -188,6 +189,49 @@ export function buildTheme(preset: ThemePreset): Theme {
           root: {
             fontFamily: DEFAULT_FONT,
             fontWeight: 600,
+            borderRadius: 8,
+            [`& .${chipClasses.icon}`]: {
+              marginLeft: 8,
+              marginRight: 0,
+            },
+            [`&.${chipClasses.sizeSmall} .${chipClasses.icon}`]: {
+              marginLeft: 6,
+              marginRight: 0,
+            },
+            [`& .${chipClasses.deleteIcon}`]: {
+              marginRight: 8,
+              marginLeft: 0,
+            },
+            [`&.${chipClasses.sizeSmall} .${chipClasses.deleteIcon}`]: {
+              marginRight: 6,
+              marginLeft: 0,
+            },
+          },
+          label: {
+            paddingLeft: 10,
+            paddingRight: 10,
+            whiteSpace: "nowrap",
+          },
+          labelSmall: {
+            paddingLeft: 8,
+            paddingRight: 8,
+            whiteSpace: "nowrap",
+          },
+          icon: {
+            marginLeft: 8,
+            marginRight: 0,
+          },
+          iconSmall: {
+            marginLeft: 6,
+            marginRight: 0,
+          },
+          deleteIcon: {
+            marginRight: 8,
+            marginLeft: 0,
+          },
+          deleteIconSmall: {
+            marginRight: 6,
+            marginLeft: 0,
           },
         },
       },

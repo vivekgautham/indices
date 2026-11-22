@@ -130,7 +130,7 @@ export const StyleQuickFilter: React.FC<StyleQuickFilterProps> = ({
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 0.6,
+                    gap: 0.75,
                     color: isSelected ? "#fff" : "inherit",
                   }}
                 >
@@ -191,7 +191,7 @@ export const StyleQuickFilter: React.FC<StyleQuickFilterProps> = ({
               variant={isSelected ? "filled" : "outlined"}
               sx={{
                 py: { xs: 1.1, sm: 1.8 },
-                px: { xs: 0.4, sm: 0.5 },
+                px: { xs: 0.75, sm: 1 },
                 borderRadius: 2.5,
                 borderColor: isSelected
                   ? opt.activeColor
