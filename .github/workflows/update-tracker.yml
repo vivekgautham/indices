@@ -2,8 +2,8 @@ name: Update Benchmark Tracker Data
 
 on:
   schedule:
-    # Run at 22:00 UTC (6:00 PM ET) Monday through Friday after US market close
-    - cron: '0 22 * * 1-5'
+    # Run at 22:15 UTC (5:15 PM EST / 6:15 PM EDT) Monday through Friday after US market close
+    - cron: '15 22 * * 1-5'
   workflow_dispatch: # Allow manual trigger in GitHub Actions UI
 
 permissions:
