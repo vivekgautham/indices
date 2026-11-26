@@ -661,6 +661,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marketindices.xyz/index/ice-short-us-treasury</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://marketindices.xyz/index/ice-semiconductor</loc>
     <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -758,6 +764,18 @@
   </url>
   <url>
     <loc>https://marketindices.xyz/index/bloomberg-1-3-month-us-treasury-bill</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/bloomberg-us-treasury-bills-0-3-months</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketindices.xyz/index/bloomberg-us-treasury-floating-rate</loc>
     <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

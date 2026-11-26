@@ -306,6 +306,12 @@ const userRequestedTickers = [
   "IBTM",
   "CTYM",
   "SSAC",
+  "VBIL",
+  "CLIP",
+  "TFLO",
+  "USFR",
+  "SHV",
+  "TBLL",
 ];
 
 for (const ticker of userRequestedTickers) {
