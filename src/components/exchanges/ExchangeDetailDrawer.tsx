@@ -63,12 +63,13 @@ export const ExchangeDetailDrawer: React.FC<Props> = ({
     lunchPercent = ((lEnd - lStart) / 1440) * 100;
   }
 
-  // Filter upcoming holidays for this exchange
+  // Filter upcoming holidays for this exchange (including today)
+  const todayIso = new Date().toISOString().split("T")[0];
   const upcomingHolidays = exchange.holidayCalendarExchange
     ? GLOBAL_MARKET_HOLIDAYS.filter(
         (h) =>
           h.exchange.includes(exchange.holidayCalendarExchange!) &&
-          new Date(h.date) >= new Date(),
+          h.date >= todayIso,
       ).slice(0, 4)
     : [];
 
@@ -209,7 +210,9 @@ export const ExchangeDetailDrawer: React.FC<Props> = ({
                 {status.statusLabel}
               </Typography>
               <Typography variant="caption" sx={{ color: "text.secondary" }}>
-                Session Countdown
+                {status.holidayName && status.status === "HOLIDAY"
+                  ? `Market Holiday • ${status.holidayName}`
+                  : "Session Countdown"}
               </Typography>
             </Box>
           </Stack>

@@ -1,8 +1,10 @@
+import { GLOBAL_MARKET_HOLIDAYS, GlobalHoliday } from "../data/globalMarketHolidays";
 import {
   ExchangeLiveStatus,
   MarketSessionStatus,
   WorldExchange,
 } from "../types/exchange";
+import { getUsMarketHolidays } from "./marketCalendarEngine";
 
 /**
  * Converts "HH:MM" string to minutes from midnight
@@ -38,6 +40,10 @@ interface LocalTimeInfo {
   second: number;
   timeString: string; // "HH:MM:SS"
   dateString: string; // e.g. "Mon, Nov 16"
+  isoDate: string; // "YYYY-MM-DD"
+  year: number;
+  month: number;
+  day: number;
 }
 
 /**
@@ -52,7 +58,7 @@ export function getExchangeLocalTime(
       timeZone,
       weekday: "short",
       year: "numeric",
-      month: "short",
+      month: "numeric",
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
@@ -76,13 +82,31 @@ export function getExchangeLocalTime(
     };
     const dayOfWeek = weekdayMap[weekdayStr] ?? date.getDay();
 
+    const year = parseInt(getVal("year"), 10) || date.getFullYear();
+    const month = parseInt(getVal("month"), 10) || date.getMonth() + 1;
+    const day = parseInt(getVal("day"), 10) || date.getDate();
     const hour = parseInt(getVal("hour"), 10) || 0;
     const minute = parseInt(getVal("minute"), 10) || 0;
     const second = parseInt(getVal("second"), 10) || 0;
 
     const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
     const timeString = `${pad(hour)}:${pad(minute)}:${pad(second)}`;
-    const dateString = `${weekdayStr}, ${getVal("month")} ${getVal("day")}`;
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const dateString = `${weekdayStr}, ${monthNames[month - 1] || getVal("month")} ${day}`;
+    const isoDate = `${year}-${pad(month)}-${pad(day)}`;
 
     return {
       dayOfWeek,
@@ -91,13 +115,21 @@ export function getExchangeLocalTime(
       second,
       timeString,
       dateString,
+      isoDate,
+      year,
+      month,
+      day,
     };
   } catch {
     // Fallback if timezone not supported in environment
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
     const hour = date.getHours();
     const minute = date.getMinutes();
     const second = date.getSeconds();
     const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
+    const isoDate = `${year}-${pad(month)}-${pad(day)}`;
     return {
       dayOfWeek: date.getDay(),
       hour,
@@ -105,27 +137,102 @@ export function getExchangeLocalTime(
       second,
       timeString: `${pad(hour)}:${pad(minute)}:${pad(second)}`,
       dateString: date.toLocaleDateString(),
+      isoDate,
+      year,
+      month,
+      day,
     };
   }
 }
 
 /**
- * Calculates days and minutes until the next active trading session
+ * Checks if a specific date is a recognized market holiday for this exchange
  */
-function getMinutesUntilNextTradingDayOpen(
-  currentDay: number,
-  currentMinutes: number,
-  tradingDays: number[],
-  openMinutes: number,
-): number {
-  for (let offset = 1; offset <= 7; offset++) {
-    const candidateDay = (currentDay + offset) % 7;
-    if (tradingDays.includes(candidateDay)) {
-      const minutesRemainingToday = 24 * 60 - currentMinutes;
-      const intermediateDaysMinutes = (offset - 1) * 24 * 60;
-      return minutesRemainingToday + intermediateDaysMinutes + openMinutes;
+export function getExchangeHoliday(
+  exchange: WorldExchange,
+  isoDate: string,
+  year?: number,
+): GlobalHoliday | { name: string; date: string; country: string } | undefined {
+  // 1. Direct match in verified GLOBAL_MARKET_HOLIDAYS dataset
+  const match = GLOBAL_MARKET_HOLIDAYS.find((h) => {
+    if (h.date !== isoDate) return false;
+    if (
+      exchange.holidayCalendarExchange &&
+      (h.exchange.includes(exchange.holidayCalendarExchange) ||
+        exchange.holidayCalendarExchange.includes(h.exchange))
+    ) {
+      return true;
+    }
+    if (
+      h.country.toLowerCase() === exchange.country.toLowerCase() ||
+      (exchange.country === "United States" && h.country === "United States")
+    ) {
+      return true;
+    }
+    return false;
+  });
+
+  if (match) return match;
+
+  // 2. Algorithmic fallback for U.S. exchanges beyond verified holiday years
+  const y = year || parseInt(isoDate.split("-")[0], 10);
+  if (
+    exchange.country === "United States" ||
+    exchange.holidayCalendarExchange === "NYSE / Nasdaq"
+  ) {
+    const usHolidays = getUsMarketHolidays(y);
+    const usMatch = usHolidays.find((h) => h.date === isoDate);
+    if (usMatch) {
+      return {
+        date: usMatch.date,
+        name: usMatch.title,
+        country: "United States",
+      };
     }
   }
+
+  return undefined;
+}
+
+/**
+ * Calculates days and minutes until the next active trading session,
+ * skipping weekends AND scheduled market holidays.
+ */
+function getMinutesUntilNextActiveTradingOpen(
+  exchange: WorldExchange,
+  currentMinutes: number,
+  openMinutes: number,
+  localDate: { year: number; month: number; day: number },
+): number {
+  const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
+
+  for (let offset = 1; offset <= 14; offset++) {
+    const candidate = new Date(
+      Date.UTC(localDate.year, localDate.month - 1, localDate.day + offset),
+    );
+    const candidateDay = candidate.getUTCDay();
+    const candidateYear = candidate.getUTCFullYear();
+    const candidateMonth = candidate.getUTCMonth() + 1;
+    const candidateDateNum = candidate.getUTCDate();
+    const candidateIso = `${candidateYear}-${pad(candidateMonth)}-${pad(candidateDateNum)}`;
+
+    // Must be a normal trading day (e.g. Monday - Friday)
+    if (!exchange.tradingDays.includes(candidateDay)) {
+      continue;
+    }
+
+    // Must not be a market holiday
+    const holiday = getExchangeHoliday(exchange, candidateIso, candidateYear);
+    if (holiday) {
+      continue;
+    }
+
+    // Found the next active trading session
+    const minutesRemainingToday = Math.max(0, 24 * 60 - currentMinutes);
+    const intermediateDaysMinutes = (offset - 1) * 24 * 60;
+    return minutesRemainingToday + intermediateDaysMinutes + openMinutes;
+  }
+
   return 24 * 60;
 }
 
@@ -204,20 +311,37 @@ export function getExchangeLiveStatus(
     postCloseMin = timeStringToMinutes(exchange.postMarket.close);
   }
 
+  // Check if today is a recognized market holiday for this exchange
+  const todayHoliday = getExchangeHoliday(
+    exchange,
+    localTime.isoDate,
+    localTime.year,
+  );
+
   let status: MarketSessionStatus = "CLOSED";
   let statusLabel = "Closed";
   let nextEvent = "Closed";
   let minutesToNextEvent = 0;
   let isRegularOpen = false;
 
-  if (!isTradingDay) {
+  if (todayHoliday) {
+    status = "HOLIDAY";
+    statusLabel = todayHoliday.name;
+    minutesToNextEvent = getMinutesUntilNextActiveTradingOpen(
+      exchange,
+      currentMinutes,
+      openMin,
+      { year: localTime.year, month: localTime.month, day: localTime.day },
+    );
+    nextEvent = `Opens in ${formatDuration(minutesToNextEvent)}`;
+  } else if (!isTradingDay) {
     status = "WEEKEND";
     statusLabel = "Weekend Closed";
-    minutesToNextEvent = getMinutesUntilNextTradingDayOpen(
-      localTime.dayOfWeek,
+    minutesToNextEvent = getMinutesUntilNextActiveTradingOpen(
+      exchange,
       currentMinutes,
-      exchange.tradingDays,
       openMin,
+      { year: localTime.year, month: localTime.month, day: localTime.day },
     );
     nextEvent = `Opens in ${formatDuration(minutesToNextEvent)}`;
   } else if (
@@ -267,14 +391,14 @@ export function getExchangeLiveStatus(
     minutesToNextEvent = openMin - currentMinutes;
     nextEvent = `Opens in ${formatDuration(minutesToNextEvent)}`;
   } else {
-    // Current day after close, wait for next trading day open
+    // Current day after close, wait for next active trading day open
     status = "CLOSED";
     statusLabel = "Closed";
-    minutesToNextEvent = getMinutesUntilNextTradingDayOpen(
-      localTime.dayOfWeek,
+    minutesToNextEvent = getMinutesUntilNextActiveTradingOpen(
+      exchange,
       currentMinutes,
-      exchange.tradingDays,
       openMin,
+      { year: localTime.year, month: localTime.month, day: localTime.day },
     );
     nextEvent = `Opens in ${formatDuration(minutesToNextEvent)}`;
   }
@@ -292,6 +416,7 @@ export function getExchangeLiveStatus(
     isRegularOpen,
     userLocalOpenTime: userHours.userLocalOpenTime,
     userLocalCloseTime: userHours.userLocalCloseTime,
+    holidayName: todayHoliday?.name,
   };
 }
 
@@ -326,6 +451,13 @@ export function getStatusColorConfig(status: MarketSessionStatus): {
         badgeColor: "#BA68C8",
         dotColor: "#BA68C8",
         border: "rgba(186, 104, 200, 0.35)",
+      };
+    case "HOLIDAY":
+      return {
+        badgeBg: "rgba(239, 68, 68, 0.12)",
+        badgeColor: "#F87171",
+        dotColor: "#EF4444",
+        border: "rgba(239, 68, 68, 0.35)",
       };
     case "WEEKEND":
     case "CLOSED":

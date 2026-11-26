@@ -20,6 +20,7 @@ export const ExchangeStatusTicker: React.FC<Props> = ({
 
   let openCount = 0;
   let preOrLunchCount = 0;
+  let holidayCount = 0;
   let closedCount = 0;
 
   interface NextTransition {
@@ -40,6 +41,9 @@ export const ExchangeStatusTicker: React.FC<Props> = ({
       st.status === "POST_MARKET"
     ) {
       preOrLunchCount++;
+    } else if (st.status === "HOLIDAY") {
+      holidayCount++;
+      closedCount++;
     } else {
       closedCount++;
     }
@@ -164,6 +168,19 @@ export const ExchangeStatusTicker: React.FC<Props> = ({
                     bgcolor: "rgba(255, 179, 0, 0.12)",
                     color: "#FFB300",
                     border: "1px solid rgba(255, 179, 0, 0.3)",
+                    "& .MuiChip-label": { px: 1 },
+                  }}
+                />
+              )}
+              {holidayCount > 0 && (
+                <Chip
+                  size="small"
+                  label={`${holidayCount} Holiday`}
+                  sx={{
+                    fontWeight: 700,
+                    bgcolor: "rgba(239, 68, 68, 0.12)",
+                    color: "#f87171",
+                    border: "1px solid rgba(239, 68, 68, 0.3)",
                     "& .MuiChip-label": { px: 1 },
                   }}
                 />

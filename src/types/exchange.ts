@@ -15,7 +15,8 @@ export type MarketSessionStatus =
   | "PRE_MARKET"
   | "POST_MARKET"
   | "CLOSED"
-  | "WEEKEND";
+  | "WEEKEND"
+  | "HOLIDAY";
 
 export interface ExchangeTradingHours {
   open: string; // "HH:MM" in local 24h format e.g. "09:30"
@@ -73,4 +74,5 @@ export interface ExchangeLiveStatus {
   isRegularOpen: boolean;
   userLocalOpenTime: string; // converted to user's browser timezone
   userLocalCloseTime: string;
+  holidayName?: string;
 }
