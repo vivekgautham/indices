@@ -8,8 +8,7 @@ const rootDir = path.resolve(__dirname, "..");
 const srcDataDir = path.join(rootDir, "src", "data");
 const publicDataDir = path.join(rootDir, "public", "data");
 
-const FRED_API_KEY =
-  process.env.FRED_API_KEY || "2d9fe8dbad89dabfd5afba8ca6e5f4f6";
+const FRED_API_KEY = process.env.FRED_API_KEY || "";
 
 const SERIES = [
   // Major U.S. Equity Benchmarks

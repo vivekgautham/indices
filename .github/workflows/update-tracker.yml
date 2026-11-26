@@ -24,7 +24,7 @@ jobs:
 
       - name: Fetch Latest Benchmark Tracker Data
         env:
-          FRED_API_KEY: ${{ secrets.FRED_API_KEY || '2d9fe8dbad89dabfd5afba8ca6e5f4f6' }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
           node scripts/fetch-fred-data.js
 

@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useMemo } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useFredData } from "../api/fredApi";
 import { useProvidersData } from "../api/indicesApi";
 import SiteFooter from "../components/layout/SiteFooter";
@@ -27,8 +27,23 @@ const PLATFORM_STATS = [
 ];
 
 export default function HomePage() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { data: fredData } = useFredData();
   const { data: providers = [] } = useProvidersData();
+
+  // Forward search queries (e.g., from browser omnibox or Google Sitelinks Search) to /indices?q=...
+  useEffect(() => {
+    const query =
+      searchParams.get("q") ||
+      searchParams.get("query") ||
+      searchParams.get("search");
+    if (query && query.trim()) {
+      navigate(`/indices?q=${encodeURIComponent(query.trim())}`, {
+        replace: true,
+      });
+    }
+  }, [searchParams, navigate]);
 
   useEffect(() => {
     document.title = `MarketIndices.xyz – ${TOTAL_INDICES}+ Global Benchmark Indices & Tracking ETFs 📊`;

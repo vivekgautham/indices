@@ -8,7 +8,8 @@ import {
 import type { Sp500SectorMarketData } from "../data/sp500SectorsData";
 
 const FRED_API_KEY_STORAGE = "indices_fred_api_key";
-export const DEFAULT_FRED_API_KEY = "2d9fe8dbad89dabfd5afba8ca6e5f4f6";
+export const DEFAULT_FRED_API_KEY =
+  (import.meta.env?.VITE_FRED_API_KEY as string) || "";
 
 export function getCustomFredApiKey(): string {
   try {
