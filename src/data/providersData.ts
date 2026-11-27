@@ -45,6 +45,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
       "BlackRock (iShares)",
       "Charles Schwab",
       "DWS Xtrackers",
+      "Avantis Investors (American Century)",
     ],
     coverage:
       "Global All-Cap Equities, US Small/Mid Cap (Russell), UK & International Equities, Fixed Income",
@@ -72,6 +73,7 @@ export const PROVIDERS_DATA: Record<ProviderId, IndexProvider> = {
       "Amundi",
       "DWS",
       "State Street",
+      "Avantis Investors (American Century)",
     ],
     coverage:
       "International Equities, Emerging Markets, ESG & Climate, Factor & Custom Indexes",

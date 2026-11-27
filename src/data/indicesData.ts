@@ -2440,6 +2440,70 @@ export const INDICES_DATA: MarketIndex[] = [
     officialUrl:
       "https://www.spglobal.com/spdji/en/indices/equity/sp-global-1200-information-technology-sector/",
   },
+  {
+    id: "sp-global-reit",
+    symbol: "SPGTREIT",
+    altSymbols: [
+      "SPGREIT",
+      "^SPGTREIT",
+      "S&P Global REIT",
+      "REET Benchmark",
+      "AVRE Benchmark",
+    ],
+    name: "S&P Global REIT Index",
+    providerId: "sp",
+    category: "Global Real Estate",
+    assetClass: "Equity",
+    region: "Global",
+    constituentsCount: 420,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly (March, June, September, December)",
+    launchYear: 2008,
+    trackingEtfs: [
+      {
+        ticker: "REET",
+        name: "iShares Global REIT ETF",
+        aum: "$3.5B+",
+      },
+      {
+        ticker: "AVRE",
+        name: "Avantis Real Estate ETF (Active Prospectus Benchmark Peer)",
+        aum: "$350M+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF investing in global real estate securities and REITs with lower relative valuations and higher profitability.",
+      },
+    ],
+    summary:
+      "Comprehensive benchmark measuring publicly traded equity real estate investment trusts across developed and emerging markets worldwide, underlying REET and benchmarking Avantis AVRE.",
+    description:
+      "The S&P Global REIT Index serves as a comprehensive benchmark of publicly traded real estate investment trusts (REITs) listed across developed and emerging market countries. It represents the global real estate asset class across industrial, retail, residential, healthcare, data center, and office properties. It serves as the underlying benchmark for the $3.5B+ iShares Global REIT ETF (REET) and is the benchmark standard for actively managed factor funds including the Avantis Real Estate ETF (AVRE).",
+    eligibilityCriteria: [
+      "Constituent of the broad S&P Global BMI (Broad Market Index)",
+      "Must be legally structured and officially classified as an Equity Real Estate Investment Trust (REIT)",
+      "Minimum float-adjusted market capitalization of $100M and 3-month median daily trading value of $5M",
+      "Reviewed annually in September with quarterly share updates in March, June, September, and December",
+    ],
+    keyCharacteristics: [
+      "Broad global real estate diversification across North America, Europe, Asia-Pacific, and Latin America",
+      "Underlying index for the $3.5B+ iShares Global REIT ETF (REET)",
+      "Prospectus benchmark standard for systematic active factor real estate funds like Avantis AVRE",
+      "High dividend yield asset class capturing physical real estate cash flows without direct property ownership",
+    ],
+    tags: [
+      "Real Estate",
+      "REIT",
+      "Global",
+      "Yield",
+      "Dividends",
+      "REET",
+      "AVRE",
+      "Avantis",
+      "S&P Dow Jones",
+    ],
+    officialUrl:
+      "https://www.spglobal.com/spdji/en/indices/equity/sp-global-reit-index/",
+  },
 
   // ==========================================
   // FTSE RUSSELL
@@ -2663,6 +2727,141 @@ export const INDICES_DATA: MarketIndex[] = [
       "Russell 1000",
       "Style Benchmark",
       "Dividends",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
+  },
+  {
+    id: "russell-midcap",
+    symbol: "RMC",
+    altSymbols: [
+      "^RMC",
+      "^RMCC",
+      "Russell Mid Cap",
+      "IWR Benchmark",
+      "VO Benchmark",
+      "AVMC Benchmark",
+    ],
+    name: "Russell Midcap Index",
+    providerId: "ftse",
+    category: "Mid-Cap Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 800,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Annual Reconstitution (June)",
+    launchYear: 1991,
+    trackingEtfs: [
+      {
+        ticker: "IWR",
+        name: "iShares Russell Mid-Cap ETF",
+        aum: "$38.5B+",
+      },
+      {
+        ticker: "VO",
+        name: "Vanguard Mid-Cap ETF (Benchmark Peer)",
+        aum: "$65B+",
+      },
+      {
+        ticker: "AVMC",
+        name: "Avantis U.S. Mid Cap Equity ETF (Active Prospectus Benchmark)",
+        aum: "$250M+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF investing across US mid-cap companies with tilts toward higher profitability and lower relative valuation.",
+      },
+    ],
+    summary:
+      "Measures the performance of the 800 smallest companies in the Russell 1000 Index, representing ~27% of total Russell 1000 market capitalization, underlying IWR and Avantis AVMC.",
+    description:
+      "The Russell Midcap Index is constructed from the Russell 1000 Index to provide a comprehensive and unbiased barometer for America's mid-cap equity segment. Comprising roughly 800 companies (ranked 201 through 1,000 by market capitalization in the annual Russell Reconstitution), it balances large-cap financial stability with small-cap growth agility. It underlies the $38B+ iShares Russell Mid-Cap ETF (IWR) and serves as the official regulatory prospectus benchmark for the Avantis U.S. Mid Cap Equity ETF (AVMC).",
+    eligibilityCriteria: [
+      "Companies ranked 201 through 1,000 by market capitalization within the Russell 1000 Index",
+      "Incorporated in the US or designated as US-benefit entity with headquarters in the US",
+      "Annual reconstitution every June ensuring seamless alignment with broader Russell US Indexes",
+    ],
+    keyCharacteristics: [
+      "The standard institutional benchmark for US mid-cap equity portfolios",
+      "Captures approximately 27% of the total market capitalization of the Russell 1000",
+      "Official regulatory prospectus benchmark for the Avantis U.S. Mid Cap Equity ETF (AVMC)",
+      "Sweet-spot allocation between mega-cap tech dominance and small-cap volatility",
+    ],
+    tags: [
+      "Mid Cap",
+      "US Equities",
+      "Russell Reconstitution",
+      "IWR",
+      "VO",
+      "AVMC",
+      "Avantis",
+      "Institutional Benchmark",
+    ],
+    officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
+  },
+  {
+    id: "russell-midcap-value",
+    symbol: "RMV",
+    altSymbols: [
+      "^RMV",
+      "^RMVD",
+      "Russell Mid Cap Value",
+      "IWS Benchmark",
+      "VOE Benchmark",
+      "AVMV Benchmark",
+    ],
+    name: "Russell Midcap Value Index",
+    providerId: "ftse",
+    category: "Mid-Cap Value Equity",
+    assetClass: "Equity",
+    region: "United States",
+    constituentsCount: 700,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Annual Reconstitution (June)",
+    launchYear: 1995,
+    trackingEtfs: [
+      {
+        ticker: "IWS",
+        name: "iShares Russell Mid-Cap Value ETF",
+        aum: "$13.2B+",
+      },
+      {
+        ticker: "VOE",
+        name: "Vanguard Mid-Cap Value ETF (Benchmark Peer)",
+        aum: "$18.5B+",
+      },
+      {
+        ticker: "AVMV",
+        name: "Avantis U.S. Mid Cap Value ETF (Active Prospectus Benchmark)",
+        aum: "$300M+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF investing in US mid-cap companies exhibiting value characteristics and higher operating profitability.",
+      },
+    ],
+    summary:
+      "Measures the performance of US mid-cap companies exhibiting value characteristics, underlying IWS and serving as the prospectus benchmark for Avantis AVMV.",
+    description:
+      "The Russell Midcap Value Index measures the performance of the mid-cap value segment of the US equity universe. Sourced from the parent Russell Midcap Index, constituents are selected based on low price-to-book ratios and lower forecasted medium-term I/B/E/S growth rates. It underlies the $13B+ iShares Russell Mid-Cap Value ETF (IWS) and serves as the official prospectus benchmark for the Avantis U.S. Mid Cap Value ETF (AVMV).",
+    eligibilityCriteria: [
+      "Derived from the Russell Midcap Index universe (companies ranked 201-1,000 in Russell 1000)",
+      "Screened for value characteristics based on price-to-book (P/B) ratio and lower 2-year I/B/E/S growth forecasts",
+      "Reconstituted annually in June simultaneously with all Russell US indexes",
+    ],
+    keyCharacteristics: [
+      "Official regulatory prospectus benchmark for Avantis U.S. Mid Cap Value ETF (AVMV)",
+      "Underlying index for the $13B+ iShares Russell Mid-Cap Value ETF (IWS)",
+      "Balances traditional cyclical value sectors with profitable mid-sized enterprise cash flows",
+      "Widely utilized by active institutional managers evaluating US mid-cap style premiums",
+    ],
+    tags: [
+      "Mid Cap",
+      "Value",
+      "US Equities",
+      "IWS",
+      "VOE",
+      "AVMV",
+      "Avantis",
+      "Russell Reconstitution",
+      "Style Benchmark",
     ],
     officialUrl: "https://www.ftserussell.com/products/indices/russell-us",
   },
@@ -3558,6 +3757,66 @@ export const INDICES_DATA: MarketIndex[] = [
       "Core",
       "Global",
       "Asia Heavy",
+    ],
+    officialUrl: "https://www.msci.com/our-solutions/indexes/emerging-markets",
+  },
+  {
+    id: "msci-emerging-markets-small-cap",
+    symbol: "M1EFSC",
+    altSymbols: [
+      "^M1EFSC",
+      "MSCI EM Small Cap",
+      "EEMS Benchmark",
+      "AVEE Benchmark",
+    ],
+    name: "MSCI Emerging Markets Small Cap Index",
+    providerId: "msci",
+    category: "Emerging Markets Small-Cap Equity",
+    assetClass: "Equity",
+    region: "Emerging Markets",
+    constituentsCount: 1950,
+    weightingMethodology: "Float-Adjusted Market Cap",
+    rebalanceFrequency: "Quarterly Index Reviews (Feb, May, Aug, Nov)",
+    launchYear: 2007,
+    trackingEtfs: [
+      {
+        ticker: "EEMS",
+        name: "iShares MSCI Emerging Markets Small-Cap ETF",
+        aum: "$600M+",
+      },
+      {
+        ticker: "AVEE",
+        name: "Avantis Emerging Markets Small Cap Equity ETF (Active Prospectus Benchmark)",
+        aum: "$120M+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF investing in emerging market small-cap companies with higher profitability and lower relative valuations.",
+      },
+    ],
+    summary:
+      "Measures small-cap representation across 24 emerging market countries, covering ~14% of free float-adjusted market cap, underlying EEMS and benchmarking Avantis AVEE.",
+    description:
+      "The MSCI Emerging Markets Small Cap Index captures small-cap equity representation across 24 developing market economies (including Taiwan, India, South Korea, Brazil, and South Africa). Designed to target the 85th to 99th percentile of free-float adjusted market capitalization in each market, it gives investors targeted exposure to high-growth domestic developing economies. It underlies the iShares MSCI Emerging Markets Small-Cap ETF (EEMS) and serves as the official prospectus benchmark for the Avantis Emerging Markets Small Cap Equity ETF (AVEE).",
+    eligibilityCriteria: [
+      "Securities in 24 emerging markets defined by MSCI Global Investable Market Indexes methodology",
+      "Targets companies in the small-cap tier (85th to 99th percentile of investable market capitalization)",
+      "Subject to MSCI size, liquidity, and foreign inclusion factor (FIF) requirements",
+      "Quarterly Index Reviews in February, May, August, and November",
+    ],
+    keyCharacteristics: [
+      "Official regulatory prospectus benchmark for the Avantis Emerging Markets Small Cap Equity ETF (AVEE)",
+      "Underlying benchmark for the iShares MSCI Emerging Markets Small-Cap ETF (EEMS)",
+      "Dynamic domestic growth exposure across Asia, Latin America, and EMEA developing nations",
+      "Captures higher domestic economic sensitivity compared to mega-cap export conglomerates",
+    ],
+    tags: [
+      "Emerging Markets",
+      "Small Cap",
+      "EEMS",
+      "AVEE",
+      "Avantis",
+      "MSCI",
+      "Developing Markets",
     ],
     officialUrl: "https://www.msci.com/our-solutions/indexes/emerging-markets",
   },
@@ -7260,6 +7519,7 @@ export const INDICES_DATA: MarketIndex[] = [
     altSymbols: [
       "MSCI World ex US Small Cap",
       "AVDV Benchmark",
+      "AVDS Benchmark",
       "SCZ Benchmark",
       "International Small Cap",
     ],
@@ -7282,22 +7542,30 @@ export const INDICES_DATA: MarketIndex[] = [
           "Systematic active factor ETF targeting non-US developed market small-cap value companies with higher operating profitability.",
       },
       {
+        ticker: "AVDS",
+        name: "Avantis International Small Cap Equity ETF (Active Prospectus Benchmark)",
+        aum: "$150M+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF capturing non-US developed market small-cap equities with enhanced profitability and valuation screens.",
+      },
+      {
         ticker: "SCZ",
         name: "iShares MSCI EAFE Small-Cap ETF",
         aum: "$11.5B+",
       },
     ],
     summary:
-      "Captures small-cap representation across 22 developed markets excluding the US, serving as the official prospectus benchmark for the $9B+ Avantis AVDV.",
+      "Captures small-cap representation across 22 developed markets excluding the US, serving as the official prospectus benchmark for Avantis AVDV and AVDS.",
     description:
-      "The MSCI World ex USA Small Cap Index captures small-cap equity representation across developed market countries outside the United States, spanning Japan, the UK, Europe, Canada, and Australia. Covering the lower 14% of free float-adjusted market capitalization in each market, it serves as the official prospectus benchmark against which Avantis systematically manages the industry-leading $9.2B+ Avantis International Small Cap Value ETF (AVDV).",
+      "The MSCI World ex USA Small Cap Index captures small-cap equity representation across developed market countries outside the United States, spanning Japan, the UK, Europe, Canada, and Australia. Covering the lower 14% of free float-adjusted market capitalization in each market, it serves as the official prospectus benchmark against which Avantis systematically manages the industry-leading $9.2B+ Avantis International Small Cap Value ETF (AVDV) and the Avantis International Small Cap Equity ETF (AVDS).",
     eligibilityCriteria: [
       "Companies located in Developed Markets outside the United States",
       "Market capitalization targets the 85th to 99th percentile of free-float adjusted universe (small-cap segment)",
       "Minimum liquidity and free-float restrictions per MSCI GIMI methodology",
     ],
     keyCharacteristics: [
-      "Official prospectus benchmark for the $9.2B+ Avantis International Small Cap Value ETF (AVDV)",
+      "Official prospectus benchmark for the $9.2B+ Avantis International Small Cap Value ETF (AVDV) and AVDS",
       "Underlying benchmark standard for developed markets international small-cap equities",
       "Deep geographic diversification across Europe, Japan, and the Commonwealth",
     ],
@@ -7305,6 +7573,7 @@ export const INDICES_DATA: MarketIndex[] = [
       "International",
       "Small Cap",
       "AVDV",
+      "AVDS",
       "SCZ",
       "Avantis",
       "MSCI",
@@ -7492,6 +7761,7 @@ export const INDICES_DATA: MarketIndex[] = [
     symbol: "M1WDXUS-IMI",
     altSymbols: [
       "IDEV Benchmark",
+      "AVDE Benchmark",
       "MSCI World ex US IMI",
       "MSCI Dev ex US IMI",
     ],
@@ -7510,11 +7780,19 @@ export const INDICES_DATA: MarketIndex[] = [
         name: "iShares Core MSCI International Developed Markets ETF",
         aum: "$16.2B+",
       },
+      {
+        ticker: "AVDE",
+        name: "Avantis International Equity ETF (Active Prospectus Benchmark)",
+        aum: "$6.5B+",
+        trackingType: "active",
+        strategyNote:
+          "Systematic active factor ETF investing across developed international markets outside the US, tilting toward value and high profitability.",
+      },
     ],
     summary:
-      "Captures large, mid, and small-cap representation across 22 Developed Markets countries outside the US, covering ~99% of developed ex-US market capitalization. Benchmark for IDEV.",
+      "Captures large, mid, and small-cap representation across 22 Developed Markets countries outside the US, covering ~99% of developed ex-US market capitalization. Benchmark for IDEV and Avantis AVDE.",
     description:
-      "The MSCI World ex USA IMI Index captures the complete investable market cap spectrum across developed economies outside the United States (including Japan, the United Kingdom, France, Germany, Switzerland, Canada, and Australia). Underpins the $16B+ iShares Core MSCI International Developed Markets ETF (IDEV).",
+      "The MSCI World ex USA IMI Index captures the complete investable market cap spectrum across developed economies outside the United States (including Japan, the United Kingdom, France, Germany, Switzerland, Canada, and Australia). Underpins the $16B+ iShares Core MSCI International Developed Markets ETF (IDEV) and serves as the regulatory prospectus benchmark for the $6.5B+ Avantis International Equity ETF (AVDE).",
     eligibilityCriteria: [
       "Companies located in 22 Developed Markets countries outside the US",
       "Covers approximately 99% of the free float-adjusted market capitalization in each market",
@@ -7522,6 +7800,7 @@ export const INDICES_DATA: MarketIndex[] = [
     ],
     keyCharacteristics: [
       "Primary underlying benchmark for the $16B+ iShares Core MSCI International Developed Markets ETF (IDEV)",
+      "Official prospectus benchmark for the $6.5B+ Avantis International Equity ETF (AVDE)",
       "Pure developed markets exposure excluding emerging market risk",
       "Broad all-cap architecture providing complete developed international coverage",
     ],
@@ -7529,6 +7808,8 @@ export const INDICES_DATA: MarketIndex[] = [
       "International",
       "Developed Markets",
       "IDEV",
+      "AVDE",
+      "Avantis",
       "iShares",
       "MSCI",
       "Ex-US",
