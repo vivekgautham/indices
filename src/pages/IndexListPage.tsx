@@ -1,9 +1,12 @@
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ClearIcon from "@mui/icons-material/Clear";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LanguageIcon from "@mui/icons-material/Language";
+import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SearchIcon from "@mui/icons-material/Search";
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import {
   Box,
   Button,
@@ -14,6 +17,8 @@ import {
   InputBase,
   Paper,
   Stack,
+  Tab,
+  Tabs,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
@@ -27,6 +32,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIndicesData, useProvidersData } from "../api/indicesApi";
 import SiteFooter from "../components/layout/SiteFooter";
+import { EtfDirectoryView } from "../components/etf/EtfDirectoryView";
 import { IndexCard } from "../components/IndexCard";
 import { IndexTableView } from "../components/IndexTableView";
 import { ProviderHeroBanner } from "../components/ProviderHeroBanner";
@@ -34,7 +40,8 @@ import { ProviderLogo } from "../components/ProviderLogo";
 import { ProviderPresetBar } from "../components/ProviderPresetBar";
 import { StyleQuickFilter } from "../components/StyleQuickFilter";
 import { PROVIDERS_DATA } from "../data/providersData";
-import { ProviderId } from "../types";
+import { IndicesSubTab, ProviderId } from "../types";
+import { isActivelyManagedEtf } from "../utils/etfClassification";
 import { OTHER_PROVIDER_IDS } from "../utils/providerClassification";
 import {
   isFactorIndex,
@@ -155,6 +162,7 @@ export default function IndexListPage() {
               val === null ||
               val === undefined ||
               val === "" ||
+              (key === "tab" && val === "providers") ||
               (key === "provider" && val === "all") ||
               (key === "style" && val === "all") ||
               (key === "cat" && val === "themes") ||
@@ -175,6 +183,35 @@ export default function IndexListPage() {
     },
     [setSearchParams],
   );
+
+  // Derive subtab: "providers" (default) | "active-etfs" | "passive-etfs"
+  const activeSubTab = useMemo<IndicesSubTab>(() => {
+    const t = searchParams.get("tab");
+    if (t === "active-etfs" || t === "passive-etfs") return t;
+    return "providers";
+  }, [searchParams]);
+
+  const handleSubTabChange = (newTab: IndicesSubTab) => {
+    updateFilterParams({
+      tab: newTab === "providers" ? null : newTab,
+    });
+  };
+
+  // Pre-calculate ETF counts for the subtab badges
+  const { activeEtfCount, passiveEtfCount } = useMemo(() => {
+    let active = 0;
+    let passive = 0;
+    for (const idx of indices) {
+      for (const etf of idx.trackingEtfs || []) {
+        if (isActivelyManagedEtf(etf)) {
+          active++;
+        } else {
+          passive++;
+        }
+      }
+    }
+    return { activeEtfCount: active, passiveEtfCount: passive };
+  }, [indices]);
 
   // Directly derive all filter states from searchParams (single source of truth)
   const selectedProvider = useMemo<ProviderId | "others" | "all">(() => {
@@ -391,11 +428,19 @@ export default function IndexListPage() {
 
   const isLoading = loadingProviders || loadingIndices;
 
-  // Set document title
+  // Set document title dynamically based on active subtab
   useEffect(() => {
-    document.title =
-      "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
-  }, []);
+    if (activeSubTab === "active-etfs") {
+      document.title =
+        "Active ETFs & Benchmark Strategies | Market Indices";
+    } else if (activeSubTab === "passive-etfs") {
+      document.title =
+        "Passive ETFs & Index Tracking Funds | Market Indices";
+    } else {
+      document.title =
+        "Market Indices Explorer | Global Benchmark Catalog & ETF Trackers";
+    }
+  }, [activeSubTab]);
 
   // Handle clicking on suggested search terms, integrating StyleFilter for Growth, Value, Factor
   const handleTermClick = (term: string) => {
@@ -495,11 +540,173 @@ export default function IndexListPage() {
         px: { xs: 1.5, sm: 3 },
       }}
     >
-      {/* Header Section */}
+      {/* Primary Subtab Switcher: Index Providers (default) vs Active ETFs vs Passive ETFs */}
       <Box
-        component="header"
-        sx={{ mb: 1, textAlign: "center", width: "100%" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mb: { xs: 2, sm: 2.5 },
+          width: "100%",
+        }}
       >
+        <Tabs
+          value={activeSubTab}
+          onChange={(_, val: IndicesSubTab) => handleSubTabChange(val)}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          aria-label="indices and etf directory tabs"
+          sx={{
+            minHeight: 46,
+            maxWidth: "100%",
+            backgroundColor: "rgba(15, 23, 42, 0.75)",
+            p: 0.5,
+            borderRadius: 3.5,
+            border: "1px solid var(--indices-border, rgba(255, 255, 255, 0.1))",
+            backdropFilter: "blur(16px)",
+            boxShadow: "0 6px 24px -2px rgba(0, 0, 0, 0.4)",
+            "& .MuiTabs-scroller": {
+              overflowX: "auto !important",
+            },
+            "& .MuiTabs-flexContainer": {
+              gap: { xs: 0.5, sm: 1 },
+            },
+            "& .MuiTabs-indicator": {
+              display: "none",
+            },
+            "& .MuiTab-root": {
+              minHeight: 38,
+              minWidth: "unset",
+              py: 0.75,
+              px: { xs: 1.75, sm: 2.75 },
+              fontSize: { xs: "0.8rem", sm: "0.88rem" },
+              fontWeight: 700,
+              textTransform: "none",
+              borderRadius: 2.75,
+              color: "text.secondary",
+              transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+              border: "1px solid transparent",
+              "&:hover": {
+                color: "text.primary",
+                backgroundColor: "rgba(255, 255, 255, 0.05)",
+              },
+              "&.Mui-selected": {
+                color: "#fff",
+                fontWeight: 800,
+                backgroundColor:
+                  activeSubTab === "active-etfs"
+                    ? "rgba(245, 158, 11, 0.22)"
+                    : activeSubTab === "passive-etfs"
+                      ? "rgba(59, 130, 246, 0.22)"
+                      : "rgba(0, 221, 148, 0.22)",
+                border: `1px solid ${
+                  activeSubTab === "active-etfs"
+                    ? "rgba(245, 158, 11, 0.55)"
+                    : activeSubTab === "passive-etfs"
+                      ? "rgba(59, 130, 246, 0.55)"
+                      : "rgba(0, 221, 148, 0.55)"
+                }`,
+                boxShadow:
+                  activeSubTab === "active-etfs"
+                    ? "0 4px 16px rgba(245, 158, 11, 0.25)"
+                    : activeSubTab === "passive-etfs"
+                      ? "0 4px 16px rgba(59, 130, 246, 0.25)"
+                      : "0 4px 16px rgba(0, 221, 148, 0.25)",
+              },
+            },
+          }}
+        >
+          <Tab
+            value="providers"
+            icon={<LayersOutlinedIcon sx={{ fontSize: { xs: 17, sm: 19 } }} />}
+            iconPosition="start"
+            label={
+              <Stack direction="row" alignItems="center" spacing={0.75}>
+                <span>Index Providers</span>
+                <Chip
+                  label={indices.length}
+                  size="small"
+                  sx={{
+                    height: 20,
+                    fontSize: "0.68rem",
+                    fontWeight: 800,
+                    borderRadius: 1.25,
+                    backgroundColor:
+                      activeSubTab === "providers"
+                        ? "rgba(0, 221, 148, 0.35)"
+                        : "rgba(255, 255, 255, 0.08)",
+                    color:
+                      activeSubTab === "providers" ? "#00DD94" : "text.secondary",
+                  }}
+                />
+              </Stack>
+            }
+          />
+
+          <Tab
+            value="active-etfs"
+            icon={<AutoAwesomeIcon sx={{ fontSize: { xs: 17, sm: 19 } }} />}
+            iconPosition="start"
+            label={
+              <Stack direction="row" alignItems="center" spacing={0.75}>
+                <span>Active ETFs</span>
+                <Chip
+                  label={activeEtfCount}
+                  size="small"
+                  sx={{
+                    height: 20,
+                    fontSize: "0.68rem",
+                    fontWeight: 800,
+                    borderRadius: 1.25,
+                    backgroundColor:
+                      activeSubTab === "active-etfs"
+                        ? "rgba(245, 158, 11, 0.35)"
+                        : "rgba(255, 255, 255, 0.08)",
+                    color:
+                      activeSubTab === "active-etfs" ? "#fbbf24" : "text.secondary",
+                  }}
+                />
+              </Stack>
+            }
+          />
+
+          <Tab
+            value="passive-etfs"
+            icon={<ShieldOutlinedIcon sx={{ fontSize: { xs: 17, sm: 19 } }} />}
+            iconPosition="start"
+            label={
+              <Stack direction="row" alignItems="center" spacing={0.75}>
+                <span>Passive ETFs</span>
+                <Chip
+                  label={passiveEtfCount}
+                  size="small"
+                  sx={{
+                    height: 20,
+                    fontSize: "0.68rem",
+                    fontWeight: 800,
+                    borderRadius: 1.25,
+                    backgroundColor:
+                      activeSubTab === "passive-etfs"
+                        ? "rgba(59, 130, 246, 0.35)"
+                        : "rgba(255, 255, 255, 0.08)",
+                    color:
+                      activeSubTab === "passive-etfs" ? "#60a5fa" : "text.secondary",
+                  }}
+                />
+              </Stack>
+            }
+          />
+        </Tabs>
+      </Box>
+
+      {/* Tab 1: Index Providers View (Default) */}
+      {activeSubTab === "providers" && (
+        <>
+          {/* Header Section */}
+          <Box
+            component="header"
+            sx={{ mb: 1, textAlign: "center", width: "100%" }}
+          >
         <Typography
           component="h1"
           sx={{
@@ -1494,6 +1701,18 @@ export default function IndexListPage() {
           </>
         )}
       </Box>
+        </>
+      )}
+
+      {/* Tab 2: Active ETFs View */}
+      {activeSubTab === "active-etfs" && (
+        <EtfDirectoryView mode="active" indices={indices} />
+      )}
+
+      {/* Tab 3: Passive ETFs View */}
+      {activeSubTab === "passive-etfs" && (
+        <EtfDirectoryView mode="passive" indices={indices} />
+      )}
 
       {/* Page Footer */}
       <SiteFooter />

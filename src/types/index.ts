@@ -82,3 +82,25 @@ export interface MarketIndex {
   officialUrl?: string;
   _searchableText?: string;
 }
+
+export type IndicesSubTab = "providers" | "active-etfs" | "passive-etfs";
+
+export interface FlatEtfItem {
+  ticker: string;
+  name: string;
+  aum?: string;
+  hasStockAnalysis?: boolean;
+  trackingType?: TrackingEtfType;
+  strategyNote?: string;
+  isActive: boolean;
+  issuer: string;
+  indexId: string;
+  indexName: string;
+  indexSymbol: string;
+  indexProviderId: ProviderId;
+  category: string;
+  assetClass: MarketIndex["assetClass"];
+  region: MarketIndex["region"];
+  weightingMethodology?: string;
+  rebalanceFrequency?: string;
+}
