@@ -537,7 +537,7 @@ export default function EventsCalendarPage() {
                   gridTemplateColumns: {
                     xs: "repeat(2, 1fr)",
                     sm: "repeat(3, 1fr)",
-                    md: "repeat(5, 1fr)",
+                    md: "repeat(6, 1fr)",
                   },
                   gap: 1.5,
                 }}
@@ -669,6 +669,32 @@ export default function EventsCalendarPage() {
                     }}
                   >
                     {categoryCounts.fomc}
+                  </Typography>
+                </Paper>
+
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 2.5,
+                    backgroundColor: "rgba(239, 68, 68, 0.04)",
+                    borderColor: "rgba(239, 68, 68, 0.2)",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#f87171", fontWeight: 700 }}
+                  >
+                    Market Holidays
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      color: "#f87171",
+                    }}
+                  >
+                    {categoryCounts.holiday}
                   </Typography>
                 </Paper>
               </Box>

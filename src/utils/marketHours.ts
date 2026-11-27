@@ -1,10 +1,10 @@
-import { GLOBAL_MARKET_HOLIDAYS, GlobalHoliday } from "../data/globalMarketHolidays";
-import {
+import { GLOBAL_MARKET_HOLIDAYS, type GlobalHoliday } from "../data/globalMarketHolidays.ts";
+import type {
   ExchangeLiveStatus,
   MarketSessionStatus,
   WorldExchange,
-} from "../types/exchange";
-import { getUsMarketHolidays } from "./marketCalendarEngine";
+} from "../types/exchange.ts";
+import { getUsMarketHolidays } from "./marketCalendarEngine.ts";
 
 /**
  * Converts "HH:MM" string to minutes from midnight

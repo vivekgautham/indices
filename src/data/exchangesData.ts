@@ -96,6 +96,7 @@ export const WORLD_EXCHANGES: WorldExchange[] = [
       { name: "SSE 50", symbol: "000016.SS" },
       { name: "STAR 50", symbol: "000688.SS" },
     ],
+    holidayCalendarExchange: "SSE / SZSE",
     description:
       "Mainland China's primary exchange, featuring the STAR Market for high-tech innovation and commanding massive domestic retail and institutional volume.",
   },
@@ -193,6 +194,7 @@ export const WORLD_EXCHANGES: WorldExchange[] = [
       { name: "SZSE Component", symbol: "399001.SZ" },
       { name: "ChiNext Index", symbol: "399006.SZ" },
     ],
+    holidayCalendarExchange: "SSE / SZSE",
     description:
       "China's Silicon Valley capital powerhouse, hosting fast-growing venture enterprises, green tech manufacturers, and the high-growth ChiNext board.",
   },
@@ -260,6 +262,7 @@ export const WORLD_EXCHANGES: WorldExchange[] = [
       { name: "Nifty Next 50", symbol: "NIFTYJR", indexId: "nifty-next-50" },
       { name: "Nifty Bank", symbol: "BANKNIFTY", indexId: "nifty-bank" },
     ],
+    holidayCalendarExchange: "NSE / BSE",
     description:
       "The world's largest exchange by derivatives contract volume and the high-speed engine powering India's rapid demographic and economic expansion.",
   },
@@ -318,6 +321,7 @@ export const WORLD_EXCHANGES: WorldExchange[] = [
       { name: "S&P BSE SENSEX", symbol: "SENSEX" },
       { name: "BSE 100", symbol: "BSE100" },
     ],
+    holidayCalendarExchange: "NSE / BSE",
     description:
       "Established in 1875 as Asia's very first stock exchange, boasting the largest roster of listed equity companies worldwide.",
   },
@@ -471,6 +475,7 @@ export const WORLD_EXCHANGES: WorldExchange[] = [
       { name: "KOSPI 200", symbol: "KOSPI200" },
       { name: "KOSDAQ", symbol: "KOSDAQ" },
     ],
+    holidayCalendarExchange: "KRX",
     description:
       "Home to South Korea's iconic tech chaebols, semiconductor manufacturers, battery innovators, and one of the highest liquidity derivatives markets.",
   },
