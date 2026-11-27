@@ -35,6 +35,39 @@ export function getEtfIssuer(name: string, ticker: string): string {
 }
 
 /**
+ * Parses an AUM string (e.g. "$1.05T+", "$815B+", "$500M+", "€1.8B+", "A$16.5B+", "$83B+ (ETF) / $105B+ (Fund)")
+ * into a standardized numeric USD-approximate value for accurate sorting and comparisons.
+ */
+export function parseAumValue(aumStr?: string): number {
+  if (!aumStr) return 0;
+
+  // Approximate FX conversion rates to USD for uniform comparison across international ETFs
+  let fx = 1.0;
+  if (/¥/i.test(aumStr)) fx = 0.0067;
+  else if (/SEK/i.test(aumStr)) fx = 0.095;
+  else if (/^R\d|ZAR/i.test(aumStr)) fx = 0.055;
+  else if (/A\$/i.test(aumStr)) fx = 0.65;
+  else if (/S\$/i.test(aumStr)) fx = 0.75;
+  else if (/€/i.test(aumStr)) fx = 1.08;
+  else if (/£/i.test(aumStr)) fx = 1.28;
+
+  // Match the first numeric quantity and scale unit (T, B, M, K)
+  const match = aumStr.match(/([\d.,]+)\s*([TMBK])/i);
+  if (!match) return 0;
+  const num = parseFloat(match[1].replace(/,/g, ""));
+  if (isNaN(num)) return 0;
+
+  const unit = match[2].toUpperCase();
+  let multiplier = 1;
+  if (unit === "T") multiplier = 1e12;
+  else if (unit === "B") multiplier = 1e9;
+  else if (unit === "M") multiplier = 1e6;
+  else if (unit === "K") multiplier = 1e3;
+
+  return num * multiplier * fx;
+}
+
+/**
  * Returns a human-friendly strategy description or tooltip note for the ETF.
  */
 export function getEtfStrategyDescription(etf: TrackingEtf): string {

@@ -6,6 +6,10 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SearchIcon from "@mui/icons-material/Search";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import SortIcon from "@mui/icons-material/Sort";
+import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import {
@@ -14,9 +18,12 @@ import {
   Card,
   CardContent,
   Chip,
+  FormControl,
   IconButton,
   InputBase,
+  MenuItem,
   Paper,
+  Select,
   Stack,
   Table,
   TableBody,
@@ -24,6 +31,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
@@ -32,7 +40,11 @@ import {
 import React, { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { FlatEtfItem, MarketIndex } from "../../types";
-import { flattenEtfsFromIndices, getEtfStrategyDescription } from "../../utils/etfClassification";
+import {
+  flattenEtfsFromIndices,
+  getEtfStrategyDescription,
+  parseAumValue,
+} from "../../utils/etfClassification";
 import { getStockAnalysisEtfUrl } from "../../utils/stockAnalysis";
 import { ProviderLogo } from "../ProviderLogo";
 
@@ -53,10 +65,12 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
     return list.filter((e) => (isActiveMode ? e.isActive : !e.isActive));
   }, [indices, isActiveMode]);
 
-  // Local filter states
+  // Local filter & sort states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIssuer, setSelectedIssuer] = useState<string>("all");
   const [selectedAssetClass, setSelectedAssetClass] = useState<string>("all");
+  const [sortField, setSortField] = useState<"default" | "aum" | "ticker" | "name" | "issuer">("default");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [viewMode, setViewMode] = useState<"table" | "card">("table");
   const [visibleCount, setVisibleCount] = useState<number>(30);
 
@@ -75,7 +89,23 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
       .sort((a, b) => issuerCounts[b] - issuerCounts[a]);
   }, [issuerCounts]);
 
-  // Filtered ETF list
+  // Request column sort (used by table headers and sort select)
+  const handleRequestSort = (field: "aum" | "ticker" | "name" | "issuer") => {
+    if (sortField === field) {
+      if (sortOrder === "desc") {
+        setSortOrder("asc");
+      } else {
+        setSortField("default");
+        setSortOrder("desc");
+      }
+    } else {
+      setSortField(field);
+      setSortOrder(field === "aum" ? "desc" : "asc");
+    }
+    setVisibleCount(30);
+  };
+
+  // Filtered and sorted ETF list
   const filteredEtfs = useMemo(() => {
     let list = allModeEtfs;
 
@@ -118,8 +148,34 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
       });
     }
 
+    if (sortField !== "default") {
+      list = [...list].sort((a, b) => {
+        if (sortField === "aum") {
+          const aumA = parseAumValue(a.aum);
+          const aumB = parseAumValue(b.aum);
+          if (aumA !== aumB) {
+            return sortOrder === "desc" ? aumB - aumA : aumA - aumB;
+          }
+          return a.ticker.localeCompare(b.ticker);
+        }
+        if (sortField === "ticker") {
+          const comp = a.ticker.localeCompare(b.ticker);
+          return sortOrder === "desc" ? -comp : comp;
+        }
+        if (sortField === "name") {
+          const comp = a.name.localeCompare(b.name);
+          return sortOrder === "desc" ? -comp : comp;
+        }
+        if (sortField === "issuer") {
+          const comp = a.issuer.localeCompare(b.issuer);
+          return sortOrder === "desc" ? -comp : comp;
+        }
+        return 0;
+      });
+    }
+
     return list;
-  }, [allModeEtfs, selectedIssuer, selectedAssetClass, searchTerm]);
+  }, [allModeEtfs, selectedIssuer, selectedAssetClass, searchTerm, sortField, sortOrder]);
 
   const visibleEtfs = useMemo(() => {
     return filteredEtfs.slice(0, visibleCount);
@@ -131,7 +187,24 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
     setSearchTerm("");
     setSelectedIssuer("all");
     setSelectedAssetClass("all");
+    setSortField("default");
+    setSortOrder("desc");
     setVisibleCount(30);
+  };
+
+  const sortLabelSx = {
+    color: "text.secondary !important",
+    fontWeight: 800,
+    fontSize: "0.78rem",
+    "&.Mui-active": {
+      color: (isActiveMode ? "#fbbf24" : "#00DD94") + " !important",
+      "& .MuiTableSortLabel-icon": {
+        color: (isActiveMode ? "#fbbf24" : "#00DD94") + " !important",
+      },
+    },
+    "&:hover": {
+      color: "text.primary !important",
+    },
   };
 
   return (
@@ -368,9 +441,140 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
             )}
           </Box>
 
-          {/* Reset Filters & View Mode Toggles */}
-          <Stack direction="row" spacing={1} alignItems="center" sx={{ alignSelf: { xs: "flex-end", sm: "center" } }}>
-            {(searchTerm || selectedIssuer !== "all" || selectedAssetClass !== "all") && (
+          {/* Sort Selector, Reset Filters & View Mode Toggles */}
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            flexWrap="wrap"
+            sx={{
+              alignSelf: { xs: "stretch", sm: "center" },
+              justifyContent: { xs: "space-between", sm: "flex-end" },
+              gap: { xs: 1, sm: 0 },
+            }}
+          >
+            {/* Sort Selector Dropdown */}
+            <FormControl
+              size="small"
+              sx={{
+                minWidth: { xs: 160, sm: 200 },
+                "& .MuiOutlinedInput-root": {
+                  height: 48,
+                  borderRadius: 2.5,
+                  backgroundColor: "rgba(30, 41, 59, 0.4)",
+                  borderColor:
+                    sortField !== "default"
+                      ? isActiveMode
+                        ? "rgba(245, 158, 11, 0.5)"
+                        : "rgba(0, 221, 148, 0.5)"
+                      : "rgba(255, 255, 255, 0.12)",
+                  color: "text.primary",
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: isActiveMode ? "rgba(245, 158, 11, 0.8)" : "primary.light",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: isActiveMode ? "#f59e0b" : "primary.main",
+                  },
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "text.secondary",
+                },
+              }}
+            >
+              <Select
+                value={sortField === "default" ? "default" : `${sortField}-${sortOrder}`}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "default") {
+                    setSortField("default");
+                    setSortOrder("desc");
+                  } else {
+                    const [f, o] = val.split("-") as [
+                      "aum" | "ticker" | "name" | "issuer",
+                      "asc" | "desc",
+                    ];
+                    setSortField(f);
+                    setSortOrder(o);
+                  }
+                  setVisibleCount(30);
+                }}
+                displayEmpty
+                renderValue={(selected) => {
+                  if (selected === "default") {
+                    return (
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <SortIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                        <span>Sort: Default</span>
+                      </Stack>
+                    );
+                  }
+                  if (selected === "aum-desc") {
+                    return (
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <TrendingUpIcon
+                          sx={{ fontSize: 18, color: isActiveMode ? "#fbbf24" : "#00DD94" }}
+                        />
+                        <span
+                          style={{
+                            fontWeight: 700,
+                            color: isActiveMode ? "#fbbf24" : "#00DD94",
+                          }}
+                        >
+                          AUM: High to Low
+                        </span>
+                      </Stack>
+                    );
+                  }
+                  if (selected === "aum-asc") {
+                    return (
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <TrendingDownIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                        <span>AUM: Low to High</span>
+                      </Stack>
+                    );
+                  }
+                  if (selected === "ticker-asc") {
+                    return (
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <SortByAlphaIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                        <span>Ticker: A to Z</span>
+                      </Stack>
+                    );
+                  }
+                  if (selected === "ticker-desc") {
+                    return (
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <SortByAlphaIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                        <span>Ticker: Z to A</span>
+                      </Stack>
+                    );
+                  }
+                  if (selected === "name-asc") {
+                    return (
+                      <Stack direction="row" alignItems="center" spacing={0.75}>
+                        <SortByAlphaIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                        <span>Name: A to Z</span>
+                      </Stack>
+                    );
+                  }
+                  return "Sort";
+                }}
+              >
+                <MenuItem value="default">Default Order</MenuItem>
+                <MenuItem value="aum-desc">AUM: High to Low (Largest First)</MenuItem>
+                <MenuItem value="aum-asc">AUM: Low to High (Smallest First)</MenuItem>
+                <MenuItem value="ticker-asc">Ticker: A to Z</MenuItem>
+                <MenuItem value="ticker-desc">Ticker: Z to A</MenuItem>
+                <MenuItem value="name-asc">Fund Name: A to Z</MenuItem>
+              </Select>
+            </FormControl>
+
+            {(searchTerm ||
+              selectedIssuer !== "all" ||
+              selectedAssetClass !== "all" ||
+              sortField !== "default") && (
               <Button
                 variant="outlined"
                 size="small"
@@ -545,6 +749,36 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
             );
           })}
 
+          {sortField !== "default" && (
+            <Chip
+              label={
+                sortField === "aum"
+                  ? `Sorted by AUM (${sortOrder === "desc" ? "High to Low" : "Low to High"})`
+                  : sortField === "ticker"
+                    ? `Sorted by Ticker (${sortOrder === "desc" ? "Z to A" : "A to Z"})`
+                    : sortField === "name"
+                      ? `Sorted by Name (${sortOrder === "desc" ? "Z to A" : "A to Z"})`
+                      : `Sorted by Sponsor (${sortOrder === "desc" ? "Z to A" : "A to Z"})`
+              }
+              size="small"
+              onDelete={() => {
+                setSortField("default");
+                setSortOrder("desc");
+              }}
+              sx={{
+                height: 24,
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                borderRadius: 1.5,
+                backgroundColor: isActiveMode
+                  ? "rgba(245, 158, 11, 0.2)"
+                  : "rgba(0, 221, 148, 0.15)",
+                color: isActiveMode ? "#fbbf24" : "#00DD94",
+                border: `1px solid ${isActiveMode ? "rgba(245, 158, 11, 0.4)" : "rgba(0, 221, 148, 0.3)"}`,
+              }}
+            />
+          )}
+
           <Typography
             variant="caption"
             sx={{
@@ -605,13 +839,34 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
             <TableHead sx={{ backgroundColor: "rgba(0, 0, 0, 0.35)" }}>
               <TableRow>
                 <TableCell sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.78rem" }}>
-                  ETF Ticker
+                  <TableSortLabel
+                    active={sortField === "ticker"}
+                    direction={sortField === "ticker" ? sortOrder : "asc"}
+                    onClick={() => handleRequestSort("ticker")}
+                    sx={sortLabelSx}
+                  >
+                    ETF Ticker
+                  </TableSortLabel>
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.78rem" }}>
-                  Fund Name & Strategy
+                  <TableSortLabel
+                    active={sortField === "name"}
+                    direction={sortField === "name" ? sortOrder : "asc"}
+                    onClick={() => handleRequestSort("name")}
+                    sx={sortLabelSx}
+                  >
+                    Fund Name & Strategy
+                  </TableSortLabel>
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.78rem" }}>
-                  Sponsor
+                  <TableSortLabel
+                    active={sortField === "issuer"}
+                    direction={sortField === "issuer" ? sortOrder : "asc"}
+                    onClick={() => handleRequestSort("issuer")}
+                    sx={sortLabelSx}
+                  >
+                    Sponsor
+                  </TableSortLabel>
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.78rem" }}>
                   Tracked / Benchmark Index
@@ -620,7 +875,19 @@ export const EtfDirectoryView: React.FC<EtfDirectoryViewProps> = ({
                   Category & Region
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.78rem" }}>
-                  AUM
+                  <TableSortLabel
+                    active={sortField === "aum"}
+                    direction={sortField === "aum" ? sortOrder : "desc"}
+                    onClick={() => handleRequestSort("aum")}
+                    sx={{
+                      ...sortLabelSx,
+                      "& .MuiTableSortLabel-icon": {
+                        order: 0,
+                      },
+                    }}
+                  >
+                    AUM
+                  </TableSortLabel>
                 </TableCell>
               </TableRow>
             </TableHead>
