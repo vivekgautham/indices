@@ -1,7 +1,7 @@
 {
   "name": "indices",
   "private": true,
-  "version": "0.0.79",
+  "version": "0.0.80",
   "homepage": "https://marketindices.xyz",
   "type": "module",
   "scripts": {
@@ -14,6 +14,7 @@
     "update:tracker": "node scripts/fetch-fred-data.js",
     "sync:earnings": "node scripts/fetch-earnings-data.js",
     "sync:market-cap": "node scripts/fetch-country-market-cap.js",
+    "sync:13f": "node scripts/fetch-13f-data.js",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

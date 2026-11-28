@@ -1,3 +1,4 @@
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
@@ -58,6 +59,14 @@ export const NAV_ITEMS: NavItem[] = [
       pathname.startsWith("/benchmark-tracker"),
   },
   {
+    id: "13f",
+    label: "13F",
+    to: "/13f",
+    icon: <AccountBalanceOutlinedIcon sx={{ fontSize: 18 }} />,
+    isActive: (pathname) =>
+      pathname.startsWith("/13f") || pathname.startsWith("/filings"),
+  },
+  {
     id: "events",
     label: "Events",
     to: "/events",
@@ -89,6 +98,16 @@ export const AppNavbar: React.FC = () => {
       return {
         title: "FRED Benchmark Tracker | U.S. Equity & Macroeconomic Indexes",
         text: "Explore daily and historical charts for major US equity benchmarks from FRED.",
+        path: fullPath,
+      };
+    }
+    if (
+      location.pathname.startsWith("/13f") ||
+      location.pathname.startsWith("/filings")
+    ) {
+      return {
+        title: "Top 100 Institutional 13F Filings & Smart Money Portfolios | Market Indices",
+        text: "Explore Form 13F-HR quarterly equity holdings of the world's premier 100 institutional managers and hedge funds.",
         path: fullPath,
       };
     }

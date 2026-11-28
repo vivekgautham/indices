@@ -14,6 +14,10 @@ const BenchmarkTrackerPage = lazyWithRetry(
   () => import("./pages/BenchmarkTrackerPage"),
 );
 
+const InstitutionalHoldings13FPage = lazyWithRetry(
+  () => import("./pages/InstitutionalHoldings13FPage"),
+);
+
 const EventsCalendarPage = lazyWithRetry(
   () => import("./pages/EventsCalendarPage"),
 );
@@ -55,6 +59,15 @@ export default function App() {
               <Route
                 path="/benchmark-tracker"
                 element={<Navigate to="/tracker" replace />}
+              />
+              <Route path="/13f" element={<InstitutionalHoldings13FPage />} />
+              <Route
+                path="/filings"
+                element={<Navigate to="/13f" replace />}
+              />
+              <Route
+                path="/institutional"
+                element={<Navigate to="/13f" replace />}
               />
               <Route path="/events" element={<EventsCalendarPage />} />
               <Route

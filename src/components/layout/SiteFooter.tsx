@@ -91,6 +91,19 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ sx = {} }) => {
         </Typography>
         <Typography
           component={RouterLink}
+          to="/13f"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            "&:hover": { color: "#00DD94" },
+          }}
+        >
+          13F Filings
+        </Typography>
+        <Typography
+          component={RouterLink}
           to="/events"
           sx={{
             color: "text.secondary",

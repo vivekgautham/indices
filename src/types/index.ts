@@ -104,3 +104,5 @@ export interface FlatEtfItem {
   weightingMethodology?: string;
   rebalanceFrequency?: string;
 }
+
+export * from "./institutional13F";

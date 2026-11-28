@@ -66,6 +66,12 @@ let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>${BASE_URL}/13f</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>${BASE_URL}/events</loc>
     <lastmod>${TODAY}</lastmod>
     <changefreq>daily</changefreq>
@@ -119,6 +125,7 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, "index.html"))) {
           <nav style="margin-top: 16px; display: flex; justify-content: center; gap: 16px; font-weight: 600; flex-wrap: wrap;">
             <a href="/indices" style="color: #00DD94; text-decoration: none;">Indices Directory</a> •
             <a href="/tracker" style="color: #00DD94; text-decoration: none;">Live Macro Tracker</a> •
+            <a href="/13f" style="color: #00DD94; text-decoration: none;">13F Institutional Filings</a> •
             <a href="/events" style="color: #00DD94; text-decoration: none;">Market Events Calendar</a> •
             <a href="/markets" style="color: #00DD94; text-decoration: none;">World Exchanges &amp; Markets</a>
           </nav>
@@ -597,6 +604,131 @@ ${JSON.stringify(datasetSchema, null, 2)}
   fs.writeFileSync(path.join(eventsDir, "index.html"), eventsHtml, "utf8");
   console.log("✓ Generated dist/events/index.html with FAQ & Breadcrumb Structured Data");
 
+  // Generate dist/13f/index.html with 13F institutional directory prerender & structured data
+  const thirteenFDir = path.join(distDir, "13f");
+  fs.mkdirSync(thirteenFDir, { recursive: true });
+  const thirteenFTitle = `Top 100 Institutional 13F Filings & Smart Money Portfolios 🏛️ | MarketIndices`;
+  const thirteenFDesc = `Quarterly Form 13F-HR institutional equity holdings of the world's top 100 managers (Berkshire Hathaway, Citadel, Bridgewater, BlackRock, Vanguard) and smart money consensus rankings.`;
+
+  const thirteenFBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${BASE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "13F Institutional Filings",
+        item: `${BASE_URL}/13f`,
+      },
+    ],
+  };
+
+  const thirteenFFaqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is an SEC Form 13F filing?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "SEC Form 13F is a quarterly regulatory filing required by the U.S. Securities and Exchange Commission (SEC) from institutional investment managers exercising investment discretion over $100 million or more in Section 13(f) securities. It discloses public equity holdings within 45 days of calendar quarter end.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which institutional managers are tracked on Market Indices?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Market Indices tracks the premier Top 100 institutional managers, including Berkshire Hathaway (Warren Buffett), Citadel Advisors (Ken Griffin), Bridgewater Associates, Renaissance Technologies, Pershing Square (Bill Ackman), Vanguard, and BlackRock.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What is the Smart Money Consensus?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The Smart Money Consensus aggregates the most widely held equity positions across the top 100 institutional managers, ranking them by total institutional capital invested, average portfolio weighting, and quarterly accumulation trends.",
+        },
+      },
+    ],
+  };
+
+  const thirteenFSemanticHtml = `
+    <article style="max-width: 900px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+      <header>
+        <h1 style="color: #00DD94;">Top 100 Institutional Form 13F Filings & Smart Money Portfolios</h1>
+        <p style="color: #94a3b8; font-size: 1.1rem;">Track quarterly equity holdings, portfolio concentrations, and Smart Money consensus trends across the world's premier 100 institutional managers under SEC Rule 13f-1.</p>
+      </header>
+      <section style="margin-top: 24px;">
+        <h2 style="color: #fff;">Featured Institutional Managers</h2>
+        <ul style="color: #cbd5e1; line-height: 1.8;">
+          <li><strong>Berkshire Hathaway (Warren Buffett)</strong>: Apple, American Express, Bank of America, Coca-Cola, Chevron, Occidental Petroleum.</li>
+          <li><strong>Citadel Advisors (Ken Griffin)</strong>: Multi-strategy quantitative and long/short equity portfolios.</li>
+          <li><strong>Bridgewater Associates (Ray Dalio)</strong>: Macro systematic all-weather equity allocations.</li>
+          <li><strong>Pershing Square (Bill Ackman)</strong>: High-conviction concentrated compounders (Chipotle, Hilton, Restaurant Brands, Alphabet).</li>
+          <li><strong>Vanguard & BlackRock</strong>: Trillions in global equity indexing and active factor strategies.</li>
+        </ul>
+      </section>
+      <section style="margin-top: 24px;">
+        <h2 style="color: #fff;">Frequently Asked Questions</h2>
+        ${thirteenFFaqSchema.mainEntity.map(faq => `
+          <div style="margin-bottom: 16px;">
+            <h3 style="color: #38bdf8; font-size: 1rem;">${escapeHtml(faq.name)}</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem;">${escapeHtml(faq.acceptedAnswer.text)}</p>
+          </div>
+        `).join("")}
+      </section>
+    </article>
+  `;
+
+  let thirteenFHtml = baseHtml
+    .replace(
+      /<title>.*?<\/title>/i,
+      `<title>${escapeHtml(thirteenFTitle)}</title>`
+    )
+    .replace(
+      /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
+      `<meta name="description" content="${thirteenFDesc}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+      `<link rel="canonical" href="${BASE_URL}/13f" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:title" content="${escapeHtml(thirteenFTitle)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:description" content="${thirteenFDesc}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:url" content="${BASE_URL}/13f" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i,
+      `<meta name="twitter:url" content="${BASE_URL}/13f" />`
+    )
+    .replace(
+      /<div id="root"><\/div>/i,
+      `<div id="root"></div>\n    <noscript>\n${thirteenFSemanticHtml.trim()}\n    </noscript>`
+    )
+    .replace(
+      /<\/head>/i,
+      `  <script type="application/ld+json">\n${JSON.stringify(thirteenFBreadcrumbSchema, null, 2)}\n  </script>\n  <script type="application/ld+json">\n${JSON.stringify(thirteenFFaqSchema, null, 2)}\n  </script>\n</head>`
+    );
+
+  fs.writeFileSync(path.join(thirteenFDir, "index.html"), thirteenFHtml, "utf8");
+  console.log("✓ Generated dist/13f/index.html with FAQ & Breadcrumb Structured Data");
+
   // Generate dist/markets/index.html with markets directory prerender & structured data
   const marketsDir = path.join(distDir, "markets");
   fs.mkdirSync(marketsDir, { recursive: true });
@@ -846,6 +978,16 @@ ${JSON.stringify(datasetSchema, null, 2)}
   fs.mkdirSync(benchTrackerDir, { recursive: true });
   fs.writeFileSync(path.join(benchTrackerDir, "index.html"), generateRedirectPage("/tracker", "Benchmark Tracker"), "utf8");
   console.log("✓ Generated dist/benchmark-tracker/index.html (redirect to /tracker with noindex)");
+
+  const filingsDir = path.join(distDir, "filings");
+  fs.mkdirSync(filingsDir, { recursive: true });
+  fs.writeFileSync(path.join(filingsDir, "index.html"), generateRedirectPage("/13f", "13F Institutional Filings"), "utf8");
+  console.log("✓ Generated dist/filings/index.html (redirect to /13f with noindex)");
+
+  const institutionalDir = path.join(distDir, "institutional");
+  fs.mkdirSync(institutionalDir, { recursive: true });
+  fs.writeFileSync(path.join(institutionalDir, "index.html"), generateRedirectPage("/13f", "13F Institutional Filings"), "utf8");
+  console.log("✓ Generated dist/institutional/index.html (redirect to /13f with noindex)");
 
   const termsOfUseDir = path.join(distDir, "terms-of-use");
   fs.mkdirSync(termsOfUseDir, { recursive: true });
