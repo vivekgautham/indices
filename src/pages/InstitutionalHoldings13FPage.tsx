@@ -32,7 +32,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
-import { InvestorDetailDrawer } from "../components/institutional/InvestorDetailDrawer";
+import { useNavigate } from "react-router-dom";
 import { InvestorDirectoryCards } from "../components/institutional/InvestorDirectoryCards";
 import {
   InvestorDirectoryTable,
@@ -46,7 +46,6 @@ import {
   SMART_MONEY_CONSENSUS_TOP_25,
   TOP_100_INSTITUTIONAL_INVESTORS,
 } from "../data/institutional13FData";
-import { InstitutionalInvestor13F } from "../types/institutional13F";
 
 type ActiveSubTab = "directory" | "consensus";
 
@@ -57,6 +56,7 @@ export const InstitutionalHoldings13FPage: React.FC = () => {
       "Top 100 Institutional 13F Filings & Smart Money Portfolios | Market Indices";
   }, []);
 
+  const navigate = useNavigate();
   const [activeSubTab, setActiveSubTab] = useState<ActiveSubTab>("directory");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -64,8 +64,6 @@ export const InstitutionalHoldings13FPage: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [viewMode, setViewMode] = useState<"table" | "card">("table");
   const [visibleCount, setVisibleCount] = useState<number>(30);
-  const [selectedInvestor, setSelectedInvestor] =
-    useState<InstitutionalInvestor13F | null>(null);
 
   // Filtered and sorted investors
   const filteredInvestors = useMemo(() => {
@@ -642,12 +640,12 @@ export const InstitutionalHoldings13FPage: React.FC = () => {
               sortField={sortField}
               sortOrder={sortOrder}
               onRequestSort={handleRequestSort}
-              onSelectInvestor={(inv) => setSelectedInvestor(inv)}
+              onSelectInvestor={(inv) => navigate(`/13f/${inv.id}`)}
             />
           ) : (
             <InvestorDirectoryCards
               investors={visibleInvestors}
-              onSelectInvestor={(inv) => setSelectedInvestor(inv)}
+              onSelectInvestor={(inv) => navigate(`/13f/${inv.id}`)}
             />
           )}
 
@@ -725,13 +723,6 @@ export const InstitutionalHoldings13FPage: React.FC = () => {
       {activeSubTab === "consensus" && (
         <SmartMoneyConsensusView consensusHoldings={SMART_MONEY_CONSENSUS_TOP_25} />
       )}
-
-      {/* Investor Detail Drawer */}
-      <InvestorDetailDrawer
-        investor={selectedInvestor}
-        open={Boolean(selectedInvestor)}
-        onClose={() => setSelectedInvestor(null)}
-      />
 
       {/* Site Footer */}
       <SiteFooter />

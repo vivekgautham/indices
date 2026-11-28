@@ -5,6 +5,7 @@ import { INDICES_DATA } from "../src/data/indicesData.ts";
 import { PROVIDERS_DATA } from "../src/data/providersData.ts";
 import { WORLD_EXCHANGES } from "../src/data/exchangesData.ts";
 import { isActivelyManagedEtf } from "../src/utils/etfClassification.ts";
+import { TOP_100_INSTITUTIONAL_INVESTORS } from "../src/data/institutional13FData.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -101,10 +102,20 @@ for (const index of INDICES_DATA) {
 `;
 }
 
+for (const inv of TOP_100_INSTITUTIONAL_INVESTORS) {
+  sitemapXml += `  <url>
+    <loc>${BASE_URL}/13f/${inv.id}</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+`;
+}
+
 sitemapXml += `</urlset>\n`;
 
 fs.writeFileSync(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf8");
-console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + 6} URLs)`);
+console.log(`✓ Generated public/sitemap.xml (${INDICES_DATA.length + TOP_100_INSTITUTIONAL_INVESTORS.length + 6} URLs)`);
 if (fs.existsSync(distDir)) {
   fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemapXml, "utf8");
   console.log(`✓ Generated dist/sitemap.xml`);
@@ -728,6 +739,99 @@ ${JSON.stringify(datasetSchema, null, 2)}
 
   fs.writeFileSync(path.join(thirteenFDir, "index.html"), thirteenFHtml, "utf8");
   console.log("✓ Generated dist/13f/index.html with FAQ & Breadcrumb Structured Data");
+
+  // Generate individual 13F institutional manager detail pages
+  for (const inv of TOP_100_INSTITUTIONAL_INVESTORS) {
+    const invDir = path.join(thirteenFDir, inv.id);
+    fs.mkdirSync(invDir, { recursive: true });
+
+    const invTitle = `${inv.name} (${inv.manager}) 13F Portfolio Holdings & Stock Picks 🏛️ | MarketIndices`;
+    const invDesc = `Explore ${inv.name}'s official SEC Form 13F portfolio holdings, top positions (${inv.topHoldings.slice(0, 5).map((h) => h.ticker).join(", ")}), AUM of ${inv.portfolioValue}, and CIK ${inv.cik}.`;
+
+    const invBreadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${BASE_URL}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "13F Institutional Filings",
+          item: `${BASE_URL}/13f`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: inv.name,
+          item: `${BASE_URL}/13f/${inv.id}`,
+        },
+      ],
+    };
+
+    const invSemanticHtml = `
+      <article style="max-width: 900px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <header>
+          <h1 style="color: #00DD94;">${escapeHtml(inv.name)} – 13F Portfolio Holdings</h1>
+          <p style="color: #94a3b8; font-size: 1.1rem;">Managed by ${escapeHtml(inv.manager)} • Total 13F AUM: ${escapeHtml(inv.portfolioValue)} • SEC CIK: ${escapeHtml(inv.cik)}</p>
+        </header>
+        <section style="margin-top: 24px;">
+          <h2 style="color: #fff;">Reported Holdings</h2>
+          <ol style="color: #cbd5e1; line-height: 1.8;">
+            ${inv.topHoldings
+              .map(
+                (h) => `
+              <li><strong>${escapeHtml(h.ticker)}</strong>: ${escapeHtml(h.name)} – ${h.portfolioWeight}% of fund ($${(h.value / 1e6).toFixed(1)}M)</li>
+            `
+              )
+              .join("")}
+          </ol>
+        </section>
+      </article>
+    `;
+
+    const invHtml = baseHtml
+      .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(invTitle)}</title>`)
+      .replace(
+        /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
+        `<meta name="description" content="${escapeHtml(invDesc)}" />`
+      )
+      .replace(
+        /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+        `<link rel="canonical" href="${BASE_URL}/13f/${inv.id}" />`
+      )
+      .replace(
+        /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+        `<meta property="og:title" content="${escapeHtml(invTitle)}" />`
+      )
+      .replace(
+        /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+        `<meta property="og:description" content="${escapeHtml(invDesc)}" />`
+      )
+      .replace(
+        /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+        `<meta property="og:url" content="${BASE_URL}/13f/${inv.id}" />`
+      )
+      .replace(
+        /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i,
+        `<meta name="twitter:url" content="${BASE_URL}/13f/${inv.id}" />`
+      )
+      .replace(
+        /<div id="root"><\/div>/i,
+        `<div id="root"></div>\n    <noscript>\n${invSemanticHtml.trim()}\n    </noscript>`
+      )
+      .replace(
+        /<\/head>/i,
+        `  <script type="application/ld+json">\n${JSON.stringify(invBreadcrumbSchema, null, 2)}\n  </script>\n</head>`
+      );
+
+    fs.writeFileSync(path.join(invDir, "index.html"), invHtml, "utf8");
+  }
+  console.log(`✓ Generated dist/13f/:investorId/index.html for ${TOP_100_INSTITUTIONAL_INVESTORS.length} institutional managers`);
 
   // Generate dist/markets/index.html with markets directory prerender & structured data
   const marketsDir = path.join(distDir, "markets");

@@ -18,6 +18,10 @@ const InstitutionalHoldings13FPage = lazyWithRetry(
   () => import("./pages/InstitutionalHoldings13FPage"),
 );
 
+const InvestorDetailPage = lazyWithRetry(
+  () => import("./pages/InvestorDetailPage"),
+);
+
 const EventsCalendarPage = lazyWithRetry(
   () => import("./pages/EventsCalendarPage"),
 );
@@ -61,6 +65,7 @@ export default function App() {
                 element={<Navigate to="/tracker" replace />}
               />
               <Route path="/13f" element={<InstitutionalHoldings13FPage />} />
+              <Route path="/13f/:investorId" element={<InvestorDetailPage />} />
               <Route
                 path="/filings"
                 element={<Navigate to="/13f" replace />}

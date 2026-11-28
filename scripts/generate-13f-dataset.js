@@ -564,11 +564,31 @@ const BLUE_CHIP_POOL = [
   { ticker: "NFLX", name: "Netflix Inc.", basePrice: 760 },
   { ticker: "CRM", name: "Salesforce Inc.", basePrice: 310 },
   { ticker: "WMT", name: "Walmart Inc.", basePrice: 86 },
+  { ticker: "BRK.B", name: "Berkshire Hathaway Inc.", basePrice: 468 },
+  { ticker: "BAC", name: "Bank of America Corp.", basePrice: 45 },
+  { ticker: "ORCL", name: "Oracle Corporation", basePrice: 188 },
+  { ticker: "ADBE", name: "Adobe Inc.", basePrice: 495 },
+  { ticker: "QCOM", name: "Qualcomm Inc.", basePrice: 165 },
+  { ticker: "CSCO", name: "Cisco Systems Inc.", basePrice: 58 },
+  { ticker: "IBM", name: "International Business Machines", basePrice: 215 },
+  { ticker: "INTC", name: "Intel Corporation", basePrice: 24 },
+  { ticker: "NOW", name: "ServiceNow Inc.", basePrice: 1010 },
+  { ticker: "UBER", name: "Uber Technologies Inc.", basePrice: 72 },
+  { ticker: "PLTR", name: "Palantir Technologies", basePrice: 65 },
+  { ticker: "ABBV", name: "AbbVie Inc.", basePrice: 175 },
+  { ticker: "MRK", name: "Merck & Co. Inc.", basePrice: 98 },
+  { ticker: "CVX", name: "Chevron Corporation", basePrice: 155 },
+  { ticker: "PEP", name: "PepsiCo Inc.", basePrice: 160 },
+  { ticker: "KO", name: "The Coca-Cola Company", basePrice: 62 },
+  { ticker: "DIS", name: "The Walt Disney Company", basePrice: 112 },
+  { ticker: "CAT", name: "Caterpillar Inc.", basePrice: 385 },
+  { ticker: "GS", name: "The Goldman Sachs Group", basePrice: 580 },
+  { ticker: "MS", name: "Morgan Stanley", basePrice: 130 },
 ];
 
 function generateHoldingsForInvestor(seedNum, totalValue) {
   // Use deterministic pseudo-random distribution based on seed
-  const numHoldings = 10;
+  const numHoldings = 15;
   const pool = [...BLUE_CHIP_POOL];
   // Deterministic shuffle
   let currentIndex = pool.length, randomIndex;
@@ -585,11 +605,12 @@ function generateHoldingsForInvestor(seedNum, totalValue) {
   }
 
   const selected = pool.slice(0, numHoldings);
-  // Weight distribution: decreasing geometric weights summing to ~35-45% of total value
+  // Weight distribution: decreasing geometric weights
   const totalTop10Pct = 25 + Math.floor(random() * 25); // 25% to 50%
-  const rawWeights = [18, 14, 11, 9, 8, 7, 6, 5, 4, 3];
+  const total15Pct = totalTop10Pct + 8 + Math.floor(random() * 6); // Top 15 weights
+  const rawWeights = [18, 14, 11, 9, 8, 7, 6, 5, 4, 3, 2.4, 2.0, 1.6, 1.3, 1.0];
   const weightSum = rawWeights.reduce((a, b) => a + b, 0);
-  const normalizedWeights = rawWeights.map(w => Number(((w / weightSum) * totalTop10Pct).toFixed(2)));
+  const normalizedWeights = rawWeights.map(w => Number(((w / weightSum) * total15Pct).toFixed(2)));
 
   const changeStatuses = ["increased", "increased", "unmodified", "reduced", "new"];
 
@@ -686,7 +707,7 @@ let nextSeed = 101;
 for (const extra of ADDITIONAL_INVESTORS) {
   if (allInvestors.length >= 100) break;
   const holdings = generateHoldingsForInvestor(nextSeed++, extra.num);
-  const top10Concentration = Number(holdings.reduce((sum, h) => sum + h.portfolioWeight, 0).toFixed(1));
+  const top10Concentration = Number(holdings.slice(0, 10).reduce((sum, h) => sum + h.portfolioWeight, 0).toFixed(1));
   const initials = extra.name.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
   const verifiedCik = (VERIFIED_CIKS[extra.id] || extra.cik).padStart(10, "0");
 
