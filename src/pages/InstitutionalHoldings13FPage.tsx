@@ -3,7 +3,6 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ClearIcon from "@mui/icons-material/Clear";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import PieChartOutlineIcon from "@mui/icons-material/PieChartOutline";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SearchIcon from "@mui/icons-material/Search";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
@@ -33,7 +32,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
-import { InstitutionalSectorView } from "../components/institutional/InstitutionalSectorView";
 import { InvestorDetailDrawer } from "../components/institutional/InvestorDetailDrawer";
 import { InvestorDirectoryCards } from "../components/institutional/InvestorDirectoryCards";
 import {
@@ -45,13 +43,12 @@ import { SmartMoneyConsensusView } from "../components/institutional/SmartMoneyC
 import { SiteFooter } from "../components/layout/SiteFooter";
 import {
   FILING_SEASON_INFO,
-  INSTITUTIONAL_SECTOR_ALLOCATION,
   SMART_MONEY_CONSENSUS_TOP_25,
   TOP_100_INSTITUTIONAL_INVESTORS,
 } from "../data/institutional13FData";
 import { InstitutionalInvestor13F } from "../types/institutional13F";
 
-type ActiveSubTab = "directory" | "consensus" | "sectors";
+type ActiveSubTab = "directory" | "consensus";
 
 export const InstitutionalHoldings13FPage: React.FC = () => {
   // Set SEO page title
@@ -344,15 +341,6 @@ export const InstitutionalHoldings13FPage: React.FC = () => {
             <Stack direction="row" alignItems="center" spacing={1}>
               <AutoAwesomeIcon sx={{ fontSize: 18 }} />
               <span>Smart Money Consensus (Top 25)</span>
-            </Stack>
-          }
-        />
-        <Tab
-          value="sectors"
-          label={
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <PieChartOutlineIcon sx={{ fontSize: 18 }} />
-              <span>Sector Allocation</span>
             </Stack>
           }
         />
@@ -736,11 +724,6 @@ export const InstitutionalHoldings13FPage: React.FC = () => {
       {/* ================= Subtab 2: Consensus ================= */}
       {activeSubTab === "consensus" && (
         <SmartMoneyConsensusView consensusHoldings={SMART_MONEY_CONSENSUS_TOP_25} />
-      )}
-
-      {/* ================= Subtab 3: Sector Allocation ================= */}
-      {activeSubTab === "sectors" && (
-        <InstitutionalSectorView sectors={INSTITUTIONAL_SECTOR_ALLOCATION} />
       )}
 
       {/* Investor Detail Drawer */}
