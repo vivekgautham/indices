@@ -39,7 +39,7 @@ export interface CountryMarketCapDataset {
 }
 
 export const COUNTRY_MARKET_CAP_DATA: CountryMarketCapDataset = {
-  "updatedAt": "2026-11-28T01:41:21.522Z",
+  "updatedAt": "2026-11-28T03:52:15.453Z",
   "source": "CompaniesMarketCap (companiesmarketcap.com/all-countries/)",
   "top30TotalUsd": 141849831755580,
   "top30TotalFormatted": "$141.85 T",
