@@ -451,7 +451,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "capital-research",
     "name": "Capital Research Global Investors",
     "manager": "Mike Gitlin",
-    "cik": "0000017444",
+    "cik": "0001422848",
     "category": "asset_manager",
     "portfolioValue": "$1.42 T",
     "portfolioValueNum": 1420000000000,
@@ -547,7 +547,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000017444",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001422848",
     "description": "Home of American Funds, specializing in proprietary bottom-up fundamental equity research with multi-manager system.",
     "cityState": "Los Angeles, CA",
     "avatarInitials": "CR"
@@ -661,7 +661,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "jpmorgan-chase-am",
     "name": "J.P. Morgan Asset Management",
     "manager": "George Gatch",
-    "cik": "0001009802",
+    "cik": "0000019617",
     "category": "asset_manager",
     "portfolioValue": "$920 B",
     "portfolioValueNum": 920000000000,
@@ -755,7 +755,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001009802",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000019617",
     "description": "Institutional asset management division of JPMorgan Chase, issuer of premier active ETFs like JEPI and JEPQ.",
     "cityState": "New York, NY",
     "avatarInitials": "JM"
@@ -1601,7 +1601,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "charles-schwab-im",
     "name": "Charles Schwab Investment Management",
     "manager": "Rick Wurster",
-    "cik": "0000316709",
+    "cik": "0000884546",
     "category": "asset_manager",
     "portfolioValue": "$410 B",
     "portfolioValueNum": 410000000000,
@@ -1694,7 +1694,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 15.3
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000316709",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000884546",
     "description": "Provider of low-cost Schwab ETFs including SCHD (dividend equity), large cap, and international funds.",
     "cityState": "Westlake, TX",
     "avatarInitials": "CS"
@@ -1808,7 +1808,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "norges-bank",
     "name": "Norges Bank (Norway Oil Fund)",
     "manager": "Nicolai Tangen",
-    "cik": "0001102598",
+    "cik": "0001374170",
     "category": "pension_sovereign",
     "portfolioValue": "$310.5 B",
     "portfolioValueNum": 310500000000,
@@ -1909,7 +1909,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001102598"
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001374170"
   },
   {
     "id": "berkshire-hathaway",
@@ -2546,7 +2546,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "ny-state-common",
     "name": "New York State Common Retirement",
     "manager": "Thomas P. DiNapoli",
-    "cik": "0000276641",
+    "cik": "0000810265",
     "category": "pension_sovereign",
     "portfolioValue": "$110 B",
     "portfolioValueNum": 110000000000,
@@ -2642,7 +2642,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -5.2
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000276641",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000810265",
     "description": "Pension fund for over one million state and local government employees in New York.",
     "cityState": "Albany, NY",
     "avatarInitials": "NY"
@@ -2759,7 +2759,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "pimco-pacific",
     "name": "Pacific Investment Management Co (PIMCO)",
     "manager": "Manny Roman & Dan Ivascyn",
-    "cik": "0001109448",
+    "cik": "0001163368",
     "category": "asset_manager",
     "portfolioValue": "$95 B",
     "portfolioValueNum": 95000000000,
@@ -2858,7 +2858,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 6.4
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001109448",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001163368",
     "description": "Global bond titan also running extensive institutional equity derivatives, convertibles, and dividend strategies.",
     "cityState": "Newport Beach, CA",
     "avatarInitials": "PI"
@@ -2867,7 +2867,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "cppib-canada",
     "name": "Canada Pension Plan Investment Board",
     "manager": "John Graham",
-    "cik": "0001479905",
+    "cik": "0001283718",
     "category": "pension_sovereign",
     "portfolioValue": "$92 B",
     "portfolioValueNum": 92000000000,
@@ -2965,7 +2965,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -8.8
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001479905",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001283718",
     "description": "CPPIB invests the funds of the Canada Pension Plan on behalf of 22 million contributors and beneficiaries.",
     "cityState": "Toronto, Canada",
     "avatarInitials": "CP"
@@ -3080,7 +3080,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "artisan-partners",
     "name": "Artisan Partners Asset Management",
     "manager": "Eric Colson",
-    "cik": "0001009802",
+    "cik": "0001466153",
     "category": "asset_manager",
     "portfolioValue": "$88 B",
     "portfolioValueNum": 88000000000,
@@ -3175,7 +3175,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001009802",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001466153",
     "description": "High-conviction autonomous investment teams running Global Value and Sustainable Emerging Markets.",
     "cityState": "Milwaukee, WI",
     "avatarInitials": "AP"
@@ -3292,7 +3292,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "loomis-sayles",
     "name": "Loomis, Sayles & Co., L.P.",
     "manager": "Kevin Charleston",
-    "cik": "0000060377",
+    "cik": "0000312348",
     "category": "asset_manager",
     "portfolioValue": "$85 B",
     "portfolioValueNum": 85000000000,
@@ -3389,7 +3389,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 4.1
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000060377",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000312348",
     "description": "Affiliate of Natixis Investment Managers managing large-cap active growth and multi-sector credit.",
     "cityState": "Boston, MA",
     "avatarInitials": "LS"
@@ -3398,7 +3398,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "columbia-threadneedle",
     "name": "Columbia Threadneedle Investments",
     "manager": "Ted Truscott",
-    "cik": "0000038777",
+    "cik": "0001233991",
     "category": "asset_manager",
     "portfolioValue": "$82 B",
     "portfolioValueNum": 82000000000,
@@ -3492,7 +3492,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -9.1
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000038777",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001233991",
     "description": "Ameriprise asset management group delivering global equity research and institutional multi-asset portfolios.",
     "cityState": "Boston, MA",
     "avatarInitials": "CT"
@@ -3501,7 +3501,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "nuveen-asset-mgmt",
     "name": "Nuveen Asset Management, LLC",
     "manager": "William Huffman",
-    "cik": "0001465109",
+    "cik": "0001521019",
     "category": "asset_manager",
     "portfolioValue": "$78 B",
     "portfolioValueNum": 78000000000,
@@ -3597,7 +3597,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -10.9
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001465109",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001521019",
     "description": "TIAA investment arm managing municipal bonds, responsible investing, and real estate assets.",
     "cityState": "Chicago, IL",
     "avatarInitials": "NA"
@@ -3606,7 +3606,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "american-century",
     "name": "American Century Companies, Inc.",
     "manager": "Jonathan S. Thomas",
-    "cik": "0000004904",
+    "cik": "0000748054",
     "category": "asset_manager",
     "portfolioValue": "$75 B",
     "portfolioValueNum": 75000000000,
@@ -3701,7 +3701,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000004904",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000748054",
     "description": "Independent asset manager directing over 40% of dividends to the Stowers Institute for Medical Research.",
     "cityState": "Kansas City, MO",
     "avatarInitials": "AC"
@@ -3816,7 +3816,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "gic-private-ltd",
     "name": "GIC Private Limited",
     "manager": "Lim Chow Kiat",
-    "cik": "0000936753",
+    "cik": "0000936828",
     "category": "pension_sovereign",
     "portfolioValue": "$65 B",
     "portfolioValueNum": 65000000000,
@@ -3911,7 +3911,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000936753",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000936828",
     "description": "Singapore's sovereign wealth fund managing the nation's international foreign exchange reserves.",
     "cityState": "Singapore",
     "avatarInitials": "GP"
@@ -3920,7 +3920,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "federated-hermes",
     "name": "Federated Hermes, Inc.",
     "manager": "J. Christopher Donahue",
-    "cik": "0001056285",
+    "cik": "0001056288",
     "category": "asset_manager",
     "portfolioValue": "$65 B",
     "portfolioValueNum": 65000000000,
@@ -4017,7 +4017,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 3.8
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001056285",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001056288",
     "description": "Pioneer in liquidity management, ESG-integrated responsible equity investing, and multi-asset funds.",
     "cityState": "Pittsburgh, PA",
     "avatarInitials": "FH"
@@ -4134,7 +4134,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "gqg-partners",
     "name": "GQG Partners LLC",
     "manager": "Rajiv Jain",
-    "cik": "0001684346",
+    "cik": "0001697233",
     "category": "asset_manager",
     "portfolioValue": "$62 B",
     "portfolioValueNum": 62000000000,
@@ -4229,7 +4229,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 3.8
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001684346",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001697233",
     "description": "Rajiv Jain's quality-growth global boutique known for decisive contrarian shifts in energy, tech, and banking.",
     "cityState": "Fort Lauderdale, FL",
     "avatarInitials": "GP"
@@ -4238,7 +4238,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "aqr-capital-mgmt",
     "name": "AQR Capital Management, LLC",
     "manager": "Cliff Asness",
-    "cik": "0001072509",
+    "cik": "0001167557",
     "category": "hedge_fund",
     "portfolioValue": "$58.2 B",
     "portfolioValueNum": 58200000000,
@@ -4335,7 +4335,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001072509",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001167557",
     "description": "Cliff Asness's systematic factor investing firm applying value, momentum, carry, and defensive styles.",
     "cityState": "Greenwich, CT",
     "avatarInitials": "AC"
@@ -4344,7 +4344,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "first-eagle-im",
     "name": "First Eagle Investment Management",
     "manager": "Mehdi Mahmud",
-    "cik": "0001009802",
+    "cik": "0001325447",
     "category": "asset_manager",
     "portfolioValue": "$58 B",
     "portfolioValueNum": 58000000000,
@@ -4439,7 +4439,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001009802",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001325447",
     "description": "Independent firm tracing roots to 1864, applying classic Graham & Dodd deep-value with gold allocations.",
     "cityState": "New York, NY",
     "avatarInitials": "FE"
@@ -4448,7 +4448,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "lord-abbett",
     "name": "Lord, Abbett & Co. LLC",
     "manager": "Douglas B. Sieg",
-    "cik": "0000060377",
+    "cik": "0000728100",
     "category": "asset_manager",
     "portfolioValue": "$54 B",
     "portfolioValueNum": 54000000000,
@@ -4541,7 +4541,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -12.3
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000060377",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000728100",
     "description": "One of the oldest independent investment firms in the United States, managing active fixed income and equities.",
     "cityState": "Jersey City, NJ",
     "avatarInitials": "LA"
@@ -4550,7 +4550,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "oakmark-funds",
     "name": "Harris Associates L.P. (Oakmark)",
     "manager": "Bill Nygren",
-    "cik": "0000826477",
+    "cik": "0000813917",
     "category": "family_office",
     "portfolioValue": "$52 B",
     "portfolioValueNum": 52000000000,
@@ -4646,7 +4646,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -1.4
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000826477",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000813917",
     "description": "Bill Nygren's classic value shop buying great businesses trading at sharp discounts to intrinsic business value.",
     "cityState": "Chicago, IL",
     "avatarInitials": "HA"
@@ -4655,7 +4655,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "texas-teachers",
     "name": "Teacher Retirement System of Texas",
     "manager": "Jase Auby",
-    "cik": "0000891500",
+    "cik": "0000796848",
     "category": "pension_sovereign",
     "portfolioValue": "$48 B",
     "portfolioValueNum": 48000000000,
@@ -4748,7 +4748,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000891500",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000796848",
     "description": "Major US institutional retirement system investing in global public equities and private markets.",
     "cityState": "Austin, TX",
     "avatarInitials": "TR"
@@ -4757,7 +4757,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "brown-advisory",
     "name": "Brown Advisory LLC",
     "manager": "Mike Hankin",
-    "cik": "0001096343",
+    "cik": "0001345929",
     "category": "asset_manager",
     "portfolioValue": "$48 B",
     "portfolioValueNum": 48000000000,
@@ -4852,7 +4852,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 14.1
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001096343",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001345929",
     "description": "Independent investment firm managing sustainable growth, large-cap equities, and flexible income.",
     "cityState": "Baltimore, MD",
     "avatarInitials": "BA"
@@ -4966,7 +4966,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "baron-capital",
     "name": "Baron Capital Management, Inc.",
     "manager": "Ron Baron",
-    "cik": "0000793547",
+    "cik": "0001017918",
     "category": "tech_growth",
     "portfolioValue": "$45 B",
     "portfolioValueNum": 45000000000,
@@ -5061,7 +5061,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000793547",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001017918",
     "description": "Ron Baron's long-term growth firm with iconic early concentrated investments in Tesla, SpaceX, and CoStar.",
     "cityState": "New York, NY",
     "avatarInitials": "BC"
@@ -5278,7 +5278,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "william-blair",
     "name": "William Blair Investment Management",
     "manager": "Beth Satterfield",
-    "cik": "0001072509",
+    "cik": "0001644956",
     "category": "asset_manager",
     "portfolioValue": "$42 B",
     "portfolioValueNum": 42000000000,
@@ -5374,7 +5374,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 4.1
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001072509",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001644956",
     "description": "100% employee-owned boutique emphasizing fundamental global growth and small-mid cap companies.",
     "cityState": "Chicago, IL",
     "avatarInitials": "WB"
@@ -5383,7 +5383,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "jane-street-group",
     "name": "Jane Street Group, LLC",
     "manager": "Rob Granieri",
-    "cik": "0001599947",
+    "cik": "0001595888",
     "category": "hedge_fund",
     "portfolioValue": "$38.5 B",
     "portfolioValueNum": 38500000000,
@@ -5478,7 +5478,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 10.7
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001599947",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001595888",
     "description": "Quantitative trading powerhouse and premier ETF market maker trading equities, bonds, and derivatives globally.",
     "cityState": "New York, NY",
     "avatarInitials": "JS"
@@ -5487,7 +5487,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "ontario-teachers",
     "name": "Ontario Teachers' Pension Plan",
     "manager": "Jo Taylor",
-    "cik": "0001075619",
+    "cik": "0000937567",
     "category": "pension_sovereign",
     "portfolioValue": "$38 B",
     "portfolioValueNum": 38000000000,
@@ -5583,7 +5583,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001075619",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000937567",
     "description": "Independent pension fund serving 340,000 active and retired teachers across Ontario.",
     "cityState": "Toronto, Canada",
     "avatarInitials": "OT"
@@ -5592,7 +5592,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "sanders-capital",
     "name": "Sanders Capital, LLC",
     "manager": "Lewis A. Sanders",
-    "cik": "0001476304",
+    "cik": "0001508097",
     "category": "asset_manager",
     "portfolioValue": "$36 B",
     "portfolioValueNum": 36000000000,
@@ -5689,7 +5689,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001476304",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001508097",
     "description": "Former AllianceBernstein CEO Lew Sanders applying quantitative discipline to fundamental valuation.",
     "cityState": "New York, NY",
     "avatarInitials": "SC"
@@ -5698,7 +5698,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "harding-loevner",
     "name": "Harding Loevner LP",
     "manager": "Ferrill Roll",
-    "cik": "0000896068",
+    "cik": "0000928196",
     "category": "asset_manager",
     "portfolioValue": "$34 B",
     "portfolioValueNum": 34000000000,
@@ -5792,7 +5792,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000896068",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0000928196",
     "description": "Global equity manager investing exclusively in high-quality, growing businesses with competitive moats.",
     "cityState": "Bridgewater, NJ",
     "avatarInitials": "HL"
@@ -6014,7 +6014,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "marshall-wace",
     "name": "Marshall Wace LLP",
     "manager": "Paul Marshall & Ian Wace",
-    "cik": "0001387131",
+    "cik": "0001318757",
     "category": "hedge_fund",
     "portfolioValue": "$29.7 B",
     "portfolioValueNum": 29700000000,
@@ -6111,7 +6111,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 4.3
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001387131",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001318757",
     "description": "European hedge fund pioneer running TOPS (Trade Optimised Portfolio System) systematic alpha generation.",
     "cityState": "London, UK",
     "avatarInitials": "MW"
@@ -6225,7 +6225,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "polen-capital",
     "name": "Polen Capital Management, LLC",
     "manager": "Dan Davidowitz",
-    "cik": "0001096343",
+    "cik": "0001034524",
     "category": "asset_manager",
     "portfolioValue": "$28 B",
     "portfolioValueNum": 28000000000,
@@ -6319,7 +6319,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 12.5
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001096343",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001034524",
     "description": "Ultra-concentrated Focus Growth manager owning only 20-25 high-ROE secular market champions.",
     "cityState": "Boca Raton, FL",
     "avatarInitials": "PC"
@@ -6328,7 +6328,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "balyasny-asset-mgmt",
     "name": "Balyasny Asset Management L.P.",
     "manager": "Dmitry Balyasny",
-    "cik": "0001262933",
+    "cik": "0001218710",
     "category": "hedge_fund",
     "portfolioValue": "$26.4 B",
     "portfolioValueNum": 26400000000,
@@ -6425,7 +6425,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 14.7
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001262933",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001218710",
     "description": "Global multi-strategy investment firm running long/short equity, commodities, and macro pods.",
     "cityState": "Chicago, IL",
     "avatarInitials": "BA"
@@ -6434,7 +6434,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "alaska-permanent",
     "name": "Alaska Permanent Fund Corporation",
     "manager": "Deven Mitchell",
-    "cik": "0001046102",
+    "cik": "0001582681",
     "category": "pension_sovereign",
     "portfolioValue": "$22 B",
     "portfolioValueNum": 22000000000,
@@ -6528,7 +6528,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001046102",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001582681",
     "description": "State-owned constitutionally created fund converting non-renewable oil revenues into permanent investments.",
     "cityState": "Juneau, AK",
     "avatarInitials": "AP"
@@ -6646,7 +6646,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "elliott-investment",
     "name": "Elliott Investment Management L.P.",
     "manager": "Paul Singer",
-    "cik": "0001048445",
+    "cik": "0001791786",
     "category": "activist",
     "portfolioValue": "$21.4 B",
     "portfolioValueNum": 21400000000,
@@ -6743,7 +6743,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001048445",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001791786",
     "description": "Paul Singer's multi-strategy activist manager with half a century of active corporate and sovereign restructurings.",
     "cityState": "West Palm Beach, FL",
     "avatarInitials": "EI"
@@ -6752,7 +6752,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "hudson-river-trading",
     "name": "Hudson River Trading LLC",
     "manager": "Alex Gerko",
-    "cik": "0001569726",
+    "cik": "0001475597",
     "category": "hedge_fund",
     "portfolioValue": "$18.2 B",
     "portfolioValueNum": 18200000000,
@@ -6847,7 +6847,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 6.4
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001569726",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001475597",
     "description": "Algorithmic multi-asset quantitative trading firm operating across global public financial exchanges.",
     "cityState": "New York, NY",
     "avatarInitials": "HR"
@@ -6856,7 +6856,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "exoduspoint-capital",
     "name": "ExodusPoint Capital Management",
     "manager": "Michael Gelband",
-    "cik": "0001738746",
+    "cik": "0001736225",
     "category": "hedge_fund",
     "portfolioValue": "$16.8 B",
     "portfolioValueNum": 16800000000,
@@ -6952,7 +6952,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -5.7
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001738746",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001736225",
     "description": "Multi-manager hedge fund founded by former Lehman and Millennium bond chief Michael Gelband.",
     "cityState": "New York, NY",
     "avatarInitials": "EC"
@@ -7066,7 +7066,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "schonfeld-strategic",
     "name": "Schonfeld Strategic Advisors LLC",
     "manager": "Steven Schonfeld",
-    "cik": "0001602796",
+    "cik": "0001665241",
     "category": "hedge_fund",
     "portfolioValue": "$14.5 B",
     "portfolioValueNum": 14500000000,
@@ -7161,7 +7161,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001602796",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001665241",
     "description": "Multi-strategy firm managing quantitative equity, fundamental equity, and tactical trading strategies.",
     "cityState": "New York, NY",
     "avatarInitials": "SS"
@@ -7170,7 +7170,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "ark-investment-mgmt",
     "name": "ARK Investment Management LLC",
     "manager": "Cathie Wood",
-    "cik": "0001603484",
+    "cik": "0001697748",
     "category": "tech_growth",
     "portfolioValue": "$14.2 B",
     "portfolioValueNum": 14200000000,
@@ -7273,7 +7273,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 24.5
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001603484"
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001697748"
   },
   {
     "id": "pershing-square",
@@ -7363,7 +7363,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "jump-trading",
     "name": "Jump Trading LLC",
     "manager": "Bill DiSomma",
-    "cik": "0001538356",
+    "cik": "0001831577",
     "category": "hedge_fund",
     "portfolioValue": "$12.4 B",
     "portfolioValueNum": 12400000000,
@@ -7461,8 +7461,8 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001538356",
-    "description": "Proprietary research and algorithmic quantitative market maker in equities, futures, options, and FX.",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001831577",
+    "description": "Proprietary research and algorithmic quantitative market maker in equities, futures, options, and FX (filing as Jump Financial, LLC).",
     "cityState": "Chicago, IL",
     "avatarInitials": "JT"
   },
@@ -7678,7 +7678,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "d1-capital-partners",
     "name": "D1 Capital Partners L.P.",
     "manager": "Daniel Sundheim",
-    "cik": "0001744530",
+    "cik": "0001747057",
     "category": "hedge_fund",
     "portfolioValue": "$10.9 B",
     "portfolioValueNum": 10900000000,
@@ -7774,7 +7774,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001744530",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001747057",
     "description": "Dan Sundheim's crossover fund investing in public and private tech, telecom, consumer, and industrials.",
     "cityState": "New York, NY",
     "avatarInitials": "DC"
@@ -7998,7 +7998,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "durable-capital",
     "name": "Durable Capital Partners LP",
     "manager": "Henry Ellenbogen",
-    "cik": "0001787163",
+    "cik": "0001798849",
     "category": "tech_growth",
     "portfolioValue": "$8.4 B",
     "portfolioValueNum": 8400000000,
@@ -8091,7 +8091,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 7.1
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001787163",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001798849",
     "description": "Former T. Rowe Price New Horizons manager Henry Ellenbogen investing in small-to-mid cap compounders.",
     "cityState": "Chevy Chase, MD",
     "avatarInitials": "DC"
@@ -8308,7 +8308,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "matrix-capital",
     "name": "Matrix Capital Management",
     "manager": "David Goel",
-    "cik": "0001387602",
+    "cik": "0001410830",
     "category": "tech_growth",
     "portfolioValue": "$7.1 B",
     "portfolioValueNum": 7100000000,
@@ -8404,7 +8404,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001387602",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001410830",
     "description": "Tiger Cub technology fund holding massive concentrated stakes in semiconductor leaders like NVIDIA and Qualcomm.",
     "cityState": "Waltham, MA",
     "avatarInitials": "MC"
@@ -8624,7 +8624,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "starboard-value",
     "name": "Starboard Value LP",
     "manager": "Jeffrey Smith",
-    "cik": "0001517981",
+    "cik": "0001517137",
     "category": "activist",
     "portfolioValue": "$6.2 B",
     "portfolioValueNum": 6200000000,
@@ -8720,7 +8720,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -9.5
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001517981",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001517137",
     "description": "Premier operational activist investor famous for comprehensive turnaround plans (Darden, Papa John's, Marvell).",
     "cityState": "New York, NY",
     "avatarInitials": "SV"
@@ -8941,7 +8941,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "whale-rock-capital",
     "name": "Whale Rock Capital Management",
     "manager": "Alex Sacerdote",
-    "cik": "0001377855",
+    "cik": "0001387322",
     "category": "tech_growth",
     "portfolioValue": "$5.6 B",
     "portfolioValueNum": 5600000000,
@@ -9037,7 +9037,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -4.2
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001377855",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001387322",
     "description": "Fundamental equity hedge fund specializing in global technology, media, and telecom wave transitions.",
     "cityState": "Boston, MA",
     "avatarInitials": "WR"
@@ -9259,7 +9259,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "dragoneer-investment",
     "name": "Dragoneer Investment Group",
     "manager": "Marc Stad",
-    "cik": "0001564757",
+    "cik": "0001602189",
     "category": "tech_growth",
     "portfolioValue": "$4.2 B",
     "portfolioValueNum": 4200000000,
@@ -9355,7 +9355,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "unmodified"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001564757",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001602189",
     "description": "Growth-oriented technology investor across enterprise cloud infrastructure and payments.",
     "cityState": "San Francisco, CA",
     "avatarInitials": "DI"
@@ -9468,7 +9468,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "sachem-head-capital",
     "name": "Sachem Head Capital Management",
     "manager": "Scott Ferguson",
-    "cik": "0001566497",
+    "cik": "0001582090",
     "category": "activist",
     "portfolioValue": "$3.4 B",
     "portfolioValueNum": 3400000000,
@@ -9566,7 +9566,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": -6.4
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001566497",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001582090",
     "description": "Activist hedge fund founded by Pershing Square partner Scott Ferguson.",
     "cityState": "New York, NY",
     "avatarInitials": "SH"
@@ -9575,7 +9575,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "corvex-management",
     "name": "Corvex Management LP",
     "manager": "Keith Meister",
-    "cik": "0001526162",
+    "cik": "0001535472",
     "category": "activist",
     "portfolioValue": "$2.8 B",
     "portfolioValueNum": 2800000000,
@@ -9672,7 +9672,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changePct": 7.7
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001526162",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001535472",
     "description": "Keith Meister's activist hedge fund focused on telecom, media, energy, and retail transformations.",
     "cityState": "New York, NY",
     "avatarInitials": "CM"
@@ -9996,7 +9996,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "light-street-capital",
     "name": "Light Street Capital Management",
     "manager": "Glen Kacher",
-    "cik": "0001509307",
+    "cik": "0001569049",
     "category": "tech_growth",
     "portfolioValue": "$1.85 B",
     "portfolioValueNum": 1850000000,
@@ -10093,7 +10093,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001509307",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001569049",
     "description": "Tiger-affiliated tech specialist focusing on artificial intelligence hardware and platform software.",
     "cityState": "San Francisco, CA",
     "avatarInitials": "LS"
@@ -10102,7 +10102,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
     "id": "shawspring-partners",
     "name": "ShawSpring Partners LLC",
     "manager": "Dennis Hong",
-    "cik": "0001765876",
+    "cik": "0001766908",
     "category": "tech_growth",
     "portfolioValue": "$1.2 B",
     "portfolioValueNum": 1200000000,
@@ -10200,7 +10200,7 @@ export const TOP_100_INSTITUTIONAL_INVESTORS: InstitutionalInvestor13F[] = [
         "changeStatus": "new"
       }
     ],
-    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001765876",
+    "secFilingUrl": "https://www.sec.gov/edgar/browse/?CIK=0001766908",
     "description": "Long-term concentrated investor in dominant platform businesses with network effects.",
     "cityState": "Boston, MA",
     "avatarInitials": "SP"
