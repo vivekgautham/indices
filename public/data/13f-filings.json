@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-28T14:09:27.910Z",
+  "updatedAt": "2026-11-28T14:49:09.408Z",
   "reportingQuarter": "Q3 2026",
   "filingDeadline": "2026-11-14",
   "nextDeadline": "2027-02-14",
@@ -7275,7 +7275,7 @@
       "portfolioValueNum": 12800000000,
       "reportPeriod": "Q3 2026",
       "filingDate": "2026-11-14",
-      "holdingsCount": 8,
+      "holdingsCount": 10,
       "top10ConcentrationPct": 100,
       "cityState": "New York, NY",
       "avatarInitials": "PS",
@@ -7331,19 +7331,36 @@
           "changeStatus": "unmodified"
         },
         {
+          "ticker": "NKE",
+          "name": "Nike Inc.",
+          "shares": 16300000,
+          "value": 1024000000,
+          "portfolioWeight": 8,
+          "changeStatus": "increased",
+          "changePct": 435
+        },
+        {
+          "ticker": "BN",
+          "name": "Brookfield Corporation",
+          "shares": 15400000,
+          "value": 768000000,
+          "portfolioWeight": 6,
+          "changeStatus": "new"
+        },
+        {
           "ticker": "BMRN",
           "name": "BioMarin Pharmaceutical",
-          "shares": 18200000,
-          "value": 1201000000,
-          "portfolioWeight": 9.38,
+          "shares": 3500000,
+          "value": 282000000,
+          "portfolioWeight": 2.2,
           "changeStatus": "new"
         },
         {
           "ticker": "SEIK",
           "name": "Seikei Partners",
-          "shares": 8500000,
-          "value": 1073000000,
-          "portfolioWeight": 8.38,
+          "shares": 1600000,
+          "value": 200000000,
+          "portfolioWeight": 1.57,
           "changeStatus": "new"
         }
       ],

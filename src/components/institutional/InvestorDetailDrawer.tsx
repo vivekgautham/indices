@@ -19,12 +19,13 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
   Tooltip,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { InstitutionalInvestor13F, PositionChangeStatus } from "../../types/institutional13F";
 import { getStockAnalysisEtfUrl } from "../../utils/stockAnalysis";
 
@@ -53,6 +54,46 @@ function formatCategoryLabel(cat: string): string {
     case "tech_growth": return "Tech & Growth";
     default: return cat;
   }
+}
+
+function renderRankBadge(rank: number) {
+  let bg = "rgba(255, 255, 255, 0.08)";
+  let text = "rgba(255, 255, 255, 0.7)";
+  let border = "rgba(255, 255, 255, 0.15)";
+
+  if (rank === 1) {
+    bg = "rgba(245, 158, 11, 0.2)";
+    text = "#fbbf24";
+    border = "rgba(245, 158, 11, 0.4)";
+  } else if (rank === 2) {
+    bg = "rgba(148, 163, 184, 0.2)";
+    text = "#cbd5e1";
+    border = "rgba(148, 163, 184, 0.4)";
+  } else if (rank === 3) {
+    bg = "rgba(217, 119, 6, 0.2)";
+    text = "#f59e0b";
+    border = "rgba(217, 119, 6, 0.4)";
+  }
+
+  return (
+    <Box
+      sx={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 24,
+        height: 24,
+        borderRadius: "50%",
+        backgroundColor: bg,
+        color: text,
+        border: `1px solid ${border}`,
+        fontWeight: 800,
+        fontSize: "0.68rem",
+      }}
+    >
+      #{rank}
+    </Box>
+  );
 }
 
 function renderChangeBadge(status: PositionChangeStatus, changePct?: number) {
@@ -138,6 +179,13 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
   open,
   onClose,
 }) => {
+  const top10Stats = useMemo(() => {
+    if (!investor) return { totalVal: 0, maxWeight: 10 };
+    const totalVal = investor.topHoldings.reduce((sum, h) => sum + h.value, 0);
+    const maxWeight = Math.max(...investor.topHoldings.map((h) => h.portfolioWeight), 1);
+    return { totalVal, maxWeight };
+  }, [investor]);
+
   if (!investor) return null;
 
   const catStyle = CATEGORY_COLORS[investor.category] || {
@@ -153,7 +201,7 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: { xs: "100%", sm: 580, md: 660 },
+          width: { xs: "100%", sm: 640, md: 740 },
           backgroundColor: "#08130F",
           backgroundImage: "linear-gradient(180deg, rgba(11, 26, 20, 0.95) 0%, rgba(5, 13, 10, 0.98) 100%)",
           color: "text.primary",
@@ -166,7 +214,7 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
     >
       {/* Header Close & CIK Pill */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
-        <Stack direction="row" alignItems="center" spacing={1}>
+        <Stack direction="row" alignItems="center" spacing={1} sx={{ flexWrap: "wrap", gap: 0.5 }}>
           <Chip
             icon={<ShieldOutlinedIcon sx={{ fontSize: "14px !important" }} />}
             label={`SEC CIK ${investor.cik}`}
@@ -194,6 +242,7 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
         <IconButton
           onClick={onClose}
           size="small"
+          aria-label="Close details"
           sx={{
             color: "text.secondary",
             "&:hover": { color: "text.primary", backgroundColor: "rgba(255, 255, 255, 0.08)" },
@@ -296,11 +345,16 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
 
       <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.08)", mb: 2.5 }} />
 
-      {/* Holdings Section */}
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: 800, color: "text.primary" }}>
-          Top Portfolio Holdings ({investor.topHoldings.length})
-        </Typography>
+      {/* Holdings Section Header */}
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
+        <Box>
+          <Typography variant="subtitle1" sx={{ fontWeight: 800, color: "text.primary" }}>
+            Top 10 Holdings ({investor.topHoldings.length} Positions)
+          </Typography>
+          <Typography variant="caption" sx={{ color: "text.secondary" }}>
+            {investor.top10ConcentrationPct}% of total portfolio • Combined value: {formatDollar(top10Stats.totalVal)}
+          </Typography>
+        </Box>
 
         <Button
           component="a"
@@ -312,15 +366,34 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
           sx={{
             textTransform: "none",
             fontSize: "0.76rem",
-            color: "primary.light",
+            color: "#00DD94",
             fontWeight: 700,
-            "&:hover": { textDecoration: "underline" },
+            backgroundColor: "rgba(0, 221, 148, 0.08)",
+            border: "1px solid rgba(0, 221, 148, 0.25)",
+            "&:hover": { backgroundColor: "rgba(0, 221, 148, 0.16)", textDecoration: "none" },
           }}
         >
           View Full 13F on SEC EDGAR
         </Button>
       </Stack>
 
+      {/* Top 10 Concentration Bar */}
+      <Box sx={{ mb: 2, p: 1.5, borderRadius: 2, backgroundColor: "rgba(0, 0, 0, 0.2)", border: "1px solid rgba(255, 255, 255, 0.06)" }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.75 }}>
+          <Typography variant="caption" sx={{ fontWeight: 700, color: "text.secondary" }}>
+            Top 10 Portfolio Weight vs Remaining
+          </Typography>
+          <Typography variant="caption" sx={{ fontWeight: 800, color: "#00DD94" }}>
+            {investor.top10ConcentrationPct}% in Top 10 • {Math.max(0, Number((100 - investor.top10ConcentrationPct).toFixed(1)))}% other ({Math.max(0, investor.holdingsCount - investor.topHoldings.length)} stocks)
+          </Typography>
+        </Stack>
+        <Box sx={{ width: "100%", height: 6, borderRadius: 3, backgroundColor: "rgba(255, 255, 255, 0.08)", overflow: "hidden", display: "flex" }}>
+          <Box sx={{ width: `${Math.min(100, investor.top10ConcentrationPct)}%`, height: "100%", backgroundColor: "#00DD94" }} />
+          <Box sx={{ width: `${Math.max(0, 100 - investor.top10ConcentrationPct)}%`, height: "100%", backgroundColor: "rgba(255, 255, 255, 0.15)" }} />
+        </Box>
+      </Box>
+
+      {/* Top 10 Holdings Table */}
       <TableContainer
         component={Paper}
         variant="outlined"
@@ -334,23 +407,29 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
         <Table size="small">
           <TableHead sx={{ backgroundColor: "rgba(255, 255, 255, 0.04)" }}>
             <TableRow>
+              <TableCell sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.72rem", width: 44 }}>
+                #
+              </TableCell>
               <TableCell sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.72rem" }}>
                 Ticker & Company
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.72rem" }}>
                 Market Value
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.72rem" }}>
-                Weight
+              <TableCell align="right" sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.72rem", minWidth: 120 }}>
+                Weight (% of Fund)
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: 800, color: "text.secondary", fontSize: "0.72rem" }}>
-                Action
+                Quarterly Move
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {investor.topHoldings.map((h, i) => {
               const url = getStockAnalysisEtfUrl(h.ticker, true);
+              const rank = i + 1;
+              const relativeBarPct = top10Stats.maxWeight > 0 ? (h.portfolioWeight / top10Stats.maxWeight) * 100 : 0;
+
               return (
                 <TableRow
                   key={`${h.ticker}-${i}`}
@@ -360,7 +439,13 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
                     "&:hover": { backgroundColor: "rgba(0, 221, 148, 0.04)" },
                   }}
                 >
-                  <TableCell>
+                  {/* Rank Column */}
+                  <TableCell sx={{ py: 1.2 }}>
+                    {renderRankBadge(rank)}
+                  </TableCell>
+
+                  {/* Ticker & Company */}
+                  <TableCell sx={{ py: 1.2 }}>
                     <Stack direction="row" alignItems="center" spacing={1}>
                       <Box
                         component={url ? "a" : "div"}
@@ -388,9 +473,9 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
                         variant="body2"
                         sx={{
                           fontWeight: 700,
-                          fontSize: "0.78rem",
+                          fontSize: "0.8rem",
                           color: "text.primary",
-                          maxWidth: 180,
+                          maxWidth: { xs: 120, sm: 180, md: 220 },
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
@@ -401,8 +486,9 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
                     </Stack>
                   </TableCell>
 
-                  <TableCell align="right">
-                    <Typography variant="body2" sx={{ fontWeight: 700, fontSize: "0.8rem", color: "text.primary" }}>
+                  {/* Market Value & Shares */}
+                  <TableCell align="right" sx={{ py: 1.2 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 700, fontSize: "0.82rem", color: "text.primary" }}>
                       {formatDollar(h.value)}
                     </Typography>
                     <Typography variant="caption" sx={{ color: "text.secondary", fontSize: "0.68rem" }}>
@@ -410,24 +496,76 @@ export const InvestorDetailDrawer: React.FC<InvestorDetailDrawerProps> = ({
                     </Typography>
                   </TableCell>
 
-                  <TableCell align="right">
-                    <Typography variant="body2" sx={{ fontWeight: 800, fontSize: "0.82rem", color: "#00DD94" }}>
+                  {/* Portfolio Weight & Visual Bar */}
+                  <TableCell align="right" sx={{ py: 1.2 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 800, fontSize: "0.86rem", color: "#00DD94" }}>
                       {h.portfolioWeight}%
                     </Typography>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        maxWidth: 90,
+                        ml: "auto",
+                        mt: 0.4,
+                        height: 4,
+                        borderRadius: 2,
+                        backgroundColor: "rgba(255, 255, 255, 0.08)",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: `${Math.min(100, Math.max(3, relativeBarPct))}%`,
+                          height: "100%",
+                          borderRadius: 2,
+                          backgroundColor: "#00DD94",
+                        }}
+                      />
+                    </Box>
                   </TableCell>
 
-                  <TableCell align="right">
+                  {/* Quarterly Move Badge */}
+                  <TableCell align="right" sx={{ py: 1.2 }}>
                     {renderChangeBadge(h.changeStatus, h.changePct)}
                   </TableCell>
                 </TableRow>
               );
             })}
           </TableBody>
+
+          {/* Table Footer: Top 10 Combined Summary */}
+          <TableFooter sx={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}>
+            <TableRow>
+              <TableCell colSpan={2} sx={{ fontWeight: 800, color: "text.primary", fontSize: "0.78rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" }}>
+                Top 10 Holdings Combined
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: 800, color: "text.primary", fontSize: "0.82rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" }}>
+                {formatDollar(top10Stats.totalVal)}
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: 900, color: "#00DD94", fontSize: "0.88rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" }}>
+                {investor.top10ConcentrationPct}%
+              </TableCell>
+              <TableCell align="right" sx={{ borderTop: "1px solid rgba(255, 255, 255, 0.1)" }}>
+                <Chip
+                  label={`${investor.topHoldings.length} POSITIONS`}
+                  size="small"
+                  sx={{
+                    height: 20,
+                    fontSize: "0.62rem",
+                    fontWeight: 800,
+                    backgroundColor: "rgba(0, 221, 148, 0.12)",
+                    color: "#00DD94",
+                    border: "1px solid rgba(0, 221, 148, 0.3)",
+                  }}
+                />
+              </TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
 
       {/* Footer Outbound SEC Link Action */}
-      <Box sx={{ mt: "auto", pt: 2 }}>
+      <Box sx={{ mt: "auto", pt: 1 }}>
         <Button
           fullWidth
           variant="outlined"

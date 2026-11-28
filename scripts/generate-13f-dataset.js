@@ -271,7 +271,7 @@ const INVESTORS_RAW = [
     portfolioValueNum: 12800000000,
     reportPeriod: "Q3 2026",
     filingDate: "2026-11-14",
-    holdingsCount: 8,
+    holdingsCount: 10,
     top10ConcentrationPct: 100.0,
     cityState: "New York, NY",
     avatarInitials: "PS",
@@ -283,8 +283,10 @@ const INVESTORS_RAW = [
       { ticker: "CMG", name: "Chipotle Mexican Grill", shares: 28500000, value: 1653000000, portfolioWeight: 12.91, changeStatus: "reduced", changePct: -18.5 },
       { ticker: "GOOG", name: "Alphabet Inc. (Class C)", shares: 8400000, value: 1562000000, portfolioWeight: 12.20, changeStatus: "unmodified" },
       { ticker: "CP", name: "Canadian Pacific Kansas City", shares: 14800000, value: 1391000000, portfolioWeight: 10.87, changeStatus: "unmodified" },
-      { ticker: "BMRN", name: "BioMarin Pharmaceutical", shares: 18200000, value: 1201000000, portfolioWeight: 9.38, changeStatus: "new" },
-      { ticker: "SEIK", name: "Seikei Partners", shares: 8500000, value: 1073000000, portfolioWeight: 8.38, changeStatus: "new" },
+      { ticker: "NKE", name: "Nike Inc.", shares: 16300000, value: 1024000000, portfolioWeight: 8.00, changeStatus: "increased", changePct: 435.0 },
+      { ticker: "BN", name: "Brookfield Corporation", shares: 15400000, value: 768000000, portfolioWeight: 6.00, changeStatus: "new" },
+      { ticker: "BMRN", name: "BioMarin Pharmaceutical", shares: 3500000, value: 282000000, portfolioWeight: 2.20, changeStatus: "new" },
+      { ticker: "SEIK", name: "Seikei Partners", shares: 1600000, value: 200000000, portfolioWeight: 1.57, changeStatus: "new" },
     ]
   },
   {
